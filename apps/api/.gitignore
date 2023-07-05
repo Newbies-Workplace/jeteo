@@ -1,5 +1,5 @@
 # compiled output
-/dist
+/.nest
 /node_modules
 
 # Logs
