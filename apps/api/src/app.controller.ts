@@ -9,4 +9,15 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('test')
+  getTest(): any {
+    console.log('aaaaa');
+    return {
+      message: 'This is a test',
+      data: {
+        name: 'John Doe',
+      },
+    };
+  }
 }
