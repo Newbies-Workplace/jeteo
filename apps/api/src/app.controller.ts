@@ -14,7 +14,7 @@ export class AppController {
   getTest(): any {
     console.log('aaaaa');
     return {
-      message: 'This is a test',
+      message: 'This is a signin',
       data: {
         name: 'John Doe',
       },
