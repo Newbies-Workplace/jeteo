@@ -5,7 +5,6 @@ import { GoogleController } from './strategies/google.controller';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  imports: [],
   controllers: [GoogleController],
   providers: [AuthService, GoogleStrategy, JwtService],
   exports: [JwtService],

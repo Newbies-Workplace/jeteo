@@ -20,8 +20,8 @@ export class GoogleController {
     const token = await this.authService.loginWithGoogle(user);
 
     res.cookie('token', token, {
+      sameSite: true,
       httpOnly: true,
-      sameSite: 'strict',
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
     });
     return res.redirect(process.env.CLIENT_URL);
