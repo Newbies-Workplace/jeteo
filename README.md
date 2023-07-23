@@ -7,18 +7,43 @@
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
+### Develop
+
+To develop jeteo, run the following commands:
+
+Copy the .env.example file to .env and fill in the values:
+```
+cp .env.example .env
+```
+
+To start the database:
+```
+docker-compose up -d
+```
+
+To generate the prisma client and types:
+```
+# run in ./apps/api/
+npm generate
+``` 
+
+To run the migrations on your database:
+```
+# run in ./apps/api/
+npm migrate
+```
+
+And finally, to start the development server:
+```
+npm dev
+```
+
+App will be available at http://localhost:3000
+
 ### Build
 
 To build all apps and packages, run the following command:
 
 ```
 npm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-npm dev
 ```

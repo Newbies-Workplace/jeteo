@@ -3,7 +3,6 @@
   "scripts": {
     "build": "dotenv -- turbo run build",
     "dev": "dotenv -- turbo run dev",
-    "generate": "dotenv -- turbo run generate",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
