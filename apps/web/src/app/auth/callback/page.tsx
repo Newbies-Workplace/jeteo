@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <div>
       callback, pobieramy swoje dane i robimy eluwine tam gdzie byliśmy
-      wcześniej
+      wcześniej!
     </div>
   );
 }
