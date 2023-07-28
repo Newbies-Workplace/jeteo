@@ -1,0 +1,16 @@
+.main{
+    margin: auto;
+    width: 80%;
+    height: 100%;
+
+    @media (max-width: 900px) {
+        width: 100%;
+    }
+}
+
+.example{
+    width: 80%;
+    height: 125px;
+    border-radius: 8px;
+    background-color: pink;
+}
