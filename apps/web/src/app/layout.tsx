@@ -15,7 +15,6 @@ export default function RootLayout({
           margin: 0,
           backgroundColor: colors.background,
           height: "100vh",
-          width: "100vw",
         }}
       >
         <Providers>{children}</Providers>
