@@ -9,6 +9,7 @@ import Ufo3 from "@/assets/images/ufo-3.svg"
 import Rocket from "@/assets/images/rocket.svg" // todo rocket svg
 import PlanetYellow from "@/assets/images/planet-yellow.svg"
 import SpaceElectricVehicle from "@/assets/images/chair.svg"
+import Image from "next/image";
 
 interface GalaxyBackgroundProps {
     hideStars?: boolean;
@@ -20,63 +21,63 @@ interface GalaxyBackgroundProps {
 }
 
 export const GalaxyBackground: React.FC<React.PropsWithChildren<GalaxyBackgroundProps>> = (
-        { 
-            children,
-            hideStars,
-            hideComets,
-            hidePlanets,
-            hideUfoSwarm,
-            hideRocket,
-            hideVehicle
+    { 
+        children,
+        hideStars,
+        hideComets,
+        hidePlanets,
+        hideUfoSwarm,
+        hideRocket,
+        hideVehicle
+    }
+) => {
+return (
+    <div className={styles.wrapper} style={{backgroundImage: `url(${SpaceFog})`, backgroundSize: 'cover'}}>
+        {!hideStars &&
+            <>
+                <div className={styles.stars}/>
+                <div className={styles.stars2}/>
+                <div className={styles.stars3}/>
+            </>
         }
-    ) => {
-    return (
-        <div className={styles.wrapper} style={{backgroundImage: `url(${SpaceFog})`, backgroundSize: 'cover'}}>
-            {!hideStars &&
-                <>
-                    <div className={styles.stars}/>
-                    <div className={styles.stars2}/>
-                    <div className={styles.stars3}/>
-                </>
-            }
 
-            {!hideComets &&
-                <>
-                    <div className={styles.comets}>
-                        <div className={styles.comet}/>
-                        <div className={styles.comet}/>
-                        <div className={styles.comet}/>
-                    </div>
-                </>
-            }
+        {!hideComets &&
+            <>
+                <div className={styles.comets}>
+                    <div className={styles.comet}/>
+                    <div className={styles.comet}/>
+                    <div className={styles.comet}/>
+                </div>
+            </>
+        }
 
-            {!hidePlanets &&
-                <>
-                    <PlanetViolet className={styles.planet}/>
-                        <div className={styles.planet2Container}>
-                        <PlanetYellow className={styles.planet2Moon}/>
-                        <PlanetBlue className={styles.planet2}/>
-                    </div>
-                </>
-            }
+        {!hidePlanets &&
+            <>
+                <Image width={44} height={44} alt="Planet Violet" src={PlanetViolet} className={styles.planet}/>
+                <div className={styles.planet2Container}>
+                    <Image width={75} height={75} alt="Planet Yellow" src={PlanetYellow} className={styles.planet2Moon}/>
+                    <Image width={49} height={49} alt="Planet Blue" src={PlanetBlue} className={styles.planet2}/>
+                </div>
+            </>
+        }
 
-            {!hideUfoSwarm &&
-                <>
-                    <div className={styles.ufoSwarm}>
-                        <Ufo1 className={styles.ufo}/>
-                        <Ufo2 className={styles.ufo}/>
-                        <Ufo3 className={styles.ufo}/>
-                    </div>
-                </>
-            }
+        {!hideUfoSwarm &&
+            <>
+                <div className={styles.ufoSwarm}>
+                    <Image width={25} height={25} alt="ufo" src={Ufo1} className={styles.ufo}/>
+                    <Image width={25} height={25} alt="ufo" src={Ufo2} className={styles.ufo}/>
+                    <Image width={25} height={25} alt="ufo" src={Ufo3} className={styles.ufo}/>
+                </div>
+            </>
+        }
 
-            {!hideRocket && <Rocket className={styles.rocket}/>}
+        {!hideRocket && <Image width={18} height={18} alt="rocket" src={Rocket} className={styles.rocket}/>}
 
-            {!hideVehicle && <SpaceElectricVehicle className={styles.vehicle}/>}
+        {!hideVehicle && <Image width={25} height={25}alt="Space Electric Vehicle" src={SpaceElectricVehicle} className={styles.vehicle}/>}
 
-            {children}
-        </div>
-    );
+        {children}
+    </div>
+);
 };
 
 export default GalaxyBackground;
