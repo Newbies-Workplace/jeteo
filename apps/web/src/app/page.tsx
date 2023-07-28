@@ -7,7 +7,7 @@ export default function Page() {
       <Navbar>
         <NavMenu />
       </Navbar>
-      
+      <Section title="elo">asdsadsad</Section>
       content
     </>
   );
