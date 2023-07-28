@@ -1,7 +1,7 @@
-import Link from "next/link";
+'use client';
 import { Navbar } from "@/components/navbar/Navbar";
 import { NavMenu } from "@/components/navmenu/NavMenu";
-
+import { Input } from "@/components/input/Input";
 export default function Page() {
   return (
     <>
@@ -9,6 +9,7 @@ export default function Page() {
         <NavMenu />
       </Navbar>
       content
+      <Input value="elo" setValue={()=>{}}></Input>
     </>
   );
 }
