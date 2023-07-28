@@ -5,6 +5,6 @@ import { EventConverter } from './application/converters/event.converter';
 
 @Module({
   controllers: [EventController],
-  providers: [EventService, EventConverter]
+  providers: [EventService, EventConverter],
 })
 export class EventModule {}

@@ -1,9 +1,10 @@
 "use client";
+
 import React, { useRef, useState } from "react";
 import styles from "./FileUpload.module.scss";
-import Button from "../button/Button";
+import Button from "@/components/button/Button";
 import cs from "classnames";
-import { ALLOWED_IMAGE_EXTENSIONS } from "../../common/utils/constants";
+import { ALLOWED_IMAGE_EXTENSIONS } from "@/common/utils/constants";
 import { Text } from "@/components/text/Text";
 
 interface FileUploadProps {

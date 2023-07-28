@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./StudioHeader.module.scss";
 import { Text } from "@/components/text/Text";
 import Image from "next/image";
-import arrowBack from "../../assets/arrow-back.svg";
+import arrowBack from "@/assets/arrow-back.svg";
 import { useRouter } from "next/navigation";
 
 interface StudioHeaderProps {
