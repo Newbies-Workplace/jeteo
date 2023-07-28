@@ -1,4 +1,5 @@
 @import '@/typography.module';
+@import '@/colors.module';
 
 .content{ 
     display: inline-flex;
@@ -9,5 +10,10 @@
     .logo {
         width: 41px;
         height: 41px;
+    }
+
+    .text {
+        @include logo;
+        color: $black;
     }
 }
