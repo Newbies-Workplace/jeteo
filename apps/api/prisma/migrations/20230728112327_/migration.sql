@@ -1,23 +1,22 @@
-/*
-  Warnings:
-
-  - A unique constraint covering the columns `[id]` on the table `User` will be added. If there are existing duplicate values, this will fail.
-  - A unique constraint covering the columns `[google_id]` on the table `User` will be added. If there are existing duplicate values, this will fail.
-  - Added the required column `mail` to the `User` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "EventVisibility" AS ENUM ('PUBLIC', 'HIDDEN', 'PRIVATE');
 
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "avatar" TEXT,
-ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN     "description" TEXT,
-ADD COLUMN     "github" TEXT,
-ADD COLUMN     "lectureId" TEXT,
-ADD COLUMN     "linkedin" TEXT,
-ADD COLUMN     "mail" TEXT NOT NULL,
-ADD COLUMN     "twitter" TEXT;
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "avatar" TEXT,
+    "google_id" TEXT NOT NULL,
+    "description" TEXT,
+    "mail" TEXT,
+    "linkedin" TEXT,
+    "twitter" TEXT,
+    "github" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "lectureId" TEXT,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Event" (
@@ -79,6 +78,12 @@ CREATE TABLE "Rate" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_google_id_key" ON "User"("google_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Event_id_key" ON "Event"("id");
 
 -- CreateIndex
@@ -89,12 +94,6 @@ CREATE UNIQUE INDEX "Invite_id_key" ON "Invite"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Rate_id_key" ON "Rate"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_google_id_key" ON "User"("google_id");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_lectureId_fkey" FOREIGN KEY ("lectureId") REFERENCES "Lecture"("id") ON DELETE SET NULL ON UPDATE CASCADE;

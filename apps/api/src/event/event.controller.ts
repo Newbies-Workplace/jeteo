@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './models/event.dto';
 import { JwtGuard } from 'src/auth/jwt/jwt.guard';
@@ -12,7 +12,7 @@ export class EventController {
     constructor(private eventService: EventService) {}
 
     @Get("/:id")
-    async getEvent(@Query('id') eventId: string) {
+    async getEvent(@Param('id') eventId: string) {
         const event = await this.eventService.getEventById(eventId);
 
         if (!event) {
@@ -22,10 +22,9 @@ export class EventController {
         return event;
     }
 
-
     @Post('/')
     @UseGuards(JwtGuard)
     async createEvent(@User() tokenUser: TokenUser, @Body() createEventDto: CreateEventDto) {
-        await this.eventService.createEvent(tokenUser.id, createEventDto);
+        return await this.eventService.createEvent(tokenUser.id, createEventDto);
     }
 }
