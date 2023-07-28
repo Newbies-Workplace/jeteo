@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LectureCard } from "@/components/lectureCard/LectureCard";
 
 export default async function Page() {
   return (
@@ -10,9 +11,13 @@ export default async function Page() {
         alignItems: "center",
       }}
     >
-      <Link href={"http://127.0.0.1:3001/api/auth/google/redirect"}>
+      {/* <Link href={"http://127.0.0.1:3001/api/auth/google/redirect"}>
         zaloguj z google
-      </Link>
+      </Link> */}
+      <LectureCard 
+        startingHour="14:35"
+        endingHour="15:55"
+      />
     </div>
   );
 }
