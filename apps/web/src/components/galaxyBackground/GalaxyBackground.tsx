@@ -31,7 +31,6 @@ export const GalaxyBackground: React.FC<React.PropsWithChildren<GalaxyBackground
         hideVehicle
     }
 ) => {
-    console.log(SpaceFog);
 return (
     <div className={styles.wrapper} style={{backgroundImage: `url(${SpaceFog.src})`, backgroundSize: 'cover'}}>
         {!hideStars &&
