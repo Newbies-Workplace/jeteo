@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Generate Schema
+        run: cd apps/api && npm run generate && cd ../../
+
       - name: Build
         run: npm run build
 

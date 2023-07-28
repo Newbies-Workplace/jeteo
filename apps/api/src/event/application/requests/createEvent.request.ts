@@ -1,6 +1,5 @@
 import { Type } from 'class-transformer';
-import {IsArray, IsDate, IsDateString, IsISO8601, IsNumber, IsObject, IsOptional, IsString, ValidateNested} from 'class-validator';
-
+import {IsArray, IsDateString, IsNumber, IsObject, IsOptional, IsString, ValidateNested} from 'class-validator';
 
 
 class Coordinates {
@@ -25,7 +24,7 @@ class Address {
     coordinates?: Coordinates;
 }
 
-export class CreateEventDto {
+export class CreateEventRequest {
     @IsString()
     title: string;
 
