@@ -1,9 +1,17 @@
 $primary: #4340BE;
-$surface: #FFFFFF;
 $background: #F3F3F3;
+$surface: #FFFFFF;
+$live: #F75254;
+$stroke: #DBDBDB;
+$black: #000000;
+$white: #FFFFFF;
 
 :export {
   primary: $primary;
-  surface: $surface;
   background: $background;
+  surface: $surface;
+  live: $live;
+  stroke: $stroke;
+  black: $black;
+  white: $white;
 }

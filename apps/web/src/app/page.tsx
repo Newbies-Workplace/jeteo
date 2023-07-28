@@ -3,7 +3,10 @@ import { Navbar } from "@/components/navbar/Navbar";
 import { NavMenu } from "@/components/navmenu/NavMenu";
 import { GetUser } from "@/components/home/GetUser";
 import { IsFullyRegistered } from "@/components/home/IsFullyRegistered";
+import { Text } from "@/components/text/Text";
 import  styles  from "@/app/page.module.scss";
+
+
 
 export default function Page() { 
   return (
@@ -13,8 +16,8 @@ export default function Page() {
       </Navbar>
 
       <div className={styles.main}>
-        <p>Witaj, <GetUser/> 👋</p>
-
+            <Text variant="headM">Witaj, <GetUser/> 👋</Text>
+        
         <IsFullyRegistered/>
         
         <div>
