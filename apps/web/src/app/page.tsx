@@ -13,7 +13,6 @@ export default function Page() {
     <>
       <Navbar>
         <NavMenu />
-        <Button></Button>
       </Navbar>
 
       <div className={styles.main}>
