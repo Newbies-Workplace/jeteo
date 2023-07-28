@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Navbar.module.scss";
-import { Logo } from "../logo/Logo";
+import { Logo } from "@/components/logo/Logo";
+import Link from "next/link";
 
 interface NavbarProps {
   children?: React.ReactNode;
@@ -9,7 +10,10 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ children }) => {
   return (
     <div className={styles.navbar}>
-      <Logo variant="logoM"/>
+      <Link href={"/"}>
+        <Logo />
+      </Link>
+
       {children}
     </div>
   );

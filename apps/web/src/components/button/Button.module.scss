@@ -9,7 +9,6 @@
     text-align: center;
 
     cursor: pointer;
-    transition: transform .3s;
 
     &.primary {
         background-color: $primary;
@@ -27,8 +26,4 @@
         font-size: 18px;
         padding: 4px 24px;
     }
-}
-
-.button:hover {
-    transform: scale(1.05);
 }
