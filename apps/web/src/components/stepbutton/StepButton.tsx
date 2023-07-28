@@ -11,7 +11,7 @@ interface StepViewProps {
 
 interface StepButtonProps {
     steps: string[]
-    activeStepIndex: number
+    active: boolean
     onStepClicked: (index: number) => void
 }
 
@@ -32,14 +32,15 @@ const Step = ({ title, isSelected}: StepProps) => (
     </div>
 )
 
-export const StepButton: React.FC<StepButtonProps> = ({steps, activeStepIndex, onStepClicked}) => (
+export const StepButton: React.FC<StepButtonProps> = ({steps, active, onStepClicked}) => (
+
     <div className={styles.clickableSteps}>
         {steps.map((step, i) =>
             <div key={i.toString()} onClick={() => onStepClicked(i)} className={styles.clickableStepContainer}>
                 <Step
                     index={i + 1}
                     title={step}
-                    isSelected={i === activeStepIndex}/>
+                    isSelected={active}/>
             </div>
         )}
     </div>

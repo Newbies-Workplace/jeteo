@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/navbar/Navbar";
 import { NavMenu } from "@/components/navmenu/NavMenu";
 import { GetUser } from "@/components/home/GetUser";
@@ -7,6 +6,7 @@ import { Text } from "@/components/text/Text";
 import  styles  from "@/app/page.module.scss";
 
 export default function Page() { 
+
 
   return (
     <>
