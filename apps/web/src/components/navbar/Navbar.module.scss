@@ -1,12 +1,15 @@
-@use '@/colors.module';
+@import '@/colors.module';
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   width: 100%;
-  padding: 22px 96px;
+  padding: 8px;
+  gap: 8px;
 
-  background-color: colors.$surface;
+  text-decoration: none;
+
+  background-color: $surface;
+  color: $black;
 }
