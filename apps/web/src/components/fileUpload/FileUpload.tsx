@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import styles from "./FileUpload.module.scss";
-import Button from "../Button/Button";
+import Button from "../button/Button";
 import cs from "classnames";
 import { ALLOWED_IMAGE_EXTENSIONS } from "../../common/utils/constants";
 import { Text } from "@/components/text/Text";
@@ -65,7 +65,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       <Button
         className={styles.button}
         primary
-        size={"medium"}
+        size={"small"}
         type={"button"}
         onClick={() => inputRef?.current?.click()}
       >

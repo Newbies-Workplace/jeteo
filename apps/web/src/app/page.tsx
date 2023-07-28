@@ -11,8 +11,6 @@ export default function Page() {
       <Navbar>
         <NavMenu />
       </Navbar>
-      
-      <FileUpload onChange={() => {}}></FileUpload>
       <div className={styles.main}>
         <Text variant="headM">
           Witaj, <GetUser /> 👋
