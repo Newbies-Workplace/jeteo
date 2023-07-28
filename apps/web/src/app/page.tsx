@@ -8,7 +8,7 @@ export default function Page() {
       <Navbar>
         <NavMenu />
       </Navbar>
-      <StepButton steps={['elo']} activeStepIndex={0} onStepClicked={()=>{}} ></StepButton>
+      <StepButton steps={['elo']} active={true} onStepClicked={()=>{}} ></StepButton>
       content
     </>
   );
