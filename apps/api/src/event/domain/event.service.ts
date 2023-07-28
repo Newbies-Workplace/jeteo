@@ -26,7 +26,20 @@ export class EventService {
                 createdAt: "asc"
             },
             skip: (page - 1) * size,
-            take: size
+            take: size,
+        });
+    }
+
+    async getUserEventsById(userId: string, page: number, size: number): Promise<Event[]> {
+        return this.prismaService.event.findMany({
+            where: {
+                userId
+            },
+            orderBy: {
+                createdAt: "asc"
+            },
+            skip: (page - 1) * size,
+            take: size,
         });
     }
 
