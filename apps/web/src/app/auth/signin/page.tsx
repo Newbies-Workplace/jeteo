@@ -1,8 +1,10 @@
+import GalaxyBackground from "@/components/galaxyBackground/GalaxyBackground";
 import Link from "next/link";
 
 export default async function Page() {
   return (
-    <div
+    <GalaxyBackground>
+      <div
       style={{
         height: "100%",
         display: "flex",
@@ -14,5 +16,7 @@ export default async function Page() {
         zaloguj z google
       </Link>
     </div>
+    </GalaxyBackground>
+    
   );
 }

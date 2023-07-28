@@ -31,8 +31,9 @@ export const GalaxyBackground: React.FC<React.PropsWithChildren<GalaxyBackground
         hideVehicle
     }
 ) => {
+    console.log(SpaceFog);
 return (
-    <div className={styles.wrapper} style={{backgroundImage: `url(${SpaceFog})`, backgroundSize: 'cover'}}>
+    <div className={styles.wrapper} style={{backgroundImage: `url(${SpaceFog.src})`, backgroundSize: 'cover'}}>
         {!hideStars &&
             <>
                 <div className={styles.stars}/>
@@ -53,10 +54,10 @@ return (
 
         {!hidePlanets &&
             <>
-                <Image width={44} height={44} alt="Planet Violet" src={PlanetViolet} className={styles.planet}/>
+                <Image width={132} height={132} alt="Planet Violet" src={PlanetViolet} className={styles.planet}/>
                 <div className={styles.planet2Container}>
-                    <Image width={75} height={75} alt="Planet Yellow" src={PlanetYellow} className={styles.planet2Moon}/>
-                    <Image width={49} height={49} alt="Planet Blue" src={PlanetBlue} className={styles.planet2}/>
+                    <Image width={157} height={159} alt="Planet Yellow" src={PlanetYellow} className={styles.planet2Moon}/>
+                    <Image width={213} height={213} alt="Planet Blue" src={PlanetBlue} className={styles.planet2}/>
                 </div>
             </>
         }
@@ -64,16 +65,16 @@ return (
         {!hideUfoSwarm &&
             <>
                 <div className={styles.ufoSwarm}>
-                    <Image width={25} height={25} alt="ufo" src={Ufo1} className={styles.ufo}/>
-                    <Image width={25} height={25} alt="ufo" src={Ufo2} className={styles.ufo}/>
-                    <Image width={25} height={25} alt="ufo" src={Ufo3} className={styles.ufo}/>
+                    <Image width={94} height={51} alt="ufo" src={Ufo1} className={styles.ufo}/>
+                    <Image width={94} height={51} alt="ufo" src={Ufo2} className={styles.ufo}/>
+                    <Image width={94} height={51} alt="ufo" src={Ufo3} className={styles.ufo}/>
                 </div>
             </>
         }
 
-        {!hideRocket && <Image width={18} height={18} alt="rocket" src={Rocket} className={styles.rocket}/>}
+        {!hideRocket && <Image width={30} height={61} alt="rocket" src={Rocket} className={styles.rocket}/>}
 
-        {!hideVehicle && <Image width={25} height={25}alt="Space Electric Vehicle" src={SpaceElectricVehicle} className={styles.vehicle}/>}
+        {!hideVehicle && <Image width={86} height={61}alt="Space Electric Vehicle" src={SpaceElectricVehicle} className={styles.vehicle}/>}
 
         {children}
     </div>
