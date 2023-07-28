@@ -30,7 +30,7 @@ export const AuthContextProvider: React.FC<any> = ({ children }) => {
 
   const fetchUser = async () => {
     const response = await fetch(
-      "http://localhost:3001/api/rest/v1/users/@me",
+      "http://127.0.0.1:3001/api/rest/v1/users/@me",
       { credentials: "include" }
     );
     const user = await response.json();

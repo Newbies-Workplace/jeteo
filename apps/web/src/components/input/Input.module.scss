@@ -1,3 +1,5 @@
+@import "@/colors.module.scss";
+
 .inputWrapper {
     margin-block: .625rem;
 
@@ -5,7 +7,8 @@
         display: block;
         margin-bottom: 3px;
     }
-}
+    
+    }
 
 .oneline {
     min-height: 30px;
@@ -14,21 +17,22 @@
     height: 100%;
 
     box-sizing: border-box;
-    border: 2px solid black;
+    border: 2px solid $stroke;
     border-radius: 8px;
 
-    background-color: #EDEDED;
-
+    background-color: $background;
+    accent-color: $primary;
     padding: 3px 9px;
+
 }
 
 .multiline {
     box-sizing: border-box;
-    border: 2px solid black;
+    border: 2px solid $stroke;
     border-radius: 8px;
     min-height: 60px;
 
-    background-color: #EDEDED;
+    background-color: $background;
 
     padding: 3px 9px;
 
