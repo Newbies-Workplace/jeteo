@@ -3,7 +3,7 @@ import { EventService } from '../domain/event.service';
 import { CreateEventRequest } from './requests/createEvent.request';
 import { JwtGuard } from 'src/auth/jwt/jwt.guard';
 import { User } from 'src/auth/jwt/jwt.decorator';
-import { TokenUser } from 'src/auth/jwt/jwt.model';
+import { Token, TokenUser } from 'src/auth/jwt/jwt.model';
 import { GetEventsQueryRequest } from './requests/getEventsQuery.request';
 import {Event} from '@prisma/client';
 import { EventResponse } from './responses/event.response';
@@ -17,6 +17,16 @@ export class EventController {
         private eventService: EventService,
         private eventConverter: EventConverter
     ) {}
+
+    @Get('/@me')
+    @UseGuards(JwtGuard)
+    async getMe(@User() user: TokenUser, @Query() paginationQuery: GetEventsQueryRequest): Promise<EventResponse[]> {
+        return (await ( this.eventService.getUserEventsById(
+            user.id,
+            paginationQuery.page,
+            paginationQuery.size
+        ))).map(this.eventConverter.convert);
+    }
 
     @Get("/:id")
     async getEvent(@Param('id') eventId: string): Promise<EventResponse> {
