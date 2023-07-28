@@ -1,0 +1,20 @@
+@import "@/colors.module.scss";
+
+.container{
+    width: 420px;
+    gap: 24px;
+    padding: 24px 0;
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 16px;
+}
+
+@media (max-width: 600px) {
+    .container{
+        position: absolute;
+        bottom: 0;
+        border-radius: 16px 16px 0 0;
+    }
+}
