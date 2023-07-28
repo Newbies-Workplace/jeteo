@@ -33,7 +33,6 @@ export class EventService {
     async getUserEventsById(userId: string, page: number, size: number): Promise<Event[]> {
         return this.prismaService.event.findMany({
             where: {
-                visibility: 'PUBLIC',
                 userId
             },
             orderBy: {
