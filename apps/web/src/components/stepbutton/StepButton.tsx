@@ -23,7 +23,8 @@ interface StepProps{
 
 const Step = ({ title, isSelected}: StepProps) => (
     <div className={styles.step}>
-        <span className={cs(styles.index, {[styles.indexActive]: isSelected})}></span>
+        <span className={cs(styles.circle, {
+            [styles.selected]: isSelected})}></span>
 
         <span className={cs(styles.text, {[styles.textActive]: isSelected})}>
             {title}

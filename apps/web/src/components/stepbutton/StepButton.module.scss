@@ -16,6 +16,7 @@
     gap: 8px;
     flex-direction: row;
     align-items: center;
+    
   }
   
   .stepContainer {
@@ -39,20 +40,32 @@
   
     &:active {
       background-color: $stroke;
+      color: $primary;
     }
   }
   
-  .step {
+  .step{
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 10px;
+  
   }
   
-  .index {
+  .circle {
+    border-radius: 50%;
     min-width: 24px;
     min-height: 24px;
-    line-height: 24px;
-  
-    text-align: center;
-    vertical-align: middle;
+    background-color: $stroke;
+    &.selected{
+      background-color: $primary;
+    }
   }  
+  
+  .text{
+    color: $black;
+    &.textActive{
+      color: $primary;
+    }
+  }
