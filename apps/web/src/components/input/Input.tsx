@@ -1,3 +1,4 @@
+'use client'
 import styles from './Input.module.scss'
 import React from "react"
 import cs from "classnames"
