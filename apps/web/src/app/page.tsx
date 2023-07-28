@@ -8,7 +8,7 @@ export default function Page() {
       <Navbar>
         <NavMenu />
       </Navbar>
-      content
+      homupage
     </>
   );
 }
