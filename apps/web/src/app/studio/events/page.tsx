@@ -1,6 +1,13 @@
 import { Text } from "@/components/text/Text";
 import Button from "@/components/button/Button";
 import styles from "./page.module.scss";
+import Link from "next/link";
+import { EventCard } from "@/components/eventCard/EventCard";
+import {
+  EventCardActionsFuture,
+  EventCardActionsLive,
+} from "@/components/eventCard/EventCardActions";
+import React from "react";
 
 export default function Page() {
   return (
@@ -19,12 +26,35 @@ export default function Page() {
         <Button primary>Dodaj</Button>
       </div>
 
-      <div style={{ width: "100%", height: 60, backgroundColor: "pink" }}>
-        event
-      </div>
-      <div style={{ width: "100%", height: 60, backgroundColor: "pink" }}>
-        event
-      </div>
+      <Link href={"/events/1"} style={{ alignSelf: "stretch" }}>
+        <EventCard
+          title="Wydarzenie 1"
+          subtitle={"opis wydarzenia"}
+          host={{
+            name: "host",
+          }}
+          place={"Wrocław, Racławicka 13"}
+          tags={[]}
+          startDate={"kiedyś"}
+        >
+          <EventCardActionsFuture />
+        </EventCard>
+      </Link>
+
+      <Link href={"/events/2"} style={{ alignSelf: "stretch" }}>
+        <EventCard
+          title="Wydarzenie 1"
+          subtitle={"opis wydarzenia"}
+          host={{
+            name: "host",
+          }}
+          place={"Wrocław, Racławicka 13"}
+          tags={["tag1", "tag2", "tag3"]}
+          startDate={"kiedyś"}
+        >
+          <EventCardActionsLive />
+        </EventCard>
+      </Link>
     </div>
   );
 }
