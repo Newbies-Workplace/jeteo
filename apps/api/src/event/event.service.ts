@@ -8,9 +8,17 @@ export class EventService {
     constructor(private prismaService: PrismaService) {}
 
     async getEventById(id: string) {
-        return await this.prismaService.event.findUnique({
+        return this.prismaService.event.findUnique({
             where: {
                 id
+            }
+        });
+    }
+
+    async getPublicEvents() {
+        return this.prismaService.event.findMany({
+            where: {
+                visibility: 'PUBLIC'
             }
         });
     }

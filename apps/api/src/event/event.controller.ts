@@ -22,9 +22,14 @@ export class EventController {
         return event;
     }
 
+    @Get('')
+    async getPublicEvents() {
+        return this.eventService.getPublicEvents();
+    }
+
     @Post('/')
     @UseGuards(JwtGuard)
     async createEvent(@User() tokenUser: TokenUser, @Body() createEventDto: CreateEventDto) {
-        return await this.eventService.createEvent(tokenUser.id, createEventDto);
+        return this.eventService.createEvent(tokenUser.id, createEventDto);
     }
 }
