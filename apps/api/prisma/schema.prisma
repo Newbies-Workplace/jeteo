@@ -8,7 +8,80 @@ datasource db {
 }
 
 model User {
-  id        String @id @default(uuid())
-  name      String
-  google_id String
+  id          String   @id @unique @default(uuid())
+  name        String
+  avatar      String?
+  google_id   String   @unique
+  description String?
+  mail        String?
+  linkedin    String?
+  twitter     String?
+  github      String?
+  createdAt   DateTime @default(now())
+  Event       Event[]
+  Lecture     Lecture? @relation(fields: [lectureId], references: [id])
+  lectureId   String?
+  Invite      Invite[]
+}
+
+model Event {
+  id           String          @id @unique @default(uuid())
+  title        String
+  subtitle     String
+  description  String
+  lectures     Lecture[]
+  from         DateTime
+  to           DateTime
+  createdBy    User            @relation(fields: [userId], references: [id])
+  city         String
+  place        String?
+  latitude     Float?
+  longitude    Float?
+  createdAt    DateTime        @default(now())
+  links        String[]
+  tags         String[]
+  visibility   EventVisibility @default(PRIVATE)
+  primaryColor String
+  coverImage   String?
+  userId       String
+}
+
+model Lecture {
+  id          String    @id @unique @default(uuid())
+  title       String
+  description String?
+  from        DateTime
+  to          DateTime
+  speakers    User[]
+  createdAt   DateTime? @default(now())
+  Event       Event?    @relation(fields: [eventId], references: [id])
+  eventId     String?
+  Invite      Invite[]
+  Rate        Rate[]
+}
+
+model Invite {
+  id        String   @id @unique @default(uuid())
+  mail      String
+  lecture   Lecture  @relation(fields: [lectureId], references: [id])
+  invitedBy User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  lectureId String
+  userId    String
+}
+
+model Rate {
+  id          String   @id @unique @default(uuid())
+  lecture     Lecture  @relation(fields: [lectureId], references: [id])
+  overallRate Int
+  topicRate   Int
+  opinion     String?
+  createdAt   DateTime @default(now())
+  lectureId   String
+}
+
+enum EventVisibility {
+  PUBLIC
+  HIDDEN
+  PRIVATE
 }

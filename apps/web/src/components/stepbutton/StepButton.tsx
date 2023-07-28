@@ -33,6 +33,7 @@ const Step = ({ title, isSelected}: StepProps) => (
 )
 
 export const StepButton: React.FC<StepButtonProps> = ({steps, active, onStepClicked}) => (
+
     <div className={styles.clickableSteps}>
         {steps.map((step, i) =>
             <div key={i.toString()} onClick={() => onStepClicked(i)} className={styles.clickableStepContainer}>

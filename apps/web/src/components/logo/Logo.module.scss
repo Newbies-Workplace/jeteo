@@ -1,0 +1,19 @@
+@import '@/typography.module';
+@import '@/colors.module';
+
+.content{ 
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 11px;
+
+    .logo {
+        width: 41px;
+        height: 41px;
+    }
+
+    .text {
+        @include logo;
+        color: $black;
+    }
+}

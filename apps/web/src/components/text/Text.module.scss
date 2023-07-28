@@ -1,0 +1,39 @@
+@import '@/typography.module';
+
+.bold {
+    font-weight: bold !important;
+}
+
+.bodyS {
+    @include bodyS();
+}
+
+.bodyM {
+    @include bodyM();
+}
+
+.bodyL {
+    @include bodyL();
+}
+
+.headS {
+    @include headS();
+}
+
+.headM {
+    @include headM();
+}
+
+.headL {
+    @include headL();
+}
+
+.logo {
+    @include logo();
+}
+
+.logoM {
+    @include logoM();
+}
+
+
