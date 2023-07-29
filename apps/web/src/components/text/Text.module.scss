@@ -24,8 +24,16 @@
     @include headM();
 }
 
+.headMbold {
+    @include headMbold();
+}
+
 .headL {
     @include headL();
+}
+
+.headLbold {
+    @include headLbold();
 }
 
 .logo {

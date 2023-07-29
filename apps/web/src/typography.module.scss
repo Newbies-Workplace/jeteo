@@ -42,12 +42,27 @@
     line-height: normal; 
 }
 
+@mixin  headMbold {
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal; 
+}
 
 @mixin  headL {
     font-family: Inter;
     font-size: 38px;
     font-style: normal;
     font-weight: 400;
+    line-height: normal; 
+}
+
+@mixin  headLbold{
+    font-family: Inter;
+    font-size: 38px;
+    font-style: normal;
+    font-weight: 700;
     line-height: normal; 
 }
 
@@ -66,4 +81,3 @@
     font-weight: 400;
     line-height: normal; 
 }
-

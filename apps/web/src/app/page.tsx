@@ -9,27 +9,30 @@ export default function Page() {
   return (
     <>
       <Navbar>
-        <NavMenu />
+        <NavMenu/>
       </Navbar>
+
       <div className={styles.main}>
-        <Text variant="headM">
-          Witaj, <GetUser /> 👋
-        </Text>
+
+        <div className={styles.title}>
+          <Text variant="headL">Witaj,</Text>
+          <Text variant="headLbold"> <GetUser/> 👋</Text>
+        </div>
 
         <div>
-          <IsFullyRegistered />
+          <IsFullyRegistered/>
         </div>
 
-        <div>
-          <Text>Wydarzenia dla ciebie</Text>
-          {/* TODO: dodac tu komponent z karteckzami eventu */}
+        <div className={styles.section}>
+          <Text variant="headMbold" className={styles.sectionTitle} >Wydarzenia dla ciebie</Text>  
           <div className={styles.example}></div>
         </div>
-        <div>
-          <Text>Wszystkie wydarzenia</Text>
-          {/* TODO: dodac tu komponent z karteckzami eventu */}
+
+        <div className={styles.section}>
+          <Text variant="headMbold" className={styles.sectionTitle} >Wszystkie wydarzenia</Text>
           <div className={styles.example}></div>
         </div>
+      
       </div>
     </>
   );
