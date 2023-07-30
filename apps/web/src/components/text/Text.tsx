@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 interface TextCompProps {
   children: React.ReactNode;
-  variant?: "bodyS" | "bodyM" | "bodyL" | "headS" | "headM" | "headMbold" | "headL" | "headLbold";
+  variant?: "bodyS" | "bodyM" | "bodyL" | "headS" | "headM" | "headL";
   bold?: boolean;
   className?: string 
 }
