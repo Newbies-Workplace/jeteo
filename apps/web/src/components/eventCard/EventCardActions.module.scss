@@ -1,8 +1,8 @@
 @import '@/colors.module.scss';
+@import "@/responsiveness.module";
 
 .actions {
   display: flex;
-  height: 28px;
   align-items: flex-start;
   gap: 8px;
   align-self: stretch;
@@ -38,3 +38,12 @@
   }
 }
 
+@include mobile {
+  .rateAverage {
+    display: none;
+  }
+
+  .rate {
+    flex-direction: row-reverse;
+  }
+}

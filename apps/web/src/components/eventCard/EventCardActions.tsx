@@ -40,7 +40,7 @@ export const EventCardActionsFresh: React.FC = () => {
       </Text>
 
       <Text className={cs(styles.action, styles.rate, styles.stretched)} bold>
-        Średnia ocena: 4.5
+        <span className={styles.rateAverage}>Średnia ocena: 4.5</span>
         <div className={styles.stars}>* * * * *</div>
       </Text>
     </div>
@@ -51,7 +51,7 @@ export const EventCardActionsArchive: React.FC = () => {
   return (
     <div className={styles.actions}>
       <Text className={cs(styles.action, styles.rate, styles.stretched)} bold>
-        Średnia ocena: 4.5
+        <span className={styles.rateAverage}>Średnia ocena: 4.5</span>
         <div className={styles.stars}>* * * * *</div>
       </Text>
     </div>

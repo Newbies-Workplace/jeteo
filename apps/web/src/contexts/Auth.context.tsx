@@ -20,7 +20,7 @@ export const AuthContext = createContext<AuthContext>({
 });
 
 export const AuthContextProvider: React.FC<any> = ({ children }) => {
-  const [user, setUser] = useState<UserResponse>();
+  const [user, setUser] = useState<UserResponse | null>(null);
 
   useEffect(() => {
     if (!Cookies.get("token") && !user) {
@@ -33,7 +33,7 @@ export const AuthContextProvider: React.FC<any> = ({ children }) => {
       "http://127.0.0.1:3001/api/rest/v1/users/@me",
       { credentials: "include" }
     );
-    const user = await response.json();
+    const user: UserResponse = await response.json();
     setUser(user);
   };
 
