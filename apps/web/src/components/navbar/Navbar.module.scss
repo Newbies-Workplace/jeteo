@@ -1,15 +1,22 @@
 @import '@/colors.module';
+@import '@/responsiveness.module';
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 8px;
+  padding: 8px 96px;
   gap: 8px;
 
   text-decoration: none;
 
   background-color: $surface;
   color: $black;
+}
+
+@include mobile {
+    .navbar {
+        padding: 8px 16px;
+    }
 }

@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { Text } from "../text/Text";
-
 import styles from "./Logo.module.scss";
 import logo from "@/assets/planet.svg";
 

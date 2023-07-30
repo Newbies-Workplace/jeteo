@@ -1,0 +1,7 @@
+$mobile-width: 480px;
+
+@mixin mobile {
+  @media only screen and (max-device-width: $mobile-width) {
+    @content;
+  }
+}

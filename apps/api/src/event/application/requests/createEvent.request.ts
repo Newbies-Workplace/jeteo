@@ -1,51 +1,58 @@
 import { Type } from 'class-transformer';
-import {IsArray, IsDateString, IsNumber, IsObject, IsOptional, IsString, ValidateNested} from 'class-validator';
-
+import {
+  IsArray,
+  IsDateString,
+  IsNumber,
+  IsObject,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
 class Coordinates {
-    @IsNumber()
-    latitude: number;
-    
-    @IsNumber()
-    longitude: number;
+  @IsNumber()
+  latitude: number;
+
+  @IsNumber()
+  longitude: number;
 }
 
 class Address {
-    @IsString()
-    city: string;
+  @IsString()
+  city: string;
 
-    @IsString()
-    place: string;
+  @IsString()
+  place: string;
 
-    @IsOptional()
-    @IsObject()
-    @ValidateNested()
-    @Type(() => Coordinates)
-    coordinates?: Coordinates;
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => Coordinates)
+  coordinates?: Coordinates;
 }
 
 export class CreateEventRequest {
-    @IsString()
-    title: string;
+  @IsString()
+  title: string;
 
-    @IsString()
-    subtitle: string;
+  @IsString()
+  subtitle: string;
 
-    @IsString()
-    description: string;
+  @IsString()
+  description: string;
 
-    @IsDateString()
-    from: string;
+  @IsDateString()
+  from: string;
 
-    @IsDateString()
-    to: string;
-    
-    @IsObject()
-    @ValidateNested()
-    @Type(() => Address)
-    address: Address;
+  @IsDateString()
+  to: string;
 
-    @IsArray()
-    @IsString({each: true})
-    tags: string[];
+  @IsObject()
+  @ValidateNested()
+  @Type(() => Address)
+  address: Address;
+
+  @IsArray()
+  @IsString({ each: true })
+  tags: string[];
 }
