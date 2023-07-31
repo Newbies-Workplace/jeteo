@@ -4,6 +4,7 @@ import { NavMenu } from "@/components/navmenu/NavMenu";
 import { GetUser } from "@/components/home/GetUser";
 import { IsFullyRegistered } from "@/components/home/IsFullyRegistered";
 import { Text } from "@/components/text/Text";
+import { LectureCard } from "@/components/lectureCard/LectureCard";
 import  styles  from "@/app/page.module.scss";
 
 export default function Page() { 
@@ -27,7 +28,10 @@ export default function Page() {
         </div>
         <div>
             <p>Wszystkie wydarzenia</p>
-            {/* TODO: dodac tu komponent z karteckzami eventu */}
+              <LectureCard 
+                startingHour="14:35"
+                endingHour="15:55"
+              />
             <div className={styles.example}></div>
         </div>
 
