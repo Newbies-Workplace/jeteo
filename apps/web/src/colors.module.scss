@@ -4,6 +4,7 @@ $surface: #FFFFFF;
 $live: #F75254;
 $stroke: #DBDBDB;
 $black: #000000;
+$gray: #717171;
 $white: #FFFFFF;
 
 :export {
@@ -13,5 +14,6 @@ $white: #FFFFFF;
   live: $live;
   stroke: $stroke;
   black: $black;
+  gray: $gray;
   white: $white;
 }

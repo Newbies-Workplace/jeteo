@@ -22,7 +22,10 @@ export const StudioHeader: React.FC<StudioHeaderProps> = ({ title }) => {
         alt="Arrow back"
         onClick={() => router.back()}
       />
-      <Text variant="headM">{title}</Text>
+
+      <Text variant="headM" bold>
+        {title}
+      </Text>
     </div>
   );
 };

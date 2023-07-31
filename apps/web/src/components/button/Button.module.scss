@@ -1,8 +1,15 @@
 @import '@/colors.module.scss';
 
 .button {
-    background-color: $white;
-    border: 2px solid $black;
+    display: flex;
+    min-width: 100px;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    background-color: $surface;
+    border: 1px solid $stroke;
     border-radius: 16px;
     color: $black;
 
@@ -19,11 +26,11 @@
 
     &.medium {
         font-size: 24px;
-        padding: 10px 72px;
+        padding: 8px 16px;
     }
 
     &.small {
         font-size: 18px;
-        padding: 4px 24px;
+        padding: 4px 8px;
     }
 }

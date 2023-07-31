@@ -23,7 +23,9 @@ export default function Page() {
           Wydarzenia
         </Text>
 
-        <Button primary>Dodaj</Button>
+        <Link href={"events/create"}>
+          <Button primary>Dodaj</Button>
+        </Link>
       </div>
 
       <Link href={"/events/1"} style={{ alignSelf: "stretch" }}>
