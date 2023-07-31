@@ -1,4 +1,5 @@
-import styles from "./Card.module.scss"
+import React from "react"
+import styles from "./LecturePersonCard.module.scss"
 import { Text } from "@/components/text/Text"
 import Image from "next/image"
 import Link from "next/link"
@@ -11,12 +12,12 @@ interface CardProps {
     image: string,
     name: string,
     description: string,
-    gmail: boolean,
-    twitter: boolean,
-    linkedin: boolean,
+    mail: string | undefined,
+    twitter: string | undefined,
+    linkedin: string | undefined,
 }
 
-export const Card: React.FC<CardProps> = ({image,name,description,gmail,twitter,linkedin}) => {
+export const Card: React.FC<CardProps> = ({image,name,description,mail,twitter,linkedin}) => {
     return (
         <div className={styles.card}>
             <Image 
@@ -36,9 +37,9 @@ export const Card: React.FC<CardProps> = ({image,name,description,gmail,twitter,
                         {description}
                 </Text>
                 <div className={styles.socials}>
-                    {gmail && 
+                    {mail && 
                         <Link 
-                            href="/https://www.google.com/intl/pl/gmail/about/">
+                            href={`https://${mail}`}>
                             <Image 
                                 alt="email" 
                                 src={emailicon}
@@ -47,7 +48,7 @@ export const Card: React.FC<CardProps> = ({image,name,description,gmail,twitter,
                     }
                     {twitter && 
                         <Link 
-                            href="/https://www.google.com/intl/pl/gmail/about/">
+                            href={`https://${twitter}`}>
                             <Image 
                                 alt="twitter" 
                                 src={twittericon}
@@ -56,7 +57,7 @@ export const Card: React.FC<CardProps> = ({image,name,description,gmail,twitter,
                     }
                     {linkedin && 
                         <Link 
-                            href="/https://www.google.com/intl/pl/gmail/about/">
+                            href={`https://${linkedin}`}>
                             <Image 
                                 alt="linkedin" 
                                 src={linkedlinicon}
