@@ -8,15 +8,12 @@ import Button from "@/components/button/Button";
 import planetWhere from "@/assets/images/planet-where.svg";
 import startPath from "@/assets/images/start-path.svg";
 import { Navbar } from "@/components/navbar/Navbar";
-import { NavMenu } from "@/components/navmenu/NavMenu";
 
 export default function NotFound() {
   return (
     <GalaxyBackground hidePlanets>
-      {/* TODO: Dodać przezroczyste tło do navbar*/}
-      <Navbar>
-        <NavMenu />
-      </Navbar>
+      <Navbar invertColor />
+
       <div className={styles.container}>
         <Image src={notFoundText} alt="Not Found" />
         <div className={styles.textContainer}>
