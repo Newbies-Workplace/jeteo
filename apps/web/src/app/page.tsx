@@ -1,5 +1,4 @@
 import { Navbar } from "@/components/navbar/Navbar";
-import { NavMenu } from "@/components/navmenu/NavMenu";
 import { GetUser } from "@/components/home/GetUser";
 import styles from "@/app/page.module.scss";
 import { EventCard } from "@/components/eventCard/EventCard";
@@ -16,9 +15,7 @@ import { Text } from "@/components/text/Text";
 export default function Page() {
   return (
     <div className={styles.page}>
-      <Navbar>
-        <NavMenu />
-      </Navbar>
+      <Navbar />
       <div className={styles.container}>
         <div className={styles.main}>
           <Text variant="headM" className={styles.hello}>
