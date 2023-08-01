@@ -2,6 +2,7 @@ type DateTime = string;
 
 export interface EventResponse {
   id: string;
+  slug: string;
   title: string;
   subtitle: string;
   description: string;

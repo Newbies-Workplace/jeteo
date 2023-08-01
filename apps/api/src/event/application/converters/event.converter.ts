@@ -7,6 +7,7 @@ export class EventConverter {
   convert(event: Event): EventResponse {
     return {
       id: event.id,
+      slug: event.id, //todo create slug from title and id
       title: event.title,
       subtitle: event.subtitle,
       description: event.description,
