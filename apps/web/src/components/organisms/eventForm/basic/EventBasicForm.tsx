@@ -12,9 +12,6 @@ import { ControlledInput } from "@/components/atoms/input/ControlledInput";
 import axiosInstance from "@/common/axiosInstance";
 import dayjs from "dayjs";
 
-// todo add react-hook-form
-// todo validation
-
 const locationOptions = [
   { id: "location", name: "Na miejscu" },
   { id: "online", name: "On-line" },
