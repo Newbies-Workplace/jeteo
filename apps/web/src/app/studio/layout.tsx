@@ -1,4 +1,3 @@
-import { NavMenu } from "@/components/molecules/navmenu/NavMenu";
 import { Navbar } from "@/components/molecules/navbar/Navbar";
 import React from "react";
 import styles from "./layout.module.scss";
@@ -9,9 +8,7 @@ import calendarIcon from "@/assets/calendar.svg";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.page}>
-      <Navbar>
-        <NavMenu />
-      </Navbar>
+      <Navbar />
 
       <div className={styles.container}>
         <div className={styles.navigation}>

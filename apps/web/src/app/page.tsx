@@ -1,5 +1,4 @@
 import { Navbar } from "@/components/molecules/navbar/Navbar";
-import { NavMenu } from "@/components/molecules/navmenu/NavMenu";
 import { GetUser } from "@/components/home/GetUser";
 import styles from "@/app/page.module.scss";
 import { EventCard } from "@/components/molecules/eventCard/EventCard";
@@ -16,18 +15,12 @@ import { Text } from "@/components/atoms/text/Text";
 export default function Page() {
   return (
     <div className={styles.page}>
-      <Navbar>
-        <NavMenu />
-      </Navbar>
+      <Navbar />
       <div className={styles.container}>
         <div className={styles.main}>
           <Text variant="headM" className={styles.hello}>
             Witaj, <GetUser /> 👋
           </Text>
-
-          {/*<div>*/}
-          {/*  <IsFullyRegistered />*/}
-          {/*</div>*/}
 
           <div className={styles.events}>
             <Link href={"/events/1"} style={{ alignSelf: "stretch" }}>

@@ -16,4 +16,10 @@
         @include logo;
         color: $black;
     }
+
+    &.invertColor {
+        .text {
+            color: $surface;
+        }
+    }
 }

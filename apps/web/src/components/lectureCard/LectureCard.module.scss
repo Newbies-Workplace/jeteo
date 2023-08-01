@@ -1,0 +1,57 @@
+@import '@/colors.module';
+
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    width: 100%;
+
+  gap: 12px;
+
+  .timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: fit-content;
+    border-radius: 39px;
+
+    padding: 4px 8px;
+    gap: 6px;
+    background-color: $primary;
+    color: $white;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+
+    padding: 16px;
+    gap: 16px;
+    border-radius: 16px;
+    background-color: $white;
+
+    .titleContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      align-self: stretch;
+
+      span {
+        align-self: stretch;
+      }
+    }
+
+    .speakers {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      align-self: stretch;
+      flex-wrap: wrap;
+    }
+  }
+}

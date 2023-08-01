@@ -3,20 +3,25 @@
 
 .navbar {
   display: flex;
+  padding: 12px 96px;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 8px 96px;
-  gap: 8px;
-
-  text-decoration: none;
-
+  align-self: stretch;
   background-color: $surface;
+  text-decoration: none;
   color: $black;
+
+  &.invertColor {
+    background-color: transparent;
+    color: $surface;
+    .burger {
+      filter: invert(100%);
+    }
+  }
 }
 
 @include mobile {
-    .navbar {
-        padding: 8px 16px;
-    }
+  .navbar {
+    padding: 8px 16px;
+  }
 }
