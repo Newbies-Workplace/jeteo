@@ -1,5 +1,5 @@
-import { NavMenu } from "@/components/navmenu/NavMenu";
-import { Navbar } from "@/components/navbar/Navbar";
+import { NavMenu } from "@/components/molecules/navmenu/NavMenu";
+import { Navbar } from "@/components/molecules/navbar/Navbar";
 import React from "react";
 import styles from "./layout.module.scss";
 import Link from "next/link";

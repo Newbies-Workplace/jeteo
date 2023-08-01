@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Section } from "@/components/section/Section";
-import { EventCard } from "@/components/eventCard/EventCard";
+import { Section } from "@/components/molecules/section/Section";
+import { EventCard } from "@/components/molecules/eventCard/EventCard";
 
 export const EventThemeForm: React.FC = () => {
   return (

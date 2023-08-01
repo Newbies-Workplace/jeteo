@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Navbar.module.scss";
-import { Logo } from "@/components/logo/Logo";
+import { Logo } from "@/components/atoms/logo/Logo";
 import Link from "next/link";
 
 interface NavbarProps {

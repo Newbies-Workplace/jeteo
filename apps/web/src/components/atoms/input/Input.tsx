@@ -1,32 +1,36 @@
 "use client";
+
 import styles from "./Input.module.scss";
 import React from "react";
 import cs from "classnames";
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 
-interface InputProps {
-  name?: string;
+export type InputProps = {
   label?: string;
+  error?: string;
   type?: React.HTMLInputTypeAttribute;
   multiline?: boolean;
   value: string;
   setValue: (value: string) => void;
+  onBlur?: () => void;
   placeholder?: string;
   required?: boolean;
   className?: string;
   style?: React.CSSProperties;
-}
+};
 
 export const Input: React.FC<InputProps> = ({
   label,
-  multiline = false,
+  error,
   type,
+  multiline = false,
   className,
   style,
   placeholder,
   required = false,
   value,
   setValue,
+  onBlur,
 }) => {
   return (
     <div className={styles.input} style={style}>
@@ -41,6 +45,7 @@ export const Input: React.FC<InputProps> = ({
             placeholder={placeholder}
             value={value}
             onChange={(event) => setValue(event.target.value)}
+            onBlur={onBlur}
             required={required}
           />
         ) : (
@@ -50,10 +55,17 @@ export const Input: React.FC<InputProps> = ({
             type={type}
             value={value}
             onChange={(event) => setValue(event.target.value)}
+            onBlur={onBlur}
             required={required}
           />
         )}
       </div>
+
+      {error && (
+        <Text className={styles.error} variant={"bodyS"}>
+          {error}
+        </Text>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-@import "@/colors.module.scss";
+@import "@/colors.module";
 
 .input {
     display: flex;
@@ -6,7 +6,8 @@
 }
 
 .inputWrapper {
-    margin-block: .625rem;
+    margin-top: 2px;
+    margin-bottom: 2px;
 
     label {
         display: block;
@@ -24,7 +25,6 @@
     background-color: $background;
     accent-color: $primary;
     padding: 3px 9px;
-
 
     &:focus {
         outline: 2px solid $primary;
@@ -50,4 +50,8 @@
 
 .required::after {
     content: " * ";
+}
+
+.error {
+    color: $live;
 }

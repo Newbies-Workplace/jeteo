@@ -1,6 +1,6 @@
-import { Logo } from "../logo/Logo";
+import { Logo } from "@/components/atoms/logo/Logo";
 import styles from "./Dialog.module.scss";
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 import React from "react";
 import cs from "classnames";
 

@@ -5,7 +5,7 @@ import styles from "./RadioButtons.module.scss";
 import cs from "classnames";
 import HelpIcon from "@/assets/help.svg";
 import Image from "next/image";
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 
 export interface RadioItem {
   id: string;
@@ -13,7 +13,7 @@ export interface RadioItem {
   description?: string;
 }
 
-interface RadioButtonsProps {
+export interface RadioButtonsProps {
   values: RadioItem[];
   selectedValueIndex: number;
   onChange: (value: RadioItem) => void;

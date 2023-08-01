@@ -3,7 +3,7 @@
 import styles from "./StepNavigation.module.scss";
 import cs from "classnames";
 import React from "react";
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 

@@ -2,7 +2,7 @@
 
 import React from "react";
 import styles from "./FileItem.module.scss";
-import close from "../../assets/close.svg";
+import close from "../../../assets/close.svg";
 import Image from "next/image";
 
 interface FileItemProps {

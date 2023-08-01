@@ -1,7 +1,7 @@
 import React from "react";
 import cs from "classnames";
 import styles from "./Tag.module.scss";
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 
 interface TagProps {
   className?: string;

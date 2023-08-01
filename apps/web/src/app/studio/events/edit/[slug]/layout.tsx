@@ -1,5 +1,5 @@
-import { StudioHeader } from "@/components/studioHeader/StudioHeader";
-import { StepNavigation } from "@/components/stepNavigation/StepNavigation";
+import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader";
+import { StepNavigation } from "@/components/molecules/stepNavigation/StepNavigation";
 import styles from "./layout.module.scss";
 import React from "react";
 

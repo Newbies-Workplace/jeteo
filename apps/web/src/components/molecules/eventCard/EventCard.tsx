@@ -1,8 +1,8 @@
 import React from "react";
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 import Image from "next/image";
 import styles from "./EventCard.module.scss";
-import { Tag } from "@/components/tag/Tag";
+import { Tag } from "@/components/atoms/tag/Tag";
 import defaultAvatar from "@/assets/images/default-profile-pic.svg";
 import LocationIcon from "@/assets/location.svg";
 import ClockIcon from "@/assets/clock.svg";

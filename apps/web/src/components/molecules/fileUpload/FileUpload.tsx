@@ -2,10 +2,10 @@
 
 import React, { useRef, useState } from "react";
 import styles from "./FileUpload.module.scss";
-import Button from "@/components/button/Button";
+import Button from "@/components/atoms/button/Button";
 import cs from "classnames";
 import { ALLOWED_IMAGE_EXTENSIONS } from "@/common/utils/constants";
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 
 interface FileUploadProps {
   accept?: string;

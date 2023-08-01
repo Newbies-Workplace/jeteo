@@ -1,5 +1,5 @@
-@import "@/colors.module.scss";
-@import "@/typography.module.scss";
+@import "@/colors.module";
+@import "@/typography.module";
 
 .container {
   display: flex;
@@ -10,6 +10,7 @@
 
 .content {
   display: flex;
+  gap: 12px;
   flex-direction: column;
 
   padding: 16px 0 16px 16px

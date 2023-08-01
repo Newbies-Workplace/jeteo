@@ -1,24 +1,64 @@
 "use client";
 
 import React from "react";
-import { Section } from "@/components/section/Section";
-import { Input } from "@/components/input/Input";
-import Button from "@/components/button/Button";
+import { Section } from "@/components/molecules/section/Section";
+import { Input } from "@/components/atoms/input/Input";
+import Button from "@/components/atoms/button/Button";
 import MDEditor from "@uiw/react-md-editor";
-import { Text } from "@/components/text/Text";
-import { MapPicker } from "@/components/mapPicker/MapPicker";
-import { RadioButtons } from "@/components/radioButtons/RadioButtons";
+import { Text } from "@/components/atoms/text/Text";
+import { MapPicker } from "@/components/molecules/mapPicker/MapPicker";
+import { RadioButtons } from "@/components/molecules/radioButtons/RadioButtons";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { ControlledInput } from "@/components/atoms/input/ControlledInput";
 
 // todo add react-hook-form
+// todo validation
 
 const locationOptions = [
   { id: "location", name: "Na miejscu" },
   { id: "online", name: "On-line" },
 ];
 
+type BasicForm = {
+  title: string;
+  subtitle: string;
+  description: string;
+  from: Date;
+  to: Date;
+  address?: {
+    city: string;
+    place: string;
+    coordinates?: {
+      latitude: number;
+      longitude: number;
+    };
+  };
+  tags: string[];
+};
+
 export const EventBasicForm: React.FC = () => {
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<BasicForm>({
+    defaultValues: {
+      address: {
+        coordinates: {
+          latitude: 51.08549,
+          longitude: 17.0104,
+        },
+      },
+    },
+  });
+
+  const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
+    console.log(data);
+  };
+
   return (
-    <>
+    <form style={{ display: "flex", flexDirection: "column" }}>
       <Section title={"Co i Kiedy?"}>
         <div
           style={{
@@ -28,40 +68,52 @@ export const EventBasicForm: React.FC = () => {
             justifyContent: "space-around",
           }}
         >
-          <Input
+          <ControlledInput
+            name={"from"}
             label={"Rozpoczęcie"}
-            value={""}
+            control={control}
             type={"datetime-local"}
-            setValue={() => {}}
-            required
           />
-          <Input
+          <ControlledInput
+            name={"to"}
             label={"Zakończenie"}
-            value={""}
+            control={control}
             type={"datetime-local"}
-            setValue={() => {}}
-            required
           />
         </div>
 
-        <Input
+        <ControlledInput
+          name={"title"}
           label={"Tytuł"}
-          value={"aaaaaaaaaaaaaaa"}
-          setValue={() => {}}
           required
+          control={control}
         />
-        <Input label={"Podtytuł"} value={""} setValue={() => {}} required />
+        <ControlledInput
+          name={"subtitle"}
+          label={"Podtytuł"}
+          required
+          control={control}
+        />
 
-        <Text variant={"headS"}>Opis</Text>
-        <div data-color-mode="light">
-          <MDEditor
-            textareaProps={{ maxLength: 10000 }}
-            height={200}
-            value={""}
-            onChange={() => {}}
-          />
-        </div>
+        <Controller
+          render={({ field, fieldState, formState }) => (
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              <Text variant={"headS"}>Opis</Text>
+              <div data-color-mode="light">
+                <MDEditor
+                  textareaProps={{ maxLength: 10000 }}
+                  height={200}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              </div>
+            </div>
+          )}
+          name={"description"}
+          control={control}
+        />
       </Section>
+
       <Section title={"Gdzie?"} contentStyle={{ gap: 8 }}>
         <RadioButtons
           values={locationOptions}
@@ -69,26 +121,48 @@ export const EventBasicForm: React.FC = () => {
           onChange={(item) => {}}
         />
 
-        <MapPicker
-          onChange={() => {}}
-          value={{ lat: 51.08549, lng: 17.0104 }}
+        <Controller
+          render={({ field, fieldState, formState }) => (
+            <MapPicker
+              onChange={(value) => {
+                field.onChange({
+                  latitude: value.lat,
+                  longitude: value.lng,
+                });
+              }}
+              value={{
+                lat: field.value?.latitude,
+                lng: field.value?.longitude,
+              }}
+            />
+          )}
+          name={"address.coordinates"}
+          control={control}
         />
 
         <div style={{ display: "flex", gap: 12, flexDirection: "row" }}>
-          <Input label={"Miasto"} value={"Ciechocinek"} setValue={() => {}} />
-          <Input
+          <ControlledInput
+            name={"address.city"}
+            label={"Miasto"}
+            control={control}
+          />
+          <ControlledInput
+            name={"address.place"}
             label={"Adres"}
-            value={""}
-            setValue={() => {}}
+            control={control}
             style={{ flex: 1 }}
           />
         </div>
       </Section>
       {/*<Section title={"Dla kogo?"}></Section>*/}
 
-      <Button primary style={{ alignSelf: "flex-end" }}>
+      <Button
+        primary
+        style={{ alignSelf: "flex-end" }}
+        onClick={handleSubmit(onSubmit)}
+      >
         Zapisz
       </Button>
-    </>
+    </form>
   );
 };

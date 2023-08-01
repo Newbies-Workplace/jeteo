@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import { Section } from "@/components/section/Section";
+import { Section } from "@/components/molecules/section/Section";
 import {
   RadioButtons,
   RadioItem,
-} from "@/components/radioButtons/RadioButtons";
+} from "@/components/molecules/radioButtons/RadioButtons";
 
 const visibilities: RadioItem[] = [
   {

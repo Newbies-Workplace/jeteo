@@ -1,17 +1,17 @@
-import { Navbar } from "@/components/navbar/Navbar";
-import { NavMenu } from "@/components/navmenu/NavMenu";
+import { Navbar } from "@/components/molecules/navbar/Navbar";
+import { NavMenu } from "@/components/molecules/navmenu/NavMenu";
 import { GetUser } from "@/components/home/GetUser";
 import styles from "@/app/page.module.scss";
-import { EventCard } from "@/components/eventCard/EventCard";
+import { EventCard } from "@/components/molecules/eventCard/EventCard";
 import Link from "next/link";
 import {
   EventCardActionsArchive,
   EventCardActionsFresh,
   EventCardActionsFuture,
   EventCardActionsLive,
-} from "@/components/eventCard/EventCardActions";
+} from "@/components/molecules/eventCard/EventCardActions";
 import React from "react";
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 
 export default function Page() {
   return (

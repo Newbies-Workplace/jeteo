@@ -2,7 +2,7 @@
 
 import React from "react";
 import styles from "./EventCardActions.module.scss";
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 import cs from "classnames";
 
 export const EventCardActionsFuture: React.FC = () => {
