@@ -22,10 +22,6 @@ export default function Page() {
             Witaj, <GetUser /> 👋
           </Text>
 
-          {/*<div>*/}
-          {/*  <IsFullyRegistered />*/}
-          {/*</div>*/}
-
           <div className={styles.events}>
             <Link href={"/events/1"} style={{ alignSelf: "stretch" }}>
               <EventCard

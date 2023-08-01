@@ -1,0 +1,39 @@
+@import '@/colors.module';
+
+.card {
+  display: flex;
+  min-width: 150px;
+  align-items: center;
+  align-self: stretch;
+
+  gap: 4px;
+  padding: 4px;
+
+  border-radius: 8px;
+  border: 0.5px solid $stroke;
+  background-color: $surface;
+
+  .img {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+  };
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    min-width: 100px;
+    max-width: 200px;
+    gap: 4px;
+
+    .socials {
+      display: flex;
+      gap: 8px;
+
+      .icon {
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+}
