@@ -9,7 +9,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.page}>
       <Navbar />
-
       <div className={styles.container}>
         <div className={styles.navigation}>
           <span className={styles.studioLogo}>Studio</span>
