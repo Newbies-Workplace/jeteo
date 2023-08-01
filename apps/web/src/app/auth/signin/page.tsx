@@ -1,6 +1,6 @@
-import GalaxyBackground from "@/components/galaxyBackground/GalaxyBackground";
+import GalaxyBackground from "@/components/molecules/galaxyBackground/GalaxyBackground";
 import Link from "next/link";
-import { Dialog } from "@/components/dialog/Dialog";
+import { Dialog } from "@/components/molecules/dialog/Dialog";
 
 export default async function Page() {
   return (

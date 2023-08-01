@@ -1,0 +1,24 @@
+@use '@/colors.module';
+
+.header {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 13px;
+    border-radius: 12px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
+    
+    background-color: colors.$surface;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+}
+
+.icon {
+    min-height: 24px;
+    min-width: 24px;
+}
+
+.icon:hover {
+    cursor: pointer;
+}

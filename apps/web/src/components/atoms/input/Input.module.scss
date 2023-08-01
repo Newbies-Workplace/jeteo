@@ -1,0 +1,57 @@
+@import "@/colors.module";
+
+.input {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputWrapper {
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    label {
+        display: block;
+    }
+}
+
+.oneline {
+    min-height: 30px;
+    width: 100%;
+    height: 100%;
+
+    border: 1px solid $stroke;
+    border-radius: 8px;
+
+    background-color: $background;
+    accent-color: $primary;
+    padding: 3px 9px;
+
+    &:focus {
+        outline: 2px solid $primary;
+    }
+}
+
+.multiline {
+    border: 1px solid $stroke;
+    border-radius: 8px;
+    min-height: 60px;
+
+    background-color: $background;
+
+    padding: 3px 9px;
+
+    width: 100%;
+    resize: vertical;
+
+    &:focus {
+        outline: 2px solid $primary;
+    }
+}
+
+.required::after {
+    content: " * ";
+}
+
+.error {
+    color: $live;
+}

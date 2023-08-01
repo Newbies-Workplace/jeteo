@@ -1,0 +1,36 @@
+@import '@/colors.module';
+
+.button {
+    display: flex;
+    min-width: 100px;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    background-color: $surface;
+    border: 1px solid $stroke;
+    border-radius: 16px;
+    color: $black;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    &.primary {
+        background-color: $primary;
+        color: $white;
+        border: 0;
+        border-radius: 16px;
+    }
+
+    &.medium {
+        font-size: 24px;
+        padding: 8px 16px;
+    }
+
+    &.small {
+        font-size: 18px;
+        padding: 4px 8px;
+    }
+}

@@ -1,4 +1,4 @@
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 
 export default function Page({ params }: { params: { slug: string } }) {
   return (

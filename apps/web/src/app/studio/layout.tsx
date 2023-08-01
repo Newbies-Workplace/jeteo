@@ -1,4 +1,4 @@
-import { Navbar } from "@/components/navbar/Navbar";
+import { Navbar } from "@/components/molecules/navbar/Navbar";
 import React from "react";
 import styles from "./layout.module.scss";
 import Link from "next/link";
