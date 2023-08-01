@@ -11,8 +11,37 @@ import {
 } from "@/components/eventCard/EventCardActions";
 import React from "react";
 import { Text } from "@/components/text/Text";
+import { LectureCard } from "@/components/lectureCard/LectureCard";
+
+
+import avatar from "@/assets/person-placeholder.svg"
 
 export default function Page() {
+
+// ! testowy do lectureCarda
+// const persons = [
+//     {
+//       id: 1,
+//       imageURL: avatar,
+//       name: "John Doe",
+//       description: "i like crocks",
+//       mail: "mail.google.com/mail/u/0/#inbox",
+//       twitter: "twitter.com/home?lang=pl",
+//       linkedin: "pl.linkedin.com",
+//       github: "github.com",
+// },
+//     {
+//       id: 2,
+//       imageURL: avatar,
+//       name: "Johny Gehen",
+//       description: "im profesionall racist(raysist)",
+//       mail: "",
+//       twitter: "",
+//       linkedin: "",
+//       github: "",
+//     }
+//   ]
+
   return (
     <div className={styles.page}>
       <Navbar />

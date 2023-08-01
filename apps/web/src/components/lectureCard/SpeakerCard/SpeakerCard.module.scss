@@ -1,3 +1,5 @@
+@import '@/colors.module';
+
 .card {
     display: flex;
     min-width: 150px;
@@ -8,8 +10,8 @@
     padding: 4px;
 
     border-radius: 8px;
-    border: 0.5px solid #DBDBDB;
-    background: #FFF; 
+    border: 0.5px solid $stroke;
+    background-color: $surface; 
 
   .img {
       width: 32px;
@@ -19,7 +21,7 @@
   .info {
       display: flex;
       flex-direction: column;
-      width: 100px;
+      min-width: 100px;
       gap: 4px;
 
 
@@ -27,6 +29,11 @@
       .socials {
           display: flex;
           gap: 8px;
+
+          .icon {
+            height: 16px;
+            width: 16px;
+          }
       }
   }
 }

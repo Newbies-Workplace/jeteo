@@ -1,22 +1,26 @@
 import React from "react"
 import styles from "./lectureCard.module.scss"
-import { Card } from "./card/LecturePersonCard"
+import { SpeakerCard } from "./SpeakerCard/SpeakerCard"
 import { Text } from "@/components/text/Text"
 import Image from "next/image"
 
-import avatar from "@/assets/Rectangle 225.svg"
-import time from "@/assets/Access time.svg"
+import time from "@/assets/clock.svg"
 import Link from "next/link"
 
 interface LectureProps {
     startingHour: string,
     endingHour: string,
+
+    title: string,
+    subtitle: string,
+
+    isAbletoRate: boolean,
+
+    persons: any,
 };
 
 
-export const LectureCard: React.FC<LectureProps> = ({startingHour,endingHour}) => {
-
-    const isAble: boolean = true;
+export const LectureCard: React.FC<LectureProps> = ({startingHour,endingHour,title,subtitle,isAbletoRate,persons}) => {
 
     return (
         <div className={styles.content}>
@@ -36,33 +40,33 @@ export const LectureCard: React.FC<LectureProps> = ({startingHour,endingHour}) =
             <div className={styles.main}>  
                 <div className={styles.titlecontainer}>
                     <Text variant="headS" bold>
-                        Paraparapapa
+                        {title}
                     </Text>
                     <Text variant="headS">
-                        opowiem wam jak to jest byc dzbanem
+                        {subtitle}
                     </Text>
                 </div>
 
                 <div className={styles.persons}>
-                    <Card 
-                        image={avatar}
-                        name="John Doe"
-                        description="i like crocks"
-                        mail="mail.google.com/mail/u/0/#inbox"
-                        twitter="twitter.com/home?lang=pl"
-                        linkedin="pl.linkedin.com"
-                    />
-                    <Card 
-                        image={avatar}
-                        name="John Doe"
-                        description="i like crocks"
-                        mail=""
-                        twitter=""
-                        linkedin=""
-                    />
+                    {persons.map(item => {
+                        return (
+                            <SpeakerCard 
+                                key={item.id}
+
+                                image={item.imageURL}
+                                name={item.name}
+                                description={item.description}
+                                mail={item.mail}
+                                twitter={item.twitter}
+                                linkedin={item.linkedIn}
+                                github={item.github}
+                            />
+                        );
+                    }
+                    )}
                 </div>
 
-                {isAble && 
+                {isAbletoRate && 
                 <Link href="/" className={styles.vote}>
                     <Text variant="headS" bold> 
                         Oceń prelekcję
