@@ -1,0 +1,15 @@
+@import '@/colors.module';
+
+.rate {
+  display: flex;
+  padding: 0 16px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+
+  border-radius: 16px;
+  background: $primary;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+  color: $white;
+}
