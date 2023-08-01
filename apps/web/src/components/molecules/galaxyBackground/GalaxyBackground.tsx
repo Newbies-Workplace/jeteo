@@ -137,5 +137,3 @@ export const GalaxyBackground: React.FC<
     </div>
   );
 };
-
-export default GalaxyBackground;

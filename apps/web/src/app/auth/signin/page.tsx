@@ -1,4 +1,4 @@
-import GalaxyBackground from "@/components/molecules/galaxyBackground/GalaxyBackground";
+import { GalaxyBackground } from "@/components/molecules/galaxyBackground/GalaxyBackground";
 import Link from "next/link";
 import { Dialog } from "@/components/molecules/dialog/Dialog";
 
