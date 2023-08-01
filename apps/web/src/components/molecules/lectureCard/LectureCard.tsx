@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./LectureCard.module.scss";
 import { SpeakerCard, SpeakerCardProps } from "./SpeakerCard/SpeakerCard";
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 import Image from "next/image";
 import time from "@/assets/clock.svg";
 
