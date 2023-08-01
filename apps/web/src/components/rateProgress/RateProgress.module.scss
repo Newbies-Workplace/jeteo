@@ -2,16 +2,26 @@
 
 .container {
     max-width: 240px;
-    max-height: 240px;
-    background-color: #F75254;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 8px;
-}
-.description {
-    max-width: 200px;
-    color: gray;
+
+    .chart {
+        height: 240px;
+        width: 240px;
+    }
+
+    .textContainer {
+        margin-top: -125px;
+        display: flex;
+        flex-direction: column;
+        gap:8px;
+
+        .description {
+            max-width: 240px;
+            color: gray;
+        }
+    }
 }
