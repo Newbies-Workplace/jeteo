@@ -5,12 +5,12 @@ import { Section } from "@/components/molecules/section/Section";
 import Button from "@/components/atoms/button/Button";
 import MDEditor from "@uiw/react-md-editor";
 import { Text } from "@/components/atoms/text/Text";
-import { MapPicker } from "@/components/molecules/mapPicker/MapPicker";
 import { RadioButtons } from "@/components/molecules/radioButtons/RadioButtons";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ControlledInput } from "@/components/atoms/input/ControlledInput";
 import axiosInstance from "@/common/axiosInstance";
 import dayjs from "dayjs";
+import { MapPicker } from "@/components/molecules/mapPicker/MapPicker";
 
 const locationOptions = [
   { id: "location", name: "Na miejscu" },
