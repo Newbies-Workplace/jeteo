@@ -1,0 +1,72 @@
+@import '@/typography.module';
+@import '@/colors.module';
+
+.main {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.planetPinkGreen {
+  position: absolute;
+  top: 10%;
+  right: 20%;
+}
+
+.planetOrange {
+  position: absolute;
+  top: 60%;
+  right: 8%;
+}
+
+.planetViolet {
+  position: absolute;
+  top: 70%;
+  left: 10%;
+}
+
+.logo {
+  position: absolute;
+  top: 25%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  text-align: left;
+  justify-content: center;
+  align-items: center;
+
+  .planetBlue {
+    z-index: 1000000;
+    border-radius: 50%;
+    box-shadow: 0 0 32px 0 rgba(0, 148, 255, 0.25),
+    2px -2px 8px 0px rgba(255, 255, 255, 0.15);
+  }
+
+  .logoTextContainer {
+    text-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.5);
+    color: $white;
+
+    display: flex;
+    flex-direction: column;
+
+    .logoText {
+      @include logo;
+      margin-top: -25px;
+      color: $white;
+      font-size: 128px;
+    }
+  }
+}
+
+.moon {
+  position: absolute;
+  bottom: -150px;
+  width: 110%;
+  transform: scale(1.35);
+  user-select: none;
+}

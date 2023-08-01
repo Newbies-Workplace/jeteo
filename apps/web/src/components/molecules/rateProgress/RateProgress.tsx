@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
 import styles from "./RateProgress.module.scss";
-import { Text } from "@/components/text/Text";
+
 import { Doughnut } from "react-chartjs-2";
 import { ArcElement, Chart as ChartJS, ChartOptions, Legend } from "chart.js";
+import { Text } from "@/components/atoms/text/Text";
 
 ChartJS.register(ArcElement, Legend);
 
