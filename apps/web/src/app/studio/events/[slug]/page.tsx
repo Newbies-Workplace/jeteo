@@ -1,7 +1,7 @@
 import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader"
-import { StudioFunctionCard } from "@/components/studioEvent/FunctionCard"
+import { StudioFunctionCard } from "@/components/molecules/studioFunctionCard/StudioFunctionCard"
 import { Text } from "@/components/atoms/text/Text"
-import { LectureCard } from "@/components/lectureCard/LectureCard"
+import { LectureCard } from "@/components/molecules/lectureCard/LectureCard"
 import styles from "./StudioEvent.module.scss"
 
 

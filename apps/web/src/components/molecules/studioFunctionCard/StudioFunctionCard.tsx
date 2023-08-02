@@ -1,5 +1,5 @@
 import styles from "./FunctionCard.module.scss"
-import { Text } from "../atoms/text/Text"
+import { Text } from "@/components/atoms/text/Text"
 import Link from "next/link"
 
 
