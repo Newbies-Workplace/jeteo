@@ -15,17 +15,17 @@ export default function Page() {
         <StudioFunctionCard 
           href="#"
           title="Zobacz"
-          subtitle="wydarzenia"
+          subtitle="wydarzenie"
         />
         <StudioFunctionCard 
           href="#"
           title="Edytuj"
-          subtitle="wydarzenia"
+          subtitle="wydarzenie"
         />
         <StudioFunctionCard 
           href="#"
           title="Usuń"
-          subtitle="wydarzenia"
+          subtitle="wydarzenie"
         />
       </div>
       
