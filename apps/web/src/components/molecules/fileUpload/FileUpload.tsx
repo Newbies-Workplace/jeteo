@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import styles from "./FileUpload.module.scss";
 import Button from "@/components/atoms/button/Button";
 import cs from "classnames";
-import { ALLOWED_IMAGE_EXTENSIONS } from "@/common/utils/constants";
+import { ALLOWED_IMAGE_EXTENSIONS } from "@/common/constants";
 import { Text } from "@/components/atoms/text/Text";
 
 interface FileUploadProps {

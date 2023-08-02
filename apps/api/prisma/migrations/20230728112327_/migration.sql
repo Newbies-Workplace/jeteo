@@ -22,11 +22,11 @@ CREATE TABLE "User" (
 CREATE TABLE "Event" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "subtitle" TEXT NOT NULL,
+    "subtitle" TEXT,
     "description" TEXT NOT NULL,
     "from" TIMESTAMP(3) NOT NULL,
     "to" TIMESTAMP(3) NOT NULL,
-    "city" TEXT NOT NULL,
+    "city" TEXT,
     "place" TEXT,
     "latitude" DOUBLE PRECISION,
     "longitude" DOUBLE PRECISION,
