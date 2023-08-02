@@ -1,16 +1,6 @@
 @import '@/typography.module';
 @import '@/colors.module';
 
-.main {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  overflow-x: hidden;
-}
-
 .planetPinkGreen {
   position: absolute;
   top: 10%;
@@ -41,7 +31,7 @@
   align-items: center;
 
   .planetBlue {
-    z-index: 1000000;
+    z-index: 1;
     border-radius: 50%;
     box-shadow: 0 0 32px 0 rgba(0, 148, 255, 0.25),
     2px -2px 8px 0px rgba(255, 255, 255, 0.15);
