@@ -64,9 +64,16 @@
 }
 
 .moon {
+  height: auto;
+  width: 100%;
   position: absolute;
-  bottom: -150px;
-  width: 110%;
-  transform: scale(1.35);
+  bottom: -300px;
   user-select: none;
+}
+
+.contentOnMoon {
+  background-color: $background;
+  width: 100%;
+  position: absolute;
+  bottom: -250px;
 }
