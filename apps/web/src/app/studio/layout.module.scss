@@ -2,8 +2,8 @@
 @import "@/colors.module.scss";
 
 .page {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
@@ -34,16 +34,20 @@
 
 .navButton {
   display: flex;
+  flex-direction: row;
   padding: 8px;
+  align-self: stretch;
   align-items: center;
   gap: 8px;
-  align-self: stretch;
+  max-width: 300px;
 
   border-radius: 8px;
   border: 2px solid $primary;
   background: $surface;
+
   box-shadow: 0 2px 8px 0 rgba(94, 0, 255, 0.25);
+
   text-decoration: none;
-  @include bodyM;
   color: $black;
+  @include bodyM;
 }

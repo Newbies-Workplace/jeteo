@@ -1,0 +1,106 @@
+@import '@/colors.module';
+
+.card {
+  display: flex;
+  padding: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+
+
+  color: $white;
+
+  border-radius: 16px;
+  background: $primary
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start;
+  row-gap: 10px;
+  align-self: stretch;
+  flex-wrap: wrap;
+
+  .texts {
+    display: flex;
+    min-width: 260px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    flex: 1 0 0;
+
+    .title {
+      display: flex;
+      align-self: stretch;
+    }
+
+    .subtitle {
+      display: flex;
+      align-self: stretch;
+    }
+  }
+
+  .host {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+
+      border-radius: 32px;
+      background-color: $white;
+    }
+  }
+}
+
+.mid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  gap: 14px;
+  align-self: stretch;
+  flex-wrap: wrap;
+
+  .pins {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: 8px;
+    flex: 1 0 0;
+    flex-wrap: wrap;
+
+    .pin {
+      display: flex;
+      gap: 4px;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .place {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+    }
+
+    .date {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+    }
+  }
+
+  .tags {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}

@@ -1,12 +1,12 @@
-import { Text } from "@/components/text/Text";
-import Button from "@/components/button/Button";
+import { Text } from "@/components/atoms/text/Text";
+import Button from "@/components/atoms/button/Button";
 import styles from "./page.module.scss";
 import Link from "next/link";
-import { EventCard } from "@/components/eventCard/EventCard";
+import { EventCard } from "@/components/molecules/eventCard/EventCard";
 import {
   EventCardActionsFuture,
   EventCardActionsLive,
-} from "@/components/eventCard/EventCardActions";
+} from "@/components/molecules/eventCard/EventCardActions";
 import React from "react";
 
 export default function Page() {
@@ -23,7 +23,9 @@ export default function Page() {
           Wydarzenia
         </Text>
 
-        <Button primary>Dodaj</Button>
+        <Link href={"events/create"}>
+          <Button primary>Dodaj</Button>
+        </Link>
       </div>
 
       <Link href={"/events/1"} style={{ alignSelf: "stretch" }}>

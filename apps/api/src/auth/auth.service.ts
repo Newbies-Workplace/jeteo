@@ -33,7 +33,7 @@ export class AuthService {
           google_id: googleUser.id,
         },
       },
-      { secret: process.env.JWT_SECRET },
+      { secret: process.env['JWT_SECRET'] },
     );
   }
 }

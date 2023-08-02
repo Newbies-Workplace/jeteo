@@ -1,13 +1,14 @@
 import Link from "next/link";
-import GalaxyBackground from "@/components/galaxyBackground/GalaxyBackground";
 import styles from "@/app/not-found.module.scss";
 import Image from "next/image";
 import notFoundText from "@/assets/images/not-found.svg";
-import { Text } from "@/components/text/Text";
-import Button from "@/components/button/Button";
 import planetWhere from "@/assets/images/planet-where.svg";
 import startPath from "@/assets/images/start-path.svg";
-import { Navbar } from "@/components/navbar/Navbar";
+import React from "react";
+import { GalaxyBackground } from "@/components/molecules/galaxyBackground/GalaxyBackground";
+import { Navbar } from "@/components/molecules/navbar/Navbar";
+import Button from "@/components/atoms/button/Button";
+import { Text } from "@/components/atoms/text/Text";
 
 export default function NotFound() {
   return (

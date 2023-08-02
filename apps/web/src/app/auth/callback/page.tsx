@@ -3,8 +3,8 @@
 import { useAuth } from "@/contexts/Auth.hook";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import GalaxyBackground from "@/components/galaxyBackground/GalaxyBackground";
-import { Dialog } from "@/components/dialog/Dialog";
+import { GalaxyBackground } from "@/components/molecules/galaxyBackground/GalaxyBackground";
+import { Dialog } from "@/components/molecules/dialog/Dialog";
 
 export default function Page() {
   const { fetchUser } = useAuth();

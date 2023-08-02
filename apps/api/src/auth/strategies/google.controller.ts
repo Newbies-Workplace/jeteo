@@ -24,6 +24,6 @@ export class GoogleController {
       httpOnly: true,
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
     });
-    return res.redirect(process.env.CLIENT_URL);
+    return res.redirect(process.env['CLIENT_URL']);
   }
 }
