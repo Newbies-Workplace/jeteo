@@ -1,5 +1,6 @@
 @import '@/typography.module';
 @import '@/colors.module';
+@import '@/responsiveness.module';
 
 .planetPinkGreen {
   position: absolute;
@@ -20,8 +21,6 @@
 }
 
 .logo {
-  position: absolute;
-  top: 25%;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -53,17 +52,32 @@
   }
 }
 
-.moon {
-  height: auto;
-  width: 100%;
-  position: absolute;
-  bottom: -300px;
-  user-select: none;
-}
-
 .contentOnMoon {
-  background-color: $background;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   position: absolute;
-  bottom: -250px;
+  bottom: -70%;
+  .moon {
+    height: auto;
+    width: 100%;
+    user-select: none;
+  }
+  .items {
+    margin-top: -4%;
+    display: flex;
+    flex-direction: row-reverse;
+    padding-bottom: 128px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 167px;
+    align-self: stretch;
+    flex-wrap: wrap;
+    background-color: $background;
+    .text {
+      overflow-wrap: break-word;
+      max-width: 500px;
+    }
+  }
 }

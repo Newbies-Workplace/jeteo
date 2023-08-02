@@ -6,6 +6,7 @@ import planetOrange from "@/assets/images/planet-orange.svg";
 import planetPinkGreen from "@/assets/images/planet-pink-green.svg";
 import planetBlue from "@/assets/images/planet-blue.svg";
 import moon from "@/assets/images/moon-decoration.svg";
+import presentation from "@/assets/images/presentation-svg.svg";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import GalaxyBackground from "@/components/molecules/galaxyBackground/GalaxyBackground";
 import { Text } from "@/components/atoms/text/Text";
@@ -13,57 +14,48 @@ import Button from "@/components/atoms/button/Button";
 import Link from "next/link";
 
 export default function Page() {
-  //TODO trzeba zmiejszac width | hight na parallax Layer bo lipa jakaś się robi, z klikaniem bo zawsze jest dla tego komponentu width i height 100%
   return (
     <GalaxyBackground hidePlanets>
       <Parallax pages={2}>
-        <ParallaxLayer
-          offset={0}
-          speed={-1.25}
-          className={styles.planetPinkGreen}
-          style={{
-            pointerEvents: "none",
-            maxHeight: 85,
-            maxWidth: 85,
-          }}
-        >
+        <ParallaxLayer offset={0} speed={-1.25} style={{ zIndex: 0 }}>
           <Image
-            className={styles.planetPinkGreen}
             src={planetPinkGreen}
-            alt={"Planet Pink Green"}
+            alt={"planetPinkGreen"}
             width={85}
             height={85}
+            className={styles.planetPinkGreen}
           />
         </ParallaxLayer>
-        <ParallaxLayer
-          offset={0}
-          speed={-0.75}
-          style={{
-            pointerEvents: "none",
-          }}
-        >
+        <ParallaxLayer offset={0} speed={-0.75} style={{ zIndex: 0 }}>
           <Image
-            className={styles.planetOrange}
             src={planetOrange}
-            alt={"Planet Orange"}
+            alt={"planetOrange"}
             width={156}
             height={156}
+            className={styles.planetOrange}
           />
         </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={-1}>
+        <ParallaxLayer offset={0} speed={-1} style={{ zIndex: 0 }}>
           <Image
-            className={styles.planetViolet}
             src={planetViolet}
-            alt={"Planet Violet"}
+            alt={"planetViolet"}
             width={53}
             height={53}
+            className={styles.planetViolet}
           />
         </ParallaxLayer>
+
         <ParallaxLayer
           offset={0}
-          speed={-0.5}
+          speed={-0.15}
           style={{
-            pointerEvents: "none",
+            zIndex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 64,
+            marginTop: "-8%",
           }}
         >
           <div className={styles.logo}>
@@ -77,6 +69,7 @@ export default function Page() {
               <Text variant={"headM"}>Portal do dzielenia się wiedzą!</Text>
             </div>
           </div>
+
           <Link href={"/"}>
             <Button
               primary
@@ -84,8 +77,9 @@ export default function Page() {
               style={{
                 paddingLeft: 16,
                 paddingRight: 16,
+                paddingTop: 8,
+                paddingBottom: 8,
               }}
-              onClick={() => console.log("Button clicked")}
             >
               Sprawdź listę wydarzeń
             </Button>
@@ -96,15 +90,26 @@ export default function Page() {
           speed={1}
           style={{
             pointerEvents: "none",
+            zIndex: 2,
           }}
         >
-          <Image src={moon} alt={"Moon"} className={styles.moon} />
+          <div className={styles.contentOnMoon}>
+            <Image src={moon} alt={"Moon"} className={styles.moon} />
+            <div className={styles.items}>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <Text variant={"headL"} bold className={styles.text}>
+                  Zbieraj wiedzę
+                </Text>
+                <Text variant={"bodyL"} className={styles.text}>
+                  Jesteśmy przekonani iż wiedza od ekspertów, jest warta więcej
+                  niż jakikolwiek poradnik na youtube. Staramy się stworzyć
+                  miejsce z wyłącznie takich ekspertów.
+                </Text>
+              </div>
+              <Image src={presentation} alt={"Presentation"} />
+            </div>
+          </div>
         </ParallaxLayer>
-        {/* <ParallaxLayer offset={0} speed={1} style={{
-          pointerEvents: 'none'
-        }}>
-          <div className={styles.contentOnMoon}></div>
-        </ParallaxLayer> */}
       </Parallax>
     </GalaxyBackground>
   );
