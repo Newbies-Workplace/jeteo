@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./SpeakerCard.module.scss";
-import { Text } from "@/components/text/Text";
+import { Text } from "@/components/atoms/text/Text";
 import Image from "next/image";
 import Link from "next/link";
 import EmailIcon from "@/assets/email.svg";
