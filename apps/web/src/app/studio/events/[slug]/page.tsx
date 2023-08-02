@@ -13,13 +13,19 @@ export default function Page() {
       />
       <div className={styles.cards}>
         <StudioFunctionCard 
+          href="#"
           title="Zobacz"
+          subtitle="wydarzenia"
         />
         <StudioFunctionCard 
+          href="#"
           title="Edytuj"
+          subtitle="wydarzenia"
         />
         <StudioFunctionCard 
+          href="#"
           title="Usuń"
+          subtitle="wydarzenia"
         />
       </div>
       

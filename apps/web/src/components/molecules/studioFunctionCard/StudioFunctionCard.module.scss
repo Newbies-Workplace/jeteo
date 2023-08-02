@@ -3,8 +3,13 @@
 .card {
   display: flex;
   flex-direction: column;
-  padding: 35px 87px 9px 13px;
   align-items: flex-start;
+  justify-content: flex-end;
+  
+  padding: 9px 13px;
+
+  min-height: 112px;
+  min-width: 200px;
 
   width: fit-content;
   
