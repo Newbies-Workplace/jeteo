@@ -3,6 +3,9 @@
   "extends": "tsconfig/nestjs.json",
   "compilerOptions": {
     "outDir": "./.nest",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "paths": {
+      "@prisma/client": ["../../prisma/client"]
+    }
   }
 }

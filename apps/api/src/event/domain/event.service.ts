@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/config/prisma.service';
-import { CreateEventRequest } from '../application/requests/createEvent.request';
+import { CreateEventRequest } from 'shared/api/event/requests/createEvent.request';
 import { Event } from '@prisma/client';
 
 @Injectable()

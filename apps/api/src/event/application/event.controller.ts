@@ -10,12 +10,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { EventService } from '../domain/event.service';
-import { CreateEventRequest } from './requests/createEvent.request';
+import { CreateEventRequest } from 'shared/api/event/requests/createEvent.request';
 import { JwtGuard } from 'src/auth/jwt/jwt.guard';
 import { User } from 'src/auth/jwt/jwt.decorator';
 import { TokenUser } from 'src/auth/jwt/jwt.model';
-import { GetEventsQueryRequest } from './requests/getEventsQuery.request';
-import { EventResponse } from './responses/event.response';
+import { GetEventsQueryRequest } from 'shared/api/event/requests/getEventsQuery.request';
+import { EventResponse } from 'shared/api/event/responses/event.response';
 import { EventConverter } from './converters/event.converter';
 
 @Controller('/rest/v1/events')
