@@ -107,6 +107,14 @@
   align-self: stretch;
   background-color: $black;
   color: $white;
+
+  @include mobile {
+      flex-direction: column;
+  }
+
+  @include tablet {
+      flex-direction: column;
+  }
 }
 
 .textWithImage{
