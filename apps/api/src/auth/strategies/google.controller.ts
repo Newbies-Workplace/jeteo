@@ -1,10 +1,10 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from '../auth.service';
-import { User } from '../jwt/jwt.decorator';
 import { GoogleUser } from './google.model';
 import * as process from 'process';
+import { AuthService } from '@/auth/auth.service';
+import { User } from '@/auth/jwt/jwt.decorator';
 
 @Controller('auth/google')
 export class GoogleController {
