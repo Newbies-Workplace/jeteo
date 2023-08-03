@@ -7,12 +7,18 @@ import planetPinkGreen from "@/assets/images/planet-pink-green.svg";
 import planetBlue from "@/assets/images/planet-blue.svg";
 import moon from "@/assets/images/moon-decoration.svg";
 import presentation from "@/assets/images/presentation-svg.svg";
+import bottomBackground from "@/assets/images/hero-bottom-background.svg";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import GalaxyBackground from "@/components/molecules/galaxyBackground/GalaxyBackground";
 import { Text } from "@/components/atoms/text/Text";
 import Button from "@/components/atoms/button/Button";
 import Link from "next/link";
 
+//todo planety powinny sie chować bo jest przerwa pomiedzy offset 0 a 1
+//todo fajnie jakby gwiazdy na background tez sie przesuwaly
+//todo zeby wykonac efekt ze coś zza ksiezyca wylatuje (od dołu) to musi miec speed -1 i musi miec domyslna pozycje na pod ksiezycem
+//todo na mobilce nie wyglada to za dobrze trzeba dostosować sobno css dla tabletow i mobilek
+//todo lepsze zdjęcie ksiezyca - moze osobno eksport kazdych lementow bez poświaty bo czarna kreska jest
 export default function Page() {
   return (
     <GalaxyBackground hidePlanets>
@@ -110,6 +116,14 @@ export default function Page() {
             </div>
           </div>
         </ParallaxLayer>
+        <ParallaxLayer
+          offset={1}
+          speed={1}
+          style={{
+            zIndex: 3,
+            pointerEvents: "none",
+          }}
+        ></ParallaxLayer>
       </Parallax>
     </GalaxyBackground>
   );
