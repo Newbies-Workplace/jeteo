@@ -1,5 +1,5 @@
 import { Event } from '@prisma/client';
-import { EventResponse } from 'shared/api/event/responses/event.response';
+import { EventResponse } from 'shared/model/event/response/event.response';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
