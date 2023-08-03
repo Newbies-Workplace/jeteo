@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/config/prisma.service';
+import { PrismaService } from '@/config/prisma.service';
 import { CreateEventRequest } from 'shared/model/event/request/createEvent.request';
 import { Event } from '@prisma/client';
 

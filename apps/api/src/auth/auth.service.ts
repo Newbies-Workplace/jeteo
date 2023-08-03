@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from '../config/prisma.service';
+import { PrismaService } from '@/config/prisma.service';
 import { GoogleUser } from './strategies/google.model';
 
 @Injectable()

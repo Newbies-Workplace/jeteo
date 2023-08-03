@@ -55,7 +55,7 @@ const defaultValues: BasicForm = {
 };
 
 interface EventBasicFormProps {
-  onSubmitted: (event: EventResponse) => void; //todo add type
+  onSubmitted: (event: EventResponse) => void;
 }
 
 export const EventBasicForm: React.FC<EventBasicFormProps> = ({
