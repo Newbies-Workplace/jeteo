@@ -38,7 +38,7 @@
   }
 }
 
-@include mobile {
+@include responsiveness.mobile {
   .rateAverage {
     display: none;
   }

@@ -28,7 +28,7 @@
 }
 
 .studioLogo {
-  @include logoM;
+  @include typography.logoM;
   font-weight: bold;
 }
 

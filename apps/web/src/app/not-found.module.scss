@@ -37,7 +37,7 @@
   right: 0;
 }
 
-@include tablet {
+@include responsiveness.tablet {
   .container {
     display: flex;
     margin: 0;

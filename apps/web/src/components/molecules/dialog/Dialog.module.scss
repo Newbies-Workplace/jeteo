@@ -12,7 +12,7 @@
     border-radius: 16px;
 }
 
-@include mobile {
+@include responsiveness.mobile {
     .container{
         width: 100%;
         position: absolute;
