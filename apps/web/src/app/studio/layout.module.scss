@@ -49,5 +49,5 @@
 
   text-decoration: none;
   color: colors.$black;
-  @include bodyM;
+  @include typography.bodyM;
 }
