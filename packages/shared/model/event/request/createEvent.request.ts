@@ -2,6 +2,8 @@ import { Type } from "class-transformer";
 import {
   IsArray,
   IsDateString,
+  IsLatitude,
+  IsLongitude,
   IsNumber,
   IsObject,
   IsOptional,
@@ -11,9 +13,11 @@ import {
 
 class Coordinates {
   @IsNumber()
+  @IsLatitude()
   latitude: number;
 
   @IsNumber()
+  @IsLongitude()
   longitude: number;
 }
 
@@ -55,5 +59,5 @@ export class CreateEventRequest {
 
   @IsArray()
   @IsString({ each: true })
-  tags: string[];
+  tags: Set<string>;
 }

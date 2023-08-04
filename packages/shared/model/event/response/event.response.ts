@@ -1,4 +1,4 @@
-type DateTime = string;
+import { DateTime } from "../../util";
 
 export interface EventResponse {
   id: string;
@@ -8,7 +8,7 @@ export interface EventResponse {
   description: string;
   from: DateTime;
   to: DateTime;
-  address: {
+  address?: {
     city: string;
     place: string;
     coordinates?: {
@@ -16,10 +16,10 @@ export interface EventResponse {
       longitude: number;
     };
   };
-  createdAt: DateTime;
-  links: string[];
+  links: string[]; // todo change to name and href
   tags: string[];
   primaryColor: string;
   coverImage?: string;
   userId: string;
+  createdAt: DateTime;
 }
