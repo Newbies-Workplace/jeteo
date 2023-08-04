@@ -1,4 +1,4 @@
-@import "@/colors.module";
+@use '@/colors.module.scss' as colors;
 
 .page {
   display: flex;
@@ -16,7 +16,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  background-color: $surface;
+  background-color: colors.$surface;
   border-radius: 12px 12px;
   padding: 16px;
 

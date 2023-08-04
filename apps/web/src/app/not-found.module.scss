@@ -1,5 +1,5 @@
-@import '@/responsiveness.module.scss';
-@import '@/colors.module.scss';
+@use '@/responsiveness.module.scss' as responsiveness;
+@use '@/colors.module.scss' as colors;
 
 .container {
   display: inline-flex;
@@ -15,7 +15,7 @@
 
   z-index: 2;
 
-  color: $white;
+  color: colors.$white;
 
   .textContainer {
     max-width: 550px;

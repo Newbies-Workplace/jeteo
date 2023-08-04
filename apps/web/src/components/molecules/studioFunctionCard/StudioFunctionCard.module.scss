@@ -1,4 +1,4 @@
-@import '@/colors.module';
+@use '@/colors.module.scss' as colors;
 
 .card {
   display: flex;
@@ -17,11 +17,11 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
   margin-top: 12px;
-  background-color: $white;
+  background-color: colors.$white;
   
 
   .title {
     
-    color: $black;
+    color: colors.$black;
   }
 }

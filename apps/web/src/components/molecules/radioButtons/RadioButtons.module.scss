@@ -1,4 +1,4 @@
-@import "@/colors.module";
+@use '@/colors.module.scss' as colors;
 
 .container {
   display: flex;
@@ -41,12 +41,12 @@
   background-color: gray;
 
   &:hover {
-    background-color: $stroke;
+    background-color: colors.$stroke;
   }
 
   &.selected {
-    background-color: $primary;
-    color: $white;
+    background-color: colors.$primary;
+    color: colors.$white;
   }
 }
 

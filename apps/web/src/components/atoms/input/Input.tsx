@@ -34,9 +34,11 @@ export const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <div className={styles.input} style={style}>
-      <Text className={cs(required && styles.required)} variant={"headS"}>
-        {label}
-      </Text>
+      {label && (
+        <Text className={cs(required && styles.required)} variant={"headS"}>
+          {label}
+        </Text>
+      )}
 
       <div className={styles.inputWrapper}>
         {multiline ? (
