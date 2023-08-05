@@ -20,6 +20,7 @@ export interface EventResponse {
   tags: string[];
   primaryColor: string;
   coverImage?: string;
+  visibility: "PRIVATE" | "HIDDEN" | "PUBLIC";
   userId: string;
   createdAt: DateTime;
 }

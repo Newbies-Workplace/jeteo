@@ -29,6 +29,7 @@ export class EventConverter {
       tags: event.tags,
       primaryColor: event.primaryColor,
       coverImage: event.coverImage,
+      visibility: event.visibility,
       userId: event.userId,
     };
   }
