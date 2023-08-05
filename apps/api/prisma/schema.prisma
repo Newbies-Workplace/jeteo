@@ -27,13 +27,13 @@ model User {
 model Event {
   id           String          @id @unique @default(uuid())
   title        String
-  subtitle     String
+  subtitle     String?
   description  String
   lectures     Lecture[]
   from         DateTime
   to           DateTime
   createdBy    User            @relation(fields: [userId], references: [id])
-  city         String
+  city         String?
   place        String?
   latitude     Float?
   longitude    Float?

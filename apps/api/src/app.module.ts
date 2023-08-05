@@ -10,7 +10,7 @@ import { EventModule } from './event/event.module';
 @Module({
   imports: [
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: process.env['JWT_SECRET'],
     }),
     PrismaModule,
     AuthModule,
