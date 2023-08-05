@@ -1,4 +1,4 @@
-@import '@/colors.module';
+@use '@/colors.module.scss' as colors;
 
 .rate {
   display: flex;
@@ -8,8 +8,8 @@
   align-self: stretch;
 
   border-radius: 16px;
-  background: $primary;
+  background: colors.$primary;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 
-  color: $white;
+  color: colors.$white;
 }

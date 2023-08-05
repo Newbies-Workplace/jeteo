@@ -1,4 +1,4 @@
-@import '@/colors.module';
+@use '@/colors.module.scss' as colors;
 
 .card {
   display: flex;
@@ -9,10 +9,10 @@
   align-self: stretch;
 
 
-  color: $white;
+  color: colors.$white;
 
   border-radius: 16px;
-  background: $primary
+  background: colors.$primary
 }
 
 .top {
@@ -55,7 +55,7 @@
       flex-shrink: 0;
 
       border-radius: 32px;
-      background-color: $white;
+      background-color: colors.$white;
     }
   }
 }

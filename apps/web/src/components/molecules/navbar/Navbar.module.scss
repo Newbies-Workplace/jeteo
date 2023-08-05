@@ -1,5 +1,5 @@
-@import '@/colors.module';
-@import '@/responsiveness.module';
+@use '@/colors.module.scss' as colors;
+@use '@/responsiveness.module.scss' as responsiveness;
 
 .navbar {
   display: flex;
@@ -7,20 +7,20 @@
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
-  background-color: $surface;
+  background-color: colors.$surface;
   text-decoration: none;
-  color: $black;
+  color: colors.$black;
 
   &.invertColor {
     background-color: transparent;
-    color: $surface;
+    color: colors.$surface;
     .burger {
       filter: invert(100%);
     }
   }
 }
 
-@include mobile {
+@include responsiveness.mobile {
   .navbar {
     padding: 8px 16px;
   }

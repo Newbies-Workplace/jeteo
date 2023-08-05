@@ -1,5 +1,5 @@
-@import '@/colors.module';
-@import "@/responsiveness.module";
+@use '@/colors.module.scss' as colors;
+@use '@/responsiveness.module.scss' as responsiveness;
 
 .actions {
   display: flex;
@@ -7,7 +7,7 @@
   gap: 8px;
   align-self: stretch;
 
-  color: $primary;
+  color: colors.$primary;
 
   .action {
     display: flex;
@@ -18,17 +18,17 @@
     align-self: stretch;
 
     border-radius: 8px;
-    background-color: $white;
+    background-color: colors.$white;
   }
 
   .live {
-    color: $white;
-    background-color: $live;
+    color: colors.$white;
+    background-color: colors.$live;
   }
 
   .rate {
-    color: $white;
-    background-color: $black;
+    color: colors.$white;
+    background-color: colors.$black;
     justify-content: space-between;
   }
 
@@ -38,7 +38,7 @@
   }
 }
 
-@include mobile {
+@include responsiveness.mobile {
   .rateAverage {
     display: none;
   }
