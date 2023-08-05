@@ -1,5 +1,5 @@
-@import "@/typography.module.scss";
-@import "@/colors.module.scss";
+@use '@/typography.module.scss' as typography;
+@use '@/colors.module.scss' as colors;
 
 .page {
   display: flex;
@@ -28,7 +28,7 @@
 }
 
 .studioLogo {
-  @include logoM;
+  @include typography.logoM;
   font-weight: bold;
 }
 
@@ -42,12 +42,12 @@
   max-width: 300px;
 
   border-radius: 8px;
-  border: 2px solid $primary;
-  background: $surface;
+  border: 2px solid colors.$primary;
+  background: colors.$surface;
 
   box-shadow: 0 2px 8px 0 rgba(94, 0, 255, 0.25);
 
   text-decoration: none;
-  color: $black;
-  @include bodyM;
+  color: colors.$black;
+  @include typography.bodyM;
 }

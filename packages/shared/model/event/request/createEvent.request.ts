@@ -1,19 +1,23 @@
-import { Type } from 'class-transformer';
+import { Type } from "class-transformer";
 import {
   IsArray,
   IsDateString,
+  IsLatitude,
+  IsLongitude,
   IsNumber,
   IsObject,
   IsOptional,
   IsString,
   ValidateNested,
-} from 'class-validator';
+} from "class-validator";
 
 class Coordinates {
   @IsNumber()
+  @IsLatitude()
   latitude: number;
 
   @IsNumber()
+  @IsLongitude()
   longitude: number;
 }
 
@@ -47,12 +51,13 @@ export class CreateEventRequest {
   @IsDateString()
   to: string;
 
+  @IsOptional()
   @IsObject()
   @ValidateNested()
   @Type(() => Address)
-  address: Address;
+  address?: Address;
 
   @IsArray()
   @IsString({ each: true })
-  tags: string[];
+  tags: Set<string>;
 }

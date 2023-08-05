@@ -1,4 +1,4 @@
-@import "@/colors.module";
+@use '@/colors.module.scss' as colors;
 
 .step {
   display: flex;
@@ -8,24 +8,24 @@
   align-items: center;
 
   cursor: pointer;
-  background-color: $surface;
+  background-color: colors.$surface;
   border-radius: 12px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
 
   &:hover {
-    background-color: $background;
+    background-color: colors.$background;
   }
 
   &:active {
-    background-color: $stroke;
-    color: $primary;
+    background-color: colors.$stroke;
+    color: colors.$primary;
   }
 
   &.disabled {
     cursor: not-allowed;
 
     &:hover {
-      background-color: $surface;
+      background-color: colors.$surface;
     }
   }
 
@@ -35,19 +35,19 @@
     min-width: 24px;
     height: 24px;
     min-height: 24px;
-    background-color: $gray;
+    background-color: colors.$gray;
 
     &.selected {
-      background-color: $primary;
+      background-color: colors.$primary;
     }
   }
 }
 
 .text {
-  color: $gray;
+  color: colors.$gray;
 
   &.textActive {
-    color: $primary;
+    color: colors.$primary;
   }
 }
 

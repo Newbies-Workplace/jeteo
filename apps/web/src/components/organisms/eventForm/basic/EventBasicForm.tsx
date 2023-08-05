@@ -11,6 +11,7 @@ import { ControlledInput } from "@/components/atoms/input/ControlledInput";
 import axiosInstance from "@/common/axiosInstance";
 import dayjs from "dayjs";
 import { MapPicker } from "@/components/molecules/mapPicker/MapPicker";
+import { EventResponse } from "shared/model/event/response/event.response";
 
 const locationOptions = [
   { id: "location", name: "Na miejscu" },
@@ -54,7 +55,7 @@ const defaultValues: BasicForm = {
 };
 
 interface EventBasicFormProps {
-  onSubmitted: (event: { slug: string }) => void; //todo add type
+  onSubmitted: (event: EventResponse) => void;
 }
 
 export const EventBasicForm: React.FC<EventBasicFormProps> = ({
@@ -71,7 +72,7 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
   const watchOnline = watch("location", "location");
 
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
-    axiosInstance.post("/rest/v1/events", data).then((res) => {
+    axiosInstance.post<EventResponse>("/rest/v1/events", data).then((res) => {
       onSubmitted(res.data);
     });
   };

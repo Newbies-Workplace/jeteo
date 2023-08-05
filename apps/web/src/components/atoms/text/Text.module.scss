@@ -1,39 +1,39 @@
-@import '@/typography.module';
+@use '@/typography.module.scss' as typography;
 
 .bold {
     font-weight: bold !important;
 }
 
 .bodyS {
-    @include bodyS();
+    @include typography.bodyS();
 }
 
 .bodyM {
-    @include bodyM();
+    @include typography.bodyM();
 }
 
 .bodyL {
-    @include bodyL();
+    @include typography.bodyL();
 }
 
 .headS {
-    @include headS();
+    @include typography.headS();
 }
 
 .headM {
-    @include headM();
+    @include typography.headM();
 }
 
 .headL {
-    @include headL();
+    @include typography.headL();
 }
 
 .logo {
-    @include logo();
+    @include typography.logo();
 }
 
 .logoM {
-    @include logoM();
+    @include typography.logoM();
 }
 
 

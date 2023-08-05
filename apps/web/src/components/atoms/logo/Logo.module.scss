@@ -1,5 +1,5 @@
-@import '@/typography.module';
-@import '@/colors.module';
+@use '@/typography.module.scss' as typography;
+@use '@/colors.module.scss' as colors;
 
 .content{ 
     display: inline-flex;
@@ -13,13 +13,13 @@
     }
 
     .text {
-        @include logo;
-        color: $black;
+        @include typography.logo;
+        color: colors.$black;
     }
 
     &.invertColor {
         .text {
-            color: $surface;
+            color: colors.$surface;
         }
     }
 }

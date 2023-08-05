@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/config/prisma.service';
-import { CreateEventRequest } from '../application/requests/createEvent.request';
+import { PrismaService } from '@/config/prisma.service';
+import { CreateEventRequest } from 'shared/model/event/request/createEvent.request';
 import { Event } from '@prisma/client';
 
 @Injectable()
@@ -56,10 +56,10 @@ export class EventService {
         description: createEventDto.description,
         from: new Date(createEventDto.from),
         to: new Date(createEventDto.to),
-        city: createEventDto.address.city,
-        place: createEventDto.address.place,
-        latitude: createEventDto.address.coordinates?.latitude,
-        longitude: createEventDto.address.coordinates?.longitude,
+        city: createEventDto.address?.city,
+        place: createEventDto.address?.place,
+        latitude: createEventDto.address?.coordinates?.latitude,
+        longitude: createEventDto.address?.coordinates?.longitude,
         primaryColor: '#4340BE',
         userId,
       },

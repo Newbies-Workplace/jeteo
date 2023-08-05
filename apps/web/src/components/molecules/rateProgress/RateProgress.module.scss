@@ -1,4 +1,4 @@
-@import '@/colors.module';
+@use '@/colors.module.scss' as colors;
 
 .container {
     max-width: 240px;

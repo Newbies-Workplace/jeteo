@@ -1,4 +1,4 @@
-@import '@/colors.module';
+@use '@/colors.module.scss' as colors;
 
 .card {
   display: flex;
@@ -10,8 +10,8 @@
   padding: 4px;
 
   border-radius: 8px;
-  border: 0.5px solid $stroke;
-  background-color: $surface;
+  border: 0.5px solid colors.$stroke;
+  background-color: colors.$surface;
 
   .img {
     width: 32px;

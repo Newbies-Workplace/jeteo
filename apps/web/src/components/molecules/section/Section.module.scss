@@ -1,5 +1,5 @@
-@import "@/colors.module";
-@import "@/typography.module";
+@use '@/colors.module.scss' as colors;
+@use '@/typography.module.scss' as typography;
 
 .container {
   display: flex;
@@ -21,14 +21,14 @@
 
   font-size: 24px;
   font-weight: bold;
-  color: $gray;
+  color: colors.$gray;
 }
 
 .dot {
   min-width: 24px;
   min-height: 24px;
 
-  background-color: $gray;
+  background-color: colors.$gray;
   border-radius: 16px;
 }
 
@@ -40,7 +40,7 @@
 
   margin-top: 8px;
   margin-bottom: 8px;
-  background-color: $gray;
+  background-color: colors.$gray;
 }
 
 .sectionDecorator {
