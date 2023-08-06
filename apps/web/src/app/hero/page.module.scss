@@ -283,7 +283,7 @@
   }
 
   @include responsiveness.tablet {
-    //nothing to change
+    flex-direction: column;
   }
 
   @include responsiveness.mobile {
