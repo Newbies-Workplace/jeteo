@@ -57,7 +57,7 @@
   flex-direction: column;
   width: 100%;
   position: absolute;
-  bottom: -70%;
+  top: -160%;
 
   .moon {
     height: auto;
@@ -78,23 +78,26 @@
     flex-wrap: wrap;
     background-color: $background;
 
-    .text {
-      overflow-wrap: break-word;
-      max-width: 500px;
+    .textContainer {
+        display: flex;
+        flex-direction: column;
+        margin-top: 30px;
+        gap: 12px;
+
+      .text {
+        overflow-wrap: break-word;
+        max-width: 500px;
+      }
     }
+  }
+  .wave {
+    margin-top: -35px;
+    height: fit-content;
+    width: 100%;
+    user-select: none;
   }
 }
 
-.bottomContent {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  gap: 167px;
-  align-self: stretch;
-}
 .footer {
   width: 100%;
   position: absolute;
