@@ -30,7 +30,7 @@
 
   @include responsiveness.tablet {
     position: absolute;
-    top: 40%;
+    top: 50%;
     right: 8%;
 
     .planetOrangeImg {
@@ -41,7 +41,7 @@
 
   @include responsiveness.mobile {
     position: absolute;
-    top: 35%;
+    top: 70%;
     right: 8%;
 
     .planetOrangeImg {
@@ -59,7 +59,7 @@
 
   @include responsiveness.tablet {
     position: absolute;
-    top: 50%;
+    top: 60%;
     right: 8%;
 
     .planetVioletImg {
@@ -70,7 +70,7 @@
 
   @include responsiveness.mobile {
     position: absolute;
-    top: 40%;
+    top: 80%;
     right: 8%;
 
     .planetVioletImg {
@@ -125,7 +125,7 @@
   }
   @include responsiveness.tablet {
     position: absolute;
-    margin-top: -20%;
+    margin-top: -15%;
     margin-left: 5%;
     margin-right: 5%;
     gap: 24px;
@@ -138,7 +138,7 @@
     }
   }
   @include responsiveness.mobile {
-    margin-top: -50%;
+    margin-top: -30%;
     margin-left: 5%;
     margin-right: 5%;
     gap: 24px;
@@ -159,6 +159,7 @@
     }
   }
 }
+
 .contentOnMoon {
   display: flex;
   flex-direction: column;
@@ -203,6 +204,19 @@
     width: 100%;
     user-select: none;
   }
+
+  @include responsiveness.tablet {
+    top: -140%;
+
+    .items {
+        gap: 64px;
+      }
+    }
+
+  @include responsiveness.mobile {
+    top: -120%;
+
+  }
 }
 
 .galaxyTextContainer {
@@ -216,8 +230,6 @@
     max-width: 500px;
   }
 }
-
-
 .footer {
   width: 100%;
   position: absolute;
@@ -239,7 +251,6 @@
       flex-direction: column;
   }
 }
-
 .textWithImage{
   display: flex;
   gap: 4px;
