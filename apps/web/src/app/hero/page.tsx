@@ -17,7 +17,7 @@ import Button from "@/components/atoms/button/Button";
 import Link from "next/link";
 import { GalaxyBackground } from "@/components/molecules/galaxyBackground/GalaxyBackground";
 import React, { useEffect, useRef, useState } from "react";
-import { animated, useSpring } from "@react-spring/web";
+import { animated, useSpringValue } from "@react-spring/web";
 
 //todo przeksakiwanie przy zmianie wartosći isVisible
 //todo na mobilce nie wyglada to za dobrze trzeba dostosować sobno css dla tabletow i mobilek
@@ -27,9 +27,9 @@ export default function Page() {
 
   const [isVisible, setIsVisible] = useState(true);
 
-  const planetProps = useSpring({
-    opacity: isVisible ? 1 : 0,
-  });
+  const opacityPingGreen = useSpringValue(1);
+  const opacityOrange = useSpringValue(1);
+  const opacityViolet = useSpringValue(1);
 
   useEffect(() => {
     const container = document.querySelector(".parallax");
@@ -41,11 +41,29 @@ export default function Page() {
 
   const handleScroll = () => {
     if (parallax.current) {
-      if (parallax.current.current >= 300) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
+      // @ts-ignore
+      setTimeout(async () => {
+        // @ts-ignore
+        if (parallax.current.current >= 370) {
+          opacityPingGreen.set(0);
+        } else {
+          opacityPingGreen.set(1);
+        }
+
+        // @ts-ignore
+        if (parallax.current.current >= 280) {
+          opacityOrange.set(0);
+        } else {
+          opacityOrange.set(1);
+        }
+
+        // @ts-ignore
+        if (parallax.current.current >= 200) {
+          opacityViolet.set(0);
+        } else {
+          opacityViolet.set(1);
+        }
+      }, 250);
     }
   };
 
@@ -54,7 +72,7 @@ export default function Page() {
       <Parallax pages={2} ref={parallax} className="parallax">
         <ParallaxLayer offset={0} speed={-1.25} style={{ zIndex: 0 }}>
           <animated.div
-            style={{ ...planetProps, width: 85, height: 85 }}
+            style={{ opacity: opacityPingGreen }}
             className={styles.planetPinkGreen}
           >
             <Image
@@ -67,7 +85,7 @@ export default function Page() {
         </ParallaxLayer>
         <ParallaxLayer offset={0} speed={-0.75} style={{ zIndex: 0 }}>
           <animated.div
-            style={{ width: 156, height: 156 }}
+            style={{ opacity: opacityOrange }}
             className={styles.planetOrange}
           >
             <Image
@@ -80,10 +98,7 @@ export default function Page() {
         </ParallaxLayer>
         <ParallaxLayer offset={0} speed={-1} style={{ zIndex: 0 }}>
           <animated.div
-            style={{
-              width: 53,
-              height: 53,
-            }}
+            style={{ opacity: opacityViolet }}
             className={styles.planetViolet}
           >
             <Image
