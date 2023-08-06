@@ -10,46 +10,90 @@ import presentation from "@/assets/images/presentation-svg.svg";
 import newbies from "@/assets/newbies.svg";
 import rst from "@/assets/RST.svg";
 import wave from "@/assets/images/wave.svg";
+import planetUfoSwarm from "@/assets/images/planet-ufoswarm.svg";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { Text } from "@/components/atoms/text/Text";
 import Button from "@/components/atoms/button/Button";
 import Link from "next/link";
 import { GalaxyBackground } from "@/components/molecules/galaxyBackground/GalaxyBackground";
+import React, { useEffect, useRef, useState } from "react";
+import { animated, useSpring } from "@react-spring/web";
 
+//todo przeksakiwanie przy zmianie wartosći isVisible
 //todo na mobilce nie wyglada to za dobrze trzeba dostosować sobno css dla tabletow i mobilek
 //todo lepsze zdjęcie ksiezyca - moze osobno eksport kazdych lementow bez poświaty bo czarna kreska jest
 export default function Page() {
+  const parallax = useRef();
+
+  const [isVisible, setIsVisible] = useState(true);
+
+  const planetProps = useSpring({
+    opacity: isVisible ? 1 : 0,
+  });
+
+  useEffect(() => {
+    const container = document.querySelector(".parallax");
+    container.addEventListener("scroll", handleScroll);
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (parallax.current) {
+      if (parallax.current.current >= 300) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+    }
+  };
+
   return (
     <GalaxyBackground hidePlanets>
-      <Parallax pages={2}>
+      <Parallax pages={2} ref={parallax} className="parallax">
         <ParallaxLayer offset={0} speed={-1.25} style={{ zIndex: 0 }}>
-          <Image
-            src={planetPinkGreen}
-            alt={"planetPinkGreen"}
-            width={85}
-            height={85}
+          <animated.div
+            style={{ ...planetProps, width: 85, height: 85 }}
             className={styles.planetPinkGreen}
-          />
+          >
+            <Image
+              src={planetPinkGreen}
+              alt="planetPinkGreen"
+              width={85}
+              height={85}
+            />
+          </animated.div>
         </ParallaxLayer>
         <ParallaxLayer offset={0} speed={-0.75} style={{ zIndex: 0 }}>
-          <Image
-            src={planetOrange}
-            alt={"planetOrange"}
-            width={156}
-            height={156}
+          <animated.div
+            style={{ width: 156, height: 156 }}
             className={styles.planetOrange}
-          />
+          >
+            <Image
+              src={planetOrange}
+              alt={"planetOrange"}
+              width={156}
+              height={156}
+            />
+          </animated.div>
         </ParallaxLayer>
         <ParallaxLayer offset={0} speed={-1} style={{ zIndex: 0 }}>
-          <Image
-            src={planetViolet}
-            alt={"planetViolet"}
-            width={53}
-            height={53}
+          <animated.div
+            style={{
+              width: 53,
+              height: 53,
+            }}
             className={styles.planetViolet}
-          />
+          >
+            <Image
+              src={planetViolet}
+              alt={"planetViolet"}
+              width={53}
+              height={53}
+            />
+          </animated.div>
         </ParallaxLayer>
-
         <ParallaxLayer
           offset={0}
           speed={-0.15}
@@ -121,11 +165,49 @@ export default function Page() {
             <Image src={wave} alt={"wave"} className={styles.wave} priority />
           </div>
         </ParallaxLayer>
+
+        <ParallaxLayer
+          offset={1}
+          speed={-0.2}
+          style={{
+            zIndex: 1,
+          }}
+        >
+          <div
+            style={{
+              zIndex: 1,
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "center",
+              alignItems: "center",
+              alignContent: "center",
+              alignSelf: "stretch",
+              flexWrap: "wrap",
+            }}
+          >
+            <Image
+              src={planetUfoSwarm}
+              alt={"planetUfoSwarm"}
+              style={{ marginTop: 15 }}
+            />
+            <div className={styles.galaxyTextContainer}>
+              <Text variant={"headL"} bold className={styles.text}>
+                Dziel się wiedzą
+              </Text>
+              <Text variant={"bodyL"} className={styles.text}>
+                Masz ego nie z tego świata i potrzebę wygadania się? To miejsce
+                stworzone dla ciebie! Jedynie co potrzebujesz to bycie ekspertem
+                i potężnego pytonga.
+              </Text>
+            </div>
+          </div>
+        </ParallaxLayer>
+
         <ParallaxLayer
           offset={1}
           speed={3}
           style={{
-            zIndex: 4,
+            zIndex: 1,
           }}
         >
           <div className={styles.footer}>
