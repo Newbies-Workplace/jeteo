@@ -63,10 +63,18 @@ export default function Page() {
         }
 
         // @ts-ignore
-        if (parallax.current.current >= 500) {
-          opacityBottomContent.set(1);
+        if (parallax.current.current >= 450 && parallax.current.current < 475) {
+          opacityBottomContent.set(0.5);
         } else {
           opacityBottomContent.set(0);
+        }
+        // @ts-ignore
+        if (parallax.current.current >= 475 && parallax.current.current < 550) {
+          opacityBottomContent.set(0.75);
+        }
+        // @ts-ignore
+        if (parallax.current.current >= 550) {
+          opacityBottomContent.set(1);
         }
       }, 250);
     }
