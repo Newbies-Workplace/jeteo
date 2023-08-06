@@ -16,20 +16,18 @@ import { Text } from "@/components/atoms/text/Text";
 import Button from "@/components/atoms/button/Button";
 import Link from "next/link";
 import { GalaxyBackground } from "@/components/molecules/galaxyBackground/GalaxyBackground";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { animated, useSpringValue } from "@react-spring/web";
 
-//todo przeksakiwanie przy zmianie wartosći isVisible
 //todo na mobilce nie wyglada to za dobrze trzeba dostosować sobno css dla tabletow i mobilek
 //todo lepsze zdjęcie ksiezyca - moze osobno eksport kazdych lementow bez poświaty bo czarna kreska jest
 export default function Page() {
   const parallax = useRef();
 
-  const [isVisible, setIsVisible] = useState(true);
-
   const opacityPingGreen = useSpringValue(1);
   const opacityOrange = useSpringValue(1);
   const opacityViolet = useSpringValue(1);
+  const opacityBottomContent = useSpringValue(0);
 
   useEffect(() => {
     const container = document.querySelector(".parallax");
@@ -62,6 +60,13 @@ export default function Page() {
           opacityViolet.set(0);
         } else {
           opacityViolet.set(1);
+        }
+
+        // @ts-ignore
+        if (parallax.current.current >= 500) {
+          opacityBottomContent.set(1);
+        } else {
+          opacityBottomContent.set(0);
         }
       }, 250);
     }
@@ -183,13 +188,15 @@ export default function Page() {
 
         <ParallaxLayer
           offset={1}
-          speed={-0.2}
+          speed={-1}
           style={{
             zIndex: 1,
+            pointerEvents: "none",
           }}
         >
-          <div
+          <animated.div
             style={{
+              opacity: opacityBottomContent,
               zIndex: 1,
               display: "flex",
               flexDirection: "row-reverse",
@@ -215,9 +222,8 @@ export default function Page() {
                 i potężnego pytonga.
               </Text>
             </div>
-          </div>
+          </animated.div>
         </ParallaxLayer>
-
         <ParallaxLayer
           offset={1}
           speed={3}
