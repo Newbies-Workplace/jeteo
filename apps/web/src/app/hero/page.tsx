@@ -5,7 +5,7 @@ import planetViolet from "@/assets/images/planet-violet.svg";
 import planetOrange from "@/assets/images/planet-orange.svg";
 import planetPinkGreen from "@/assets/images/planet-pink-green.svg";
 import planetBlue from "@/assets/images/planet-blue.svg";
-import moon from "@/assets/images/moon-decoration.svg";
+import moon from "@/assets/images/moon-decoration.png";
 import presentation from "@/assets/images/presentation-svg.svg";
 import newbies from "@/assets/newbies.svg";
 import rst from "@/assets/RST.svg";
@@ -42,7 +42,7 @@ export default function Page() {
       // @ts-ignore
       setTimeout(async () => {
         // @ts-ignore
-        if (parallax.current.current >= 370) {
+        if (parallax.current.current >= 400) {
           opacityPingGreen.set(0);
         } else {
           opacityPingGreen.set(1);
@@ -69,11 +69,11 @@ export default function Page() {
           opacityBottomContent.set(0);
         }
         // @ts-ignore
-        if (parallax.current.current >= 475 && parallax.current.current < 550) {
+        if (parallax.current.current >= 475 && parallax.current.current < 500) {
           opacityBottomContent.set(0.75);
         }
         // @ts-ignore
-        if (parallax.current.current >= 550) {
+        if (parallax.current.current >= 500) {
           opacityBottomContent.set(1);
         }
       }, 250);
@@ -218,7 +218,7 @@ export default function Page() {
             <Image
               src={planetUfoSwarm}
               alt={"planetUfoSwarm"}
-              style={{ marginTop: 15 }}
+              style={{ marginTop: 70 }}
             />
             <div className={styles.galaxyTextContainer}>
               <Text variant={"headL"} bold className={styles.text}>
