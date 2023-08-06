@@ -19,6 +19,8 @@ import { GalaxyBackground } from "@/components/molecules/galaxyBackground/Galaxy
 import React, { useEffect, useRef } from "react";
 import { animated, useSpringValue } from "@react-spring/web";
 
+//todo dodać landcape do mixinów
+//todo ogarnąc warningi
 export default function Page() {
   const parallax = useRef();
 
