@@ -30,7 +30,7 @@
 
   @include responsiveness.tablet {
     position: absolute;
-    top: 50%;
+    top: 60%;
     right: 8%;
 
     .planetOrangeImg {
@@ -59,7 +59,7 @@
 
   @include responsiveness.tablet {
     position: absolute;
-    top: 60%;
+    top: 70%;
     right: 8%;
 
     .planetVioletImg {
@@ -80,6 +80,7 @@
     }
   }
 }
+
 .logoSection {
   display: flex;
   flex-direction: column;
@@ -123,15 +124,16 @@
       }
     }
   }
+
   @include responsiveness.tablet {
     position: absolute;
-    margin-top: -15%;
+    top: 15%;
     margin-left: 5%;
     margin-right: 5%;
     gap: 24px;
     text-align: center;
     .logo {
-      .planetBlue{
+      .planetBlue {
         width: 160px;
         height: 160px;
       }
@@ -145,13 +147,16 @@
     text-align: center;
     .logo {
       flex-direction: column;
-      .planetBlue{
+
+      .planetBlue {
         width: 90px;
         height: 90px;
       }
-      .logoTextContainer{
+
+      .logoTextContainer {
         max-width: 300px;
         overflow-wrap: break-word;
+
         .logoText {
           font-size: 84px;
         }
@@ -187,17 +192,22 @@
     background-color: colors.$background;
 
     .textContainer {
-        display: flex;
-        flex-direction: column;
-        margin-top: 30px;
-        gap: 12px;
+      display: flex;
+      flex-direction: column;
+      margin-top: 30px;
+      gap: 12px;
 
       .text {
         overflow-wrap: break-word;
         max-width: 500px;
       }
     }
+
+    .presentation {
+      margin-top: 15px;
+    }
   }
+
   .wave {
     margin-top: -35px;
     height: fit-content;
@@ -207,29 +217,86 @@
 
   @include responsiveness.tablet {
     top: -140%;
-
     .items {
-        gap: 64px;
-      }
+      gap: 64px;
+      padding-left: 30px;
+      padding-right: 30px;
     }
+
+    .wave {
+      margin-top: -25px;
+    }
+  }
+
 
   @include responsiveness.mobile {
     top: -120%;
 
+    .items {
+      gap: 32px;
+      padding-left: 15px;
+      padding-right: 15px;
+
+      .textContainer {
+        .text {
+          max-width: 300px;
+        }
+      }
+
+      .presentation {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+    .wave {
+      margin-top: -5px;
+      height: fit-content;
+      width: 100%;
+      user-select: none;
+    }
   }
 }
 
-.galaxyTextContainer {
+.galaxyContent {
   display: flex;
-  flex-direction: column;
-  margin-top: 60px;
-  gap: 12px;
-  color: colors.$white;
-  .text {
-    overflow-wrap: break-word;
-    max-width: 500px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  align-self: stretch;
+
+  .galaxyTextContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+    gap: 12px;
+    color: colors.$white;
+
+    .text {
+      overflow-wrap: break-word;
+      max-width: 500px;
+    }
+  }
+
+  .planetUfoSwarm {
+    margin-top: 70px;
+  }
+
+  @include responsiveness.tablet {
+    //nothing to change
+  }
+
+  @include responsiveness.mobile {
+    flex-direction: column;
+    padding-left: 15px;
+
+    .planetUfoSwarm {
+      width: 300px;
+      height: 300px;
+    }
   }
 }
+
 .footer {
   width: 100%;
   position: absolute;
@@ -244,17 +311,19 @@
   color: colors.$white;
 
   @include responsiveness.mobile {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   @include responsiveness.tablet {
-      flex-direction: column;
+    flex-direction: column;
   }
 }
-.textWithImage{
+
+.textWithImage {
   display: flex;
   gap: 4px;
 }
+
 .link {
   text-decoration: underline;
   color: colors.$white;

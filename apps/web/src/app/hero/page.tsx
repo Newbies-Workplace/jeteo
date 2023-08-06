@@ -170,9 +170,9 @@ export default function Page() {
                 </Text>
               </div>
               <Image
+                className={styles.presentation}
                 src={presentation}
                 alt={"Presentation"}
-                style={{ marginTop: 15 }}
               />
             </div>
             <Image src={wave} alt={"wave"} className={styles.wave} priority />
@@ -190,21 +190,9 @@ export default function Page() {
           <animated.div
             style={{
               opacity: opacityBottomContent,
-              zIndex: 1,
-              display: "flex",
-              flexDirection: "row-reverse",
-              justifyContent: "center",
-              alignItems: "center",
-              alignContent: "center",
-              alignSelf: "stretch",
-              flexWrap: "wrap",
             }}
+            className={styles.galaxyContent}
           >
-            <Image
-              src={planetUfoSwarm}
-              alt={"planetUfoSwarm"}
-              style={{ marginTop: 70 }}
-            />
             <div className={styles.galaxyTextContainer}>
               <Text variant={"headL"} bold className={styles.text}>
                 Dziel się wiedzą
@@ -215,6 +203,11 @@ export default function Page() {
                 i potężnego pytonga.
               </Text>
             </div>
+            <Image
+              className={styles.planetUfoSwarm}
+              src={planetUfoSwarm}
+              alt={"planetUfoSwarm"}
+            />
           </animated.div>
         </ParallaxLayer>
         <ParallaxLayer
