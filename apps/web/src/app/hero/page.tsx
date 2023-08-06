@@ -19,8 +19,6 @@ import { GalaxyBackground } from "@/components/molecules/galaxyBackground/Galaxy
 import React, { useEffect, useRef } from "react";
 import { animated, useSpringValue } from "@react-spring/web";
 
-//todo na mobilce nie wyglada to za dobrze trzeba dostosować sobno css dla tabletow i mobilek
-//todo lepsze zdjęcie ksiezyca - moze osobno eksport kazdych lementow bez poświaty bo czarna kreska jest
 export default function Page() {
   const parallax = useRef();
 
@@ -89,6 +87,7 @@ export default function Page() {
             className={styles.planetPinkGreen}
           >
             <Image
+              className={styles.planetPinkGreenImg}
               src={planetPinkGreen}
               alt="planetPinkGreen"
               width={85}
@@ -102,6 +101,7 @@ export default function Page() {
             className={styles.planetOrange}
           >
             <Image
+              className={styles.planetOrangeImg}
               src={planetOrange}
               alt={"planetOrange"}
               width={156}
@@ -115,6 +115,7 @@ export default function Page() {
             className={styles.planetViolet}
           >
             <Image
+              className={styles.planetVioletImg}
               src={planetViolet}
               alt={"planetViolet"}
               width={53}
@@ -125,44 +126,28 @@ export default function Page() {
         <ParallaxLayer
           offset={0}
           speed={-0.15}
-          style={{
-            zIndex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 64,
-            marginTop: "-8%",
-          }}
+          style={{ zIndex: 1 }}
+          className={styles.logoSection}
         >
           <div className={styles.logo}>
             <Image
               src={planetBlue}
               alt={"Planet Blue"}
               className={styles.planetBlue}
+              width={213}
+              height={213}
             />
             <div className={styles.logoTextContainer}>
               <Text className={styles.logoText}>jeteo</Text>
               <Text variant={"headM"}>Portal do dzielenia się wiedzą!</Text>
             </div>
           </div>
-
           <Link href={"/"}>
-            <Button
-              primary
-              size="small"
-              style={{
-                paddingLeft: 16,
-                paddingRight: 16,
-                paddingTop: 8,
-                paddingBottom: 8,
-              }}
-            >
+            <Button className={styles.button} primary size="small">
               Sprawdź listę wydarzeń
             </Button>
           </Link>
         </ParallaxLayer>
-
         <ParallaxLayer
           offset={1}
           speed={1}
