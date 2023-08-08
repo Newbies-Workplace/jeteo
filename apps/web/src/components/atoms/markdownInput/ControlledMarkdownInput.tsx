@@ -1,8 +1,11 @@
 "use client";
 
-import { Input, InputProps } from "@/components/atoms/input/Input";
 import { Control, RegisterOptions, useController } from "react-hook-form";
 import React from "react";
+import {
+  MarkdownInput,
+  MarkdownInputProps,
+} from "@/components/atoms/markdownInput/MarkdownInput";
 
 export type ControlledInputProps = {
   name: string;
@@ -11,9 +14,9 @@ export type ControlledInputProps = {
     RegisterOptions,
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
   >;
-} & Omit<InputProps, "setValue" | "value">;
+} & Omit<MarkdownInputProps, "setValue" | "value">;
 
-export const ControlledInput: React.FC<ControlledInputProps> = ({
+export const ControlledMarkdownInput: React.FC<ControlledInputProps> = ({
   name,
   control,
   rules,
@@ -22,7 +25,7 @@ export const ControlledInput: React.FC<ControlledInputProps> = ({
   const { field, fieldState } = useController({ name, control, rules });
 
   return (
-    <Input
+    <MarkdownInput
       {...rest}
       value={field.value ?? ""}
       setValue={field.onChange}

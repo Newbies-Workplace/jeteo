@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { Section } from "@/components/molecules/section/Section";
 import {
@@ -7,8 +8,8 @@ import {
 } from "@/components/molecules/radioButtons/RadioButtons";
 import Button from "@/components/atoms/button/Button";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import axiosInstance from "@/common/axiosInstance";
-import { EventResponse } from "shared/.dist/model/event/response/event.response";
+import { EventResponse } from "shared/model/event/response/event.response";
+import { myFetch } from "@/common/fetch";
 
 const visibilities: RadioItem[] = [
   {
@@ -28,18 +29,13 @@ type VisibilityForm = {
   visibility: "PRIVATE" | "HIDDEN" | "PUBLIC";
 };
 
-const defaultValues: VisibilityForm = {
-  visibility: "PRIVATE",
-};
-
 interface EventVisibilityFormProps {
   event: EventResponse;
-  onSubmitted: (event: EventResponse) => void;
+  onSubmitted?: (event: EventResponse) => void;
 }
 
 export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
   event,
-  onSubmitted,
 }) => {
   const {
     control,
@@ -51,9 +47,10 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
     },
   });
   const onSubmit: SubmitHandler<VisibilityForm> = (data: VisibilityForm) => {
-    axiosInstance.patch<EventResponse>("/rest/v1/events", data).then((res) => {
-      onSubmitted(res.data);
-    });
+    myFetch(`/rest/v1/events/${event.id}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
   };
 
   return (

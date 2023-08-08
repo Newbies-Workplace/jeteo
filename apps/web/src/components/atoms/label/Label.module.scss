@@ -1,0 +1,7 @@
+@use "@/colors.module.scss" as colors;
+
+.requiredStar {
+  margin-left: 3px;
+  color: colors.$primary;
+  font-weight: bold;
+}
