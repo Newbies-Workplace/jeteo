@@ -10,6 +10,7 @@ import Button from "@/components/atoms/button/Button";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { EventResponse } from "shared/model/event/response/event.response";
 import { myFetch } from "@/common/fetch";
+import { useRouter } from "next/navigation";
 
 const visibilities: RadioItem[] = [
   {
@@ -37,6 +38,7 @@ interface EventVisibilityFormProps {
 export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
   event,
 }) => {
+  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -50,7 +52,11 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
     myFetch(`/rest/v1/events/${event.id}`, {
       method: "PATCH",
       body: JSON.stringify(data),
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then(() => {
+        router.refresh();
+      });
   };
 
   return (

@@ -12,6 +12,7 @@ export const EventBasicFormWrapper: React.FC<{ event: EventResponse }> = ({
 
   const onSubmitted = (event: EventResponse) => {
     router.push(`/studio/events/edit/${event.slug}/theme`);
+    router.refresh();
   };
   return <EventBasicForm onSubmitted={onSubmitted} event={event} />;
 };

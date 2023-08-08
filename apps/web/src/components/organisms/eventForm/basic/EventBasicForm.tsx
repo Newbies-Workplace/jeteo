@@ -3,8 +3,6 @@
 import React from "react";
 import { Section } from "@/components/molecules/section/Section";
 import Button from "@/components/atoms/button/Button";
-import MDEditor from "@uiw/react-md-editor";
-import { Text } from "@/components/atoms/text/Text";
 import { RadioButtons } from "@/components/molecules/radioButtons/RadioButtons";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ControlledInput } from "@/components/atoms/input/ControlledInput";
