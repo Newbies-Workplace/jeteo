@@ -26,7 +26,7 @@ export default function NotFound() {
           </Text>
         </div>
         <Link href={"/"}>
-          <Button primary className={styles.button} size="small">
+          <Button primary size="small">
             Zabierz mnie na stronę główną
           </Button>
         </Link>
