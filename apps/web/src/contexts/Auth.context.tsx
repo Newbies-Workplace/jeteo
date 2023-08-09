@@ -2,12 +2,7 @@
 
 import React, { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-
-// todo - move to shared
-export interface UserResponse {
-  id: string;
-  nick: string;
-}
+import { UserResponse } from "shared/model/user/response/user.response";
 
 interface AuthContext {
   fetchUser: () => Promise<void>;

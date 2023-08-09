@@ -5,6 +5,7 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -17,6 +18,8 @@ import { TokenUser } from 'src/auth/jwt/jwt.model';
 import { GetEventsQueryRequest } from 'shared/model/event/request/getEventsQuery.request';
 import { EventResponse } from 'shared/model/event/response/event.response';
 import { EventConverter } from './converters/event.converter';
+import { UpdateEventRequest } from 'shared/model/event/request/updateEventRequest';
+import { Event } from '@prisma/client';
 
 @Controller('/rest/v1/events')
 export class EventController {
@@ -51,6 +54,33 @@ export class EventController {
     return this.eventConverter.convert(event);
   }
 
+  @Patch('/:id')
+  @UseGuards(JwtGuard)
+  async patchEvent(
+    @Param('id') eventId: string,
+    @Body() updateEventRequest: UpdateEventRequest,
+    @User() user: TokenUser,
+  ): Promise<EventResponse> {
+    const event: Event = await this.eventService.getEventById(eventId);
+
+    if (!event) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
+    if (event.userId !== user.id) {
+      throw new HttpException(
+        'User is not an event owner',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    const updatedEvent = await this.eventService.updateEvent(
+      eventId,
+      updateEventRequest,
+    );
+
+    return this.eventConverter.convert(updatedEvent);
+  }
+
   @Get('')
   async getPublicEvents(
     @Query() paginationQuery: GetEventsQueryRequest,
@@ -67,11 +97,11 @@ export class EventController {
   @UseGuards(JwtGuard)
   async createEvent(
     @User() tokenUser: TokenUser,
-    @Body() createEventDto: CreateEventRequest,
+    @Body() createEventRequest: CreateEventRequest,
   ): Promise<EventResponse> {
     const event = await this.eventService.createEvent(
       tokenUser.id,
-      createEventDto,
+      createEventRequest,
     );
 
     return this.eventConverter.convert(event);

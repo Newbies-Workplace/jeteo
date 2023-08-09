@@ -4,6 +4,7 @@ import styles from "./Input.module.scss";
 import React from "react";
 import cs from "classnames";
 import { Text } from "@/components/atoms/text/Text";
+import { Label } from "@/components/atoms/label/Label";
 
 export type InputProps = {
   label?: string;
@@ -34,11 +35,7 @@ export const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <div className={styles.input} style={style}>
-      {label && (
-        <Text className={cs(required && styles.required)} variant={"headS"}>
-          {label}
-        </Text>
-      )}
+      {label && <Label label={label} required={required} />}
 
       <div className={styles.inputWrapper}>
         {multiline ? (

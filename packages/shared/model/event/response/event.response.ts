@@ -4,7 +4,7 @@ export interface EventResponse {
   id: string;
   slug: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   description: string;
   from: DateTime;
   to: DateTime;
@@ -20,6 +20,7 @@ export interface EventResponse {
   tags: string[];
   primaryColor: string;
   coverImage?: string;
+  visibility: "PRIVATE" | "HIDDEN" | "PUBLIC";
   userId: string;
   createdAt: DateTime;
 }
