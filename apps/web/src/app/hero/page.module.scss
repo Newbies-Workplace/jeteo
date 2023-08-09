@@ -29,10 +29,6 @@
   right: 8%;
 
   @include responsiveness.tablet {
-    position: absolute;
-    top: 60%;
-    right: 8%;
-
     .planetOrangeImg {
       width: 124px;
       height: 124px;
@@ -58,10 +54,6 @@
   left: 10%;
 
   @include responsiveness.tablet {
-    position: absolute;
-    top: 70%;
-    right: 8%;
-
     .planetVioletImg {
       width: 46px;
       height: 46px;
@@ -74,7 +66,6 @@
     right: 8%;
 
     .planetVioletImg {
-
       width: 28px;
       height: 28px;
     }
@@ -236,7 +227,7 @@
       gap: 32px;
       padding-left: 15px;
       padding-right: 15px;
-
+      padding-bottom: 0;
       .textContainer {
         .text {
           max-width: 300px;

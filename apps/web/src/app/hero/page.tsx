@@ -5,13 +5,13 @@ import planetViolet from "@/assets/images/planet-violet.svg";
 import planetOrange from "@/assets/images/planet-orange.svg";
 import planetPinkGreen from "@/assets/images/planet-pink-green.svg";
 import planetBlue from "@/assets/images/planet-blue.svg";
-import moon from "@/assets/images/moon-decoration.png";
+import moon from "@/assets/images/moon-decoration.svg";
 import presentation from "@/assets/images/presentation-svg.svg";
 import newbies from "@/assets/newbies.svg";
 import rst from "@/assets/RST.svg";
 import wave from "@/assets/images/wave.svg";
 import planetUfoSwarm from "@/assets/images/planet-ufoswarm.svg";
-import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+import { IParallax, Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { Text } from "@/components/atoms/text/Text";
 import Button from "@/components/atoms/button/Button";
 import Link from "next/link";
@@ -20,7 +20,7 @@ import React, { useEffect, useRef } from "react";
 import { animated, useSpringValue } from "@react-spring/web";
 
 export default function Page() {
-  const parallax = useRef();
+  const parallax = useRef<IParallax>();
 
   const opacityPingGreen = useSpringValue(1);
   const opacityOrange = useSpringValue(1);
@@ -34,47 +34,24 @@ export default function Page() {
       container.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   const handleScroll = () => {
-    if (parallax.current) {
-      // @ts-ignore
-      setTimeout(async () => {
-        // @ts-ignore
-        if (parallax.current.current >= 400) {
-          opacityPingGreen.set(0);
-        } else {
-          opacityPingGreen.set(1);
-        }
+    const current: number = parallax.current ? parallax.current.current : null;
 
-        // @ts-ignore
-        if (parallax.current.current >= 280) {
-          opacityOrange.set(0);
-        } else {
-          opacityOrange.set(1);
-        }
-
-        // @ts-ignore
-        if (parallax.current.current >= 200) {
-          opacityViolet.set(0);
-        } else {
-          opacityViolet.set(1);
-        }
-
-        // @ts-ignore
-        if (parallax.current.current >= 450 && parallax.current.current < 475) {
-          opacityBottomContent.set(0.5);
-        } else {
-          opacityBottomContent.set(0);
-        }
-        // @ts-ignore
-        if (parallax.current.current >= 475 && parallax.current.current < 500) {
-          opacityBottomContent.set(0.75);
-        }
-        // @ts-ignore
-        if (parallax.current.current >= 500) {
-          opacityBottomContent.set(1);
-        }
-      }, 250);
-    }
+    setTimeout(async () => {
+      opacityPingGreen.set(current >= 400 ? 0 : 1);
+      opacityOrange.set(current >= 280 ? 0 : 1);
+      opacityViolet.set(current >= 200 ? 0 : 1);
+      opacityBottomContent.set(
+        current >= 460 && current < 475
+          ? 0.5
+          : current >= 475 && current < 500
+          ? 0.75
+          : current >= 500
+          ? 1
+          : 0
+      );
+    }, 150);
   };
 
   return (
@@ -163,9 +140,11 @@ export default function Page() {
                   Zbieraj wiedzę
                 </Text>
                 <Text variant={"bodyL"} className={styles.text}>
-                  Jesteśmy przekonani iż wiedza od ekspertów, jest warta więcej
-                  niż jakikolwiek poradnik na youtube. Staramy się stworzyć
-                  miejsce z wyłącznie takich ekspertów.
+                  Jesteśmy głęboko przekonani, że wiedza dostarczana przez
+                  ekspertów posiada znacznie większą wartość niż jakikolwiek
+                  poradnik dostępny na YouTube. W związku z tym, dążymy do
+                  utworzenia środowiska skupiającego wyłącznie takich
+                  specjalistów.
                 </Text>
               </div>
               <Image
@@ -197,9 +176,10 @@ export default function Page() {
                 Dziel się wiedzą
               </Text>
               <Text variant={"bodyL"} className={styles.text}>
-                Masz ego nie z tego świata i potrzebę wygadania się? To miejsce
-                stworzone dla ciebie! Jedynie co potrzebujesz to bycie ekspertem
-                i potężnego pytonga.
+                Masz wiarę we własne umiejętności i chęć dzielenia się wiedzą?
+                To miejsce powstało właśnie z myślą o Tobie! Wystarczy posiadać
+                garść wiedzy z obszaru programowania, aby dołączyć do naszej
+                społeczności pasjonatów technologii.
               </Text>
             </div>
             <Image
