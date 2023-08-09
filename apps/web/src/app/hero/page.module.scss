@@ -1,0 +1,321 @@
+@use '@/colors.module.scss' as colors;
+@use '@/typography.module.scss' as typography;
+@use '@/responsiveness.module.scss' as responsiveness;
+
+.planetPinkGreen {
+  position: absolute;
+  top: 10%;
+  right: 20%;
+
+  @include responsiveness.tablet {
+    .planetPinkGreenImg {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  @include responsiveness.mobile {
+
+    .planetPinkGreenImg {
+      width: 36px;
+      height: 36px;
+    }
+  }
+}
+
+.planetOrange {
+  position: absolute;
+  top: 60%;
+  right: 8%;
+
+  @include responsiveness.tablet {
+    .planetOrangeImg {
+      width: 124px;
+      height: 124px;
+    }
+  }
+
+  @include responsiveness.mobile {
+    position: absolute;
+    top: 70%;
+    right: 8%;
+
+    .planetOrangeImg {
+
+      width: 56px;
+      height: 56px;
+    }
+  }
+}
+
+.planetViolet {
+  position: absolute;
+  top: 70%;
+  left: 10%;
+
+  @include responsiveness.tablet {
+    .planetVioletImg {
+      width: 46px;
+      height: 46px;
+    }
+  }
+
+  @include responsiveness.mobile {
+    position: absolute;
+    top: 80%;
+    right: 8%;
+
+    .planetVioletImg {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}
+
+.logoSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 64px;
+  margin-top: -8%;
+
+  .button {
+    padding: 8px 16px;
+  }
+
+  .logo {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    text-align: left;
+    justify-content: center;
+    align-items: center;
+
+    .planetBlue {
+      z-index: 1;
+      border-radius: 50%;
+      box-shadow: 0 0 32px 0 rgba(0, 148, 255, 0.25),
+      2px -2px 8px 0px rgba(255, 255, 255, 0.15);
+    }
+
+    .logoTextContainer {
+      text-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.5);
+      color: colors.$white;
+
+      display: flex;
+      flex-direction: column;
+
+      .logoText {
+        @include typography.logo;
+        margin-top: -25px;
+        color: colors.$white;
+        font-size: 128px;
+      }
+    }
+  }
+
+  @include responsiveness.tablet {
+    position: absolute;
+    top: 15%;
+    margin-left: 5%;
+    margin-right: 5%;
+    gap: 24px;
+    text-align: center;
+    .logo {
+      .planetBlue {
+        width: 160px;
+        height: 160px;
+      }
+    }
+  }
+  @include responsiveness.mobile {
+    margin-top: -30%;
+    margin-left: 5%;
+    margin-right: 5%;
+    gap: 24px;
+    text-align: center;
+    .logo {
+      flex-direction: column;
+
+      .planetBlue {
+        width: 90px;
+        height: 90px;
+      }
+
+      .logoTextContainer {
+        max-width: 300px;
+        overflow-wrap: break-word;
+
+        .logoText {
+          font-size: 84px;
+        }
+      }
+    }
+  }
+}
+
+.contentOnMoon {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+  top: -160%;
+
+  .moon {
+    height: auto;
+    width: 100%;
+    user-select: none;
+  }
+
+  .items {
+    margin-top: -4%;
+    display: flex;
+    flex-direction: row-reverse;
+    padding-bottom: 128px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 167px;
+    align-self: stretch;
+    flex-wrap: wrap;
+    background-color: colors.$background;
+
+    .textContainer {
+      display: flex;
+      flex-direction: column;
+      margin-top: 30px;
+      gap: 12px;
+
+      .text {
+        overflow-wrap: break-word;
+        max-width: 500px;
+      }
+    }
+
+    .presentation {
+      margin-top: 15px;
+    }
+  }
+
+  .wave {
+    margin-top: -35px;
+    height: fit-content;
+    width: 100%;
+    user-select: none;
+  }
+
+  @include responsiveness.tablet {
+    top: -140%;
+    .items {
+      gap: 64px;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .wave {
+      margin-top: -25px;
+    }
+  }
+
+
+  @include responsiveness.mobile {
+    top: -120%;
+
+    .items {
+      gap: 32px;
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-bottom: 0;
+      .textContainer {
+        .text {
+          max-width: 300px;
+        }
+      }
+
+      .presentation {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+    .wave {
+      margin-top: -5px;
+      height: fit-content;
+      width: 100%;
+      user-select: none;
+    }
+  }
+}
+
+.galaxyContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  align-self: stretch;
+
+  .galaxyTextContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+    gap: 12px;
+    color: colors.$white;
+
+    .text {
+      overflow-wrap: break-word;
+      max-width: 500px;
+    }
+  }
+
+  .planetUfoSwarm {
+    margin-top: 70px;
+  }
+
+  @include responsiveness.tablet {
+    flex-direction: column;
+  }
+
+  @include responsiveness.mobile {
+    flex-direction: column;
+    padding-left: 15px;
+
+    .planetUfoSwarm {
+      width: 300px;
+      height: 300px;
+    }
+  }
+}
+
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  padding: 16px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+  background-color: colors.$black;
+  color: colors.$white;
+
+  @include responsiveness.mobile {
+    flex-direction: column;
+  }
+
+  @include responsiveness.tablet {
+    flex-direction: column;
+  }
+}
+
+.textWithImage {
+  display: flex;
+  gap: 4px;
+}
+
+.link {
+  text-decoration: underline;
+  color: colors.$white;
+}

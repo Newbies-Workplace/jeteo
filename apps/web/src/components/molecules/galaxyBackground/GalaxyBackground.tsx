@@ -18,6 +18,7 @@ interface GalaxyBackgroundProps {
   hideUfoSwarm?: boolean;
   hideRocket?: boolean;
   hideVehicle?: boolean;
+  style?: React.CSSProperties;
 }
 
 export const GalaxyBackground: React.FC<
@@ -30,6 +31,7 @@ export const GalaxyBackground: React.FC<
   hideUfoSwarm,
   hideRocket,
   hideVehicle,
+  style,
 }) => {
   return (
     <div
@@ -37,6 +39,7 @@ export const GalaxyBackground: React.FC<
       style={{
         backgroundImage: `url(${SpaceFog.src})`,
         backgroundSize: "cover",
+        ...style,
       }}
     >
       {!hideStars && (
