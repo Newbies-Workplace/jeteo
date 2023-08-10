@@ -3,14 +3,10 @@ import { GetUser } from "@/components/home/GetUser";
 import styles from "@/app/page.module.scss";
 import { EventCard } from "@/components/molecules/eventCard/EventCard";
 import Link from "next/link";
-import {
-  EventCardActionsArchive,
-  EventCardActionsFresh,
-  EventCardActionsFuture,
-  EventCardActionsLive,
-} from "@/components/molecules/eventCard/EventCardActions";
-import React from "react";
+import React, { Suspense } from "react";
 import { Text } from "@/components/atoms/text/Text";
+import { getEvents } from "@/common/getEvent";
+import dayjs from "dayjs";
 
 export default function Page() {
   return (
@@ -22,69 +18,45 @@ export default function Page() {
             Witaj, <GetUser /> 👋
           </Text>
 
-          <div className={styles.events}>
-            <Link href={"/events/1"} style={{ alignSelf: "stretch" }}>
-              <EventCard
-                title="Wydarzenie 1"
-                subtitle={"opis wydarzenia"}
-                host={{
-                  name: "host",
-                }}
-                place={"Wrocław, Racławicka 13"}
-                tags={[]}
-                startDate={"kiedyś"}
-              >
-                <EventCardActionsFuture />
-              </EventCard>
-            </Link>
-
-            <Link href={"/events/2"} style={{ alignSelf: "stretch" }}>
-              <EventCard
-                title="Wydarzenie 1"
-                subtitle={"opis wydarzenia"}
-                host={{
-                  name: "host",
-                }}
-                place={"Wrocław, Racławicka 13"}
-                tags={["tag1", "tag2", "tag3"]}
-                startDate={"kiedyś"}
-              >
-                <EventCardActionsLive />
-              </EventCard>
-            </Link>
-
-            <Link href={"/events/2"} style={{ alignSelf: "stretch" }}>
-              <EventCard
-                title="Wydarzenie 1"
-                subtitle={"opis wydarzenia"}
-                host={{
-                  name: "host",
-                }}
-                place={"Wrocław, Racławicka 13"}
-                tags={["tag2", "tag3"]}
-                startDate={"kiedyś"}
-              >
-                <EventCardActionsFresh />
-              </EventCard>
-            </Link>
-
-            <Link href={"/events/2"} style={{ alignSelf: "stretch" }}>
-              <EventCard
-                title="Wydarzenie 1"
-                subtitle={"opis wydarzenia"}
-                host={{
-                  name: "host",
-                }}
-                place={"Wrocław, Racławicka 13"}
-                tags={["Java"]}
-                startDate={"kiedyś"}
-              >
-                <EventCardActionsArchive />
-              </EventCard>
-            </Link>
-          </div>
+          <Suspense fallback={"loading"}>
+            <EventList />
+          </Suspense>
         </div>
       </div>
     </div>
   );
 }
+
+const EventList = async () => {
+  const events = await getEvents();
+
+  return (
+    <div className={styles.events}>
+      {events.map((event) => {
+        return (
+          <Link
+            key={event.id}
+            href={`/events/${event.slug}`}
+            style={{ alignSelf: "stretch" }}
+          >
+            <EventCard
+              title={event.title}
+              subtitle={event.subtitle}
+              host={{
+                name: event.host.name,
+                avatar: event.host.avatar,
+              }}
+              place={
+                event.address
+                  ? event.address.city + ", " + event.address.place
+                  : undefined
+              }
+              tags={event.tags}
+              startDate={dayjs(event.from).format("D MMMM YYYY, HH:mm")}
+            />
+          </Link>
+        );
+      })}
+    </div>
+  );
+};

@@ -16,6 +16,7 @@ export const myFetch = async (
   return await fetch(inp, {
     credentials: "include",
     headers: {
+      ...init?.headers,
       "Content-Type": "application/json",
     },
     ...init,

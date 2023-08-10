@@ -2,12 +2,16 @@ import { Providers } from "@/providers";
 import React from "react";
 import "@/global.css";
 import colors from "@/colors.module.scss";
+import "dayjs/locale/pl";
+import dayjs from "dayjs";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  dayjs.locale("pl");
+
   return (
     <html lang="en">
       <body

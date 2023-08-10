@@ -7,7 +7,9 @@ import {
   EventCardActionsFuture,
   EventCardActionsLive,
 } from "@/components/molecules/eventCard/EventCardActions";
-import React from "react";
+import React, { Suspense } from "react";
+import { getEvents, getMyEvents } from "@/common/getEvent";
+import dayjs from "dayjs";
 
 export default function Page() {
   return (
@@ -28,35 +30,43 @@ export default function Page() {
         </Link>
       </div>
 
-      <Link href={"/events/1"} style={{ alignSelf: "stretch" }}>
-        <EventCard
-          title="Wydarzenie 1"
-          subtitle={"opis wydarzenia"}
-          host={{
-            name: "host",
-          }}
-          place={"Wrocław, Racławicka 13"}
-          tags={[]}
-          startDate={"kiedyś"}
-        >
-          <EventCardActionsFuture />
-        </EventCard>
-      </Link>
-
-      <Link href={"/events/2"} style={{ alignSelf: "stretch" }}>
-        <EventCard
-          title="Wydarzenie 1"
-          subtitle={"opis wydarzenia"}
-          host={{
-            name: "host",
-          }}
-          place={"Wrocław, Racławicka 13"}
-          tags={["tag1", "tag2", "tag3"]}
-          startDate={"kiedyś"}
-        >
-          <EventCardActionsLive />
-        </EventCard>
-      </Link>
+      <Suspense fallback={"loading"}>
+        <MyEventList />
+      </Suspense>
     </div>
   );
 }
+
+const MyEventList = async () => {
+  const events = await getMyEvents();
+
+  return (
+    <div className={styles.events}>
+      {events.map((event) => {
+        return (
+          <Link
+            key={event.id}
+            href={`/studio/events/${event.slug}`}
+            style={{ alignSelf: "stretch" }}
+          >
+            <EventCard
+              title={event.title}
+              subtitle={event.subtitle}
+              host={{
+                name: event.host.name,
+                avatar: event.host.avatar,
+              }}
+              place={
+                event.address
+                  ? event.address.city + ", " + event.address.place
+                  : undefined
+              }
+              tags={event.tags}
+              startDate={dayjs(event.from).format("D MMMM YYYY, HH:mm")}
+            />
+          </Link>
+        );
+      })}
+    </div>
+  );
+};

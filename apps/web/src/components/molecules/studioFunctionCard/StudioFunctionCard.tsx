@@ -1,22 +1,19 @@
-import styles from "./StudioFunctionCard.module.scss"
-import { Text } from "@/components/atoms/text/Text"
-import Link from "next/link"
-
+import styles from "./StudioFunctionCard.module.scss";
+import { Text } from "@/components/atoms/text/Text";
+import Link from "next/link";
+import React from "react";
 
 interface StudioFunctionCardProps {
-  title: string,
-  href: string,
-  subtitle: string,
+  title: string;
+  href: string;
+  subtitle: string;
 }
 
-export const StudioFunctionCard: React.FC<StudioFunctionCardProps> = 
-(
-  {
-    href,
-    title,
-    subtitle,
-  }
-) => {
+export const StudioFunctionCard: React.FC<StudioFunctionCardProps> = ({
+  href,
+  title,
+  subtitle,
+}) => {
   return (
     <Link href={href} className={styles.card}>
       <Text variant="headM" bold className={styles.title}>
@@ -26,5 +23,5 @@ export const StudioFunctionCard: React.FC<StudioFunctionCardProps> =
         {subtitle}
       </Text>
     </Link>
-  )
-}
+  );
+};
