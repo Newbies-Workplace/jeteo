@@ -45,7 +45,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({ value, setValue }) => {
       })}
 
       <input
-        minLength={2}
+        minLength={1}
         maxLength={20}
         value={tagValue}
         onChange={(e) => setTagValue(e.target.value)}
