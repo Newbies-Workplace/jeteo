@@ -61,6 +61,7 @@ export class EventService {
         place: createEventDto.address?.place,
         latitude: createEventDto.address?.coordinates?.latitude,
         longitude: createEventDto.address?.coordinates?.longitude,
+        tags: createEventDto.tags,
         primaryColor: '#4340BE',
         userId,
       },
@@ -97,6 +98,7 @@ export class EventService {
         ...address,
         primaryColor: updateEventRequest.primaryColor,
         visibility: updateEventRequest.visibility,
+        tags: updateEventRequest.tags,
       },
       where: {
         id: eventId,

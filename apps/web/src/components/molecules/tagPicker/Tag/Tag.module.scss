@@ -1,0 +1,20 @@
+@use '@/colors.module.scss' as colors;
+
+.tagContainer {
+  display: flex;
+  padding: 4px;
+  align-items: center;
+  gap: 4px;
+
+  border-radius: 8px;
+  border: 1px solid colors.$primary;
+  background-color: colors.$surface;
+
+  .text {
+    cursor: default;
+  }
+
+  .close {
+    cursor: pointer;
+  }
+}

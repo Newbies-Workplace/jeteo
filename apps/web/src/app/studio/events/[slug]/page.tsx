@@ -1,37 +1,20 @@
-import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader"
-import { StudioFunctionCard } from "@/components/molecules/studioFunctionCard/StudioFunctionCard"
-import { Text } from "@/components/atoms/text/Text"
-import { LectureCard } from "@/components/molecules/lectureCard/LectureCard"
-import styles from "./StudioEvent.module.scss"
-
+import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader";
+import { StudioFunctionCard } from "@/components/molecules/studioFunctionCard/StudioFunctionCard";
+import { Text } from "@/components/atoms/text/Text";
+import { LectureCard } from "@/components/molecules/lectureCard/LectureCard";
+import styles from "./StudioEvent.module.scss";
 
 export default function Page() {
   return (
     <div className={styles.content}>
-      <StudioHeader 
-         title="I like crocs"
-      />
+      <StudioHeader title="I like crocs" />
       <div className={styles.cards}>
-        <StudioFunctionCard 
-          href="#"
-          title="Zobacz"
-          subtitle="wydarzenie"
-        />
-        <StudioFunctionCard 
-          href="#"
-          title="Edytuj"
-          subtitle="wydarzenie"
-        />
-        <StudioFunctionCard 
-          href="#"
-          title="Usuń"
-          subtitle="wydarzenie"
-        />
+        <StudioFunctionCard href="#" title="Zobacz" subtitle="wydarzenie" />
+        <StudioFunctionCard href="#" title="Edytuj" subtitle="wydarzenie" />
+        <StudioFunctionCard href="#" title="Usuń" subtitle="wydarzenie" />
       </div>
-      
-      <Text variant="headL">
-        Prelekcje
-      </Text>
+
+      <Text variant="headL">Prelekcje</Text>
 
       <LectureCard
         startingHour="13:00"
@@ -54,7 +37,6 @@ export default function Page() {
         subtitle="kto zatrzyma maxa verstappena?"
         speakers={[]}
       />
-
     </div>
-  )
+  );
 }
