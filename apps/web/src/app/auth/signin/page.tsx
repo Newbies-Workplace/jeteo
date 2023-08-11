@@ -1,8 +1,14 @@
+import styles from "./page.module.scss";
 import { GalaxyBackground } from "@/components/molecules/galaxyBackground/GalaxyBackground";
 import Link from "next/link";
 import { Dialog } from "@/components/molecules/dialog/Dialog";
+import { Text } from "@/components/atoms/text/Text";
+import Google from "@/assets/google.svg";
+import { SignInButton } from "@/app/auth/signin/components/SignInButton";
 
-export default async function Page() {
+const baseUrl: string = process.env["NEXT_PUBLIC_BACKEND_URL"];
+
+export default function Page() {
   return (
     <GalaxyBackground>
       <div
@@ -14,10 +20,22 @@ export default async function Page() {
           alignItems: "center",
         }}
       >
-        <Dialog title="Zaczynamy przygodę 🚀" style={{ zIndex: 1 }}>
-          <Link href={"http://127.0.0.1:3001/api/auth/google/redirect"}>
-            zaloguj z google
-          </Link>
+        <Dialog title="Zaczynamy przygodę 🚀" arrowBack style={{ zIndex: 1 }}>
+          <Text variant={"bodyM"}>Kontynuuj przez:</Text>
+          <div className={styles.buttons}>
+            <Link href={`${baseUrl}/auth/google/redirect`}>
+              <SignInButton icon={Google}>Google</SignInButton>
+            </Link>
+          </div>
+          <div style={{ textAlign: "center", paddingTop: 12 }}>
+            <Text variant={"bodyM"}>
+              Korzystając z serwiusu akceptujesz
+              <br />
+            </Text>
+            <Link href={"/privacy-policy"} className={styles.link}>
+              politykę prywatnosci
+            </Link>
+          </div>
         </Dialog>
       </div>
     </GalaxyBackground>
