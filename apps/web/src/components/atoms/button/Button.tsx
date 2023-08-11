@@ -8,6 +8,8 @@ import Image from "next/image";
 interface ButtonProps {
   className?: string;
   primary?: boolean;
+  outlined?: boolean;
+  signIn?: boolean;
   style?: React.CSSProperties;
   icon?: string;
   iconSize?: number;
@@ -20,6 +22,8 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   children,
   className,
   primary = false,
+  outlined = false,
+  signIn = false,
   type = "button",
   onClick,
   size = "medium",
@@ -34,6 +38,8 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
         styles.button,
         {
           [styles.primary]: primary,
+          [styles.outlined]: outlined,
+          [styles.signIn]: signIn,
           [styles.medium]: size === "medium",
           [styles.small]: size === "small",
         },

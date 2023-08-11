@@ -1,0 +1,23 @@
+@use '@/responsiveness.module.scss' as responsiveness;
+@use '@/colors.module.scss' as colors;
+@use '@/typography.module.scss' as typography;
+.buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding-top: 14px;
+
+  @include responsiveness.mobile {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.link {
+  text-decoration: underline;
+  @include typography.bodyM;
+  color: colors.$black
+}
