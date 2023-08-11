@@ -1,5 +1,5 @@
 import { EventResponse } from "shared/model/event/response/event.response";
-import { myFetch } from "@/common/fetch";
+import { myFetch, urlParams } from "@/common/fetch";
 import { GetEventsQueryRequest } from "shared/.dist/model/event/request/getEventsQuery.request";
 import { cookies } from "next/headers";
 
@@ -17,7 +17,7 @@ export const getEvents = async (): Promise<EventResponse[]> => {
     page: 1,
     size: 100,
   };
-  const res = await myFetch(`/rest/v1/events?` + new URLSearchParams(params), {
+  const res = await myFetch(`/rest/v1/events?${urlParams(params)}`, {
     cache: "no-store",
   });
   if (!res.ok) return undefined;
@@ -29,15 +29,12 @@ export const getMyEvents = async (): Promise<EventResponse[]> => {
     page: 1,
     size: 100,
   };
-  const res = await myFetch(
-    `/rest/v1/events/@me?` + new URLSearchParams(params),
-    {
-      cache: "no-store",
-      headers: {
-        Cookie: cookies().toString(),
-      },
-    }
-  );
+  const res = await myFetch(`/rest/v1/events/@me?${urlParams(params)}`, {
+    cache: "no-store",
+    headers: {
+      Cookie: cookies().toString(),
+    },
+  });
   if (!res.ok) return undefined;
   return res.json();
 };
