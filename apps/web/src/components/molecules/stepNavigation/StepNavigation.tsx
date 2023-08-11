@@ -48,7 +48,7 @@ export const StepNavigation: React.FC<StepsContainerProps> = ({ links }) => {
         const isActive = pathname.startsWith(link.href);
 
         return (
-          <Link href={link.href} key={link.name}>
+          <Link href={link.href} key={link.name} replace>
             <StepButton key={link.name} active={isActive} title={link.name} />
           </Link>
         );
