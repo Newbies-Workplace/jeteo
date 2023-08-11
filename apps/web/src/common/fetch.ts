@@ -16,6 +16,7 @@ export const myFetch = async (
   return await fetch(inp, {
     credentials: "include",
     headers: {
+      ...init?.headers,
       "Content-Type": "application/json",
     },
     ...init,
@@ -26,4 +27,10 @@ export const myFetch = async (
 
     return res;
   });
+};
+
+export const urlParams = (obj: any): string => {
+  return Object.keys(obj)
+    .map((key) => key + "=" + obj[key])
+    .join("&");
 };

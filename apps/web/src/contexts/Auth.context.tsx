@@ -3,6 +3,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { UserResponse } from "shared/model/user/response/user.response";
+import { myFetch } from "@/common/fetch";
 
 interface AuthContext {
   fetchUser: () => Promise<void>;
@@ -24,11 +25,10 @@ export const AuthContextProvider: React.FC<any> = ({ children }) => {
   }, []);
 
   const fetchUser = async () => {
-    const response = await fetch(
-      "http://127.0.0.1:3001/api/rest/v1/users/@me",
-      { credentials: "include" }
+    const user: UserResponse = await myFetch("/rest/v1/users/@me").then((res) =>
+      res.json()
     );
-    const user: UserResponse = await response.json();
+
     setUser(user);
   };
 

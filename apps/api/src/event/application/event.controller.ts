@@ -34,13 +34,15 @@ export class EventController {
     @User() user: TokenUser,
     @Query() paginationQuery: GetEventsQueryRequest,
   ): Promise<EventResponse[]> {
-    return (
-      await this.eventService.getUserEventsById(
-        user.id,
-        paginationQuery.page,
-        paginationQuery.size,
-      )
-    ).map(this.eventConverter.convert);
+    const events = await this.eventService.getUserEventsById(
+      user.id,
+      paginationQuery.page,
+      paginationQuery.size,
+    );
+
+    return await Promise.all(
+      events.map((event) => this.eventConverter.convert(event)),
+    );
   }
 
   @Get('/:id')
@@ -51,7 +53,7 @@ export class EventController {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     }
 
-    return this.eventConverter.convert(event);
+    return await this.eventConverter.convert(event);
   }
 
   @Patch('/:id')
@@ -78,19 +80,21 @@ export class EventController {
       updateEventRequest,
     );
 
-    return this.eventConverter.convert(updatedEvent);
+    return await this.eventConverter.convert(updatedEvent);
   }
 
   @Get('')
   async getPublicEvents(
     @Query() paginationQuery: GetEventsQueryRequest,
   ): Promise<EventResponse[]> {
-    return (
-      await this.eventService.getPublicEvents(
-        paginationQuery.page,
-        paginationQuery.size,
-      )
-    ).map(this.eventConverter.convert);
+    const events = await this.eventService.getPublicEvents(
+      paginationQuery.page,
+      paginationQuery.size,
+    );
+
+    return await Promise.all(
+      events.map((event) => this.eventConverter.convert(event)),
+    );
   }
 
   @Post('/')
@@ -104,6 +108,6 @@ export class EventController {
       createEventRequest,
     );
 
-    return this.eventConverter.convert(event);
+    return await this.eventConverter.convert(event);
   }
 }

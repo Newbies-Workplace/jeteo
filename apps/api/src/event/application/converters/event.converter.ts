@@ -1,10 +1,21 @@
 import { Event } from '@prisma/client';
 import { EventResponse } from 'shared/model/event/response/event.response';
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '@/config/prisma.service';
 
 @Injectable()
 export class EventConverter {
-  convert(event: Event): EventResponse {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async convert(event: Event): Promise<EventResponse> {
+    const author = await this.prismaService.user.findFirst({
+      select: {
+        name: true,
+        avatar: true,
+      },
+      where: { id: event.userId },
+    });
+
     return {
       id: event.id,
       slug: event.id, //todo create slug from title and id
@@ -25,6 +36,10 @@ export class EventConverter {
               },
             }),
         },
+      host: {
+        name: author.name,
+        avatar: author.avatar,
+      },
       createdAt: event.createdAt.toISOString(),
       links: event.links,
       tags: event.tags,

@@ -21,6 +21,10 @@ export interface EventResponse {
   primaryColor: string;
   coverImage?: string;
   visibility: "PRIVATE" | "HIDDEN" | "PUBLIC";
+  host: {
+    name: string;
+    avatar?: string;
+  };
   userId: string;
   createdAt: DateTime;
 }

@@ -9,12 +9,12 @@ import ClockIcon from "@/assets/clock.svg";
 
 export interface EventCardProps {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   host: {
     avatar?: string;
     name: string;
   };
-  place: string;
+  place?: string;
   startDate: string;
   tags: string[];
   children?: React.ReactNode;
@@ -36,9 +36,11 @@ export const EventCard: React.FC<EventCardProps> = ({
           <Text variant={"headM"} bold className={styles.title}>
             {title}
           </Text>
-          <Text variant={"bodyM"} className={styles.subtitle}>
-            {subtitle}
-          </Text>
+          {subtitle && (
+            <Text variant={"bodyM"} className={styles.subtitle}>
+              {subtitle}
+            </Text>
+          )}
         </div>
         <div className={styles.host}>
           <Text variant={"bodyS"}>{host.name}</Text>
@@ -54,12 +56,14 @@ export const EventCard: React.FC<EventCardProps> = ({
       </div>
       <div className={styles.mid}>
         <div className={styles.pins}>
-          <div className={styles.pin}>
-            <Image src={LocationIcon} alt={"location"} />
-            <Text variant={"bodyS"} className={styles.place}>
-              {place}
-            </Text>
-          </div>
+          {place !== undefined && (
+            <div className={styles.pin}>
+              <Image src={LocationIcon} alt={"location"} />
+              <Text variant={"bodyS"} className={styles.place}>
+                {place}
+              </Text>
+            </div>
+          )}
 
           <div className={styles.pin}>
             <Image src={ClockIcon} alt={"time"} />
