@@ -1,0 +1,33 @@
+@import '@/colors.module';
+@import '@/typography.module';
+
+.tagPicker {
+  display: flex;
+  flex-wrap: wrap;
+  
+  
+
+  width: 418px;
+  padding: 4px;
+  gap: 4px;
+
+  width: 100%;
+  
+  border-radius: 12px;
+  border: 1px solid $stroke;
+  background: $background;
+
+  .input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    @include bodyM();
+
+    &:focus {
+      border: none;
+      outline: none;
+      
+    }
+  }
+}

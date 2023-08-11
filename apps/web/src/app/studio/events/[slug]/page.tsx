@@ -4,6 +4,7 @@ import { Text } from "@/components/atoms/text/Text"
 import { LectureCard } from "@/components/molecules/lectureCard/LectureCard"
 import styles from "./StudioEvent.module.scss"
 
+import { TagPicker } from "@/components/molecules/tagPicker/TagPicker"
 
 export default function Page() {
   return (
@@ -54,6 +55,8 @@ export default function Page() {
         subtitle="kto zatrzyma maxa verstappena?"
         speakers={[]}
       />
+
+      <TagPicker />
 
     </div>
   )
