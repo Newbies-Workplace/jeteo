@@ -3,10 +3,12 @@ import { GalaxyBackground } from "@/components/molecules/galaxyBackground/Galaxy
 import Link from "next/link";
 import { Dialog } from "@/components/molecules/dialog/Dialog";
 import { Text } from "@/components/atoms/text/Text";
-import Button from "@/components/atoms/button/Button";
 import Google from "@/assets/google.svg";
+import { SignInButton } from "@/app/auth/signin/components/SignInButton";
 
-export default async function Page() {
+const baseUrl: string = process.env["NEXT_PUBLIC_BACKEND_URL"];
+
+export default function Page() {
   return (
     <GalaxyBackground>
       <div
@@ -21,15 +23,8 @@ export default async function Page() {
         <Dialog title="Zaczynamy przygodę 🚀" arrowBack style={{ zIndex: 1 }}>
           <Text variant={"bodyM"}>Kontynuuj przez:</Text>
           <div className={styles.buttons}>
-            <Link href={"http://127.0.0.1:3001/api/auth/google/redirect"}>
-              <Button
-                signIn
-                outlined
-                icon={Google}
-                style={{ paddingRight: 84 }}
-              >
-                Google
-              </Button>
+            <Link href={`${baseUrl}/auth/google/redirect`}>
+              <SignInButton icon={Google}>Google</SignInButton>
             </Link>
           </div>
           <div style={{ textAlign: "center", paddingTop: 12 }}>
