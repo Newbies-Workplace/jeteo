@@ -72,6 +72,6 @@ export class CreateEventRequest {
 
   @IsArray()
   @IsString({ each: true })
-  @Length(5, undefined, { each: true })
+  @Length(2, 20, { each: true })
   tags: string[];
 }

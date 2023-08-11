@@ -1,33 +1,28 @@
-@import '@/colors.module';
-@import '@/typography.module';
+@use '@/colors.module.scss' as colors;
+@use '@/typography.module.scss' as typography;
 
 .tagPicker {
   display: flex;
   flex-wrap: wrap;
-  
-  
-
-  width: 418px;
   padding: 4px;
   gap: 4px;
-
+  min-height: 39px;
   width: 100%;
   
   border-radius: 12px;
-  border: 1px solid $stroke;
-  background: $background;
+  border: 1px solid colors.$stroke;
+  background: colors.$background;
 
   .input {
     background-color: transparent;
     border: none;
     outline: none;
 
-    @include bodyM();
+    @include typography.bodyM();
 
     &:focus {
       border: none;
       outline: none;
-      
     }
   }
 }

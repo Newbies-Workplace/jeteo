@@ -15,6 +15,7 @@ import { notBlank, notBlankOrNull } from "shared/util";
 import { UpdateEventRequest } from "shared/model/event/request/updateEventRequest";
 import { Validations } from "@/common/validations";
 import { ControlledMarkdownInput } from "@/components/atoms/markdownInput/ControlledMarkdownInput";
+import { TagPicker } from "@/components/molecules/tagPicker/TagPicker";
 
 const locationOptions = [
   { id: "location", name: "Na miejscu" },
@@ -98,7 +99,7 @@ const getCreateRequestData = (form: BasicForm): CreateEventRequest => {
             },
           }
         : null,
-    tags: [],
+    tags: form.tags,
   };
 };
 const getUpdateRequestData = (form: BasicForm): UpdateEventRequest => {
@@ -122,7 +123,7 @@ const getUpdateRequestData = (form: BasicForm): UpdateEventRequest => {
             },
           }
         : null,
-    tags: [],
+    tags: form.tags,
   };
 };
 
@@ -298,6 +299,19 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
             </div>
           </>
         )}
+      </Section>
+
+      <Section title={"Dla kogo?"}>
+        <Controller
+          name={"tags"}
+          control={control}
+          render={({ field }) => (
+            <TagPicker
+              value={field.value}
+              setValue={(tags) => field.onChange(tags)}
+            />
+          )}
+        />
       </Section>
 
       <Button

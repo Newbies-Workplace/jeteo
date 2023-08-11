@@ -1,4 +1,4 @@
-@import '@/colors.module';
+@use '@/colors.module.scss' as colors;
 
 .tagContainer {
   display: flex;
@@ -7,8 +7,8 @@
   gap: 4px;
 
   border-radius: 8px;
-  border: 1px solid $primary;
-  background-color: $surface;
+  border: 1px solid colors.$primary;
+  background-color: colors.$surface;
 
   .text {
     cursor: default;
