@@ -18,7 +18,7 @@ export default function UserMenu() {
         <div className={styles.menu}>
             <div className={styles.profile}>
                 <Image alt="Open menu" src={profilePicture} className={styles.burger} />
-                <Text variant="headS" bold={true} className={styles.text}>{user?.nick} {user?.avatar}</Text>
+                <Text variant="headS" bold={true} className={styles.text}>{user?.nick}</Text>
             </div>
             <div className={styles.buttonContainer}>
                 <Link href={"/studio/events"}>
