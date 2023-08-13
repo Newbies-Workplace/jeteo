@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import burger from "@/assets/Burger.svg";
 import cs from "classnames";
+import ProfileMenu from "@/components/organisms/profileMenu/ProfileMenu";
 
 interface NavbarProps {
   invertColor?: boolean;
@@ -17,10 +18,7 @@ export const Navbar: React.FC<NavbarProps> = ({ invertColor }) => {
         <Logo invertColor={invertColor} />
       </Link>
       <div>
-        <Link href={"/studio/events"}>studio</Link>
-        <Link href={"/auth/signin"}>
-          <Image alt="Open menu" src={burger} className={styles.burger} />
-        </Link>
+        <ProfileMenu />
       </div>
     </div>
   );
