@@ -1,0 +1,10 @@
+@import '../menus.module.scss';
+
+
+.menu{
+    @extend .menu;
+    width: 215px;
+    height: 179px;
+    gap: 5px;
+
+}

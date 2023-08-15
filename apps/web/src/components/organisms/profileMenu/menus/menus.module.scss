@@ -1,0 +1,50 @@
+@use '@/colors.module.scss' as colors;
+@use '@/typography.module.scss' as typography;
+
+.menu{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+
+    position: absolute;
+    top: 120%;
+    right: 0;
+
+    background-color: colors.$primary;
+
+    border-radius: 16px;
+    border-top-right-radius: 0px;
+    padding-bottom: 5px;
+
+}
+
+
+.pfp{
+    border-radius: 32px;
+}
+
+.profile{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12.5px;
+    margin-bottom: 6.5px;
+    margin-top: 6.5px;
+
+    width: 90%;
+}
+
+.text{
+    color: colors.$white;
+}
+
+.buttonContainer{
+    display: flex;
+    flex-direction: column;
+    width: 92%;
+    gap: 8px;
+
+}
