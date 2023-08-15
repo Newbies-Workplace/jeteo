@@ -6,7 +6,6 @@ import Link from "next/link";
 import React from "react";
 import { Text } from "@/components/atoms/text/Text";
 import { getEvents } from "@/common/getEvent";
-import dayjs from "dayjs";
 
 export const dynamic = "force-dynamic";
 
@@ -43,7 +42,7 @@ export default async function Page() {
                         : undefined
                     }
                     tags={event.tags}
-                    startDate={dayjs(event.from).format("D MMMM YYYY, HH:mm")}
+                    startDate={event.from}
                   />
                 </Link>
               );

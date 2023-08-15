@@ -49,7 +49,7 @@ export default async function Page() {
                     : undefined
                 }
                 tags={event.tags}
-                startDate={dayjs(event.from).format("D MMMM YYYY, HH:mm")}
+                startDate={event.from}
               />
             </Link>
           );

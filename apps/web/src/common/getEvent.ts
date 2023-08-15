@@ -5,9 +5,13 @@ import { cookies } from "next/headers";
 
 export const getEvent = async (eventSlug: string): Promise<EventResponse> => {
   const eventId = eventSlug; //todo get id from slug
-  const res = await myFetch(`/rest/v1/events/${eventId}`, {
-    cache: "no-store",
-  });
+  const res = await myFetch(
+    `/rest/v1/events/${eventId}`,
+    {
+      cache: "no-store",
+    },
+    false
+  );
   if (!res.ok) return undefined;
   return res.json();
 };

@@ -1,18 +1,18 @@
-import { Event } from '@prisma/client';
+import { Event, User } from '@prisma/client';
 import { EventResponse } from 'shared/model/event/response/event.response';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/config/prisma.service';
+import { UserConverter } from '@/user/user.converter';
 
 @Injectable()
 export class EventConverter {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly userConverter: UserConverter,
+  ) {}
 
   async convert(event: Event): Promise<EventResponse> {
-    const author = await this.prismaService.user.findFirst({
-      select: {
-        name: true,
-        avatar: true,
-      },
+    const author: User = await this.prismaService.user.findFirst({
       where: { id: event.userId },
     });
 
@@ -36,10 +36,7 @@ export class EventConverter {
               },
             }),
         },
-      host: {
-        name: author.name,
-        avatar: author.avatar,
-      },
+      host: this.userConverter.convert(author),
       createdAt: event.createdAt.toISOString(),
       links: event.links,
       tags: event.tags,

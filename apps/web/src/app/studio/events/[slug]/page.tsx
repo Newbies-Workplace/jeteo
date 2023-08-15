@@ -4,9 +4,14 @@ import { Text } from "@/components/atoms/text/Text";
 import { LectureCard } from "@/components/molecules/lectureCard/LectureCard";
 import styles from "./page.module.scss";
 import { getEvent } from "@/common/getEvent";
+import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const event = await getEvent(params.slug);
+  if (!event) {
+    notFound();
+  }
+
   return (
     <div className={styles.content}>
       <StudioHeader title={event.title} />

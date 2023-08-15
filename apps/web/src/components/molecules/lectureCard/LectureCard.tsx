@@ -39,7 +39,7 @@ export const LectureCard: React.FC<LectureProps> = ({
           <Text variant="headS">{subtitle}</Text>
         </div>
 
-        {speakers.length > 1 && (
+        {speakers.length >= 1 && (
           <div className={styles.speakers}>
             {speakers.map((item) => {
               return (
@@ -48,10 +48,7 @@ export const LectureCard: React.FC<LectureProps> = ({
                   avatar={item.avatar}
                   name={item.name}
                   description={item.description}
-                  mail={item.mail}
-                  twitter={item.twitter}
-                  linkedin={item.linkedin}
-                  github={item.github}
+                  socials={item.socials}
                 />
               );
             })}

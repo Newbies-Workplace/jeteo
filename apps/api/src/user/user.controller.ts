@@ -15,7 +15,7 @@ export class UserController {
     //todo fetch all data from prisma
     return {
       id: user.id,
-      nick: user.nick,
+      name: user.name,
       socials: {},
     };
   }
