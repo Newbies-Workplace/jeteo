@@ -40,16 +40,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
           <div className={styles.content}>
             <div className={styles.main}>
-              <div className={styles.box}>
+              <div className={cs(styles.box, styles.description)}>
                 <Text variant={"headS"} bold>
                   Opis
                 </Text>
 
-                <Text variant={"headS"} bold>
-                  <EventDescription description={event.description} />
-                </Text>
+                <EventDescription description={event.description} />
               </div>
-              <div className={styles.agenda}>
+              <div className={cs(styles.agenda, styles.agenda)}>
                 <Text variant={"headS"} bold>
                   Agenda
                 </Text>
@@ -91,7 +89,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
             <div className={styles.side}>
               <div className={cs(styles.box, styles.host)}>
-                <Avatar size={86} src={event.host.avatar} />
+                <Avatar
+                  size={86}
+                  src={event.host.avatar}
+                  className={styles.avatar}
+                />
 
                 <Text variant={"headS"} bold>
                   {event.host.name}
@@ -105,7 +107,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   <UserSocials size={24} socials={event.host.socials} />
                 )}
               </div>
-              <div className={styles.box}>
+              <div className={cs(styles.box, styles.timeBox)}>
                 <Text variant={"headS"} bold>
                   Kiedy?
                 </Text>
@@ -115,7 +117,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               </div>
 
               {event.address && (
-                <div className={styles.box}>
+                <div className={cs(styles.box, styles.location)}>
                   <Text variant={"headS"} bold>
                     Gdzie?
                   </Text>
