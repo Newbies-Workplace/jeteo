@@ -42,9 +42,14 @@
 }
 
 .button {
-    background-color: pink;
+    border: unset;
     border-radius: 8px;
-    //background-color: colors.$white;
+    background-color: colors.$white;
     color: colors.$black;
     width: 100%;
+}
+
+.dangerousButton {
+    background-color: colors.$live;
+    color: colors.$white;
 }

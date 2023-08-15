@@ -30,15 +30,11 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   return (
     <button
       type={type}
-      className={cs(
-        styles.button,
-        {
-          [styles.primary]: primary,
-          [styles.medium]: size === "medium",
-          [styles.small]: size === "small",
-        },
-        className
-      )}
+      className={cs(className, styles.button, {
+        [styles.primary]: primary,
+        [styles.medium]: size === "medium",
+        [styles.small]: size === "small",
+      })}
       style={style}
       onClick={onClick}
     >
