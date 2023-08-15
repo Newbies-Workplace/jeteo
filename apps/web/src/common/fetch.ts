@@ -1,12 +1,12 @@
-const baseUrl: string = process.env["NEXT_PUBLIC_BACKEND_URL"];
+const baseUrl: string = process.env['NEXT_PUBLIC_BACKEND_URL'];
 
 export const myFetch = async (
   input: RequestInfo,
   init?: RequestInit,
-  failIfNotOk: boolean = true
+  failIfNotOk: boolean = true,
 ): Promise<Response> => {
   const inp: RequestInfo =
-    typeof input === "string"
+    typeof input === 'string'
       ? baseUrl + input
       : {
           url: baseUrl + input.url,
@@ -14,15 +14,15 @@ export const myFetch = async (
         };
 
   return await fetch(inp, {
-    credentials: "include",
+    credentials: 'include',
     headers: {
       ...init?.headers,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     ...init,
   }).then((res) => {
     if (failIfNotOk && !res.ok) {
-      return Promise.reject("response is not ok");
+      return Promise.reject('response is not ok');
     }
 
     return res;
@@ -31,6 +31,6 @@ export const myFetch = async (
 
 export const urlParams = (obj: any): string => {
   return Object.keys(obj)
-    .map((key) => key + "=" + obj[key])
-    .join("&");
+    .map((key) => key + '=' + obj[key])
+    .join('&');
 };

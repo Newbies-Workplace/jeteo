@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from "react";
 import styles from "./FileItem.module.scss";
@@ -18,7 +18,7 @@ export const FileItem: React.FC<FileItemProps> = ({ url, onDeleteClick }) => {
           className={styles.close}
           src={close}
           alt="Cancel"
-          style={{ color: "white" }}
+          style={{ color: 'white' }}
           onClick={() => onDeleteClick()}
         />
       )}

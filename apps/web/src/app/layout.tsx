@@ -10,7 +10,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  dayjs.locale("pl");
+  dayjs.locale('pl');
 
   return (
     <html lang="en">
@@ -18,7 +18,7 @@ export default function RootLayout({
         style={{
           margin: 0,
           backgroundColor: colors.background,
-          height: "100vh",
+          height: '100vh',
         }}
       >
         <Providers>{children}</Providers>

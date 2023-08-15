@@ -6,8 +6,8 @@ import burgir from "@/assets/Burger.svg";
 export const NavMenu: React.FC = () => {
   return (
     <div>
-      <Link href={"/studio/events"}>studio</Link>
-      <Link href={"/auth/signin"}>
+      <Link href={'/studio/events'}>studio</Link>
+      <Link href={'/auth/signin'}>
         <Image alt="burgir" src={burgir} />
       </Link>
     </div>

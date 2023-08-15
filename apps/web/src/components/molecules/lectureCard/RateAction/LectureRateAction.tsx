@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import styles from "./LectureRateAction.module.scss";
 import { Text } from "@/components/atoms/text/Text";

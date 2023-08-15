@@ -33,21 +33,21 @@ export const EventCard: React.FC<EventCardProps> = ({
     <div className={styles.card}>
       <div className={styles.top}>
         <div className={styles.texts}>
-          <Text variant={"headM"} bold className={styles.title}>
+          <Text variant={'headM'} bold className={styles.title}>
             {title}
           </Text>
           {subtitle && (
-            <Text variant={"bodyM"} className={styles.subtitle}>
+            <Text variant={'bodyM'} className={styles.subtitle}>
               {subtitle}
             </Text>
           )}
         </div>
         <div className={styles.host}>
-          <Text variant={"bodyS"}>{host.name}</Text>
+          <Text variant={'bodyS'}>{host.name}</Text>
 
           <Image
             src={host.avatar ?? defaultAvatar}
-            alt={"avatar"}
+            alt={'avatar'}
             width={32}
             height={32}
             className={styles.avatar}
@@ -58,16 +58,16 @@ export const EventCard: React.FC<EventCardProps> = ({
         <div className={styles.pins}>
           {place !== undefined && (
             <div className={styles.pin}>
-              <Image src={LocationIcon} alt={"location"} />
-              <Text variant={"bodyS"} className={styles.place}>
+              <Image src={LocationIcon} alt={'location'} />
+              <Text variant={'bodyS'} className={styles.place}>
                 {place}
               </Text>
             </div>
           )}
 
           <div className={styles.pin}>
-            <Image src={ClockIcon} alt={"time"} />
-            <Text variant={"bodyS"} className={styles.date}>
+            <Image src={ClockIcon} alt={'time'} />
+            <Text variant={'bodyS'} className={styles.date}>
               {startDate}
             </Text>
           </div>

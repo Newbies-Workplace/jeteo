@@ -19,5 +19,5 @@
 .link {
   text-decoration: underline;
   @include typography.bodyM;
-  color: colors.$black
+  color: colors.$black;
 }

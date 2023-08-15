@@ -1,4 +1,4 @@
-import { Type, Transform } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import {
   IsArray,
   IsDateString,
@@ -9,7 +9,7 @@ import {
   IsOptional,
   IsString,
   Length,
-  ValidateNested,
+  ValidateNested
 } from "class-validator";
 import { trimIfExists } from "../../../util";
 

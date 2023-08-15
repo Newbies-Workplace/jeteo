@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useAuth } from "@/contexts/Auth.hook";
 import { useEffect } from "react";
@@ -12,7 +12,7 @@ export default function Page() {
 
   useEffect(() => {
     fetchUser().then(() => {
-      router.push("/");
+      router.push('/');
     });
   }, []);
 
@@ -20,11 +20,11 @@ export default function Page() {
     <GalaxyBackground>
       <div
         style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <Dialog title="Jeszcze chwila ⌛" style={{ zIndex: 1 }}></Dialog>

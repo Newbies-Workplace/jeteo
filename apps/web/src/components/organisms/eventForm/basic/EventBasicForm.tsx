@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from "react";
 import { Section } from "@/components/molecules/section/Section";
@@ -18,8 +18,8 @@ import { ControlledMarkdownInput } from "@/components/atoms/markdownInput/Contro
 import { TagPicker } from "@/components/molecules/tagPicker/TagPicker";
 
 const locationOptions = [
-  { id: "location", name: "Na miejscu" },
-  { id: "online", name: "On-line" },
+  { id: 'location', name: 'Na miejscu' },
+  { id: 'online', name: 'On-line' },
 ];
 
 type BasicForm = {
@@ -28,7 +28,7 @@ type BasicForm = {
   description: string;
   from: string;
   to: string;
-  location: "online" | "location";
+  location: 'online' | 'location';
   address?: {
     city: string;
     place: string;
@@ -46,9 +46,9 @@ const getDefaultValue = (event?: EventResponse): BasicForm => {
         title: event.title,
         subtitle: event.subtitle,
         description: event.description,
-        from: dayjs(event.from).format("YYYY-MM-DDThh:mm"),
-        to: dayjs(event.to).format("YYYY-MM-DDThh:mm"),
-        location: event.address ? "location" : "online",
+        from: dayjs(event.from).format('YYYY-MM-DDThh:mm'),
+        to: dayjs(event.to).format('YYYY-MM-DDThh:mm'),
+        location: event.address ? 'location' : 'online',
         address: {
           city: event.address?.city,
           place: event.address?.place,
@@ -60,15 +60,15 @@ const getDefaultValue = (event?: EventResponse): BasicForm => {
         tags: event.tags,
       }
     : {
-        title: "",
-        subtitle: "",
-        description: "",
-        from: dayjs().format("YYYY-MM-DDThh:mm"),
-        to: dayjs().add(1, "h").format("YYYY-MM-DDThh:mm"),
-        location: "location",
+        title: '',
+        subtitle: '',
+        description: '',
+        from: dayjs().format('YYYY-MM-DDThh:mm'),
+        to: dayjs().add(1, 'h').format('YYYY-MM-DDThh:mm'),
+        location: 'location',
         address: {
-          city: "",
-          place: "",
+          city: '',
+          place: '',
           coordinates: {
             latitude: 51.08549,
             longitude: 17.0104,
@@ -86,7 +86,7 @@ const getCreateRequestData = (form: BasicForm): CreateEventRequest => {
     from: form.from,
     to: form.to,
     address:
-      form.location === "location" &&
+      form.location === 'location' &&
       form.address &&
       form.address.city &&
       form.address.place
@@ -110,7 +110,7 @@ const getUpdateRequestData = (form: BasicForm): UpdateEventRequest => {
     from: form.from,
     to: form.to,
     address:
-      form.location === "location" &&
+      form.location === 'location' &&
       form.address &&
       form.address.city &&
       form.address.place
@@ -129,16 +129,16 @@ const getUpdateRequestData = (form: BasicForm): UpdateEventRequest => {
 
 const getRequest = async (
   data: BasicForm,
-  event?: EventResponse
+  event?: EventResponse,
 ): Promise<EventResponse> => {
   if (event) {
     return myFetch(`/rest/v1/events/${event.id}`, {
-      method: "PATCH",
+      method: 'PATCH',
       body: JSON.stringify(getUpdateRequestData(data)),
     }).then((res) => res.json());
   } else {
-    return myFetch("/rest/v1/events", {
-      method: "POST",
+    return myFetch('/rest/v1/events', {
+      method: 'POST',
       body: JSON.stringify(getCreateRequestData(data)),
     }).then((res) => res.json());
   }
@@ -162,8 +162,8 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
     defaultValues: getDefaultValue(event),
   });
   const watchOnline = watch(
-    "location",
-    event?.address !== null ? "location" : "online"
+    'location',
+    event?.address !== null ? 'location' : 'online',
   );
 
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
@@ -177,35 +177,35 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
   };
 
   return (
-    <form style={{ display: "flex", flexDirection: "column" }}>
-      <Section title={"Co i Kiedy?"}>
+    <form style={{ display: 'flex', flexDirection: 'column' }}>
+      <Section title={'Co i Kiedy?'}>
         <div
           style={{
-            display: "flex",
+            display: 'flex',
             gap: 12,
-            flexDirection: "row",
-            justifyContent: "space-around",
+            flexDirection: 'row',
+            justifyContent: 'space-around',
           }}
         >
           <ControlledInput
-            name={"from"}
-            label={"Rozpoczęcie"}
+            name={'from'}
+            label={'Rozpoczęcie'}
             control={control}
-            type={"datetime-local"}
+            type={'datetime-local'}
             rules={{ required: Validations.required }}
           />
           <ControlledInput
-            name={"to"}
-            label={"Zakończenie"}
+            name={'to'}
+            label={'Zakończenie'}
             control={control}
-            type={"datetime-local"}
+            type={'datetime-local'}
             rules={{ required: Validations.required }}
           />
         </div>
 
         <ControlledInput
-          name={"title"}
-          label={"Tytuł"}
+          name={'title'}
+          label={'Tytuł'}
           required
           control={control}
           rules={{
@@ -215,8 +215,8 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
           }}
         />
         <ControlledInput
-          name={"subtitle"}
-          label={"Podtytuł"}
+          name={'subtitle'}
+          label={'Podtytuł'}
           control={control}
           rules={{
             minLength: Validations.minLength(5),
@@ -225,8 +225,8 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
         />
 
         <ControlledMarkdownInput
-          name={"description"}
-          label={"Opis"}
+          name={'description'}
+          label={'Opis'}
           required
           height={200}
           textareaProps={{ maxLength: 10000 }}
@@ -238,22 +238,22 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
         />
       </Section>
 
-      <Section title={"Gdzie?"} contentStyle={{ gap: 8 }}>
+      <Section title={'Gdzie?'} contentStyle={{ gap: 8 }}>
         <Controller
-          name={"location"}
+          name={'location'}
           control={control}
           render={({ field }) => (
             <RadioButtons
               values={locationOptions}
               selectedValueIndex={locationOptions.findIndex(
-                (value) => value.id === field.value
+                (value) => value.id === field.value,
               )}
               onChange={(item) => field.onChange(item.id)}
             />
           )}
         />
 
-        {watchOnline === "location" && (
+        {watchOnline === 'location' && (
           <>
             <Controller
               render={({ field, fieldState, formState }) => (
@@ -270,14 +270,14 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
                   }}
                 />
               )}
-              name={"address.coordinates"}
+              name={'address.coordinates'}
               control={control}
             />
 
-            <div style={{ display: "flex", gap: 12, flexDirection: "row" }}>
+            <div style={{ display: 'flex', gap: 12, flexDirection: 'row' }}>
               <ControlledInput
-                name={"address.city"}
-                label={"Miasto"}
+                name={'address.city'}
+                label={'Miasto'}
                 control={control}
                 rules={{
                   required: Validations.required,
@@ -286,8 +286,8 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
                 }}
               />
               <ControlledInput
-                name={"address.place"}
-                label={"Adres"}
+                name={'address.place'}
+                label={'Adres'}
                 control={control}
                 style={{ flex: 1 }}
                 rules={{
@@ -301,9 +301,9 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
         )}
       </Section>
 
-      <Section title={"Dla kogo?"}>
+      <Section title={'Dla kogo?'}>
         <Controller
-          name={"tags"}
+          name={'tags'}
           control={control}
           render={({ field }) => (
             <TagPicker
@@ -316,7 +316,7 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
 
       <Button
         primary
-        style={{ alignSelf: "flex-end" }}
+        style={{ alignSelf: 'flex-end' }}
         onClick={handleSubmit(onSubmit)}
       >
         Zapisz

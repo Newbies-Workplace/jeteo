@@ -8,7 +8,7 @@ import { Text } from "@/components/atoms/text/Text";
 import { getEvents } from "@/common/getEvent";
 import dayjs from "dayjs";
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default async function Page() {
   const events = await getEvents();
@@ -28,7 +28,7 @@ export default async function Page() {
                 <Link
                   key={event.id}
                   href={`/events/${event.slug}`}
-                  style={{ alignSelf: "stretch" }}
+                  style={{ alignSelf: 'stretch' }}
                 >
                   <EventCard
                     title={event.title}
@@ -39,11 +39,11 @@ export default async function Page() {
                     }}
                     place={
                       event.address
-                        ? event.address.city + ", " + event.address.place
+                        ? event.address.city + ', ' + event.address.place
                         : undefined
                     }
                     tags={event.tags}
-                    startDate={dayjs(event.from).format("D MMMM YYYY, HH:mm")}
+                    startDate={dayjs(event.from).format('D MMMM YYYY, HH:mm')}
                   />
                 </Link>
               );

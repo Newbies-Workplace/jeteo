@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from "react";
 import cs from "classnames";
@@ -23,7 +23,7 @@ export const SignInButton: React.FC<
       style={style}
       onClick={onClick}
     >
-      {icon && <Image alt={"icon"} src={icon} width={iconSize} />}
+      {icon && <Image alt={'icon'} src={icon} width={iconSize} />}
       {children}
     </button>
   );

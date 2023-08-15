@@ -9,11 +9,11 @@ interface LabelProps {
 
 export const Label: React.FC<LabelProps> = ({ label, required = false }) => {
   return (
-    <Text variant={"headS"}>
+    <Text variant={'headS'}>
       {label}
 
       {required && (
-        <Text className={styles.requiredStar} variant={"headS"}>
+        <Text className={styles.requiredStar} variant={'headS'}>
           *
         </Text>
       )}

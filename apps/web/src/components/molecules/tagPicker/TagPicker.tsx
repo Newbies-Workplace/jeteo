@@ -1,9 +1,8 @@
-"use client";
+'use client';
 
-import React from "react";
+import React, { useState } from "react";
 import styles from "./TagPicker.module.scss";
 import { Tag } from "./Tag/Tag";
-import { useState } from "react";
 
 interface TagPickerProps {
   value?: string[];
@@ -11,10 +10,10 @@ interface TagPickerProps {
 }
 
 export const TagPicker: React.FC<TagPickerProps> = ({ value, setValue }) => {
-  const [tagValue, setTagValue] = useState("");
+  const [tagValue, setTagValue] = useState('');
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && tagValue) {
+    if (event.key === 'Enter' && tagValue) {
       const tagToCreate = tagValue.trim();
 
       if (tagToCreate.length === 0) {
@@ -31,7 +30,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({ value, setValue }) => {
 
   function createTag(tagToCreate: string) {
     setValue((prevState) => [...prevState, tagToCreate]);
-    setTagValue("");
+    setTagValue('');
   }
 
   function deleteTag(tag: string) {

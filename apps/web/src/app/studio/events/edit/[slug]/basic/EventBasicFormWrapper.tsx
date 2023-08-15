@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { EventResponse } from "shared/model/event/response/event.response";
 import { useRouter } from "next/navigation";

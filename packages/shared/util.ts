@@ -3,7 +3,7 @@ export const notBlank = (value: string | undefined): string | undefined => {
     return undefined;
   }
 
-  if (value.trim() === "") {
+  if (value.trim() === '') {
     return undefined;
   }
 
@@ -16,7 +16,7 @@ export const notBlankOrNull = (value: string | undefined): string | null => {
 };
 
 export const trimIfExists = (
-  value: string | undefined | null
+  value: string | undefined | null,
 ): string | undefined | null => {
   if (value === undefined || value === null) {
     return value;

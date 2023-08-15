@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { Input, InputProps } from "@/components/atoms/input/Input";
 import { Control, RegisterOptions, useController } from "react-hook-form";
@@ -9,9 +9,9 @@ export type ControlledInputProps = {
   control: Control<any>;
   rules?: Omit<
     RegisterOptions,
-    "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
-} & Omit<InputProps, "setValue" | "value">;
+} & Omit<InputProps, 'setValue' | 'value'>;
 
 export const ControlledInput: React.FC<ControlledInputProps> = ({
   name,
@@ -24,7 +24,7 @@ export const ControlledInput: React.FC<ControlledInputProps> = ({
   return (
     <Input
       {...rest}
-      value={field.value ?? ""}
+      value={field.value ?? ''}
       setValue={field.onChange}
       onBlur={field.onBlur}
       error={fieldState.error?.message}

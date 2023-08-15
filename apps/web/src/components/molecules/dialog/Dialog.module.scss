@@ -1,30 +1,30 @@
 @use '@/colors.module.scss' as colors;
 @use '@/responsiveness.module.scss' as responsiveness;
 
-.container{
-    width: 420px;
-    gap: 10px;
-    padding: 24px 0;
-    background-color: colors.$white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 16px;
+.container {
+  width: 420px;
+  gap: 10px;
+  padding: 24px 0;
+  background-color: colors.$white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 16px;
 }
 
 @include responsiveness.mobile {
-    .container{
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-        border-radius: 16px 16px 0 0;
-    }
+  .container {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border-radius: 16px 16px 0 0;
+  }
 }
 
 .arrowBack {
-    min-height: 24px;
-    min-width: 24px;
-    &:hover {
-        cursor: pointer;
-    }
+  min-height: 24px;
+  min-width: 24px;
+  &:hover {
+    cursor: pointer;
+  }
 }

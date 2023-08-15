@@ -20,7 +20,7 @@ export interface EventResponse {
   tags: string[];
   primaryColor: string;
   coverImage?: string;
-  visibility: "PRIVATE" | "HIDDEN" | "PUBLIC";
+  visibility: 'PRIVATE' | 'HIDDEN' | 'PUBLIC';
   host: {
     name: string;
     avatar?: string;

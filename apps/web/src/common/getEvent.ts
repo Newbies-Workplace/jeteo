@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 export const getEvent = async (eventSlug: string): Promise<EventResponse> => {
   const eventId = eventSlug; //todo get id from slug
   const res = await myFetch(`/rest/v1/events/${eventId}`, {
-    cache: "no-store",
+    cache: 'no-store',
   });
   if (!res.ok) return undefined;
   return res.json();
@@ -18,7 +18,7 @@ export const getEvents = async (): Promise<EventResponse[]> => {
     size: 100,
   };
   const res = await myFetch(`/rest/v1/events?${urlParams(params)}`, {
-    cache: "no-store",
+    cache: 'no-store',
   });
   if (!res.ok) return undefined;
   return res.json();
@@ -30,7 +30,7 @@ export const getMyEvents = async (): Promise<EventResponse[]> => {
     size: 100,
   };
   const res = await myFetch(`/rest/v1/events/@me?${urlParams(params)}`, {
-    cache: "no-store",
+    cache: 'no-store',
     headers: {
       Cookie: cookies().toString(),
     },

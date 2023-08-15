@@ -8,4 +8,4 @@ services:
       POSTGRES_USER: jeteo
       POSTGRES_PASSWORD: jeteo
     ports:
-      - "5432:5432"
+      - '5432:5432'

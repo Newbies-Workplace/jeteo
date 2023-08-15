@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from "react";
 import cs from "classnames";
@@ -11,18 +11,18 @@ interface ButtonProps {
   style?: React.CSSProperties;
   icon?: string;
   iconSize?: number;
-  type?: "submit" | "reset" | "button";
+  type?: 'submit' | 'reset' | 'button';
   onClick?: () => void;
-  size?: "medium" | "small";
+  size?: 'medium' | 'small';
 }
 
 export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   children,
   className,
   primary = false,
-  type = "button",
+  type = 'button',
   onClick,
-  size = "medium",
+  size = 'medium',
   style,
   icon,
   iconSize,
@@ -34,15 +34,15 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
         styles.button,
         {
           [styles.primary]: primary,
-          [styles.medium]: size === "medium",
-          [styles.small]: size === "small",
+          [styles.medium]: size === 'medium',
+          [styles.small]: size === 'small',
         },
-        className
+        className,
       )}
       style={style}
       onClick={onClick}
     >
-      {icon && <Image alt={"icon"} src={icon} width={iconSize} />}
+      {icon && <Image alt={'icon'} src={icon} width={iconSize} />}
       {children}
     </button>
   );

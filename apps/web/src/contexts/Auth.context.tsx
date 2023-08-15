@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
@@ -19,14 +19,14 @@ export const AuthContextProvider: React.FC<any> = ({ children }) => {
   const [user, setUser] = useState<UserResponse | null>(null);
 
   useEffect(() => {
-    if (!Cookies.get("token") && !user) {
+    if (!Cookies.get('token') && !user) {
       fetchUser();
     }
   }, []);
 
   const fetchUser = async () => {
-    const user: UserResponse = await myFetch("/rest/v1/users/@me").then((res) =>
-      res.json()
+    const user: UserResponse = await myFetch('/rest/v1/users/@me').then((res) =>
+      res.json(),
     );
 
     setUser(user);

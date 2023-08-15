@@ -14,16 +14,16 @@ export default async function Page() {
     <div className={styles.container}>
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}
       >
-        <Text variant={"headM"} bold>
+        <Text variant={'headM'} bold>
           Wydarzenia
         </Text>
 
-        <Link href={"events/create"}>
+        <Link href={'events/create'}>
           <Button primary>Dodaj</Button>
         </Link>
       </div>
@@ -34,7 +34,7 @@ export default async function Page() {
             <Link
               key={event.id}
               href={`/studio/events/${event.slug}`}
-              style={{ alignSelf: "stretch" }}
+              style={{ alignSelf: 'stretch' }}
             >
               <EventCard
                 title={event.title}
@@ -45,11 +45,11 @@ export default async function Page() {
                 }}
                 place={
                   event.address
-                    ? event.address.city + ", " + event.address.place
+                    ? event.address.city + ', ' + event.address.place
                     : undefined
                 }
                 tags={event.tags}
-                startDate={dayjs(event.from).format("D MMMM YYYY, HH:mm")}
+                startDate={dayjs(event.from).format('D MMMM YYYY, HH:mm')}
               />
             </Link>
           );

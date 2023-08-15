@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import styles from "./page.module.scss";
 import Image from "next/image";
 import planetViolet from "@/assets/images/planet-violet.svg";
@@ -28,10 +28,10 @@ export default function Page() {
   const opacityBottomContent = useSpringValue(0);
 
   useEffect(() => {
-    const container = document.querySelector(".parallax");
-    container.addEventListener("scroll", handleScroll);
+    const container = document.querySelector('.parallax');
+    container.addEventListener('scroll', handleScroll);
     return () => {
-      container.removeEventListener("scroll", handleScroll);
+      container.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -49,7 +49,7 @@ export default function Page() {
           ? 0.75
           : current >= 500
           ? 1
-          : 0
+          : 0,
       );
     }, 150);
   };
@@ -79,7 +79,7 @@ export default function Page() {
             <Image
               className={styles.planetOrangeImg}
               src={planetOrange}
-              alt={"planetOrange"}
+              alt={'planetOrange'}
               width={156}
               height={156}
             />
@@ -93,7 +93,7 @@ export default function Page() {
             <Image
               className={styles.planetVioletImg}
               src={planetViolet}
-              alt={"planetViolet"}
+              alt={'planetViolet'}
               width={53}
               height={53}
             />
@@ -108,17 +108,17 @@ export default function Page() {
           <div className={styles.logo}>
             <Image
               src={planetBlue}
-              alt={"Planet Blue"}
+              alt={'Planet Blue'}
               className={styles.planetBlue}
               width={213}
               height={213}
             />
             <div className={styles.logoTextContainer}>
               <Text className={styles.logoText}>jeteo</Text>
-              <Text variant={"headM"}>Portal do dzielenia się wiedzą!</Text>
+              <Text variant={'headM'}>Portal do dzielenia się wiedzą!</Text>
             </div>
           </div>
-          <Link href={"/"}>
+          <Link href={'/'}>
             <Button className={styles.button} primary size="small">
               Sprawdź listę wydarzeń
             </Button>
@@ -128,18 +128,18 @@ export default function Page() {
           offset={1}
           speed={1}
           style={{
-            pointerEvents: "none",
+            pointerEvents: 'none',
             zIndex: 2,
           }}
         >
           <div className={styles.contentOnMoon}>
-            <Image src={moon} alt={"Moon"} className={styles.moon} priority />
+            <Image src={moon} alt={'Moon'} className={styles.moon} priority />
             <div className={styles.items}>
               <div className={styles.textContainer}>
-                <Text variant={"headL"} bold className={styles.text}>
+                <Text variant={'headL'} bold className={styles.text}>
                   Zbieraj wiedzę
                 </Text>
-                <Text variant={"bodyL"} className={styles.text}>
+                <Text variant={'bodyL'} className={styles.text}>
                   Jesteśmy głęboko przekonani, że wiedza dostarczana przez
                   ekspertów posiada znacznie większą wartość niż jakikolwiek
                   poradnik dostępny na YouTube. W związku z tym, dążymy do
@@ -150,10 +150,10 @@ export default function Page() {
               <Image
                 className={styles.presentation}
                 src={presentation}
-                alt={"Presentation"}
+                alt={'Presentation'}
               />
             </div>
-            <Image src={wave} alt={"wave"} className={styles.wave} priority />
+            <Image src={wave} alt={'wave'} className={styles.wave} priority />
           </div>
         </ParallaxLayer>
 
@@ -162,7 +162,7 @@ export default function Page() {
           speed={-1}
           style={{
             zIndex: 1,
-            pointerEvents: "none",
+            pointerEvents: 'none',
           }}
         >
           <animated.div
@@ -172,10 +172,10 @@ export default function Page() {
             className={styles.galaxyContent}
           >
             <div className={styles.galaxyTextContainer}>
-              <Text variant={"headL"} bold className={styles.text}>
+              <Text variant={'headL'} bold className={styles.text}>
                 Dziel się wiedzą
               </Text>
-              <Text variant={"bodyL"} className={styles.text}>
+              <Text variant={'bodyL'} className={styles.text}>
                 Masz wiarę we własne umiejętności i chęć dzielenia się wiedzą?
                 To miejsce powstało właśnie z myślą o Tobie! Wystarczy posiadać
                 garść wiedzy z obszaru programowania, aby dołączyć do naszej
@@ -185,7 +185,7 @@ export default function Page() {
             <Image
               className={styles.planetUfoSwarm}
               src={planetUfoSwarm}
-              alt={"planetUfoSwarm"}
+              alt={'planetUfoSwarm'}
             />
           </animated.div>
         </ParallaxLayer>
@@ -198,29 +198,29 @@ export default function Page() {
         >
           <div className={styles.footer}>
             <div className={styles.textWithImage}>
-              <Text variant={"headS"}>
-                Platforma realizowana przez{" "}
+              <Text variant={'headS'}>
+                Platforma realizowana przez{' '}
                 {
-                  <Link href={"http://newbies.pl/"} className={styles.link}>
+                  <Link href={'http://newbies.pl/'} className={styles.link}>
                     newbies
                   </Link>
                 }
               </Text>
-              <Image src={newbies} alt={"Newbies"} width={24} height={24} />
+              <Image src={newbies} alt={'Newbies'} width={24} height={24} />
             </div>
             <div className={styles.textWithImage}>
-              <Text variant={"headS"}>
-                powered by{" "}
+              <Text variant={'headS'}>
+                powered by{' '}
                 {
                   <Link
-                    href={"https://www.rst.software/"}
+                    href={'https://www.rst.software/'}
                     className={styles.link}
                   >
                     RST
                   </Link>
                 }
               </Text>
-              <Image src={rst} alt={"rst"} width={24} height={24} />
+              <Image src={rst} alt={'rst'} width={24} height={24} />
             </div>
           </div>
         </ParallaxLayer>

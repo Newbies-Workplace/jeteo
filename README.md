@@ -12,28 +12,33 @@
 To develop jeteo, run the following commands:
 
 Copy the .env.example file to .env and fill in the values:
+
 ```
 cp .env.template .env
 ```
 
 To start the database:
+
 ```
 docker-compose up -d
 ```
 
 To generate the prisma client and types:
+
 ```
 # run in ./apps/api/
 npm run generate
-``` 
+```
 
 To run the migrations on your database:
+
 ```
 # run in ./apps/api/
 npm run migrate
 ```
 
 And finally, to start the development server:
+
 ```
 npm run dev
 ```

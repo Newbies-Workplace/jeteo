@@ -1,5 +1,5 @@
 export const Validations = {
-  required: "To pole jest wymagane.",
+  required: 'To pole jest wymagane.',
   minLength: (min: number) => ({
     value: min,
     message: `Minimalna ilość znaków: ${min}.`,
@@ -10,6 +10,6 @@ export const Validations = {
   }),
   email: {
     value: /\S+@\S+\.\S+/,
-    message: "Niepoprawny adres email.",
+    message: 'Niepoprawny adres email.',
   },
 };

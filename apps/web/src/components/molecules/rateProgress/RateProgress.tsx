@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from "react";
 import styles from "./RateProgress.module.scss";
@@ -23,27 +23,27 @@ export const RateProgress: React.FC<RateProgressProps> = ({
   description,
 }) => {
   const data = {
-    labels: ["Oceny"],
+    labels: ['Oceny'],
     datasets: [
       {
-        label: "Średnia ocen",
+        label: 'Średnia ocen',
         data: [value, max - value],
-        backgroundColor: ["rgba(67,64,190, 1)", "rgba(196,196,196, 1)"],
-        borderColor: ["rgba(67,64,190, 1)", "rgba(196,196,196, 1)"],
+        backgroundColor: ['rgba(67,64,190, 1)', 'rgba(196,196,196, 1)'],
+        borderColor: ['rgba(67,64,190, 1)', 'rgba(196,196,196, 1)'],
         borderWidth: 1,
       },
     ],
   };
 
-  const options: ChartOptions<"doughnut"> = {
+  const options: ChartOptions<'doughnut'> = {
     animation: {
       duration: 1000,
-      easing: "easeInOutSine",
+      easing: 'easeInOutSine',
     },
     responsive: true,
     circumference: 180,
     rotation: 270,
-    cutout: "85%",
+    cutout: '85%',
     plugins: {
       legend: {
         display: false,
@@ -57,13 +57,13 @@ export const RateProgress: React.FC<RateProgressProps> = ({
         <Doughnut data={data} options={options} style={{ zIndex: 1 }} />
       </div>
       <div className={styles.textContainer}>
-        <Text variant={"headL"} bold>
-          {value.toFixed(2) + "/" + max}
+        <Text variant={'headL'} bold>
+          {value.toFixed(2) + '/' + max}
         </Text>
-        <Text variant={"headM"} bold>
+        <Text variant={'headM'} bold>
           {label}
         </Text>
-        <Text variant={"bodyS"} bold className={styles.description}>
+        <Text variant={'bodyS'} bold className={styles.description}>
           {description}
         </Text>
       </div>

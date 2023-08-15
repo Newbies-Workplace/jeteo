@@ -12,8 +12,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className={styles.container}>
         <div className={styles.navigation}>
           <span className={styles.studioLogo}>Studio</span>
-          <NavButton href={"/studio/events"}>
-            <Image src={calendarIcon} alt={""} />
+          <NavButton href={'/studio/events'}>
+            <Image src={calendarIcon} alt={''} />
             Wydarzenia
           </NavButton>
         </div>

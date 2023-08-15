@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useRef, useState } from "react";
 import styles from "./FileUpload.module.scss";
@@ -13,7 +13,7 @@ interface FileUploadProps {
 }
 
 export const FileUpload: React.FC<FileUploadProps> = ({
-  accept = ALLOWED_IMAGE_EXTENSIONS.join(", "),
+  accept = ALLOWED_IMAGE_EXTENSIONS.join(', '),
   onChange,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -22,9 +22,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
+    if (e.type === 'dragenter' || e.type === 'dragover') {
       setDraggingFile(true);
-    } else if (e.type === "dragleave") {
+    } else if (e.type === 'dragleave') {
       setDraggingFile(false);
     }
   };
@@ -57,7 +57,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
       <input
         ref={inputRef}
-        type={"file"}
+        type={'file'}
         className={styles.input}
         accept={accept}
         onChange={handleChange}
@@ -66,8 +66,8 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       <Button
         className={styles.button}
         primary
-        size={"small"}
-        type={"button"}
+        size={'small'}
+        type={'button'}
         onClick={() => inputRef?.current?.click()}
       >
         Wybierz

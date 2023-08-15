@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useRef } from "react";
 import styles from "./RadioButtons.module.scss";
@@ -56,19 +56,19 @@ export const RadioButtons: React.FC<RadioButtonsProps> = ({
                 <div className={styles.help}>
                   <Image
                     src={HelpIcon}
-                    alt={"help icon"}
+                    alt={'help icon'}
                     width={20}
                     height={20}
                   />
 
-                  <Text className={styles.helpText} variant={"bodyS"}>
+                  <Text className={styles.helpText} variant={'bodyS'}>
                     {item.description}
                   </Text>
                 </div>
               )}
             </div>
 
-            <Text className={styles.name} variant={"bodyM"}>
+            <Text className={styles.name} variant={'bodyM'}>
               {item.name}
             </Text>
           </div>

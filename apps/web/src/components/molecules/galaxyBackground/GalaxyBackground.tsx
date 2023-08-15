@@ -38,7 +38,7 @@ export const GalaxyBackground: React.FC<
       className={styles.wrapper}
       style={{
         backgroundImage: `url(${SpaceFog.src})`,
-        backgroundSize: "cover",
+        backgroundSize: 'cover',
         ...style,
       }}
     >

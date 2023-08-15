@@ -2,7 +2,7 @@ import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
+    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -10,11 +10,11 @@ const preview: Preview = {
       },
     },
     backgrounds: {
-      default: "default",
+      default: 'default',
       values: [
         {
-          name: "default",
-          value: "#F3F3F3",
+          name: 'default',
+          value: '#F3F3F3',
         },
       ],
     },

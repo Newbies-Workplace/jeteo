@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { Text } from "@/components/atoms/text/Text";
 import MDEditor from "@uiw/react-md-editor";
@@ -31,7 +31,7 @@ export const MarkdownInput: React.FC<MarkdownInputProps> = ({
   textareaProps,
 }) => {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
       <Label label={label} required={required} />
 
       <div data-color-mode="light">
@@ -46,7 +46,7 @@ export const MarkdownInput: React.FC<MarkdownInputProps> = ({
       </div>
 
       {error && (
-        <Text className={styles.error} variant={"bodyS"}>
+        <Text className={styles.error} variant={'bodyS'}>
           {error}
         </Text>
       )}

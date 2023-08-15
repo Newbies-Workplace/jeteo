@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Logo } from "@/components/atoms/logo/Logo";
 import styles from "./Dialog.module.scss";
 import { Text } from "@/components/atoms/text/Text";
@@ -28,8 +28,8 @@ export const Dialog: React.FC<DialogProps> = ({
       {arrowBack && (
         <div
           style={{
-            width: "100%",
-            alignItems: "start",
+            width: '100%',
+            alignItems: 'start',
             paddingLeft: 16,
             marginBottom: -30,
           }}

@@ -24,16 +24,16 @@ export default async function Layout({
       <StepNavigation
         links={[
           {
-            name: "Podstawowe informacje",
+            name: 'Podstawowe informacje',
             href: `/studio/events/edit/${params.slug}/basic`,
           },
-          { name: "Wygląd", href: `/studio/events/edit/${params.slug}/theme` },
+          { name: 'Wygląd', href: `/studio/events/edit/${params.slug}/theme` },
           {
-            name: "Prelekcje",
+            name: 'Prelekcje',
             href: `/studio/events/edit/${params.slug}/lectures`,
           },
           {
-            name: "Widoczność",
+            name: 'Widoczność',
             href: `/studio/events/edit/${params.slug}/visibility`,
           },
         ]}

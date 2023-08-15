@@ -5,16 +5,23 @@
     "dev": "dotenv -- turbo run dev",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write \"apps/**/*.+(js|jsx|ts|tsx|md)\" \"packages/**/*.+(js|jsx|ts|tsx|md)\"",
     "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
   "devDependencies": {
     "@turbo/gen": "^1.9.7",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
     "dotenv-cli": "latest",
-    "eslint": "^7.32.0",
-    "eslint-config-custom": "*",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "husky": "^8.0.0",
-    "prettier": "^2.5.1",
+    "lint-staged": "^14.0.0",
+    "prettier": "^3.0.2",
     "turbo": "^1.10.12"
   },
   "name": "jeteo",

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import styles from "./Input.module.scss";
 import React from "react";
@@ -61,7 +61,7 @@ export const Input: React.FC<InputProps> = ({
       </div>
 
       {error && (
-        <Text className={styles.error} variant={"bodyS"}>
+        <Text className={styles.error} variant={'bodyS'}>
           {error}
         </Text>
       )}

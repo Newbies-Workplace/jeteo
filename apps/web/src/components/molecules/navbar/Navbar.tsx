@@ -13,12 +13,12 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ invertColor }) => {
   return (
     <div className={cs(styles.navbar, { [styles.invertColor]: invertColor })}>
-      <Link href={"/"}>
+      <Link href={'/'}>
         <Logo invertColor={invertColor} />
       </Link>
       <div>
-        <Link href={"/studio/events"}>studio</Link>
-        <Link href={"/auth/signin"}>
+        <Link href={'/studio/events'}>studio</Link>
+        <Link href={'/auth/signin'}>
           <Image alt="Open menu" src={burger} className={styles.burger} />
         </Link>
       </div>

@@ -1,12 +1,4 @@
-import {
-  ArrayMaxSize,
-  IsArray,
-  IsDateString,
-  IsEmail,
-  IsString,
-  IsUUID,
-  ValidateNested,
-} from "class-validator";
+import { ArrayMaxSize, IsArray, IsDateString, IsEmail, IsString, IsUUID, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 export class CreateLectureRequest {

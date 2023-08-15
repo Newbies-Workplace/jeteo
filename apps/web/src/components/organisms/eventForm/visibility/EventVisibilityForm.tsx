@@ -1,11 +1,8 @@
-"use client";
+'use client';
 
 import React from "react";
 import { Section } from "@/components/molecules/section/Section";
-import {
-  RadioButtons,
-  RadioItem,
-} from "@/components/molecules/radioButtons/RadioButtons";
+import { RadioButtons, RadioItem } from "@/components/molecules/radioButtons/RadioButtons";
 import Button from "@/components/atoms/button/Button";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { EventResponse } from "shared/model/event/response/event.response";
@@ -14,20 +11,20 @@ import { useRouter } from "next/navigation";
 
 const visibilities: RadioItem[] = [
   {
-    id: "PRIVATE",
-    name: "Prywatna",
-    description: "Widoczna tylko dla Ciebie i prelegentów",
+    id: 'PRIVATE',
+    name: 'Prywatna',
+    description: 'Widoczna tylko dla Ciebie i prelegentów',
   },
   {
-    id: "HIDDEN",
-    name: "Niepubliczna",
-    description: "Widoczna tylko dla osób posiadających link wydarzenia",
+    id: 'HIDDEN',
+    name: 'Niepubliczna',
+    description: 'Widoczna tylko dla osób posiadających link wydarzenia',
   },
-  { id: "PUBLIC", name: "Publiczna", description: "Widoczna dla każdego" },
+  { id: 'PUBLIC', name: 'Publiczna', description: 'Widoczna dla każdego' },
 ];
 
 type VisibilityForm = {
-  visibility: "PRIVATE" | "HIDDEN" | "PUBLIC";
+  visibility: 'PRIVATE' | 'HIDDEN' | 'PUBLIC';
 };
 
 interface EventVisibilityFormProps {
@@ -50,7 +47,7 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
   });
   const onSubmit: SubmitHandler<VisibilityForm> = (data: VisibilityForm) => {
     myFetch(`/rest/v1/events/${event.id}`, {
-      method: "PATCH",
+      method: 'PATCH',
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
@@ -60,16 +57,16 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
   };
 
   return (
-    <form style={{ display: "flex", flexDirection: "column" }}>
-      <Section title={"Widoczność"}>
+    <form style={{ display: 'flex', flexDirection: 'column' }}>
+      <Section title={'Widoczność'}>
         <Controller
-          name={"visibility"}
+          name={'visibility'}
           control={control}
           render={({ field }) => (
             <RadioButtons
               values={visibilities}
               selectedValueIndex={visibilities.findIndex(
-                (value) => value.id === field.value
+                (value) => value.id === field.value,
               )}
               onChange={(item) => field.onChange(item.id)}
             />
@@ -78,7 +75,7 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
       </Section>
       <Button
         primary
-        style={{ alignSelf: "flex-end" }}
+        style={{ alignSelf: 'flex-end' }}
         onClick={handleSubmit(onSubmit)}
       >
         Zapisz

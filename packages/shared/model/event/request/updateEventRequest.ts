@@ -1,10 +1,4 @@
-import {
-  IsEnum,
-  IsHexColor,
-  IsOptional,
-  IsString,
-  Length,
-} from "class-validator";
+import { IsEnum, IsHexColor, IsOptional, IsString, Length } from "class-validator";
 import { CreateEventRequest } from "./createEvent.request";
 
 export class UpdateEventRequest extends CreateEventRequest {
@@ -34,6 +28,6 @@ export class UpdateEventRequest extends CreateEventRequest {
 
   @IsOptional()
   @IsString()
-  @IsEnum(["PRIVATE", "HIDDEN", "PUBLIC"])
-  visibility?: "PRIVATE" | "HIDDEN" | "PUBLIC";
+  @IsEnum(['PRIVATE', 'HIDDEN', 'PUBLIC'])
+  visibility?: 'PRIVATE' | 'HIDDEN' | 'PUBLIC';
 }

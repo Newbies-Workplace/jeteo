@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Page from "./page";
 
 const meta: Meta<typeof Page> = {
-  title: "Pages/Hero",
+  title: 'Pages/Hero',
   component: Page,
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 

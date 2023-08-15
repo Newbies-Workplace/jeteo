@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import styles from "./StepNavigation.module.scss";
 import cs from "classnames";
@@ -25,7 +25,7 @@ export const StepButton: React.FC<StepButtonProps> = ({
       className={cs(styles.text, {
         [styles.textActive]: active,
       })}
-      variant={"headM"}
+      variant={'headM'}
     >
       {title}
     </Text>
