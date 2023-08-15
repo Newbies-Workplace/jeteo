@@ -1,9 +1,9 @@
 export interface UserResponse {
   id: string;
-  nick: string;
+  name: string;
   avatar?: string;
   description?: string;
-  socials: {
+  socials?: {
     mail?: string;
     github?: string;
     twitter?: string;

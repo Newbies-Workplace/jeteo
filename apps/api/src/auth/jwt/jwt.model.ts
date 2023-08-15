@@ -1,7 +1,7 @@
 export type TokenUser = {
   id: string;
   google_id: string;
-  nick: string;
+  name: string;
 };
 
 export type Token = {

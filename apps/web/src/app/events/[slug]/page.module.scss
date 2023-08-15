@@ -1,0 +1,165 @@
+@use "@/colors.module.scss" as colors;
+@use "@/responsiveness.module.scss" as responsiveness;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  align-self: stretch;
+  background-color: colors.$primary;
+  min-height: 320px;
+  border-radius: 0 0 16px 16px;
+}
+
+.containerWrapper {
+  display: flex;
+  margin: 0 auto;
+  width: 100%;
+  justify-content: center;
+  align-self: stretch;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  max-width: responsiveness.$content-width;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1 0 0;
+  align-self: stretch;
+  margin: -48px 16px 16px;
+}
+
+.titleAnchor {
+  position: relative;
+}
+
+.title {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 4px;
+
+  color: colors.$white;
+
+  .tags {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1 0 0;
+}
+
+.side {
+  display: flex;
+  max-width: 304px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1 0 0;
+}
+
+.box {
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  gap: 16px;
+  align-self: stretch;
+
+  background-color: colors.$surface;
+  border-radius: 16px;
+}
+
+.host {
+  align-items: center;
+
+  .avatar {
+    margin-top: -48px;
+  }
+}
+
+.agenda {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+
+  .separator {
+    width: 6px;
+    height: 16px;
+    border-radius: 3px;
+    background: colors.$stroke;
+  }
+}
+
+@media only screen and (max-width: 820px) {
+  .header {
+    border-radius: 0 0 4px 4px;
+  }
+
+  .container {
+    margin: -48px 0 0;
+    padding: 0 8px;
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: unset;
+  }
+
+  .main {
+    max-width: unset;
+  }
+
+  .side {
+    max-width: unset;
+  }
+
+  .description {
+    order: 1;
+  }
+
+  .location {
+    order: 2;
+  }
+
+  .timeBox {
+    order: 3;
+  }
+
+  .agenda {
+    order: 4;
+  }
+
+  .host {
+    order: 5;
+
+    .avatar {
+      margin-top: unset;
+    }
+  }
+}

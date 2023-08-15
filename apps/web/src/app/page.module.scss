@@ -1,3 +1,5 @@
+@use "@/responsiveness.module.scss" as responsiveness;
+
 .page {
     display: flex;
     flex-direction: column;
@@ -15,7 +17,7 @@
     margin: 0 16px;
     display: flex;
     flex-direction: column;
-    max-width: 960px;
+    max-width: responsiveness.$content-width;
     align-items: center;
     gap: 16px;
     flex: 1 0 0;

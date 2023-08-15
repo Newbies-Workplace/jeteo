@@ -3,9 +3,10 @@ import { Text } from "@/components/atoms/text/Text";
 import Image from "next/image";
 import styles from "./EventCard.module.scss";
 import { Tag } from "@/components/atoms/tag/Tag";
-import defaultAvatar from "@/assets/images/default-profile-pic.svg";
 import LocationIcon from "@/assets/location.svg";
 import ClockIcon from "@/assets/clock.svg";
+import dayjs from "dayjs";
+import { Avatar } from "@/components/atoms/avatar/Avatar";
 
 export interface EventCardProps {
   title: string;
@@ -45,13 +46,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         <div className={styles.host}>
           <Text variant={"bodyS"}>{host.name}</Text>
 
-          <Image
-            src={host.avatar ?? defaultAvatar}
-            alt={"avatar"}
-            width={32}
-            height={32}
-            className={styles.avatar}
-          />
+          <Avatar src={host.avatar} size={32} />
         </div>
       </div>
       <div className={styles.mid}>
@@ -68,7 +63,7 @@ export const EventCard: React.FC<EventCardProps> = ({
           <div className={styles.pin}>
             <Image src={ClockIcon} alt={"time"} />
             <Text variant={"bodyS"} className={styles.date}>
-              {startDate}
+              {dayjs(startDate).format("D MMMM YYYY, HH:mm")}
             </Text>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { DateTime } from "../../util";
+import { UserResponse } from "../../user/response/user.response";
 
 export interface EventResponse {
   id: string;
@@ -21,10 +22,7 @@ export interface EventResponse {
   primaryColor: string;
   coverImage?: string;
   visibility: "PRIVATE" | "HIDDEN" | "PUBLIC";
-  host: {
-    name: string;
-    avatar?: string;
-  };
+  host: UserResponse;
   userId: string;
   createdAt: DateTime;
 }

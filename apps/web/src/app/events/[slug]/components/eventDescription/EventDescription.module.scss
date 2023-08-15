@@ -1,0 +1,5 @@
+@use "@/typography.module" as typography;
+
+.description {
+  @include typography.bodyM();
+}

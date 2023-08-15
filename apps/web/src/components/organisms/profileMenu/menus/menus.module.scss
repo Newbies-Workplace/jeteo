@@ -1,12 +1,14 @@
 @use '@/colors.module.scss' as colors;
 @use '@/typography.module.scss' as typography;
 
-.menu{
-
+.menu {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
+    gap: 12px;
+
+    z-index: 10;
 
     position: absolute;
     top: 120%;
@@ -14,37 +16,40 @@
 
     background-color: colors.$primary;
 
-    border-radius: 16px;
-    border-top-right-radius: 0px;
-    padding-bottom: 5px;
-
+    border-radius: 16px 0 16px 16px;
+    padding: 8px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
-
-.pfp{
-    border-radius: 32px;
-}
-
-.profile{
+.profile {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 12.5px;
-    margin-bottom: 6.5px;
-    margin-top: 6.5px;
-
-    width: 90%;
+    gap: 8px;
+    align-self: stretch;
 }
 
-.text{
+.text {
     color: colors.$white;
 }
 
-.buttonContainer{
+.buttonContainer {
     display: flex;
     flex-direction: column;
-    width: 92%;
+    align-self: stretch;
     gap: 8px;
+}
 
+.button {
+    border: unset;
+    border-radius: 8px;
+    background-color: colors.$white;
+    color: colors.$black;
+    width: 100%;
+}
+
+.dangerousButton {
+    background-color: colors.$live;
+    color: colors.$white;
 }
