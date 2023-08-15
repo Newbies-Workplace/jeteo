@@ -5,10 +5,10 @@ import styles from './UserMenu.module.scss'
 import { Text } from "@/components/atoms/text/Text";
 import colors from "@/colors.module.scss";
 import Image from "next/image";
-import profilePicture from "@/assets/default-profile-picture.svg";
+import profilePicture from "@/assets/images/default-profile-pic.svg";
 import Link from "next/link";
 import { useAuth } from "@/contexts/Auth.hook";
-
+import menuStyles from "../menus.module.scss"
 
 export default function UserMenu() {
     const { user } = useAuth();
@@ -16,11 +16,11 @@ export default function UserMenu() {
   
     return (
         <div className={styles.menu}>
-            <div className={styles.profile}>
-                <Image alt="Open menu" src={profilePicture} className={styles.burger} />
-                <Text variant="headS" bold={true} className={styles.text}>{user?.nick} {user?.avatar}</Text>
+            <div className={menuStyles.profile}>
+                <Image alt="pfp" src={profilePicture} className={menuStyles.pfp} />
+                <Text variant="headS" bold={true} className={menuStyles.text}>{user?.nick}</Text>
             </div>
-            <div className={styles.buttonContainer}>
+            <div className={menuStyles.buttonContainer}>
                 <Link href={"/studio/events"}>
                     <Button primary size="small" 
                         style={{ 
@@ -30,7 +30,7 @@ export default function UserMenu() {
                             width: "100%",
                             
                         }}>
-                        <Text variant="bodyM" className={styles.title}>
+                        <Text variant="bodyM">
                             Jeteo studio
                         </Text>
                     </Button>            
@@ -45,7 +45,7 @@ export default function UserMenu() {
                             width: "100%",
                             
                         }}>
-                        <Text variant="bodyM" className={styles.title}>
+                        <Text variant="bodyM">
                             Ustawienia
                         </Text>
                     </Button>            
@@ -60,7 +60,7 @@ export default function UserMenu() {
                             width: "100%",
                             
                         }}>
-                        <Text variant="bodyM" className={styles.title}>
+                        <Text variant="bodyM">
                             Wyloguj
                         </Text>
                     </Button>            

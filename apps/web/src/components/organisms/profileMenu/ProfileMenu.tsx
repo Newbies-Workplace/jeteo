@@ -1,12 +1,13 @@
 'use client'
 
-import UserMenu from "@/components/molecules/userMenu/UserMenu";
-import GuestMenu from "@/components/molecules/guestMenu/GuestMenu";
+import UserMenu from "./menus/userMenu/UserMenu";
+import GuestMenu from "./menus/guestMenu/GuestMenu";
 import { useAuth } from "@/contexts/Auth.hook";
 import Image from "next/image";
 import burger from "@/assets/Burger.svg";
 import styles from "./ProfileMenu.module.scss";
 import { useState, useRef, useEffect } from 'react';
+
 
 
 

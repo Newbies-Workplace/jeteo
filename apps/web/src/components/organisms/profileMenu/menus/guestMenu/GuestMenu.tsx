@@ -5,7 +5,8 @@ import styles from './GuestMenu.module.scss'
 import { Text } from "@/components/atoms/text/Text";
 import colors from "@/colors.module.scss";
 import Image from "next/image";
-import profilePicture from "@/assets/default-profile-picture.svg";
+import profilePicture from "@/assets/images/default-profile-pic.svg";
+import menuStyles from "../menus.module.scss"
 import Link from "next/link";
 
 
@@ -13,9 +14,9 @@ import Link from "next/link";
 export default function GuestMenu() {
     return (
         <div className={styles.menu}>
-            <div className={styles.profile}>
-                <Image alt="Open menu" src={profilePicture} className={styles.burger} />
-                <Text variant="headS" bold={true} className={styles.text}> Gall anonim</Text>
+            <div className={menuStyles.profile}>
+                <Image alt="pfp" src={profilePicture} className={menuStyles.pfp} />
+                <Text variant="headS" bold={true} className={menuStyles.text}> Gall anonim</Text>
             </div>
             
             <Link href={"/auth/signin"} style={{width: "90%"}}>
@@ -27,7 +28,7 @@ export default function GuestMenu() {
                     width: "100%",
                     
                 }}>
-                <Text variant="bodyM" className={styles.title}>
+                <Text variant="bodyM">
                     Zaloguj się
                 </Text>
             </Button>
