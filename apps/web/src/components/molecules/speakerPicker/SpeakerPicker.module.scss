@@ -1,0 +1,33 @@
+@use "@/colors.module.scss" as colors;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+
+  .inputs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--stroke, colors.$stroke);
+    background: var(--background, colors.$background);
+
+    .input {
+      width: 50%;
+      border: none;
+      outline: none;
+      background-color: colors.$background;
+      text-align: start;
+    }
+
+    .add:hover {
+      cursor: pointer;
+    }
+  }
+}
