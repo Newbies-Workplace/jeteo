@@ -52,8 +52,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   Agenda
                 </Text>
                 <LectureCard
-                  startingHour={"12:00"}
-                  endingHour={"13:00"}
+                  from={"2023-08-16T17:19:08.398Z"}
+                  to={"2023-08-16T17:19:08.398Z"}
                   title={"AAA"}
                   subtitle={"aaa"}
                   speakers={[
@@ -69,8 +69,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 />
                 <div className={styles.separator} />
                 <LectureCard
-                  startingHour={"13:00"}
-                  endingHour={"14:00"}
+                  from={"2023-08-16T17:19:08.398Z"}
+                  to={"2023-08-16T17:19:08.398Z"}
                   title={"BBB"}
                   subtitle={"bbb"}
                   speakers={[
