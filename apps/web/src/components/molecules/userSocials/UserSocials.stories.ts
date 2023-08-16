@@ -10,7 +10,7 @@ export default meta;
 
 type Story = StoryObj<typeof UserSocials>;
 
-export const Primary: Story = {
+export const Default: Story = {
     args: {
         size: 20,
         direction: "row",
@@ -19,6 +19,35 @@ export const Primary: Story = {
             github: "github.com",
             twitter: "twitter.pl",
             linkedin: "linkedin.pl",
+        }
+    },
+};
+export const Empty: Story = {
+    args: {
+        size: 20,
+        direction: "row",
+        socials: {}
+    },
+};
+export const Invalid: Story = {
+    args: {
+        size: 20,
+        direction: "row",
+        socials: {
+            mail: "exmple@gmail.com",
+            //@ts-ignore
+            invalid: "invalid data"
+        }
+    },
+};
+
+export const OnlyInvalid: Story = {
+    args: {
+        size: 20,
+        direction: "row",
+        socials: {
+            //@ts-ignore
+            invalid: "invalid data"
         }
     },
 };
