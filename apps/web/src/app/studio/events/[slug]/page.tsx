@@ -1,10 +1,10 @@
 import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader";
 import { StudioFunctionCard } from "@/components/molecules/studioFunctionCard/StudioFunctionCard";
 import { Text } from "@/components/atoms/text/Text";
-import { LectureCard } from "@/components/molecules/lectureCard/LectureCard";
 import styles from "./page.module.scss";
 import { getEvent } from "@/common/getEvent";
 import { notFound } from "next/navigation";
+import { StudioLectureCard } from "@/components/molecules/studioLectureCard/StudioLectureCard";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const event = await getEvent(params.slug);
@@ -32,23 +32,23 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
       <Text variant="headL">Prelekcje</Text>
 
-      <LectureCard
-        startingHour="13:00"
-        endingHour="14:00"
+      <StudioLectureCard
+        from="2023-08-16T17:19:08.398Z"
+        to="2023-08-16T17:19:08.398Z"
         title="Pogadajmy o Formule 1"
         subtitle="kto zatrzyma maxa verstappena?"
         speakers={[]}
       />
-      <LectureCard
-        startingHour="13:00"
-        endingHour="14:00"
+      <StudioLectureCard
+        from="2023-08-16T17:19:08.398Z"
+        to="2023-08-16T17:19:08.398Z"
         title="Pogadajmy o Formule 1"
         subtitle="kto zatrzyma maxa verstappena?"
         speakers={[]}
       />
-      <LectureCard
-        startingHour="13:00"
-        endingHour="14:00"
+      <StudioLectureCard
+        from="2023-08-16T17:19:08.398Z"
+        to="2023-08-16T17:19:08.398Z"
         title="Pogadajmy o Formule 1"
         subtitle="kto zatrzyma maxa verstappena?"
         speakers={[]}

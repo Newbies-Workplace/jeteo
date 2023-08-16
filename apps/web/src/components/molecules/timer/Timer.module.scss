@@ -1,0 +1,15 @@
+@use "@/colors.module.scss" as colors;
+
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: fit-content;
+  border-radius: 39px;
+
+  padding: 4px 8px;
+  gap: 6px;
+  background-color: colors.$primary;
+  color: colors.$white;
+}

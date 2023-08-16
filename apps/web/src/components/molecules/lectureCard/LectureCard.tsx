@@ -2,12 +2,11 @@ import React from "react";
 import styles from "./LectureCard.module.scss";
 import { SpeakerCard, SpeakerCardProps } from "./SpeakerCard/SpeakerCard";
 import { Text } from "@/components/atoms/text/Text";
-import Image from "next/image";
-import time from "@/assets/clock.svg";
+import { Timer } from "@/components/molecules/timer/Timer";
 
 interface LectureProps {
-  startingHour: string;
-  endingHour: string;
+  from: string;
+  to: string;
   title: string;
   subtitle: string;
   speakers: SpeakerCardProps[];
@@ -15,8 +14,8 @@ interface LectureProps {
 }
 
 export const LectureCard: React.FC<LectureProps> = ({
-  startingHour,
-  endingHour,
+  from,
+  to,
   title,
   subtitle,
   speakers,
@@ -24,13 +23,7 @@ export const LectureCard: React.FC<LectureProps> = ({
 }) => {
   return (
     <div className={styles.content}>
-      <div className={styles.timer}>
-        <Image alt="time" src={time} width={16} height={16} />
-        <Text variant="headS">
-          {startingHour} - {endingHour}
-        </Text>
-      </div>
-
+      <Timer from={from} to={to} />
       <div className={styles.main}>
         <div className={styles.titleContainer}>
           <Text variant="headS" bold>
