@@ -103,9 +103,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     {event.host.description}
                   </Text>
                 )}
-                {event.host.socials && (
-                  <UserSocials size={24} socials={event.host.socials} />
-                )}
+                <UserSocials size={24} socials={event.host.socials} />
               </div>
               <div className={cs(styles.box, styles.timeBox)}>
                 <Text variant={"headS"} bold>
