@@ -1,4 +1,6 @@
 @use "@/colors.module.scss" as colors;
+@use "@/typography.module.scss" as typography;
+@use "@/responsiveness.module.scss" as responsiveness;
 
 .container {
   display: flex;
@@ -7,16 +9,20 @@
   gap: 8px;
   align-self: stretch;
 
-  .inputs {
+  .record {
     display: flex;
     justify-content: space-between;
     align-items: center;
     align-self: stretch;
     gap: 8px;
-    padding: 8px;
+    padding: 6px 8px;
     border-radius: 8px;
     border: 1px solid var(--stroke, colors.$stroke);
-    background: var(--background, colors.$background);
+    background-color: colors.$background;
+
+    &.items {
+      background-color: colors.$surface;
+    }
 
     .input {
       width: 50%;
@@ -24,10 +30,84 @@
       outline: none;
       background-color: colors.$background;
       text-align: start;
+      align-content: center;
+      color: colors.$black;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      @include typography.bodyM();
     }
 
     .add:hover {
       cursor: pointer;
+    }
+
+    .text {
+      width: 50%;
+      text-align: start;
+      align-content: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .name {
+      width: 25%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .button {
+      min-width: 15%;
+      white-space: nowrap;
+      flex-direction: row-reverse;
+    }
+
+    .delete:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+@include responsiveness.mobile {
+  .container {
+    .record {
+      justify-content: unset;
+
+      .button {
+        min-width: unset;
+        font-size: 0;
+        display: unset;
+      }
+      gap: 16px;
+      .text {
+        width: 40%
+      }
+
+      .name {
+        width: 20%;
+      }
+    }
+  }
+}
+
+@include responsiveness.tablet {
+  .container {
+    .record {
+
+      .button {
+        min-width: unset;
+        font-size: 0;
+        display: unset;
+      }
+      .text {
+        width: 50%
+      }
+
+      .name {
+        width: 42%;
+      }
     }
   }
 }
