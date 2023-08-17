@@ -1,4 +1,4 @@
-@use '@/colors.module.scss' as colors;
+@use "@/colors.module.scss" as colors;
 
 .card {
   display: flex;
@@ -8,11 +8,10 @@
   gap: 10px;
   align-self: stretch;
 
-
   color: colors.$white;
 
   border-radius: 16px;
-  background: colors.$primary
+  background: colors.$primary;
 }
 
 .top {
@@ -91,7 +90,7 @@
   .tags {
     display: flex;
     justify-content: flex-end;
-    align-items: flex-start;
-    gap: 2px;
+    flex-wrap: wrap;
+    gap: 4px;
   }
 }
