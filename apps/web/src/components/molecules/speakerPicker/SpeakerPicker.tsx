@@ -36,9 +36,15 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
       <div className={styles.record}>
         <Image src={GreyCircle} alt={"GreyCircle"} width={32} height={32} />
 
-        <input className={styles.input} type="email" placeholder="Email" />
         <input
           className={styles.input}
+          style={{ width: "40%" }}
+          type="email"
+          placeholder="Email"
+        />
+        <input
+          className={styles.input}
+          style={{ width: "60%" }}
           type="text"
           placeholder="Nazwa (widoczna publicznie)"
         />
@@ -120,7 +126,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
           </div>
         ))}
 
-      <Text variant={"bodyS"} bold>
+      <Text variant={"bodyS"}>
         Maksymlanie 2 prelegentów. Linki z zaproszeniami będą aktywowane i
         wysłane mailem po zapisaniu prelekcji.
       </Text>

@@ -25,7 +25,6 @@
     }
 
     .input {
-      width: 50%;
       border: none;
       outline: none;
       background-color: colors.$background;
@@ -43,7 +42,7 @@
     }
 
     .text {
-      width: 50%;
+      width: 40%;
       text-align: start;
       align-content: center;
       white-space: nowrap;
@@ -52,14 +51,14 @@
     }
 
     .name {
-      width: 25%;
+      width: 40%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .button {
-      min-width: 15%;
+      width: calc(20% - 10px);
       white-space: nowrap;
       flex-direction: row-reverse;
     }
@@ -73,20 +72,10 @@
 @include responsiveness.mobile {
   .container {
     .record {
-      justify-content: unset;
-
       .button {
         min-width: unset;
         font-size: 0;
         display: unset;
-      }
-      gap: 16px;
-      .text {
-        width: 40%
-      }
-
-      .name {
-        width: 20%;
       }
     }
   }
@@ -95,18 +84,10 @@
 @include responsiveness.tablet {
   .container {
     .record {
-
       .button {
         min-width: unset;
         font-size: 0;
         display: unset;
-      }
-      .text {
-        width: 50%
-      }
-
-      .name {
-        width: 42%;
       }
     }
   }
