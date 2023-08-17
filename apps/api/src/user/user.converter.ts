@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserResponse } from 'shared/.dist/model/user/response/user.response';
+import { UserResponse } from 'shared/model/user/response/user.response';
 import { User } from '@prisma/client';
 
 @Injectable()
