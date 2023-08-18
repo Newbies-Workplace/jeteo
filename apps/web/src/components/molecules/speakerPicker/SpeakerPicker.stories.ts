@@ -23,8 +23,18 @@ export const Default: Story = {
 export const WithInvites: Story = {
   args: {
     invites: [
-      { email: "prelegent1@test.test", name: "John Doe", link: "link" },
-      { email: "prelegent2@test.test", name: "John Doe", link: "link2" },
+      {
+        id: "uuid1-invite1",
+        email: "prelegent1@test.test",
+        name: "John Doe",
+        link: "link",
+      },
+      {
+        id: "uuid1-invite2",
+        email: "prelegent2@test.test",
+        name: "John Doe",
+        link: "link2",
+      },
     ],
     speakers: [],
   },
@@ -34,8 +44,8 @@ export const WithSpeakers: Story = {
   args: {
     invites: [],
     speakers: [
-      { name: "Prelegent Jeden", avatar: Profile },
-      { name: "Prelegent Dwa", avatar: Profile },
+      { id: "uuid2-speaker1", name: "Prelegent Jeden", avatar: Profile },
+      { id: "uuid2-speaker2", name: "Prelegent Dwa", avatar: Profile },
     ],
   },
 };
@@ -43,8 +53,15 @@ export const WithSpeakers: Story = {
 export const WithAllData: Story = {
   args: {
     invites: [
-      { email: "prelegent2@test.test", name: "John Doe", link: "link" },
+      {
+        id: "uuid3-invite1",
+        email: "prelegent2@test.test",
+        name: "John Doe",
+        link: "link",
+      },
     ],
-    speakers: [{ name: "Prelegent Jeden", avatar: Profile }],
+    speakers: [
+      { id: "uuid3-speaker1", name: "Prelegent Jeden", avatar: Profile },
+    ],
   },
 };

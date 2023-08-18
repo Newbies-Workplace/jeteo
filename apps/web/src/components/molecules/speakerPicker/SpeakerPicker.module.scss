@@ -37,11 +37,11 @@
       @include typography.bodyM();
     }
 
-    .add:hover {
+    .iconButton:hover {
       cursor: pointer;
     }
 
-    .text {
+    .email {
       width: 40%;
       text-align: start;
       align-content: center;
@@ -61,10 +61,6 @@
       width: calc(20% - 10px);
       white-space: nowrap;
       flex-direction: row-reverse;
-    }
-
-    .delete:hover {
-      cursor: pointer;
     }
   }
 }

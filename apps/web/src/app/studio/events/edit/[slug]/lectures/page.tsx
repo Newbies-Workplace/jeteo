@@ -1,8 +1,6 @@
 import { StudioLectureCard } from "@/components/molecules/studioLectureCard/StudioLectureCard";
 import styles from "./page.module.scss";
 import Button from "@/components/atoms/button/Button";
-import { SpeakerPicker } from "@/components/molecules/speakerPicker/SpeakerPicker";
-import Profile from "@/assets/images/default-profile-pic.svg";
 
 export default function Page() {
   return (
@@ -35,16 +33,6 @@ export default function Page() {
           ]}
           from="2023-08-16T17:19:08.398Z"
           to="2023-08-16T17:19:08.398Z"
-        />
-        <SpeakerPicker
-          invites={[
-            { email: "prelegent1@test.test", name: "John Doe", link: "link" },
-            { email: "prelegent2@test.test", name: "John Doe", link: "link2" },
-          ]}
-          speakers={[
-            { name: "Prelegent Jeden", avatar: Profile },
-            { name: "Prelegent Dwa", avatar: Profile },
-          ]}
         />
       </div>
       <div className={styles.buttons}>

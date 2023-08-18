@@ -16,8 +16,8 @@ interface SpeakerPickerProps {
   onAddInvite?: () => void;
   onDeleteInvite?: () => void;
   onDeleteSpeaker?: () => void;
-  invites: { email: string; name: string; link: string }[];
-  speakers: { name: string; avatar: string }[];
+  invites: { id: string; email: string; name: string; link: string }[];
+  speakers: { id: string; name: string; avatar: string }[];
 }
 
 export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
@@ -50,7 +50,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
         />
 
         <Image
-          className={styles.add}
+          className={styles.iconButton}
           src={Add}
           alt={"add"}
           width={20}
@@ -60,63 +60,55 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
       </div>
 
       {invites &&
-        invites.map((invite, index) => {
-          return (
-            <div
-              className={cs(styles.record, styles.items)}
-              key={`invite-${index}`}
+        invites.map((invite) => (
+          <div className={cs(styles.record, styles.items)} key={invite.id}>
+            <Image
+              src={PrimaryCircle}
+              alt={"PrimaryCircle"}
+              width={32}
+              height={32}
+            />
+            <Text className={styles.email} variant={"bodyM"}>
+              {invite.email}
+            </Text>
+            <Text className={styles.name} variant={"bodyM"}>
+              {invite.name}
+            </Text>
+            <Button
+              className={styles.button}
+              primary
+              size="small"
+              icon={Copy}
+              onClick={() => {
+                copyTextToClipboard(invite.link);
+              }}
             >
-              <Image
-                src={PrimaryCircle}
-                alt={"PrimaryCircle"}
-                width={32}
-                height={32}
-              />
-              <Text className={styles.text} variant={"bodyM"}>
-                {invite.email}
-              </Text>
-              <Text className={styles.name} variant={"bodyM"}>
-                {invite.name}
-              </Text>
-              <Button
-                className={styles.button}
-                primary
-                size="small"
-                icon={Copy}
-                onClick={() => {
-                  copyTextToClipboard(invite.link);
-                }}
-              >
-                Skopiuj zaproszenie
-              </Button>
-              <Image
-                className={styles.delete}
-                src={Delete}
-                alt={"Delete"}
-                width={22}
-                height={22}
-                onClick={onDeleteInvite}
-              />
-            </div>
-          );
-        })}
+              Skopiuj zaproszenie
+            </Button>
+            <Image
+              className={styles.iconButton}
+              src={Delete}
+              alt={"Delete"}
+              width={22}
+              height={22}
+              onClick={onDeleteInvite}
+            />
+          </div>
+        ))}
 
       {speakers &&
-        speakers.map((speaker, index) => (
-          <div
-            className={cs(styles.record, styles.items)}
-            key={`speaker-${index}`}
-          >
+        speakers.map((speaker) => (
+          <div className={cs(styles.record, styles.items)} key={speaker.id}>
             <Avatar src={speaker.avatar} size={32} />
             <Text
-              className={styles.text}
-              style={{ textAlign: "start", width: "100%", marginLeft: -1 }}
+              className={styles.name}
+              style={{ textAlign: "start", width: "100%", marginLeft: -3 }}
               variant={"bodyM"}
             >
               {speaker.name}
             </Text>
             <Image
-              className={styles.delete}
+              className={styles.iconButton}
               src={Delete}
               alt={"Delete"}
               width={22}
