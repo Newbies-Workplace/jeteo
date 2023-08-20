@@ -1,5 +1,6 @@
 import { Type, Transform } from "class-transformer";
 import {
+  ArrayMaxSize,
   IsArray,
   IsDateString,
   IsLatitude,
@@ -73,5 +74,6 @@ export class CreateEventRequest {
   @IsArray()
   @IsString({ each: true })
   @Length(1, 20, { each: true })
+  @ArrayMaxSize(8)
   tags: string[];
 }
