@@ -16,7 +16,11 @@ import {
   CreateLectureInvite,
   CreateLectureRequest,
 } from "shared/model/lecture/request/createLecture.request";
-import { StudioLectureResponse } from "shared/model/lecture/response/lecture.response";
+import {
+  LectureResponse,
+  StudioLectureResponse,
+} from "shared/model/lecture/response/lecture.response";
+import { UpdateLectureRequest } from "shared/model/lecture/request/updateLecture.request";
 
 type BasicForm = {
   title: string;
@@ -29,17 +33,46 @@ type BasicForm = {
   };
 };
 
-const getDefaultValue = (): BasicForm => {
-  return {
-    title: "",
-    description: "",
-    from: dayjs().format("YYYY-MM-DDThh:mm"),
-    to: dayjs().add(1, "h").format("YYYY-MM-DDThh:mm"),
-    speakersAndInvites: {
-      invites: [],
-      speakers: [],
-    },
-  };
+const getDefaultValue = (lecture?: StudioLectureResponse): BasicForm => {
+  return lecture
+    ? {
+        title: lecture.title,
+        description: lecture.description,
+        from: dayjs(lecture.from).format("YYYY-MM-DDThh:mm"),
+        to: dayjs(lecture.to).format("YYYY-MM-DDThh:mm"),
+        speakersAndInvites: {
+          invites: lecture.invites,
+          speakers: lecture.speakers,
+        },
+      }
+    : {
+        title: "",
+        description: "",
+        from: dayjs().format("YYYY-MM-DDThh:mm"),
+        to: dayjs().add(1, "h").format("YYYY-MM-DDThh:mm"),
+        speakersAndInvites: {
+          invites: [],
+          speakers: [],
+        },
+      };
+};
+
+const getRequest = async (
+  data: BasicForm,
+  eventSlug: string,
+  lecture?: LectureResponse
+): Promise<LectureResponse> => {
+  if (lecture) {
+    return myFetch(`/rest/v1/events/${eventSlug}/lectures/${lecture.id}`, {
+      method: "PATCH",
+      body: JSON.stringify(getUpdateRequestData(data)),
+    }).then((res) => res.json());
+  } else {
+    return myFetch(`/rest/v1/events/${eventSlug}/lectures`, {
+      method: "POST",
+      body: JSON.stringify(getCreateRequestData(data)),
+    }).then((res) => res.json());
+  }
 };
 
 const getCreateRequestData = (form: BasicForm): CreateLectureRequest => {
@@ -51,14 +84,26 @@ const getCreateRequestData = (form: BasicForm): CreateLectureRequest => {
     invites: form.speakersAndInvites.invites,
   };
 };
+const getUpdateRequestData = (form: BasicForm): UpdateLectureRequest => {
+  return {
+    title: form.title,
+    description: form.description,
+    from: form.from,
+    to: form.to,
+    invites: form.speakersAndInvites.invites,
+    speakers: form.speakersAndInvites.speakers,
+  };
+};
 
 interface LectureBasicFormProps {
   eventSlug: string;
-  onSubmitted?: (res: StudioLectureResponse) => void;
+  lecture?: LectureResponse;
+  onSubmitted?: (res: LectureResponse) => void;
 }
 
 export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   eventSlug,
+  lecture,
   onSubmitted,
 }) => {
   const { control, handleSubmit } = useForm<BasicForm>({
@@ -66,12 +111,8 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   });
 
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
-    myFetch(`/rest/v1/events/${eventSlug}/lectures`, {
-      method: "POST",
-      body: JSON.stringify(getCreateRequestData(data)),
-    })
-      .then((res) => res.json())
-      .then((res) => {
+    getRequest(data, eventSlug, lecture)
+      .then((res: StudioLectureResponse) => {
         onSubmitted?.(res);
       })
       .catch((e) => {
@@ -140,10 +181,8 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
               invites={field.value.invites}
               speakers={field.value.speakers}
               onAddInvite={(email, name) => {
-                //todo add toast
-
                 if (
-                  field.value.invites.some((invite) => invite.email === email)
+                  field.value.invites.some((invite) => invite.mail === email)
                 ) {
                   return;
                 }

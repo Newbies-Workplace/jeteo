@@ -17,14 +17,14 @@ import cs from "classnames";
 import * as process from "process";
 
 interface SpeakerPickerProps {
-  onAddInvite?: (email: string, name: string) => void;
+  onAddInvite?: (mail: string, name: string) => void;
   onDeleteInvite?: (id: string) => void;
   onDeleteSpeaker?: (id: string) => void;
   invites: CreateLectureInvite[];
   speakers: UserResponse[];
 }
 
-const emailRegExp: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const emailRegExp: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
   onAddInvite,
@@ -35,6 +35,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
 }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const canAdd = invites.length + speakers.length !== 2;
 
@@ -42,25 +43,24 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
     const trimmedEmail = email.trim();
     const trimmedName = name.trim();
 
-    //todo toast
     if (trimmedEmail.length === 0 || trimmedName.length === 0) {
-      console.log("puste pola");
+      setErrorMessage("Wszystkie pola muszą być uzupełnione.");
       return;
     }
 
     if (!emailRegExp.test(trimmedEmail)) {
-      console.log("email jest niepoprawny");
+      setErrorMessage("Błędny adres email.");
       return;
     }
 
-    if (invites.some((invite) => invite.email === trimmedEmail)) {
-      console.log("Osoba o tym Emailu jest juz zaproszona");
+    if (invites.some((invite) => invite.mail === trimmedEmail)) {
+      setErrorMessage("Osoba o tym mailu jest już zaproszona.");
 
       return;
     }
 
     if (invites.length + speakers.length === 2) {
-      console.log("liczba prelegentów nie może być większa niż 2");
+      setErrorMessage("Liczba prelegentów nie może być większa niż: 2.");
 
       return;
     }
@@ -96,9 +96,17 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
                 className={cs(styles.input, styles.ellipsis)}
                 type="email"
                 placeholder="Email"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    onSubmit();
+                  }
+                }}
                 disabled={!canAdd}
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setErrorMessage("");
+                }}
               />
             </td>
 
@@ -114,7 +122,10 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
                 }}
                 disabled={!canAdd}
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setErrorMessage("");
+                }}
               />
             </td>
             <td />
@@ -134,7 +145,6 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
               </div>
             </td>
           </tr>
-
           {invites &&
             invites.map((invite) => (
               <tr className={styles.item} key={invite.id}>
@@ -149,7 +159,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
                   </div>
                 </td>
                 <td className={styles.ellipsis}>
-                  <Text variant={"bodyM"}>{invite.email}</Text>
+                  <Text variant={"bodyM"}>{invite.mail}</Text>
                 </td>
                 <td className={styles.ellipsis}>
                   <Text variant={"bodyM"}>{invite.name}</Text>
@@ -213,7 +223,11 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
             ))}
         </tbody>
       </table>
-
+      {errorMessage && (
+        <Text variant={"bodyS"} className={styles.error}>
+          {errorMessage}
+        </Text>
+      )}
       <Text variant={"bodyS"}>
         Maksymlanie 2 prelegentów. Linki z zaproszeniami będą aktywowane i
         wysłane mailem po zapisaniu prelekcji.

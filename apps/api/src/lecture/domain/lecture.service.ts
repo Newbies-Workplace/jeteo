@@ -27,7 +27,7 @@ export class LectureService {
               id: invite.id,
               name: invite.name,
               userId: userId,
-              mail: invite.email,
+              mail: invite.mail,
             })),
           },
         },

@@ -1,15 +1,21 @@
-import { EventResponse } from "shared/model/event/response/event.response";
 import { myFetch } from "@/common/fetch";
-import { StudioLectureResponse } from "shared/model/lecture/response/lecture.response";
+import {
+  LectureResponse,
+  StudioLectureResponse,
+} from "shared/model/lecture/response/lecture.response";
+import { cookies } from "next/headers";
 
 export const getLecture = async (
   lectureSlug: string
-): Promise<EventResponse> => {
+): Promise<LectureResponse> => {
   const lectureId = lectureSlug; //todo get id from slug
   const res = await myFetch(
     `/rest/v1/lectures/${lectureId}`,
     {
       cache: "no-store",
+      headers: {
+        Cookie: cookies().toString(),
+      },
     },
     false
   );
@@ -25,6 +31,9 @@ export const getStudioLecture = async (
     `/rest/v1/lectures/${lectureId}`,
     {
       cache: "no-store",
+      headers: {
+        Cookie: cookies().toString(),
+      },
     },
     false
   );

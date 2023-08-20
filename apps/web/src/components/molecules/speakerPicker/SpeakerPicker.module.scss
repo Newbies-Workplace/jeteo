@@ -66,4 +66,8 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+  .error {
+    color: colors.$live;
+    padding-bottom: 4px;
+  }
 }

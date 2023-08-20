@@ -31,5 +31,5 @@ export class CreateLectureInvite {
   @IsString()
   name: string;
   @IsEmail()
-  email: string;
+  mail: string;
 }

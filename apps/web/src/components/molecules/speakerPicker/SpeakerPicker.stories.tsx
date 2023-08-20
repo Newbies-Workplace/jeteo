@@ -25,13 +25,12 @@ export const WithInvites: Story = {
     invites: [
       {
         id: "uuid1-invite1",
-        email:
-          "prelegent1prelegent1prelegent1prelegent1prelegent1prelegent1@test.test",
+        mail: "prelegent1prelegent1prelegent1prelegent1prelegent1prelegent1@test.test",
         name: "John Doe John Doe John Doe John Doe John Doe",
       },
       {
         id: "uuid1-invite2",
-        email: "prelegent2@test.test",
+        mail: "prelegent2@test.test",
         name: "John Doe",
       },
     ],
@@ -56,7 +55,7 @@ export const WithAllData: Story = {
     invites: [
       {
         id: "uuid3-invite1",
-        email: "prelegent2@test.test",
+        mail: "prelegent2@test.test",
         name: "John Doe",
       },
     ],
