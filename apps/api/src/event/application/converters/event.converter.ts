@@ -2,7 +2,7 @@ import { Event, User } from '@prisma/client';
 import { EventResponse } from 'shared/model/event/response/event.response';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/config/prisma.service';
-import { UserConverter } from '@/user/user.converter';
+import { UserConverter } from '@/user/application/user.converter';
 
 @Injectable()
 export class EventConverter {

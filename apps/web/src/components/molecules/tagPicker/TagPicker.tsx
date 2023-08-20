@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./TagPicker.module.scss";
 import { Tag } from "./Tag/Tag";
 import { useState } from "react";
+import { Text } from "@/components/atoms/text/Text";
 
 interface TagPickerProps {
   value?: string[];
@@ -44,15 +45,19 @@ export const TagPicker: React.FC<TagPickerProps> = ({ value, setValue }) => {
         return <Tag key={t} value={t} del={() => deleteTag(t)} />;
       })}
 
-      <input
-        minLength={1}
-        maxLength={20}
-        value={tagValue}
-        onChange={(e) => setTagValue(e.target.value)}
-        onKeyDown={onKeyDown}
-        className={styles.input}
-        placeholder="Otaguj mnie"
-      />
+      {value.length <= 8 ? (
+        <input
+          minLength={1}
+          maxLength={20}
+          value={tagValue}
+          onChange={(e) => setTagValue(e.target.value)}
+          onKeyDown={onKeyDown}
+          className={styles.input}
+          placeholder="Otaguj mnie"
+        />
+      ) : (
+        <Text variant="bodyM">Osiągnięto Limit Tagów</Text>
+      )}
     </div>
   );
 };

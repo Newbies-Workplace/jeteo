@@ -18,11 +18,48 @@ interface UserSocialsProps {
   };
 }
 
+interface SocialData {
+  icon: string;
+  alt: string;
+  hrefPrefix?: string;
+}
+
+
+const socialsData: {
+  [key in keyof UserSocialsProps['socials']]: SocialData
+} = {
+  mail: {
+    icon: EmailIcon,
+    alt: 'email',
+    hrefPrefix: 'mailto:'
+  },
+  github: {
+    icon: GithubIcon,
+    alt: 'github',
+  },
+  linkedin: {
+    icon: LinkedinIcon,
+    alt: 'linkedin'
+  },
+  twitter: {
+    icon: TwitterIcon,
+    alt: 'twitter'
+  }
+}
+
 export const UserSocials: React.FC<UserSocialsProps> = ({
   size = 16,
   direction = "row",
-  socials: { mail, twitter, linkedin, github },
+  socials,
 }) => {
+  const socialEntries = Object.entries(socials).filter(([key, _]) => {
+    return !!socialsData[key];
+  });
+
+  if (socialEntries.length === 0) {
+    return <></>
+  }
+
   return (
     <div
       className={styles.socials}
@@ -30,26 +67,15 @@ export const UserSocials: React.FC<UserSocialsProps> = ({
         flexDirection: direction,
       }}
     >
-      {mail && (
-        <Link href={`mailto:${mail}`}>
-          <Image alt="email" src={EmailIcon} width={size} height={size} />
+      {socialEntries.map(([key, href]) => {
+        if (!href) return;
+
+        const { icon, alt, hrefPrefix } = socialsData[key];
+
+        return <Link href={`${hrefPrefix || ''}${href}`} key={key}>
+          <Image alt={alt} src={icon} width={size} height={size}/>
         </Link>
-      )}
-      {twitter && (
-        <Link href={twitter}>
-          <Image alt="twitter" src={TwitterIcon} width={size} height={size} />
-        </Link>
-      )}
-      {linkedin && (
-        <Link href={linkedin}>
-          <Image alt="linkedin" src={LinkedinIcon} width={size} height={size} />
-        </Link>
-      )}
-      {github && (
-        <Link href={github}>
-          <Image alt="github" src={GithubIcon} width={size} height={size} />
-        </Link>
-      )}
+      })}
     </div>
   );
 };

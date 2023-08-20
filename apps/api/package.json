@@ -10,6 +10,7 @@
     "start:prod": "node dist/main",
     "generate": "prisma generate && prisma format",
     "migrate": "dotenv -e ../../.env -- prisma migrate dev",
+    "studio": "dotenv -e ../../.env -- npx prisma studio",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

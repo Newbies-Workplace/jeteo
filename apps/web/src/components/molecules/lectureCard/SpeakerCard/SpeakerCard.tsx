@@ -32,7 +32,7 @@ export const SpeakerCard: React.FC<SpeakerCardProps> = ({
 
         {description && <Text variant="bodyS">{description}</Text>}
 
-        {socials && <UserSocials socials={socials} />}
+        <UserSocials socials={socials} />
       </div>
     </div>
   );
