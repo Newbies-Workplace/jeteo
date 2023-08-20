@@ -6,7 +6,7 @@ import SpaceFog from "@/assets/images/space-fog.svg";
 import Ufo1 from "@/assets/images/ufo-1.svg";
 import Ufo2 from "@/assets/images/ufo-2.svg";
 import Ufo3 from "@/assets/images/ufo-3.svg";
-import Rocket from "@/assets/images/rocket.svg"; // todo rocket svg
+import Rocket from "@/assets/images/rocket.svg";
 import PlanetYellow from "@/assets/images/planet-yellow.svg";
 import SpaceElectricVehicle from "@/assets/images/chair.svg";
 import Image from "next/image";

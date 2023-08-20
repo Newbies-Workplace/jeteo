@@ -25,15 +25,14 @@ export const WithInvites: Story = {
     invites: [
       {
         id: "uuid1-invite1",
-        email: "prelegent1@test.test",
-        name: "John Doe",
-        link: "link",
+        email:
+          "prelegent1prelegent1prelegent1prelegent1prelegent1prelegent1@test.test",
+        name: "John Doe John Doe John Doe John Doe John Doe",
       },
       {
         id: "uuid1-invite2",
         email: "prelegent2@test.test",
         name: "John Doe",
-        link: "link2",
       },
     ],
     speakers: [],
@@ -44,7 +43,9 @@ export const WithSpeakers: Story = {
   args: {
     invites: [],
     speakers: [
+      // @ts-ignore
       { id: "uuid2-speaker1", name: "Prelegent Jeden", avatar: Profile },
+      // @ts-ignore
       { id: "uuid2-speaker2", name: "Prelegent Dwa", avatar: Profile },
     ],
   },
@@ -57,10 +58,10 @@ export const WithAllData: Story = {
         id: "uuid3-invite1",
         email: "prelegent2@test.test",
         name: "John Doe",
-        link: "link",
       },
     ],
     speakers: [
+      // @ts-ignore
       { id: "uuid3-speaker1", name: "Prelegent Jeden", avatar: Profile },
     ],
   },

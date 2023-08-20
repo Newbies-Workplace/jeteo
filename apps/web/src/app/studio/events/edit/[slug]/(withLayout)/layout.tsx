@@ -2,7 +2,7 @@ import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader";
 import { StepNavigation } from "@/components/molecules/stepNavigation/StepNavigation";
 import styles from "./layout.module.scss";
 import React from "react";
-import { EventResponse } from "shared/.dist/model/event/response/event.response";
+import { EventResponse } from "shared/model/event/response/event.response";
 import { getEvent } from "@/common/getEvent";
 import { notFound } from "next/navigation";
 

@@ -1,6 +1,6 @@
-import { EventResponse } from "shared/.dist/model/event/response/event.response";
+import { EventResponse } from "shared/model/event/response/event.response";
 import { myFetch } from "@/common/fetch";
-import { StudioLectureResponse } from "shared/.dist/model/lecture/response/lecture.response";
+import { StudioLectureResponse } from "shared/model/lecture/response/lecture.response";
 
 export const getLecture = async (
   lectureSlug: string

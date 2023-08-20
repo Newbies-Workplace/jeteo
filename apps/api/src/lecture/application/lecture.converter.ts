@@ -25,7 +25,6 @@ export class LectureConverter {
       to: lecture.to.toISOString(),
       createdAt: lecture.createdAt.toISOString(),
       ratingSummary: {
-        //todo extract to function
         average: 0,
         count: 0,
         opinionCount: 0,
@@ -33,7 +32,6 @@ export class LectureConverter {
         topicAverage: 0,
       },
       invites: invites.map((invite) => ({
-        //todo extract to converter
         id: invite.id,
         name: invite.name,
         createdAt: invite.createdAt.toISOString(),
@@ -52,7 +50,7 @@ export class LectureConverter {
   ): StudioLectureResponse {
     return {
       ...this.convert(lecture, speakers, []),
-      ratings: [], //todo
+      ratings: [],
       invites: invites.map((invite) => ({
         id: invite.id,
         name: invite.name,

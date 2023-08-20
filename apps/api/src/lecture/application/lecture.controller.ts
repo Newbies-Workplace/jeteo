@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { JwtGuard } from '@/auth/jwt/jwt.guard';
-import { LectureResponse } from 'shared/.dist/model/lecture/response/lecture.response';
+import { LectureResponse } from 'shared/model/lecture/response/lecture.response';
 
 @Controller('/rest/v1/lectures')
 export class LectureController {

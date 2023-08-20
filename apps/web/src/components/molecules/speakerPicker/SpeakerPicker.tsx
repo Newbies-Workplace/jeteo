@@ -11,9 +11,10 @@ import Image from "next/image";
 import { Text } from "@/components/atoms/text/Text";
 import Button from "@/components/atoms/button/Button";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
+import { UserResponse } from "shared/model/user/response/user.response";
+import { CreateLectureInvite } from "shared/model/lecture/request/createLecture.request";
 import cs from "classnames";
-import { UserResponse } from "shared/.dist/model/user/response/user.response";
-import { CreateLectureInvite } from "shared/.dist/model/lecture/request/createLecture.request";
+import * as process from "process";
 
 interface SpeakerPickerProps {
   onAddInvite?: (email: string, name: string) => void;
@@ -35,19 +36,24 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
 
-  const validInputs = () => {
+  const canAdd = invites.length + speakers.length !== 2;
+
+  const onSubmit = () => {
+    const trimmedEmail = email.trim();
+    const trimmedName = name.trim();
+
     //todo toast
-    if (email.length === 0 || name.length === 0) {
+    if (trimmedEmail.length === 0 || trimmedName.length === 0) {
       console.log("puste pola");
       return;
     }
 
-    if (!emailRegExp.test(email)) {
+    if (!emailRegExp.test(trimmedEmail)) {
       console.log("email jest niepoprawny");
       return;
     }
 
-    if (invites.some((invite) => invite.email === email)) {
+    if (invites.some((invite) => invite.email === trimmedEmail)) {
       console.log("Osoba o tym Emailu jest juz zaproszona");
 
       return;
@@ -59,7 +65,10 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
       return;
     }
 
-    onAddInvite(email, name);
+    onAddInvite(trimmedEmail, trimmedName);
+
+    setEmail("");
+    setName("");
   };
 
   async function copyTextToClipboard(text: string) {
@@ -68,94 +77,142 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
 
   return (
     <div className={styles.container}>
-      <div className={styles.record}>
-        <Image src={GreyCircle} alt={"GreyCircle"} width={32} height={32} />
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Image
+                  src={GreyCircle}
+                  alt={"GreyCircle"}
+                  width={32}
+                  height={32}
+                />
+              </div>
+            </td>
 
-        <input
-          className={styles.input}
-          style={{ width: "40%" }}
-          type="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          className={styles.input}
-          style={{ width: "60%" }}
-          type="text"
-          placeholder="Nazwa (widoczna publicznie)"
-          onChange={(e) => setName(e.target.value)}
-        />
+            <td>
+              <input
+                className={cs(styles.input, styles.ellipsis)}
+                type="email"
+                placeholder="Email"
+                disabled={!canAdd}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </td>
 
-        <Image
-          className={styles.iconButton}
-          src={Add}
-          alt={"add"}
-          width={20}
-          height={20}
-          onClick={validInputs}
-        />
-      </div>
+            <td>
+              <input
+                className={cs(styles.input, styles.ellipsis)}
+                type="text"
+                placeholder="Nazwa (widoczna publicznie)"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    onSubmit();
+                  }
+                }}
+                disabled={!canAdd}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </td>
+            <td />
 
-      {invites &&
-        invites.map((invite) => (
-          <div className={cs(styles.record, styles.items)} key={invite.id}>
-            <Image
-              src={PrimaryCircle}
-              alt={"PrimaryCircle"}
-              width={32}
-              height={32}
-            />
-            <Text className={styles.email} variant={"bodyM"}>
-              {invite.email}
-            </Text>
-            <Text className={styles.name} variant={"bodyM"}>
-              {invite.name}
-            </Text>
-            <Button
-              className={styles.button}
-              primary
-              size="small"
-              icon={Copy}
-              onClick={() => {
-                copyTextToClipboard(
-                  `http://127.0.0.1:3000/invite/${invite.id}` //todo sciezka z env
-                );
-              }}
-            >
-              Skopiuj zaproszenie
-            </Button>
-            <Image
-              className={styles.iconButton}
-              src={Delete}
-              alt={"Delete"}
-              width={22}
-              height={22}
-              onClick={() => onDeleteInvite(invite.id)}
-            />
-          </div>
-        ))}
+            <td>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                {canAdd && (
+                  <Image
+                    className={styles.iconButton}
+                    src={Add}
+                    alt={"add"}
+                    width={24}
+                    height={24}
+                    onClick={onSubmit}
+                  />
+                )}
+              </div>
+            </td>
+          </tr>
 
-      {speakers &&
-        speakers.map((speaker) => (
-          <div className={cs(styles.record, styles.items)} key={speaker.id}>
-            <Avatar src={speaker.avatar} size={32} />
-            <Text
-              className={styles.name}
-              style={{ textAlign: "start", width: "100%", marginLeft: -3 }}
-              variant={"bodyM"}
-            >
-              {speaker.name}
-            </Text>
-            <Image
-              className={styles.iconButton}
-              src={Delete}
-              alt={"Delete"}
-              width={22}
-              height={22}
-              onClick={() => onDeleteSpeaker(speaker.id)}
-            />
-          </div>
-        ))}
+          {invites &&
+            invites.map((invite) => (
+              <tr className={styles.item} key={invite.id}>
+                <td>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Image
+                      src={PrimaryCircle}
+                      alt={"PrimaryCircle"}
+                      width={32}
+                      height={32}
+                    />
+                  </div>
+                </td>
+                <td className={styles.ellipsis}>
+                  <Text variant={"bodyM"}>{invite.email}</Text>
+                </td>
+                <td className={styles.ellipsis}>
+                  <Text variant={"bodyM"}>{invite.name}</Text>
+                </td>
+                <td>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Button
+                      style={{ minWidth: "unset" }}
+                      primary
+                      size="small"
+                      rightIcon={Copy}
+                      onClick={() => {
+                        copyTextToClipboard(
+                          `${process.env["NEXT_PUBLIC_FRONTEND_URL"]}/invite/${invite.id}`
+                        );
+                      }}
+                    ></Button>
+                  </div>
+                </td>
+                <td>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Image
+                      className={styles.iconButton}
+                      src={Delete}
+                      alt={"Delete"}
+                      width={24}
+                      height={24}
+                      onClick={() => onDeleteInvite(invite.id)}
+                    />
+                  </div>
+                </td>
+              </tr>
+            ))}
+
+          {speakers &&
+            speakers.map((speaker) => (
+              <tr className={styles.item} key={speaker.id}>
+                <td>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Avatar src={speaker.avatar} size={32} />
+                  </div>
+                </td>
+                <td className={styles.ellipsis} colSpan={2}>
+                  <Text variant={"bodyM"}>{speaker.name}</Text>
+                </td>
+                <td />
+
+                <td>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Image
+                      className={styles.iconButton}
+                      src={Delete}
+                      alt={"Delete"}
+                      width={24}
+                      height={24}
+                      onClick={() => onDeleteSpeaker(speaker.id)}
+                    />
+                  </div>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
 
       <Text variant={"bodyS"}>
         Maksymlanie 2 prelegentów. Linki z zaproszeniami będą aktywowane i
