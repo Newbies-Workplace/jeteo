@@ -20,10 +20,7 @@ import { EventResponse } from 'shared/model/event/response/event.response';
 import { EventConverter } from './event.converter';
 import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.request';
 import { Event } from '@prisma/client';
-import {
-  LectureResponse,
-  StudioLectureResponse,
-} from 'shared/model/lecture/response/lecture.response';
+import { StudioLectureResponse } from 'shared/model/lecture/response/lecture.response';
 import { CreateLectureRequest } from 'shared/model/lecture/request/createLecture.request';
 import { LectureService } from '@/lecture/domain/lecture.service';
 import { LectureConverter } from '@/lecture/application/lecture.converter';
@@ -83,6 +80,7 @@ export class EventController {
   }
 
   @Post('/:id/lectures')
+  @UseGuards(JwtGuard)
   async createLecture(
     @Param('id') eventId: string,
     @User() user: TokenUser,

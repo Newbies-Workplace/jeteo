@@ -4,7 +4,7 @@ import {
   LectureResponse,
   StudioLectureResponse,
 } from 'shared/model/lecture/response/lecture.response';
-import { UserConverter } from '@/user/user.converter';
+import { UserConverter } from '@/user/application/user.converter';
 
 @Injectable()
 export class LectureConverter {

@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+
+import React, { useState } from "react";
 import styles from "./SpeakerPicker.module.scss";
 import GreyCircle from "@/assets/images/speaker-picker-circle-grey.svg";
 import PrimaryCircle from "@/assets/images/speaker-picker-circle-primary.svg";
@@ -12,12 +13,13 @@ import Button from "@/components/atoms/button/Button";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
 import cs from "classnames";
 import { UserResponse } from "shared/.dist/model/user/response/user.response";
+import { CreateLectureInvite } from "shared/.dist/model/lecture/request/createLecture.request";
 
 interface SpeakerPickerProps {
   onAddInvite?: (email: string, name: string) => void;
   onDeleteInvite?: (id: string) => void;
-  onDeleteSpeaker?: () => void;
-  invites: { id: string; email: string; name: string }[];
+  onDeleteSpeaker?: (id: string) => void;
+  invites: CreateLectureInvite[];
   speakers: UserResponse[];
 }
 
@@ -30,8 +32,8 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
   invites,
   speakers,
 }) => {
-  const [email, setEmail] = React.useState("");
-  const [name, setName] = React.useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
 
   const validInputs = () => {
     //todo toast
@@ -45,10 +47,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
       return;
     }
 
-    if (
-      invites.some((invite) => invite.email === email) ||
-      speakers.some((speaker) => speaker.socials.mail === email)
-    ) {
+    if (invites.some((invite) => invite.email === email)) {
       console.log("Osoba o tym Emailu jest juz zaproszona");
 
       return;
@@ -153,7 +152,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
               alt={"Delete"}
               width={22}
               height={22}
-              onClick={onDeleteSpeaker}
+              onClick={() => onDeleteSpeaker(speaker.id)}
             />
           </div>
         ))}

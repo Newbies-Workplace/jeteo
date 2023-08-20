@@ -20,7 +20,7 @@ export const EventLecturesForm: React.FC = () => {
           }
           speakers={[
             { name: "Jan Kowalski", description: "Python/Java Developer" },
-            { name: "Jan Kowalski", description: "Python/Java Developer" },
+            { name: "Jan2 Kowalski", description: "Python/Java Developer" },
           ]}
           from="2023-08-16T17:19:08.398Z"
           to="2023-08-16T17:19:08.398Z"
@@ -34,7 +34,7 @@ export const EventLecturesForm: React.FC = () => {
           }
           speakers={[
             { name: "Jan Kowalski", description: "Python Developer" },
-            { name: "Jan Kowalski", description: "Java Developer" },
+            { name: "Jan2 Kowalski", description: "Java Developer" },
           ]}
           from="2023-08-16T17:19:08.398Z"
           to="2023-08-16T17:19:08.398Z"

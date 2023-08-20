@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Section } from "@/components/molecules/section/Section";
 import { ControlledInput } from "@/components/atoms/input/ControlledInput";
 import { Validations } from "@/common/validations";
@@ -11,14 +11,22 @@ import { SpeakerPicker } from "@/components/molecules/speakerPicker/SpeakerPicke
 import Button from "@/components/atoms/button/Button";
 import { UserResponse } from "shared/model/user/response/user.response";
 import { v4 as uuidv4 } from "uuid";
+import { myFetch } from "@/common/fetch";
+import {
+  CreateLectureInvite,
+  CreateLectureRequest,
+} from "shared/model/lecture/request/createLecture.request";
+import { StudioLectureResponse } from "shared/model/lecture/response/lecture.response";
 
 type BasicForm = {
   title: string;
   description: string;
   from: string;
   to: string;
-  invites: { id: string; email: string; name: string }[];
-  speakers: UserResponse[];
+  speakersAndInvites: {
+    invites: CreateLectureInvite[];
+    speakers: UserResponse[];
+  };
 };
 
 const getDefaultValue = (): BasicForm => {
@@ -27,21 +35,49 @@ const getDefaultValue = (): BasicForm => {
     description: "",
     from: dayjs().format("YYYY-MM-DDThh:mm"),
     to: dayjs().add(1, "h").format("YYYY-MM-DDThh:mm"),
-    invites: [],
-    speakers: [],
+    speakersAndInvites: {
+      invites: [],
+      speakers: [],
+    },
+  };
+};
+
+const getCreateRequestData = (form: BasicForm): CreateLectureRequest => {
+  return {
+    title: form.title,
+    description: form.description,
+    from: form.from,
+    to: form.to,
+    invites: form.speakersAndInvites.invites,
   };
 };
 
 interface LectureBasicFormProps {
-  onSubmitted?: () => void;
+  eventSlug: string;
+  onSubmitted?: (res: StudioLectureResponse) => void;
 }
 
 export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
+  eventSlug,
   onSubmitted,
 }) => {
-  const { control } = useForm<BasicForm>({
+  const { control, handleSubmit } = useForm<BasicForm>({
     defaultValues: getDefaultValue(),
   });
+
+  const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
+    myFetch(`/rest/v1/events/${eventSlug}/lectures`, {
+      method: "POST",
+      body: JSON.stringify(getCreateRequestData(data)),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        onSubmitted?.(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <form style={{ display: "flex", flexDirection: "column" }}>
@@ -97,27 +133,44 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
       </Section>
       <Section title={"Prelegenci"}>
         <Controller
-          name={"invites"}
+          name={"speakersAndInvites"}
           control={control}
           render={({ field }) => (
             <SpeakerPicker
-              invites={field.value}
-              speakers={[]}
+              invites={field.value.invites}
+              speakers={field.value.speakers}
               onAddInvite={(email, name) => {
                 //todo add toast
 
-                if (field.value.some((invite) => invite.email === email)) {
+                if (
+                  field.value.invites.some((invite) => invite.email === email)
+                ) {
                   return;
                 }
 
-                field.onChange([...field.value, { id: uuidv4(), email, name }]);
+                field.onChange({
+                  ...field.value,
+                  invites: [
+                    ...field.value.invites,
+                    {
+                      id: uuidv4(),
+                      email,
+                      name,
+                    },
+                  ],
+                });
               }}
               onDeleteInvite={(id) => {
-                field.onChange(
-                  field.value.filter((invite) => invite.id !== id)
-                );
+                field.onChange({
+                  ...field.value,
+                  invites: field.value.invites.filter(
+                    (invite) => invite.id !== id
+                  ),
+                });
               }}
-              onDeleteSpeaker={() => {}}
+              onDeleteSpeaker={() => {
+                //todo
+              }}
             />
           )}
         />
@@ -125,7 +178,7 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
       <Button
         primary
         style={{ alignSelf: "flex-end" }}
-        onClick={() => console.log("SAVE")}
+        onClick={handleSubmit(onSubmit)}
       >
         Zapisz
       </Button>
