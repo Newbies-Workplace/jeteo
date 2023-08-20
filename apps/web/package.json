@@ -27,7 +27,8 @@
     "react-hook-form": "^7.45.2",
     "react-leaflet": "^4.2.1",
     "react-leaflet-marker": "^2.1.0",
-    "shared": "*"
+    "shared": "*",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.2.1",

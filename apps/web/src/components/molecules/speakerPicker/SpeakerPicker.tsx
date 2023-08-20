@@ -11,14 +11,17 @@ import { Text } from "@/components/atoms/text/Text";
 import Button from "@/components/atoms/button/Button";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
 import cs from "classnames";
+import { UserResponse } from "shared/.dist/model/user/response/user.response";
 
 interface SpeakerPickerProps {
-  onAddInvite?: () => void;
-  onDeleteInvite?: () => void;
+  onAddInvite?: (email: string, name: string) => void;
+  onDeleteInvite?: (id: string) => void;
   onDeleteSpeaker?: () => void;
-  invites: { id: string; email: string; name: string; link: string }[];
-  speakers: { id: string; name: string; avatar: string }[];
+  invites: { id: string; email: string; name: string }[];
+  speakers: UserResponse[];
 }
+
+const emailRegExp: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
   onAddInvite,
@@ -27,6 +30,39 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
   invites,
   speakers,
 }) => {
+  const [email, setEmail] = React.useState("");
+  const [name, setName] = React.useState("");
+
+  const validInputs = () => {
+    //todo toast
+    if (email.length === 0 || name.length === 0) {
+      console.log("puste pola");
+      return;
+    }
+
+    if (!emailRegExp.test(email)) {
+      console.log("email jest niepoprawny");
+      return;
+    }
+
+    if (
+      invites.some((invite) => invite.email === email) ||
+      speakers.some((speaker) => speaker.socials.mail === email)
+    ) {
+      console.log("Osoba o tym Emailu jest juz zaproszona");
+
+      return;
+    }
+
+    if (invites.length + speakers.length === 2) {
+      console.log("liczba prelegentów nie może być większa niż 2");
+
+      return;
+    }
+
+    onAddInvite(email, name);
+  };
+
   async function copyTextToClipboard(text: string) {
     return await navigator.clipboard.writeText(text);
   }
@@ -41,12 +77,14 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
           style={{ width: "40%" }}
           type="email"
           placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
           className={styles.input}
           style={{ width: "60%" }}
           type="text"
           placeholder="Nazwa (widoczna publicznie)"
+          onChange={(e) => setName(e.target.value)}
         />
 
         <Image
@@ -55,7 +93,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
           alt={"add"}
           width={20}
           height={20}
-          onClick={onAddInvite}
+          onClick={validInputs}
         />
       </div>
 
@@ -80,7 +118,9 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
               size="small"
               icon={Copy}
               onClick={() => {
-                copyTextToClipboard(invite.link);
+                copyTextToClipboard(
+                  `http://127.0.0.1:3000/invite/${invite.id}` //todo sciezka z env
+                );
               }}
             >
               Skopiuj zaproszenie
@@ -91,7 +131,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
               alt={"Delete"}
               width={22}
               height={22}
-              onClick={onDeleteInvite}
+              onClick={() => onDeleteInvite(invite.id)}
             />
           </div>
         ))}

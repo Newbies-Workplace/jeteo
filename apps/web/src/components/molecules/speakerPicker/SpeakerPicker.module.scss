@@ -58,6 +58,7 @@
     }
 
     .button {
+      min-width: fit-content;
       width: calc(20% - 10px);
       white-space: nowrap;
       flex-direction: row-reverse;

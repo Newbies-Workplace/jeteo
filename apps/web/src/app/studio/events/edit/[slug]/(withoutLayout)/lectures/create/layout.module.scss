@@ -6,6 +6,13 @@
   gap: 12px;
 }
 
+.stepsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .content {
   display: flex;
   flex-direction: column;
