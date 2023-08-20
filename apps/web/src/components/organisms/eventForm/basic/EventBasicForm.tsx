@@ -12,7 +12,7 @@ import { EventResponse } from "shared/model/event/response/event.response";
 import { myFetch } from "@/common/fetch";
 import { CreateEventRequest } from "shared/model/event/request/createEvent.request";
 import { notBlank, notBlankOrNull } from "shared/util";
-import { UpdateEventRequest } from "shared/model/event/request/updateEventRequest";
+import { UpdateEventRequest } from "shared/model/event/request/updateEvent.request";
 import { Validations } from "@/common/validations";
 import { ControlledMarkdownInput } from "@/components/atoms/markdownInput/ControlledMarkdownInput";
 import { TagPicker } from "@/components/molecules/tagPicker/TagPicker";

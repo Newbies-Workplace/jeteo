@@ -11,7 +11,7 @@
 
 To develop jeteo, run the following commands:
 
-Copy the .env.example file to .env and fill in the values:
+Copy the .env.template file to .env and fill in the values:
 ```
 cp .env.template .env
 ```
