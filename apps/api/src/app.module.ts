@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AppController } from '@/app.controller';
-import { AppService } from '@/app.service';
 import { AuthModule } from '@/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from '@/config/prisma.module';
@@ -20,6 +19,5 @@ import { LectureModule } from '@/lecture/lecture.module';
     EventModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

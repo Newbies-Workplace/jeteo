@@ -5,8 +5,7 @@
     "outDir": "./.nest",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
-      "@prisma/client": ["../../prisma/client"],
+      "@/*": ["src/*"]
     }
   }
 }
