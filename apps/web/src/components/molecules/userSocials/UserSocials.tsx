@@ -52,12 +52,16 @@ export const UserSocials: React.FC<UserSocialsProps> = ({
   direction = "row",
   socials,
 }) => {
+  if (!socials) {
+    return null; 
+  }
+
   const socialEntries = Object.entries(socials).filter(([key, _]) => {
     return !!socialsData[key];
   });
 
   if (socialEntries.length === 0) {
-    return <></>
+    return <></>;
   }
 
   return (

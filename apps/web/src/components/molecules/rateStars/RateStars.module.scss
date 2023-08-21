@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.starsWrapper {
+    display: flex;
+    gap: 16px;
+}
+
+
+.activeStar {
+    filter: invert(08%) sepia(100%) saturate(912%) hue-rotate(342deg) brightness(98%) contrast(100%);
+}    
+
+.star {
+    cursor: pointer;
+    user-select: none;
+}
