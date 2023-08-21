@@ -18,11 +18,27 @@
 
   cursor: pointer;
 
+  &:hover {
+    background-color: colors.$lightHover;
+  }
+
+  &:active {
+    background-color: colors.$lightActive;
+  }
+
   &.primary {
     background-color: colors.$primary;
     color: colors.$white;
     border: 0;
     border-radius: 16px;
+
+    &:hover {
+      background-color: colors.$primaryHover;
+    }
+
+    &:active {
+      background-color: colors.$primaryActive;
+    }
   }
 
   &.medium {
