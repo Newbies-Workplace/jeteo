@@ -1,0 +1,24 @@
+@use '@/colors.module.scss' as colors;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stepsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  background-color: colors.$surface;
+  border-radius: 12px 12px;
+  padding: 16px;
+
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
+}

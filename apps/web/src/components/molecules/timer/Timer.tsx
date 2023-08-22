@@ -15,7 +15,7 @@ export const Timer: React.FC<TimerProps> = ({ from, to }) => {
     <div className={styles.timer}>
       <Image alt="time" src={time} width={16} height={16} />
       <Text variant="headS">
-        {dayjs(from).format("HH:mm")}- {dayjs(to).format("HH:mm")}
+        {dayjs(from).format("HH:mm")} - {dayjs(to).format("HH:mm")}
       </Text>
     </div>
   );

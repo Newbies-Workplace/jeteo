@@ -36,21 +36,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
         from="2023-08-16T17:19:08.398Z"
         to="2023-08-16T17:19:08.398Z"
         title="Pogadajmy o Formule 1"
-        subtitle="kto zatrzyma maxa verstappena?"
+        description="kto zatrzyma maxa verstappena?"
         speakers={[]}
       />
       <StudioLectureCard
         from="2023-08-16T17:19:08.398Z"
         to="2023-08-16T17:19:08.398Z"
         title="Pogadajmy o Formule 1"
-        subtitle="kto zatrzyma maxa verstappena?"
+        description="kto zatrzyma maxa verstappena?"
         speakers={[]}
       />
       <StudioLectureCard
         from="2023-08-16T17:19:08.398Z"
         to="2023-08-16T17:19:08.398Z"
         title="Pogadajmy o Formule 1"
-        subtitle="kto zatrzyma maxa verstappena?"
+        description="kto zatrzyma maxa verstappena?"
         speakers={[]}
       />
     </div>

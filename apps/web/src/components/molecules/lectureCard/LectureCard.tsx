@@ -8,7 +8,7 @@ interface LectureProps {
   from: string;
   to: string;
   title: string;
-  subtitle: string;
+  description: string;
   speakers: SpeakerCardProps[];
   children?: React.ReactNode;
 }
@@ -17,7 +17,7 @@ export const LectureCard: React.FC<LectureProps> = ({
   from,
   to,
   title,
-  subtitle,
+  description,
   speakers,
   children,
 }) => {
@@ -29,7 +29,7 @@ export const LectureCard: React.FC<LectureProps> = ({
           <Text variant="headS" bold>
             {title}
           </Text>
-          <Text variant="headS">{subtitle}</Text>
+          <Text variant="headS">{description}</Text>
         </div>
 
         {speakers.length >= 1 && (

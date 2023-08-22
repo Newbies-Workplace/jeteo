@@ -63,7 +63,7 @@ const getRequest = async (
   lecture?: LectureResponse
 ): Promise<LectureResponse> => {
   if (lecture) {
-    return myFetch(`/rest/v1/events/${eventSlug}/lectures/${lecture.id}`, {
+    return myFetch(`/rest/v1/lectures/${lecture.id}`, {
       method: "PATCH",
       body: JSON.stringify(getUpdateRequestData(data)),
     }).then((res) => res.json());
@@ -91,13 +91,13 @@ const getUpdateRequestData = (form: BasicForm): UpdateLectureRequest => {
     from: form.from,
     to: form.to,
     invites: form.speakersAndInvites.invites,
-    speakers: form.speakersAndInvites.speakers,
+    speakerIds: form.speakersAndInvites.speakers.map((speaker) => speaker.id),
   };
 };
 
 interface LectureBasicFormProps {
   eventSlug: string;
-  lecture?: LectureResponse;
+  lecture?: StudioLectureResponse;
   onSubmitted?: (res: LectureResponse) => void;
 }
 
@@ -107,7 +107,7 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   onSubmitted,
 }) => {
   const { control, handleSubmit } = useForm<BasicForm>({
-    defaultValues: getDefaultValue(),
+    defaultValues: getDefaultValue(lecture),
   });
 
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
@@ -181,12 +181,6 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
               invites={field.value.invites}
               speakers={field.value.speakers}
               onAddInvite={(email, name) => {
-                if (
-                  field.value.invites.some((invite) => invite.mail === email)
-                ) {
-                  return;
-                }
-
                 field.onChange({
                   ...field.value,
                   invites: [
@@ -207,8 +201,13 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
                   ),
                 });
               }}
-              onDeleteSpeaker={() => {
-                //todo
+              onDeleteSpeaker={(id) => {
+                field.onChange({
+                  ...field.value,
+                  speakers: field.value.speakers.filter(
+                    (speaker) => speaker.id !== id
+                  ),
+                });
               }}
             />
           )}

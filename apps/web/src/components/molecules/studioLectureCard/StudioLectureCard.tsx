@@ -9,20 +9,25 @@ import {
   SpeakerCardProps,
 } from "@/components/molecules/lectureCard/SpeakerCard/SpeakerCard";
 import { Timer } from "@/components/molecules/timer/Timer";
+import Link from "next/link";
 
 interface StudioLectureCardProps {
+  eventSlug: string;
+  lectureSlug: string;
   from: string;
   to: string;
   title: string;
-  subtitle: string;
+  description: string;
   speakers: SpeakerCardProps[];
 }
 
 export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
+  eventSlug,
+  lectureSlug,
   from,
   to,
   title,
-  subtitle,
+  description,
   speakers,
 }) => {
   return (
@@ -34,7 +39,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
             <Text variant="headS" bold>
               {title}
             </Text>
-            <Text variant="bodyM">{subtitle}</Text>
+            <Text variant="bodyM">{description}</Text>
           </div>
 
           {speakers.length >= 1 && (
@@ -55,13 +60,18 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
         </div>
 
         <div className={styles.actions}>
-          <Image
-            className={styles.action}
-            src={Edit}
-            alt={"Edit"}
-            width={24}
-            height={24}
-          />
+          <Link
+            href={`/studio/events/edit/${eventSlug}/lectures/edit/${lectureSlug}/basic`}
+          >
+            <Image
+              className={styles.action}
+              src={Edit}
+              alt={"Edit"}
+              width={24}
+              height={24}
+            />
+          </Link>
+
           <Image
             className={styles.action}
             src={Delete}

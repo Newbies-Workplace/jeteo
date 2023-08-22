@@ -1,8 +1,8 @@
-import { myFetch } from "@/common/fetch";
+import { myFetch, urlParams } from "@/common/fetch";
 import {
   LectureResponse,
-  StudioLectureResponse,
 } from "shared/model/lecture/response/lecture.response";
+import { GetLecturesQuery } from "shared/model/lecture/request/getLectures.query";
 import { cookies } from "next/headers";
 
 export const getLecture = async (
@@ -23,12 +23,18 @@ export const getLecture = async (
   return res.json();
 };
 
-export const getStudioLecture = async (
-  lectureSlug: string
-): Promise<StudioLectureResponse> => {
-  const lectureId = lectureSlug; //todo get id from slug
+export const getEventLectures = async (
+  eventSlug: string
+): Promise<LectureResponse[]> => {
+  const eventId = eventSlug; //todo get id from slug
+  const params: GetLecturesQuery = {
+    eventId: eventId,
+    page: 1,
+    size: 100,
+  };
+
   const res = await myFetch(
-    `/rest/v1/lectures/${lectureId}`,
+    `/rest/v1/lectures?${urlParams(params)}`,
     {
       cache: "no-store",
       headers: {

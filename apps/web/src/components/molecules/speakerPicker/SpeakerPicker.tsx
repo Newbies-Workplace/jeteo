@@ -15,6 +15,7 @@ import { UserResponse } from "shared/model/user/response/user.response";
 import { CreateLectureInvite } from "shared/model/lecture/request/createLecture.request";
 import cs from "classnames";
 import * as process from "process";
+import { Validations } from "@/common/validations";
 
 interface SpeakerPickerProps {
   onAddInvite?: (mail: string, name: string) => void;
@@ -23,8 +24,6 @@ interface SpeakerPickerProps {
   invites: CreateLectureInvite[];
   speakers: UserResponse[];
 }
-
-const emailRegExp: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
   onAddInvite,
@@ -48,7 +47,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
       return;
     }
 
-    if (!emailRegExp.test(trimmedEmail)) {
+    if (!Validations.email.value.test(trimmedEmail)) {
       setErrorMessage("Błędny adres email.");
       return;
     }

@@ -6,39 +6,30 @@ import { StudioLectureCard } from "@/components/molecules/studioLectureCard/Stud
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Button from "@/components/atoms/button/Button";
+import { LectureResponse } from "shared/.dist/model/lecture/response/lecture.response";
 
-export const EventLecturesForm: React.FC = () => {
+export const EventLecturesForm: React.FC<{
+  eventSlug: string;
+  lectures: LectureResponse[];
+}> = ({ eventSlug, lectures }) => {
   return (
     <div className={styles.content}>
       <div className={styles.lectures}>
-        <StudioLectureCard
-          title={
-            "Java kontra Python? Co jest mocniejsze? Nie wiesz? Ja też! Wpadaj na wydarzenia, a może się dowiesz!"
-          }
-          subtitle={
-            "Prezentacja na temat Pythona i Java. Dlaczego Python jest mocniejszy? Dlaczego Java jest lepsza? Może C# jets lepszy? Nie było tutaj nic o C#, nic nie szkodzi. I tak tu nic o C# nie będzie"
-          }
-          speakers={[
-            { name: "Jan Kowalski", description: "Python/Java Developer" },
-            { name: "Jan2 Kowalski", description: "Python/Java Developer" },
-          ]}
-          from="2023-08-16T17:19:08.398Z"
-          to="2023-08-16T17:19:08.398Z"
-        />
-        <StudioLectureCard
-          title={
-            "Java kontra Python? Co jest mocniejsze? Nie wiesz? Ja też! Wpadaj na wydarzenia, a może się dowiesz!"
-          }
-          subtitle={
-            "Prezentacja na temat Pythona i Java. Dlaczego Python jest mocniejszy? Dlaczego Java jest lepsza? Może C# jets lepszy? Nie było tutaj nic o C#, nic nie szkodzi. I tak tu nic o C# nie będzie"
-          }
-          speakers={[
-            { name: "Jan Kowalski", description: "Python Developer" },
-            { name: "Jan2 Kowalski", description: "Java Developer" },
-          ]}
-          from="2023-08-16T17:19:08.398Z"
-          to="2023-08-16T17:19:08.398Z"
-        />
+        {lectures.map((lecture) => (
+          <StudioLectureCard
+            eventSlug={eventSlug}
+            lectureSlug={lecture.slug}
+            key={lecture.id}
+            title={lecture.title}
+            description={lecture.description}
+            speakers={lecture.speakers.map((speaker) => ({
+              name: speaker.name,
+              avatar: speaker.avatar,
+            }))}
+            from={lecture.from}
+            to={lecture.to}
+          />
+        ))}
       </div>
       <div className={styles.buttons}>
         <Link href={`${usePathname()}/create`}>

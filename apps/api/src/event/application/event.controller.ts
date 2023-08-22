@@ -24,14 +24,16 @@ import { StudioLectureResponse } from 'shared/model/lecture/response/lecture.res
 import { CreateLectureRequest } from 'shared/model/lecture/request/createLecture.request';
 import { LectureService } from '@/lecture/domain/lecture.service';
 import { LectureConverter } from '@/lecture/application/lecture.converter';
+import { PrismaService } from '@/config/prisma.service';
 
 @Controller('/rest/v1/events')
 export class EventController {
   constructor(
-    private eventService: EventService,
-    private eventConverter: EventConverter,
-    private lectureService: LectureService,
-    private lectureConverter: LectureConverter,
+    private readonly prismaService: PrismaService,
+    private readonly eventService: EventService,
+    private readonly eventConverter: EventConverter,
+    private readonly lectureService: LectureService,
+    private readonly lectureConverter: LectureConverter,
   ) {}
 
   @Post('/')
@@ -86,7 +88,11 @@ export class EventController {
     @User() user: TokenUser,
     @Body() createLectureRequest: CreateLectureRequest,
   ): Promise<StudioLectureResponse> {
-    const event = await this.eventService.getEventById(eventId);
+    const event = await this.prismaService.event.findUnique({
+      where: {
+        id: eventId,
+      },
+    });
     if (!event) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     }
@@ -108,7 +114,11 @@ export class EventController {
     @Body() updateEventRequest: UpdateEventRequest,
     @User() user: TokenUser,
   ): Promise<EventResponse> {
-    const event: Event = await this.eventService.getEventById(eventId);
+    const event: Event = await this.prismaService.event.findUnique({
+      where: {
+        id: eventId,
+      },
+    });
     if (!event) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     }
@@ -124,6 +134,7 @@ export class EventController {
 
   @Get('/:id')
   async getEvent(@Param('id') eventId: string): Promise<EventResponse> {
+    //todo validate if user has access to event (if event is private)
     const event = await this.eventService.getEventById(eventId);
     if (!event) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);

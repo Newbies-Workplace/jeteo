@@ -1,9 +1,8 @@
-import { IsOptional } from "class-validator";
+import { IsOptional, IsString } from "class-validator";
 import {
   CreateLectureInvite,
   CreateLectureRequest,
 } from "./createLecture.request";
-import { UserResponse } from "../../user/response/user.response";
 
 export class UpdateLectureRequest extends CreateLectureRequest {
   // override optional fields from CreateEventRequest
@@ -22,6 +21,9 @@ export class UpdateLectureRequest extends CreateLectureRequest {
   @IsOptional()
   invites: CreateLectureInvite[];
 
+  // other optional fields
+
   @IsOptional()
-  speakers: UserResponse[];
+  @IsString({ each: true })
+  speakerIds: string[];
 }

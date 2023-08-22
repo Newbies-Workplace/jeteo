@@ -1,7 +1,10 @@
+import { IsNumber, IsString } from "class-validator";
 import { Type } from "class-transformer";
-import { IsNumber } from "class-validator";
 
-export class GetEventsQuery {
+export class GetLecturesQuery {
+  @IsString()
+  eventId: string;
+
   @Type(() => Number)
   @IsNumber()
   page: number;
