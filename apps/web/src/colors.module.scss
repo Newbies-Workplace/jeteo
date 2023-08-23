@@ -6,6 +6,12 @@ $stroke: #DBDBDB;
 $black: #000000;
 $gray: #717171;
 $white: #FFFFFF;
+$primaryHover: #3C3AAB;
+$primaryActive: #363398;
+$lightHover: #E3E2F5;
+$lightActive: #C5C4EB;
+$liveHover: #de494b;
+$liveActive: #c54143;
 
 :export {
   primary: $primary;
@@ -16,4 +22,10 @@ $white: #FFFFFF;
   black: $black;
   gray: $gray;
   white: $white;
+  primaryHover: $primaryHover;
+  primaryActive: $primaryActive;
+  lightHover: $lightHover;
+  lightActive: $lightActive;
+  liveHover: $liveHover;
+  liveActive: $liveActive;
 }

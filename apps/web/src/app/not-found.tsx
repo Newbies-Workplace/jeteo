@@ -25,7 +25,7 @@ export default function NotFound() {
             miejsce do którego zmierzasz już nie istnieje lub nigdy nie istniało
           </Text>
         </div>
-        <Link href={"/"}>
+        <Link href={"/"} style={{ width: "fit-content" }}>
           <Button primary size="small">
             Zabierz mnie na stronę główną
           </Button>

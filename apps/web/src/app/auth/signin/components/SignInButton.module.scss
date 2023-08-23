@@ -19,4 +19,12 @@
   cursor: pointer;
 
   @include typography.bodyM;
+
+  &:hover {
+    background-color: colors.$lightHover;
+  }
+
+  &:active {
+    background-color: colors.$lightActive;
+  }
 }
