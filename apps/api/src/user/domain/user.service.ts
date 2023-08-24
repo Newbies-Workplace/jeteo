@@ -37,6 +37,35 @@ export class UserService {
     }
 
     async updateUserAvatar(userId: string, avatar: Express.Multer.File): Promise<string> {
-        return this.storageService.saveFile(avatar.buffer, `/users/${userId}`);
+        const user = await this.getUser(userId);
+        if (!user) {
+            // TODO handle missing user
+            return;
+        }
+
+        let filename: string;
+
+        if (!user.avatar) {
+            filename = await this.storageService.createFile(avatar.buffer, `/users/${userId}`);
+        } else {
+            try {
+                filename = await this.storageService.replaceFile(avatar.buffer, user.avatar);
+            } catch (e) {
+                filename = await this.storageService.createFile(avatar.buffer, `/users/${userId}`);
+            }
+        }
+
+        const filePath = `/users/${userId}/${filename}`;
+
+        await this.prismaService.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                avatar: filePath
+            }
+        });
+
+        return filePath;
     }
 }

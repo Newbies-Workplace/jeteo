@@ -3,9 +3,7 @@ import { randomUUID } from 'crypto';
 import fs from 'fs';
 import {parse} from 'path';
 import {
-    InvalidFilenameException,
-    InvalidFolderPathException,
-    InvalidPathExceptions
+    InvalidPathException
 } from './exceptions/InvalidPathExceptions';
 
 @Injectable()
@@ -17,57 +15,61 @@ export class StorageService {
             fs.mkdirSync(this.storagePath);
     }
 
-    getFile(path: string): fs.ReadStream {
-        console.log(path);
-        console.log(this.isValidPath(path));
-
-        if (!this.isValidPath(path)) throw new InvalidPathExceptions(path);
-        return fs.createReadStream(`${this.storagePath}/${path}`);
+    getFile(folderPath: string): fs.ReadStream {
+        if (!this.isValidPath(folderPath)) throw new InvalidPathException(folderPath);
+        return fs.createReadStream(this.formatPath(folderPath));
     }
 
-    async saveFile(file: Buffer, path: string, fileName?: string): Promise<string> {
-        if (!this.isValidFolderPath(path)) throw new InvalidFolderPathException(path);
-
-
-        if (fileName) {
-            if (!this.isValidFileName(fileName)) throw new InvalidFilenameException(fileName);
+    async createFile(file: Buffer, folderPath: string): Promise<string> {
+        if (!this.isValidPath(folderPath)) {
+            throw new InvalidPathException(folderPath)
         }
-        else
-            fileName = randomUUID();
 
-        this.createPathIfMissing(path);
-        await fs.promises.writeFile(`${this.storagePath}/${path}/${fileName}`, file);
-        return fileName;
+        const filename = randomUUID();
+
+        this.createPathIfMissing(folderPath);
+        await fs.promises.writeFile(this.formatPath(folderPath, filename), file);
+        return filename;
     }
 
-    createPathIfMissing(path: string) {
-        path = this.storagePath + '/' + path;
+    async replaceFile(file: Buffer, filePath: string): Promise<string> {
+        if (!this.isValidFolderPath(filePath)) throw new InvalidPathException(filePath);
 
-        if (!fs.existsSync(path))
-            fs.mkdirSync(path, {
+        await fs.promises.unlink(this.formatPath(filePath));
+        const parsedPath = parse(filePath);
+        return this.createFile(file, parsedPath.dir);
+    }
+
+    formatPath(folderPath: string, filename?: string): string {
+        return `${this.storagePath}${folderPath}${ filename ? `/${filename}` : '' }`;
+    }
+
+    createPathIfMissing(folderPath: string): void {
+        if (!this.isValidFolderPath(folderPath)) throw new InvalidPathException(folderPath);
+        folderPath = this.storagePath + folderPath;
+
+        if (!fs.existsSync(folderPath))
+            fs.mkdirSync(folderPath, {
                 recursive: true
             });
     }
 
-    isValidPath(path: string, fileName?: string): boolean {
-        console.log(path);
-
-        if (fileName) {
-            return this.isValidFolderPath(path) && this.isValidFileName(fileName)
+    isValidPath(folderPath: string, filename?: string): boolean {
+        if (filename) {
+            return this.isValidFolderPath(folderPath) && this.isValidFileName(filename)
         } else {
-            const parsedPath = parse(path);
-            console.log(parsedPath);
+            const parsedPath = parse(folderPath);
             return this.isValidFolderPath(parsedPath.dir) && this.isValidFileName(parsedPath.base);
         }
     }
 
-    isValidFileName(fileName: string): boolean {
+    isValidFileName(filename: string): boolean {
         const pathRegex = /^[a-z\-0-9]+$/g;
-        return pathRegex.test(fileName);
+        return pathRegex.test(filename);
     }
 
-    isValidFolderPath(path: string): boolean {
+    isValidFolderPath(folderPath: string): boolean {
         const pathRegex = /^(\/[a-z\-0-9]+)+$/g;
-        return pathRegex.test(path);
+        return pathRegex.test(folderPath);
     }
 }

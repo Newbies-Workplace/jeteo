@@ -15,13 +15,14 @@ import {UserConverter} from '@/user/application/user.converter';
 import {UserService} from '@/user/domain/user.service';
 import { UpdateUserRequest } from 'shared/model/user/request/updateUser.request';
 import {FileInterceptor} from '@nestjs/platform-express';
-import {randomUUID} from 'crypto';
+import {StoragePathConverter} from '@/storage/application/converters/storagePath.converter';
 
 @Controller('rest/v1/users')
 export class UserController {
   constructor(
       private readonly userConverter: UserConverter,
-      private readonly userService: UserService
+      private readonly userService: UserService,
+      private readonly storagePath: StoragePathConverter
   ) {}
 
   @Get('@me')
@@ -39,18 +40,16 @@ export class UserController {
   }
 
   @Put('@me/avatar')
-  // @UseGuards(JwtGuard)
+  @UseGuards(JwtGuard)
   @UseInterceptors(FileInterceptor('avatar'))
   async putMeAvatar(@User() tokenUser: TokenUser, @UploadedFile() file: Express.Multer.File ): Promise<string> {
-    const userId = randomUUID();
-
-    let fileUUID: string;
+    let avatarPath: string;
     try {
-      fileUUID = await this.userService.updateUserAvatar(userId, file);
+      avatarPath = await this.userService.updateUserAvatar(tokenUser.id, file);
     } catch (e) {
       console.log(e);
     }
 
-    return `/storage/${userId}/${fileUUID}`;
+    return this.storagePath.convert(`${avatarPath}`);
   }
 }
