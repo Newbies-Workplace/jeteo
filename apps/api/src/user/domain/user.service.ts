@@ -48,11 +48,7 @@ export class UserService {
         if (!user.avatar) {
             filename = await this.storageService.createFile(avatar.buffer, `/users/${userId}`);
         } else {
-            try {
-                filename = await this.storageService.replaceFile(avatar.buffer, user.avatar);
-            } catch (e) {
-                filename = await this.storageService.createFile(avatar.buffer, `/users/${userId}`);
-            }
+            filename = await this.storageService.replaceFile(avatar.buffer, user.avatar);
         }
 
         const filePath = `/users/${userId}/${filename}`;

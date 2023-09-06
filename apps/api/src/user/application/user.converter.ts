@@ -13,7 +13,7 @@ export class UserConverter {
     return {
       id: user.id,
       name: user.name,
-      avatar: user.avatar ? this.storagePathConverter.convert(user.avatar) : '',
+      avatar: user.avatar ? this.storagePathConverter.convert(user.avatar) : null,
       description: user.description,
       socials: {
         mail: user.mail,

@@ -55,12 +55,13 @@ export class StorageService {
     }
 
     isValidPath(folderPath: string, filename?: string): boolean {
-        if (filename) {
-            return this.isValidFolderPath(folderPath) && this.isValidFileName(filename)
-        } else {
+        if (!filename) {
             const parsedPath = parse(folderPath);
-            return this.isValidFolderPath(parsedPath.dir) && this.isValidFileName(parsedPath.base);
+            filename = parsedPath.base
+            folderPath = parsedPath.dir
         }
+
+        return this.isValidFolderPath(folderPath) && this.isValidFileName(filename);
     }
 
     isValidFileName(filename: string): boolean {
