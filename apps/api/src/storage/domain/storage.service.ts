@@ -4,19 +4,22 @@ import fs from 'fs';
 import {parse} from 'path';
 import {
     InvalidPathException
-} from './exceptions/InvalidPathExceptions';
+} from './exceptions/InvalidPathException';
 
 @Injectable()
 export class StorageService {
     private readonly storagePath = 'storage';
 
     constructor() {
-        if (!fs.existsSync(this.storagePath))
+        if (!fs.existsSync(this.storagePath)) {
             fs.mkdirSync(this.storagePath);
+        }
     }
 
     getFile(folderPath: string): fs.ReadStream {
-        if (!this.isValidPath(folderPath)) throw new InvalidPathException(folderPath);
+        if (!this.isValidPath(folderPath)) {
+            throw new InvalidPathException(folderPath);
+        }
         return fs.createReadStream(this.formatPath(folderPath));
     }
 
@@ -57,8 +60,8 @@ export class StorageService {
     isValidPath(folderPath: string, filename?: string): boolean {
         if (!filename) {
             const parsedPath = parse(folderPath);
-            filename = parsedPath.base
             folderPath = parsedPath.dir
+            filename = parsedPath.base
         }
 
         return this.isValidFolderPath(folderPath) && this.isValidFileName(filename);

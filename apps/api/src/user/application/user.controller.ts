@@ -2,7 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Get, InternalServerErrorException,
+  Get,
   Put,
   UploadedFile,
   UseGuards,
@@ -17,7 +17,7 @@ import {UserService} from '@/user/domain/user.service';
 import { UpdateUserRequest } from 'shared/model/user/request/updateUser.request';
 import {FileInterceptor} from '@nestjs/platform-express';
 import {StoragePathConverter} from '@/storage/application/converters/storagePath.converter';
-import {InvalidPathException} from '@/storage/domain/exceptions/InvalidPathExceptions';
+import {InvalidPathException} from '@/storage/domain/exceptions/InvalidPathException';
 
 @Controller('rest/v1/users')
 export class UserController {
@@ -45,17 +45,16 @@ export class UserController {
   @UseGuards(JwtGuard)
   @UseInterceptors(FileInterceptor('avatar'))
   async putMeAvatar(@User() tokenUser: TokenUser, @UploadedFile() file: Express.Multer.File ): Promise<string> {
-    let avatarPath: string;
     try {
-      avatarPath = await this.userService.updateUserAvatar(tokenUser.id, file);
+      let avatarPath = await this.userService.updateUserAvatar(tokenUser.id, file);
+      return this.storagePath.convert(`${avatarPath}`);
+
     } catch (e) {
       if (e instanceof InvalidPathException) {
         throw new BadRequestException();
-      } else {
-        throw new InternalServerErrorException();
       }
-    }
 
-    return this.storagePath.convert(`${avatarPath}`);
+      throw e;
+    }
   }
 }

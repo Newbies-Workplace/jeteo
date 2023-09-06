@@ -3,6 +3,7 @@ import {PrismaService} from '@/config/prisma.service';
 import {User} from '@prisma/client';
 import { UpdateUserRequest } from 'shared/model/user/request/updateUser.request';
 import {StorageService} from '@/storage/domain/storage.service';
+import {UserNotFoundException} from '@/user/domain/exceptions/UserNotFoundException';
 
 @Injectable()
 export class UserService {
@@ -12,11 +13,17 @@ export class UserService {
     ) {}
 
     async getUser(userId: string): Promise<User> {
-        return this.prismaService.user.findUnique({
+        const user = this.prismaService.user.findUnique({
             where: {
                 id: userId,
             },
         });
+
+        if (!user) {
+            throw new UserNotFoundException();
+        }
+
+        return user;
     }
 
     async updateUser(userId: string, updatedUser: UpdateUserRequest): Promise<User> {
@@ -38,10 +45,6 @@ export class UserService {
 
     async updateUserAvatar(userId: string, avatar: Express.Multer.File): Promise<string> {
         const user = await this.getUser(userId);
-        if (!user) {
-            // TODO handle missing user
-            return;
-        }
 
         let filename: string;
 
