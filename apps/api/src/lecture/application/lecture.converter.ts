@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Invite, Lecture, User } from '@prisma/client';
 import {
   LectureResponse,
-  StudioLectureResponse,
+  LectureDetailsResponse,
 } from 'shared/model/lecture/response/lecture.response';
 import { UserConverter } from '@/user/application/user.converter';
 
@@ -43,11 +43,11 @@ export class LectureConverter {
     };
   }
 
-  convertStudio(
+  convertDetails(
     lecture: Lecture,
     speakers: User[],
     invites: Invite[],
-  ): StudioLectureResponse {
+  ): LectureDetailsResponse {
     return {
       ...this.convert(lecture, speakers, []),
       ratings: [],

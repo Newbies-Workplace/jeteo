@@ -20,7 +20,7 @@ import { EventResponse } from 'shared/model/event/response/event.response';
 import { EventConverter } from './event.converter';
 import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.request';
 import { Event } from '@prisma/client';
-import { StudioLectureResponse } from 'shared/model/lecture/response/lecture.response';
+import { LectureDetailsResponse } from 'shared/model/lecture/response/lecture.response';
 import { CreateLectureRequest } from 'shared/model/lecture/request/createLecture.request';
 import { LectureService } from '@/lecture/domain/lecture.service';
 import { LectureConverter } from '@/lecture/application/lecture.converter';
@@ -87,7 +87,7 @@ export class EventController {
     @Param('id') eventId: string,
     @User() user: TokenUser,
     @Body() createLectureRequest: CreateLectureRequest,
-  ): Promise<StudioLectureResponse> {
+  ): Promise<LectureDetailsResponse> {
     const event = await this.prismaService.event.findUnique({
       where: {
         id: eventId,
@@ -104,7 +104,7 @@ export class EventController {
       createLectureRequest,
     );
 
-    return this.lectureConverter.convertStudio(lecture, [], lecture.Invites);
+    return this.lectureConverter.convertDetails(lecture, [], lecture.Invites);
   }
 
   @Patch('/:id')

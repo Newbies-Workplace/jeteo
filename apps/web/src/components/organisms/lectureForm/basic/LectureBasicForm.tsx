@@ -18,7 +18,7 @@ import {
 } from "shared/model/lecture/request/createLecture.request";
 import {
   LectureResponse,
-  StudioLectureResponse,
+  LectureDetailsResponse,
 } from "shared/model/lecture/response/lecture.response";
 import { UpdateLectureRequest } from "shared/model/lecture/request/updateLecture.request";
 
@@ -33,7 +33,7 @@ type BasicForm = {
   };
 };
 
-const getDefaultValue = (lecture?: StudioLectureResponse): BasicForm => {
+const getDefaultValue = (lecture?: LectureDetailsResponse): BasicForm => {
   return lecture
     ? {
         title: lecture.title,
@@ -97,7 +97,7 @@ const getUpdateRequestData = (form: BasicForm): UpdateLectureRequest => {
 
 interface LectureBasicFormProps {
   eventSlug: string;
-  lecture?: StudioLectureResponse;
+  lecture?: LectureDetailsResponse;
   onSubmitted?: (res: LectureResponse) => void;
 }
 
@@ -112,7 +112,7 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
 
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
     getRequest(data, eventSlug, lecture)
-      .then((res: StudioLectureResponse) => {
+      .then((res: LectureDetailsResponse) => {
         onSubmitted?.(res);
       })
       .catch((e) => {

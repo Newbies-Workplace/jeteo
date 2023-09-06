@@ -20,7 +20,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: Token): Promise<TokenUser> {
-    console.log(payload);
     const user = await this.prismaService.user.findFirst({
       where: {
         google_id: payload.user.google_id,

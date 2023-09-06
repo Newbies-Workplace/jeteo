@@ -2,8 +2,8 @@ import { DateTime } from "../../util";
 import { UserResponse } from "../../user/response/user.response";
 import {
   InviteResponse,
-  StudioInviteResponse,
-} from "../../invite/response/studioInviteResponse";
+  InviteDetailsResponse,
+} from "../../invite/response/inviteDetailsResponse";
 
 export interface LectureResponse {
   id: string;
@@ -28,8 +28,8 @@ export interface LectureResponse {
   };
 }
 
-export interface StudioLectureResponse extends LectureResponse {
-  invites: StudioInviteResponse[];
+export interface LectureDetailsResponse extends LectureResponse {
+  invites: InviteDetailsResponse[];
   ratings: {
     id: string;
     overallRate: number;

@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import {
   LectureResponse,
-  StudioLectureResponse,
+  LectureDetailsResponse,
 } from 'shared/model/lecture/response/lecture.response';
 import { GetLecturesQuery } from 'shared/model/lecture/request/getLectures.query';
 import { LectureService } from '@/lecture/domain/lecture.service';
@@ -124,6 +124,45 @@ export class LectureController {
       lecture.Invites,
     );
   }
+  @Get('/:id/details')
+  @UseGuards(JwtGuard)
+  async getLectureDetails(
+    @User() user: TokenUser,
+    @Param('id') id: string,
+  ): Promise<LectureDetailsResponse> {
+    const lecture = await this.prismaService.lecture.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        Invites: true,
+        Speakers: true,
+        Event: true,
+      },
+    });
+    if (!lecture) {
+      throw new HttpException('Lecture not Found', HttpStatus.NOT_FOUND);
+    }
+
+    const event = lecture.Event;
+
+    if (
+      //todo check if speaker
+      user &&
+      event.userId !== user.id
+    ) {
+      throw new HttpException(
+        'User is not allowed to see this lecture',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    return this.lectureConverter.convertDetails(
+      lecture,
+      lecture.Speakers,
+      lecture.Invites,
+    );
+  }
 
   @Patch('/:id')
   @UseGuards(JwtGuard)
@@ -131,7 +170,7 @@ export class LectureController {
     @User() user: TokenUser,
     @Param('id') id: string,
     @Body() request: UpdateLectureRequest,
-  ): Promise<StudioLectureResponse> {
+  ): Promise<LectureDetailsResponse> {
     const lecture = await this.prismaService.lecture.findUnique({
       where: {
         id: id,
@@ -151,7 +190,7 @@ export class LectureController {
       request,
     );
 
-    return this.lectureConverter.convertStudio(
+    return this.lectureConverter.convertDetails(
       updatedLecture,
       updatedLecture.Speakers,
       updatedLecture.Invites,

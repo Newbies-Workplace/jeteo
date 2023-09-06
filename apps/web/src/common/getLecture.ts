@@ -1,5 +1,6 @@
 import { myFetch, urlParams } from "@/common/fetch";
 import {
+  LectureDetailsResponse,
   LectureResponse,
 } from "shared/model/lecture/response/lecture.response";
 import { GetLecturesQuery } from "shared/model/lecture/request/getLectures.query";
@@ -11,6 +12,24 @@ export const getLecture = async (
   const lectureId = lectureSlug; //todo get id from slug
   const res = await myFetch(
     `/rest/v1/lectures/${lectureId}`,
+    {
+      cache: "no-store",
+      headers: {
+        Cookie: cookies().toString(),
+      },
+    },
+    false
+  );
+  if (!res.ok) return undefined;
+  return res.json();
+};
+
+export const getLectureDetails = async (
+  lectureSlug: string
+): Promise<LectureDetailsResponse> => {
+  const lectureId = lectureSlug; //todo get id from slug
+  const res = await myFetch(
+    `/rest/v1/lectures/${lectureId}/details`,
     {
       cache: "no-store",
       headers: {
