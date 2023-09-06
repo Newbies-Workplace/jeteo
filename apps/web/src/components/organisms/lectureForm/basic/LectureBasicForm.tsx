@@ -187,8 +187,8 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
                     ...field.value.invites,
                     {
                       id: uuidv4(),
-                      email,
-                      name,
+                      mail: email,
+                      name: name,
                     },
                   ],
                 });

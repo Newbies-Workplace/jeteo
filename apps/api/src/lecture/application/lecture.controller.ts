@@ -22,8 +22,7 @@ import { TokenUser } from '@/auth/jwt/jwt.model';
 import { EventVisibility } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtGuard } from '@/auth/jwt/jwt.guard';
-import { UpdateEventRequest } from 'shared/.dist/model/event/request/updateEvent.request';
-import { UpdateLectureRequest } from 'shared/.dist/model/lecture/request/updateLecture.request';
+import { UpdateLectureRequest } from 'shared/model/lecture/request/updateLecture.request';
 
 @Controller('/rest/v1/lectures')
 export class LectureController {

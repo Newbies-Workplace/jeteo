@@ -6,7 +6,7 @@ import { StudioLectureCard } from "@/components/molecules/studioLectureCard/Stud
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Button from "@/components/atoms/button/Button";
-import { LectureResponse } from "shared/.dist/model/lecture/response/lecture.response";
+import { LectureResponse } from "shared/model/lecture/response/lecture.response";
 
 export const EventLecturesForm: React.FC<{
   eventSlug: string;

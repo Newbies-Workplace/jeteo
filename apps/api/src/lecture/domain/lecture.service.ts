@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateLectureRequest } from 'shared/model/lecture/request/createLecture.request';
 import { PrismaService } from '@/config/prisma.service';
 import { Lecture } from '@prisma/client';
-import { UpdateLectureRequest } from 'shared/.dist/model/lecture/request/updateLecture.request';
+import { UpdateLectureRequest } from 'shared/model/lecture/request/updateLecture.request';
 
 @Injectable()
 export class LectureService {

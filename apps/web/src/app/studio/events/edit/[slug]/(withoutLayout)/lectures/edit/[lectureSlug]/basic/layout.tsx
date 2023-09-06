@@ -3,7 +3,7 @@ import React from "react";
 import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader";
 import { StepButton } from "@/components/molecules/stepNavigation/StepNavigation";
 import { getLecture } from "@/common/getLecture";
-import { LectureResponse } from "shared/.dist/model/lecture/response/lecture.response";
+import { LectureResponse } from "shared/model/lecture/response/lecture.response";
 import { notFound } from "next/navigation";
 
 export default async function Layout({
