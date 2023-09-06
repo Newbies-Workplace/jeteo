@@ -16,7 +16,7 @@ export default function UserMenu() {
   return (
     <div className={styles.menu}>
       <div className={menuStyles.profile}>
-        <Avatar size={64} src={profilePicture} />
+        <Avatar size={64} src={user.avatar} />
 
         <Text variant="headS" bold={true} className={menuStyles.text}>
           {user?.name}
