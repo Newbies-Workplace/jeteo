@@ -24,40 +24,43 @@ interface SocialData {
   hrefPrefix?: string;
 }
 
-
 const socialsData: {
-  [key in keyof UserSocialsProps['socials']]: SocialData
+  [key in keyof UserSocialsProps["socials"]]: SocialData;
 } = {
   mail: {
     icon: EmailIcon,
-    alt: 'email',
-    hrefPrefix: 'mailto:'
+    alt: "email",
+    hrefPrefix: "mailto:",
   },
   github: {
     icon: GithubIcon,
-    alt: 'github',
+    alt: "github",
   },
   linkedin: {
     icon: LinkedinIcon,
-    alt: 'linkedin'
+    alt: "linkedin",
   },
   twitter: {
     icon: TwitterIcon,
-    alt: 'twitter'
-  }
-}
+    alt: "twitter",
+  },
+};
 
 export const UserSocials: React.FC<UserSocialsProps> = ({
   size = 16,
   direction = "row",
   socials,
 }) => {
+  if (!socials) {
+    return <></>;
+  }
+
   const socialEntries = Object.entries(socials).filter(([key, _]) => {
     return !!socialsData[key];
   });
 
   if (socialEntries.length === 0) {
-    return <></>
+    return <></>;
   }
 
   return (
@@ -72,9 +75,11 @@ export const UserSocials: React.FC<UserSocialsProps> = ({
 
         const { icon, alt, hrefPrefix } = socialsData[key];
 
-        return <Link href={`${hrefPrefix || ''}${href}`} key={key}>
-          <Image alt={alt} src={icon} width={size} height={size}/>
-        </Link>
+        return (
+          <Link href={`${hrefPrefix || ""}${href}`} key={key}>
+            <Image alt={alt} src={icon} width={size} height={size} />
+          </Link>
+        );
       })}
     </div>
   );

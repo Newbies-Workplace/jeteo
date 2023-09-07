@@ -1,0 +1,73 @@
+@use "@/colors.module.scss" as colors;
+@use "@/typography.module.scss" as typography;
+@use "@/responsiveness.module.scss" as responsiveness;
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+  }
+
+  tr:first-child {
+    background-color: colors.$background;
+  }
+
+  td {
+    overflow: hidden;
+    border: solid 1px colors.$stroke;
+    padding: 6px 4px;
+  }
+  td:first-child {
+    width: 45px;
+    padding-left: 8px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+  td:nth-child(4) {
+    width: 54px;
+  }
+  td:last-child {
+    width: 36px;
+    padding-right: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  td:not(td:first-child) {
+    border-left: none;
+  }
+  td:not(td:last-child) {
+    border-right: none;
+  }
+
+  .item {
+    background-color: colors.$white;
+  }
+
+  .input {
+    border: none;
+    outline: none;
+    width: 100%;
+    background-color: colors.$background;
+    color: colors.$black;
+    @include typography.bodyM();
+  }
+
+  .iconButton {
+    cursor: pointer;
+  }
+
+  .ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .error {
+    color: colors.$live;
+    padding-bottom: 4px;
+  }
+}

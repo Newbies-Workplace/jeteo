@@ -1,6 +1,6 @@
 import { EventResponse } from "shared/model/event/response/event.response";
 import { myFetch, urlParams } from "@/common/fetch";
-import { GetEventsQueryRequest } from "shared/.dist/model/event/request/getEventsQuery.request";
+import { GetEventsQuery } from "shared/model/event/request/getEvents.query";
 import { cookies } from "next/headers";
 
 export const getEvent = async (eventSlug: string): Promise<EventResponse> => {
@@ -17,7 +17,7 @@ export const getEvent = async (eventSlug: string): Promise<EventResponse> => {
 };
 
 export const getEvents = async (): Promise<EventResponse[]> => {
-  const params: GetEventsQueryRequest = {
+  const params: GetEventsQuery = {
     page: 1,
     size: 100,
   };
@@ -29,7 +29,7 @@ export const getEvents = async (): Promise<EventResponse[]> => {
 };
 
 export const getMyEvents = async (): Promise<EventResponse[]> => {
-  const params: GetEventsQueryRequest = {
+  const params: GetEventsQuery = {
     page: 1,
     size: 100,
   };

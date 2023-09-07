@@ -9,7 +9,8 @@ interface ButtonProps {
   className?: string;
   primary?: boolean;
   style?: React.CSSProperties;
-  icon?: string;
+  leftIcon?: string;
+  rightIcon?: string;
   iconSize?: number;
   type?: "submit" | "reset" | "button";
   onClick?: () => void;
@@ -24,7 +25,8 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   onClick,
   size = "medium",
   style,
-  icon,
+  leftIcon,
+  rightIcon,
   iconSize,
 }) => {
   return (
@@ -38,8 +40,9 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
       style={style}
       onClick={onClick}
     >
-      {icon && <Image alt={"icon"} src={icon} width={iconSize} />}
+      {leftIcon && <Image alt={"icon"} src={leftIcon} width={iconSize} />}
       {children}
+      {rightIcon && <Image alt={"icon"} src={rightIcon} width={iconSize} />}
     </button>
   );
 };

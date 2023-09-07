@@ -2,6 +2,8 @@ $primary: #4340BE;
 $background: #F3F3F3;
 $surface: #FFFFFF;
 $live: #F75254;
+$liveHover: #de494b;
+$liveActive: #c54143;
 $stroke: #DBDBDB;
 $black: #000000;
 $gray: #717171;
@@ -10,14 +12,14 @@ $primaryHover: #3C3AAB;
 $primaryActive: #363398;
 $lightHover: #E3E2F5;
 $lightActive: #C5C4EB;
-$liveHover: #de494b;
-$liveActive: #c54143;
 
 :export {
   primary: $primary;
   background: $background;
   surface: $surface;
   live: $live;
+  liveHover: $liveHover;
+  liveActive: $liveActive;
   stroke: $stroke;
   black: $black;
   gray: $gray;
@@ -26,6 +28,4 @@ $liveActive: #c54143;
   primaryActive: $primaryActive;
   lightHover: $lightHover;
   lightActive: $lightActive;
-  liveHover: $liveHover;
-  liveActive: $liveActive;
 }

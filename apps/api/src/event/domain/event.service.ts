@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/config/prisma.service';
 import { CreateEventRequest } from 'shared/model/event/request/createEvent.request';
 import { Event } from '@prisma/client';
-import { UpdateEventRequest } from 'shared/model/event/request/updateEventRequest';
+import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.request';
 
 @Injectable()
 export class EventService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   async getEventById(id: string): Promise<Event> {
     return this.prismaService.event.findUnique({
