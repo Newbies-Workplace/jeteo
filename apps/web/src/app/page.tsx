@@ -7,6 +7,7 @@ import React from "react";
 import { Text } from "@/components/atoms/text/Text";
 import { getEvents } from "@/common/getEvent";
 
+
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
@@ -20,7 +21,6 @@ export default async function Page() {
           <Text variant="headM" className={styles.hello}>
             Witaj, <GetUser /> 👋
           </Text>
-
           <div className={styles.events}>
             {events.map((event) => {
               return (

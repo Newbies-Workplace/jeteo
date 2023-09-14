@@ -1,20 +1,23 @@
 'use client'
 
-import React, { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import styles from "./TextArea.module.scss"
 import { Text } from "@/components/atoms/text/Text";
 
 
 export interface TextAreaProps {
     title: string;
+    text: string;
+    setText: any;
 }
 
 
 const TextArea: React.FC<TextAreaProps> = ({
     title,
+    text,
+    setText,
 
 }) => {
-    const [text, setText] = useState('');
   
     return (
         <div className={styles.areaWrapper}>

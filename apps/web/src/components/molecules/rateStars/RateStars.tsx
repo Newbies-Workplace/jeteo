@@ -9,15 +9,18 @@ import { Text } from "@/components/atoms/text/Text";
 export interface RateStarsProps {
     title: string,
     subtitle: string,
+    rating: number,
+    setRating: any,
 
 }
 
 const RateStars: React.FC<RateStarsProps> = ({
     title,
     subtitle,
+    rating,
+    setRating,
 
 }) => {
-    const [rating, setRating] = useState(0);
 
     return (
         <div className={styles.container}>
