@@ -52,7 +52,7 @@ export const UserSocials: React.FC<UserSocialsProps> = ({
   socials,
 }) => {
   if (!socials) {
-    return <></>;
+    return null; 
   }
 
   const socialEntries = Object.entries(socials).filter(([key, _]) => {
