@@ -34,6 +34,7 @@ export default function ProfileMenu() {
   return (
     <div className={styles.menuContainer} ref={dropdownRef}>
       <Image
+        style={{ cursor: "pointer" }}
         alt="Open menu"
         src={burger}
         onClick={() => setShowMenu(!showMenu)}

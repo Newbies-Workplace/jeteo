@@ -28,6 +28,8 @@ export class CreateLectureRequest {
 export class CreateLectureInvite {
   @IsUUID()
   id: string;
+  @IsString()
+  name: string;
   @IsEmail()
-  email: string;
+  mail: string;
 }

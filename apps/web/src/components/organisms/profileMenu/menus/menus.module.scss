@@ -52,4 +52,11 @@
 .dangerousButton {
     background-color: colors.$live;
     color: colors.$white;
+
+    &:hover {
+        background-color: colors.$liveHover;
+    }
+    &:active {
+        background-color: colors.$liveActive;
+    }
 }

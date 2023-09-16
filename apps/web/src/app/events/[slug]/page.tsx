@@ -55,7 +55,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   from={"2023-08-16T17:19:08.398Z"}
                   to={"2023-08-16T17:19:08.398Z"}
                   title={"AAA"}
-                  subtitle={"aaa"}
+                  description={"aaa"}
                   speakers={[
                     {
                       name: "Jan Kowalski",
@@ -72,7 +72,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   from={"2023-08-16T17:19:08.398Z"}
                   to={"2023-08-16T17:19:08.398Z"}
                   title={"BBB"}
-                  subtitle={"bbb"}
+                  description={"bbb"}
                   speakers={[
                     {
                       name: "Jan Kowalski",

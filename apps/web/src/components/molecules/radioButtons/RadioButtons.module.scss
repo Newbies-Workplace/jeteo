@@ -35,18 +35,30 @@
   height: 75px;
   padding: 8px;
 
-  border: 0;
   border-radius: 16px;
 
-  background-color: gray;
+  background-color: colors.$surface;
+  border: 1px solid colors.$stroke;
 
   &:hover {
-    background-color: colors.$stroke;
+    background-color: colors.$lightHover;
+  }
+
+  &:active {
+    background-color: colors.$lightActive;
   }
 
   &.selected {
     background-color: colors.$primary;
     color: colors.$white;
+
+    &:hover {
+      background-color: colors.$primaryHover;
+    }
+
+    &:active {
+      background-color: colors.$primaryActive;
+    }
   }
 }
 

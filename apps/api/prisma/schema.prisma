@@ -52,17 +52,19 @@ model Lecture {
   description String?
   from        DateTime
   to          DateTime
-  speakers    User[]
   createdAt   DateTime? @default(now())
   Event       Event?    @relation(fields: [eventId], references: [id])
   eventId     String?
-  Invite      Invite[]
+  userId      String
+  Speakers    User[]
+  Invites     Invite[]
   Rate        Rate[]
 }
 
 model Invite {
   id        String   @id @unique @default(uuid())
   mail      String
+  name      String
   lecture   Lecture  @relation(fields: [lectureId], references: [id])
   invitedBy User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())

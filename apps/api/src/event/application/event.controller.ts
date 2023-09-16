@@ -15,77 +15,44 @@ import { CreateEventRequest } from 'shared/model/event/request/createEvent.reque
 import { JwtGuard } from 'src/auth/jwt/jwt.guard';
 import { User } from 'src/auth/jwt/jwt.decorator';
 import { TokenUser } from 'src/auth/jwt/jwt.model';
-import { GetEventsQueryRequest } from 'shared/model/event/request/getEventsQuery.request';
+import { GetEventsQuery } from 'shared/model/event/request/getEvents.query';
 import { EventResponse } from 'shared/model/event/response/event.response';
-import { EventConverter } from './converters/event.converter';
-import { UpdateEventRequest } from 'shared/model/event/request/updateEventRequest';
+import { EventConverter } from './event.converter';
+import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.request';
 import { Event } from '@prisma/client';
+import { LectureDetailsResponse } from 'shared/model/lecture/response/lecture.response';
+import { CreateLectureRequest } from 'shared/model/lecture/request/createLecture.request';
+import { LectureService } from '@/lecture/domain/lecture.service';
+import { LectureConverter } from '@/lecture/application/lecture.converter';
+import { PrismaService } from '@/config/prisma.service';
 
 @Controller('/rest/v1/events')
 export class EventController {
   constructor(
-    private eventService: EventService,
-    private eventConverter: EventConverter,
+    private readonly prismaService: PrismaService,
+    private readonly eventService: EventService,
+    private readonly eventConverter: EventConverter,
+    private readonly lectureService: LectureService,
+    private readonly lectureConverter: LectureConverter,
   ) {}
 
-  @Get('/@me')
+  @Post('/')
   @UseGuards(JwtGuard)
-  async getMe(
+  async createEvent(
     @User() user: TokenUser,
-    @Query() paginationQuery: GetEventsQueryRequest,
-  ): Promise<EventResponse[]> {
-    const events = await this.eventService.getUserEventsById(
+    @Body() createEventRequest: CreateEventRequest,
+  ): Promise<EventResponse> {
+    const event = await this.eventService.createEvent(
       user.id,
-      paginationQuery.page,
-      paginationQuery.size,
+      createEventRequest,
     );
-
-    return await Promise.all(
-      events.map((event) => this.eventConverter.convert(event)),
-    );
-  }
-
-  @Get('/:id')
-  async getEvent(@Param('id') eventId: string): Promise<EventResponse> {
-    const event = await this.eventService.getEventById(eventId);
-
-    if (!event) {
-      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
-    }
 
     return await this.eventConverter.convert(event);
   }
 
-  @Patch('/:id')
-  @UseGuards(JwtGuard)
-  async patchEvent(
-    @Param('id') eventId: string,
-    @Body() updateEventRequest: UpdateEventRequest,
-    @User() user: TokenUser,
-  ): Promise<EventResponse> {
-    const event: Event = await this.eventService.getEventById(eventId);
-
-    if (!event) {
-      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
-    }
-    if (event.userId !== user.id) {
-      throw new HttpException(
-        'User is not an event owner',
-        HttpStatus.FORBIDDEN,
-      );
-    }
-
-    const updatedEvent = await this.eventService.updateEvent(
-      eventId,
-      updateEventRequest,
-    );
-
-    return await this.eventConverter.convert(updatedEvent);
-  }
-
   @Get('')
   async getPublicEvents(
-    @Query() paginationQuery: GetEventsQueryRequest,
+    @Query() paginationQuery: GetEventsQuery,
   ): Promise<EventResponse[]> {
     const events = await this.eventService.getPublicEvents(
       paginationQuery.page,
@@ -97,17 +64,91 @@ export class EventController {
     );
   }
 
-  @Post('/')
+  @Get('/@me')
   @UseGuards(JwtGuard)
-  async createEvent(
-    @User() tokenUser: TokenUser,
-    @Body() createEventRequest: CreateEventRequest,
-  ): Promise<EventResponse> {
-    const event = await this.eventService.createEvent(
-      tokenUser.id,
-      createEventRequest,
+  async getMe(
+    @User() user: TokenUser,
+    @Query() pagination: GetEventsQuery,
+  ): Promise<EventResponse[]> {
+    const events = await this.eventService.getUserEventsById(
+      user.id,
+      pagination.page,
+      pagination.size,
     );
 
+    return await Promise.all(
+      events.map((event) => this.eventConverter.convert(event)),
+    );
+  }
+
+  @Post('/:id/lectures')
+  @UseGuards(JwtGuard)
+  async createLecture(
+    @Param('id') eventId: string,
+    @User() user: TokenUser,
+    @Body() createLectureRequest: CreateLectureRequest,
+  ): Promise<LectureDetailsResponse> {
+    const event = await this.prismaService.event.findUnique({
+      where: {
+        id: eventId,
+      },
+    });
+    if (!event) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
+    this.assertEventOwner(event, user);
+
+    const lecture = await this.lectureService.createLecture(
+      eventId,
+      user.id,
+      createLectureRequest,
+    );
+
+    return this.lectureConverter.convertDetails(lecture, [], lecture.Invites);
+  }
+
+  @Patch('/:id')
+  @UseGuards(JwtGuard)
+  async patchEvent(
+    @Param('id') eventId: string,
+    @Body() updateEventRequest: UpdateEventRequest,
+    @User() user: TokenUser,
+  ): Promise<EventResponse> {
+    const event: Event = await this.prismaService.event.findUnique({
+      where: {
+        id: eventId,
+      },
+    });
+    if (!event) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
+    this.assertEventOwner(event, user);
+
+    const updatedEvent = await this.eventService.updateEvent(
+      eventId,
+      updateEventRequest,
+    );
+
+    return await this.eventConverter.convert(updatedEvent);
+  }
+
+  @Get('/:id')
+  async getEvent(@Param('id') eventId: string): Promise<EventResponse> {
+    //todo validate if user has access to event (if event is private)
+    const event = await this.eventService.getEventById(eventId);
+    if (!event) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
+
     return await this.eventConverter.convert(event);
+  }
+
+  private assertEventOwner(event: Event, user: TokenUser) {
+    if (event.userId !== user.id) {
+      throw new HttpException(
+        'User is not an event owner',
+        HttpStatus.FORBIDDEN,
+      );
+    }
   }
 }
