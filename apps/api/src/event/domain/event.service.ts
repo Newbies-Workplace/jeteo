@@ -8,14 +8,6 @@ import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.reque
 export class EventService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getEventById(id: string): Promise<Event> {
-    return this.prismaService.event.findUnique({
-      where: {
-        id,
-      },
-    });
-  }
-
   async getPublicEvents(page: number, size: number): Promise<Event[]> {
     return this.prismaService.event.findMany({
       where: {

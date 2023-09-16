@@ -4,7 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { GoogleUser } from './google.model';
 import * as process from 'process';
 import { AuthService } from '@/auth/auth.service';
-import { User } from '@/auth/jwt/jwt.decorator';
+import { JWTUser } from '@/auth/jwt/jwt.decorator';
 
 @Controller('auth/google')
 export class GoogleController {
@@ -16,7 +16,7 @@ export class GoogleController {
 
   @Get('redirect')
   @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@User() user: GoogleUser, @Res() res: Response) {
+  async googleAuthRedirect(@JWTUser() user: GoogleUser, @Res() res: Response) {
     const token = await this.authService.loginWithGoogle(user);
 
     res.cookie('token', token, {

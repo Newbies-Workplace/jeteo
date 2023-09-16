@@ -10,19 +10,23 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
-  LectureResponse,
   LectureDetailsResponse,
+  LectureResponse,
 } from 'shared/model/lecture/response/lecture.response';
 import { GetLecturesQuery } from 'shared/model/lecture/request/getLectures.query';
 import { LectureService } from '@/lecture/domain/lecture.service';
 import { LectureConverter } from '@/lecture/application/lecture.converter';
 import { PrismaService } from '@/config/prisma.service';
-import { User } from '@/auth/jwt/jwt.decorator';
+import { JWTUser } from '@/auth/jwt/jwt.decorator';
 import { TokenUser } from '@/auth/jwt/jwt.model';
-import { EventVisibility } from '@prisma/client';
-import { AuthGuard } from '@nestjs/passport';
-import { JwtGuard } from '@/auth/jwt/jwt.guard';
+import { JwtGuard, OptionalJwtGuard } from '@/auth/jwt/jwt.guard';
 import { UpdateLectureRequest } from 'shared/model/lecture/request/updateLecture.request';
+import { LectureDetails } from '@/lecture/domain/lecture.types';
+import {
+  assertEventReadAccess,
+  assertEventWriteAccess,
+  assertLectureReadAccess,
+} from '@/auth/auth.methods';
 
 @Controller('/rest/v1/lectures')
 export class LectureController {
@@ -33,10 +37,10 @@ export class LectureController {
   ) {}
 
   @Get('/')
-  @UseGuards(AuthGuard(['jwt', 'anonymous']))
+  @UseGuards(OptionalJwtGuard)
   async getLectures(
-    @User() user: TokenUser,
     @Query() query: GetLecturesQuery,
+    @JWTUser() user?: TokenUser,
   ): Promise<LectureResponse[]> {
     const event = await this.prismaService.event.findUnique({
       where: {
@@ -49,6 +53,7 @@ export class LectureController {
 
     const lectures = await this.prismaService.lecture.findMany({
       include: {
+        Event: true,
         Invites: true,
         Speakers: true,
       },
@@ -62,138 +67,74 @@ export class LectureController {
       take: query.size,
     });
 
-    if (
-      event.visibility === EventVisibility.PRIVATE &&
-      user &&
-      event.userId !== user.id
-    ) {
-      throw new HttpException(
-        'User is not allowed to see this lecture',
-        HttpStatus.FORBIDDEN,
-      );
-    }
+    assertEventReadAccess(user, event);
 
     return await Promise.all(
-      lectures.map((lecture) =>
-        this.lectureConverter.convert(
-          lecture,
-          lecture.Speakers,
-          lecture.Invites,
-        ),
-      ),
+      lectures.map((lecture) => this.lectureConverter.convert(lecture)),
     );
   }
 
   @Get('/:id')
-  @UseGuards(AuthGuard(['jwt', 'anonymous']))
+  @UseGuards(OptionalJwtGuard)
   async getLecture(
-    @User() user: TokenUser,
     @Param('id') id: string,
+    @JWTUser() user?: TokenUser,
   ): Promise<LectureResponse> {
-    const lecture = await this.prismaService.lecture.findUnique({
-      where: {
-        id: id,
-      },
-      include: {
-        Invites: true,
-        Speakers: true,
-        Event: true,
-      },
-    });
-    if (!lecture) {
-      throw new HttpException('Lecture not Found', HttpStatus.NOT_FOUND);
-    }
+    const lecture = await this.getLectureDetailsById(id);
 
-    const event = lecture.Event;
+    assertLectureReadAccess(user, lecture, 'public');
 
-    if (
-      //todo check if speaker
-      event.visibility === EventVisibility.PRIVATE &&
-      user &&
-      event.userId !== user.id
-    ) {
-      throw new HttpException(
-        'User is not allowed to see this lecture',
-        HttpStatus.FORBIDDEN,
-      );
-    }
-
-    return this.lectureConverter.convert(
-      lecture,
-      lecture.Speakers,
-      lecture.Invites,
-    );
+    return this.lectureConverter.convert(lecture);
   }
   @Get('/:id/details')
   @UseGuards(JwtGuard)
   async getLectureDetails(
-    @User() user: TokenUser,
     @Param('id') id: string,
+    @JWTUser() user: TokenUser,
   ): Promise<LectureDetailsResponse> {
-    const lecture = await this.prismaService.lecture.findUnique({
-      where: {
-        id: id,
-      },
-      include: {
-        Invites: true,
-        Speakers: true,
-        Event: true,
-      },
-    });
-    if (!lecture) {
-      throw new HttpException('Lecture not Found', HttpStatus.NOT_FOUND);
-    }
+    const lecture = await this.getLectureDetailsById(id);
 
-    const event = lecture.Event;
+    assertLectureReadAccess(user, lecture, 'detailed');
 
-    if (
-      //todo check if speaker
-      user &&
-      event.userId !== user.id
-    ) {
-      throw new HttpException(
-        'User is not allowed to see this lecture',
-        HttpStatus.FORBIDDEN,
-      );
-    }
-
-    return this.lectureConverter.convertDetails(
-      lecture,
-      lecture.Speakers,
-      lecture.Invites,
-    );
+    return this.lectureConverter.convertDetails(lecture);
   }
 
   @Patch('/:id')
   @UseGuards(JwtGuard)
   async updateLecture(
-    @User() user: TokenUser,
     @Param('id') id: string,
     @Body() request: UpdateLectureRequest,
+    @JWTUser() user: TokenUser,
   ): Promise<LectureDetailsResponse> {
-    const lecture = await this.prismaService.lecture.findUnique({
-      where: {
-        id: id,
-      },
-      include: {
-        Event: true,
-      },
-    });
-    if (!lecture) {
-      throw new HttpException('Lecture not Found', HttpStatus.NOT_FOUND);
-    }
+    const lecture = await this.getLectureDetailsById(id);
 
-    //todo check if speaker has edit permissions
+    assertEventWriteAccess(user, lecture.Event);
 
     const updatedLecture = await this.lectureService.updateLecture(
       lecture,
       request,
     );
 
-    return this.lectureConverter.convertDetails(
-      updatedLecture,
-      updatedLecture.Speakers,
-      updatedLecture.Invites,
+    return this.lectureConverter.convertDetails(updatedLecture);
+  }
+
+  private async getLectureDetailsById(id: string): Promise<LectureDetails> {
+    const lecture: LectureDetails = await this.prismaService.lecture.findUnique(
+      {
+        where: {
+          id: id,
+        },
+        include: {
+          Invites: true,
+          Speakers: true,
+          Event: true,
+        },
+      },
     );
+    if (!lecture) {
+      throw new HttpException('Lecture not Found', HttpStatus.NOT_FOUND);
+    }
+
+    return lecture;
   }
 }
