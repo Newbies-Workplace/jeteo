@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { EventService } from '../domain/event.service';
 import { CreateEventRequest } from 'shared/model/event/request/createEvent.request';
-import { JwtGuard } from 'src/auth/jwt/jwt.guard';
-import { User } from 'src/auth/jwt/jwt.decorator';
+import { JwtGuard, OptionalJwtGuard } from 'src/auth/jwt/jwt.guard';
+import { JWTUser } from 'src/auth/jwt/jwt.decorator';
 import { TokenUser } from 'src/auth/jwt/jwt.model';
 import { GetEventsQuery } from 'shared/model/event/request/getEvents.query';
 import { EventResponse } from 'shared/model/event/response/event.response';
@@ -25,6 +25,10 @@ import { CreateLectureRequest } from 'shared/model/lecture/request/createLecture
 import { LectureService } from '@/lecture/domain/lecture.service';
 import { LectureConverter } from '@/lecture/application/lecture.converter';
 import { PrismaService } from '@/config/prisma.service';
+import {
+  assertEventReadAccess,
+  assertEventWriteAccess,
+} from '@/auth/auth.methods';
 
 @Controller('/rest/v1/events')
 export class EventController {
@@ -39,8 +43,8 @@ export class EventController {
   @Post('/')
   @UseGuards(JwtGuard)
   async createEvent(
-    @User() user: TokenUser,
     @Body() createEventRequest: CreateEventRequest,
+    @JWTUser() user: TokenUser,
   ): Promise<EventResponse> {
     const event = await this.eventService.createEvent(
       user.id,
@@ -67,8 +71,8 @@ export class EventController {
   @Get('/@me')
   @UseGuards(JwtGuard)
   async getMe(
-    @User() user: TokenUser,
     @Query() pagination: GetEventsQuery,
+    @JWTUser() user: TokenUser,
   ): Promise<EventResponse[]> {
     const events = await this.eventService.getUserEventsById(
       user.id,
@@ -85,18 +89,12 @@ export class EventController {
   @UseGuards(JwtGuard)
   async createLecture(
     @Param('id') eventId: string,
-    @User() user: TokenUser,
     @Body() createLectureRequest: CreateLectureRequest,
+    @JWTUser() user: TokenUser,
   ): Promise<LectureDetailsResponse> {
-    const event = await this.prismaService.event.findUnique({
-      where: {
-        id: eventId,
-      },
-    });
-    if (!event) {
-      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
-    }
-    this.assertEventOwner(event, user);
+    const event = await this.getEventById(eventId);
+
+    assertEventWriteAccess(user, event);
 
     const lecture = await this.lectureService.createLecture(
       eventId,
@@ -104,7 +102,7 @@ export class EventController {
       createLectureRequest,
     );
 
-    return this.lectureConverter.convertDetails(lecture, [], lecture.Invites);
+    return this.lectureConverter.convertDetails(lecture);
   }
 
   @Patch('/:id')
@@ -112,17 +110,11 @@ export class EventController {
   async patchEvent(
     @Param('id') eventId: string,
     @Body() updateEventRequest: UpdateEventRequest,
-    @User() user: TokenUser,
+    @JWTUser() user: TokenUser,
   ): Promise<EventResponse> {
-    const event: Event = await this.prismaService.event.findUnique({
-      where: {
-        id: eventId,
-      },
-    });
-    if (!event) {
-      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
-    }
-    this.assertEventOwner(event, user);
+    const event = await this.getEventById(eventId);
+
+    assertEventWriteAccess(user, event);
 
     const updatedEvent = await this.eventService.updateEvent(
       eventId,
@@ -132,23 +124,30 @@ export class EventController {
     return await this.eventConverter.convert(updatedEvent);
   }
 
+  @UseGuards(OptionalJwtGuard)
   @Get('/:id')
-  async getEvent(@Param('id') eventId: string): Promise<EventResponse> {
-    //todo validate if user has access to event (if event is private)
-    const event = await this.eventService.getEventById(eventId);
-    if (!event) {
-      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
-    }
+  async getEvent(
+    @Param('id') eventId: string,
+    @JWTUser() user: TokenUser | undefined,
+  ): Promise<EventResponse> {
+    const event = await this.getEventById(eventId);
+
+    assertEventReadAccess(user, event);
 
     return await this.eventConverter.convert(event);
   }
 
-  private assertEventOwner(event: Event, user: TokenUser) {
-    if (event.userId !== user.id) {
-      throw new HttpException(
-        'User is not an event owner',
-        HttpStatus.FORBIDDEN,
-      );
+  private async getEventById(id: string): Promise<Event> {
+    const event = this.prismaService.event.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!event) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     }
+
+    return event;
   }
 }

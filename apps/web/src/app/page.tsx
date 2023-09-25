@@ -7,11 +7,10 @@ import React from "react";
 import { Text } from "@/components/atoms/text/Text";
 import { getEvents } from "@/common/getEvent";
 
-
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
-  const events = await getEvents();
+  const events = await getEvents().catch(() => undefined);
 
   return (
     <div className={styles.page}>
@@ -22,31 +21,38 @@ export default async function Page() {
             Witaj, <GetUser /> 👋
           </Text>
           <div className={styles.events}>
-            {events.map((event) => {
-              return (
-                <Link
-                  key={event.id}
-                  href={`/events/${event.slug}`}
-                  style={{ alignSelf: "stretch" }}
-                >
-                  <EventCard
-                    title={event.title}
-                    subtitle={event.subtitle}
-                    host={{
-                      name: event.host.name,
-                      avatar: event.host.avatar,
-                    }}
-                    place={
-                      event.address
-                        ? event.address.city + ", " + event.address.place
-                        : undefined
-                    }
-                    tags={event.tags}
-                    startDate={event.from}
-                  />
-                </Link>
-              );
-            })}
+            {events &&
+              events.map((event) => {
+                return (
+                  <Link
+                    key={event.id}
+                    href={`/events/${event.slug}`}
+                    style={{ alignSelf: "stretch" }}
+                  >
+                    <EventCard
+                      title={event.title}
+                      subtitle={event.subtitle}
+                      host={{
+                        name: event.host.name,
+                        avatar: event.host.avatar,
+                      }}
+                      place={
+                        event.address
+                          ? event.address.city + ", " + event.address.place
+                          : undefined
+                      }
+                      tags={event.tags}
+                      startDate={event.from}
+                    />
+                  </Link>
+                );
+              })}
+
+            {!events && (
+              <Text variant="bodyM" className={styles.hello}>
+                Błąd pobierania wydarzeń
+              </Text>
+            )}
           </div>
         </div>
       </div>
