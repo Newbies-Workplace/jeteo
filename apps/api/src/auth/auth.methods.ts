@@ -57,6 +57,7 @@ export const assertEventReadAccess = (
     return;
   }
 
+  //todo fix queries without token (on website)
   throw new HttpException(
     'User is not allowed to see this event',
     HttpStatus.FORBIDDEN,

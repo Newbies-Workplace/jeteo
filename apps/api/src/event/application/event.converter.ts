@@ -3,6 +3,7 @@ import { EventResponse } from 'shared/model/event/response/event.response';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/config/prisma.service';
 import { UserConverter } from '@/user/application/user.converter';
+import { generateSlug } from '@/common/slugs';
 
 @Injectable()
 export class EventConverter {
@@ -18,7 +19,7 @@ export class EventConverter {
 
     return {
       id: event.id,
-      slug: event.id, //todo create slug from title and id
+      slug: generateSlug(event.title, event.id),
       title: event.title,
       subtitle: event.subtitle,
       description: event.description,

@@ -138,7 +138,7 @@ export class EventController {
   }
 
   private async getEventById(id: string): Promise<Event> {
-    const event = this.prismaService.event.findUnique({
+    const event = await this.prismaService.event.findUnique({
       where: {
         id,
       },

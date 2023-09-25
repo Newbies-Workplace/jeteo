@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '@/config/prisma.service';
 import { GoogleUser } from './strategies/google.model';
+import { nanoid } from '@/common/nanoid';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +21,7 @@ export class AuthService {
     if (!queryUser) {
       queryUser = await this.prismaService.user.create({
         data: {
+          id: nanoid(),
           google_id: googleUser.id,
           name: [googleUser.firstName, googleUser.lastName].join(' '),
         },

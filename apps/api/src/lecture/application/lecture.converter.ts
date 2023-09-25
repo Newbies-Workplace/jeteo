@@ -5,6 +5,7 @@ import {
 } from 'shared/model/lecture/response/lecture.response';
 import { UserConverter } from '@/user/application/user.converter';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
+import { generateSlug } from '@/common/slugs';
 
 @Injectable()
 export class LectureConverter {
@@ -13,7 +14,7 @@ export class LectureConverter {
   convert(lecture: LectureDetails): LectureResponse {
     return {
       id: lecture.id,
-      slug: lecture.id, //todo create slug from title and id
+      slug: generateSlug(lecture.title, lecture.id),
       eventId: lecture.eventId,
       title: lecture.title,
       description: lecture.description,

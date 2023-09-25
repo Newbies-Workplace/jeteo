@@ -3,6 +3,7 @@ import { CreateLectureRequest } from 'shared/model/lecture/request/createLecture
 import { PrismaService } from '@/config/prisma.service';
 import { UpdateLectureRequest } from 'shared/model/lecture/request/updateLecture.request';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
+import { nanoid } from '@/common/nanoid';
 
 @Injectable()
 export class LectureService {
@@ -15,6 +16,7 @@ export class LectureService {
   ) {
     return this.prismaService.lecture.create({
       data: {
+        id: nanoid(),
         eventId: eventId,
         userId: userId,
         title: createLectureRequest.title,
