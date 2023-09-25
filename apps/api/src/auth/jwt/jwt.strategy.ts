@@ -7,7 +7,7 @@ import fromExtractors = ExtractJwt.fromExtractors;
 import { Request } from 'express';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
+export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private prismaService: PrismaService) {
     super({
       jwtFromRequest: fromExtractors([
@@ -26,7 +26,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       },
     });
 
-    if (!user) throw new UnauthorizedException();
+    if (!user) {
+      throw new UnauthorizedException();
+    }
 
     return {
       id: user.id,

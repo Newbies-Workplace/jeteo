@@ -124,11 +124,11 @@ export class EventController {
     return await this.eventConverter.convert(updatedEvent);
   }
 
-  @Get('/:id')
   @UseGuards(OptionalJwtGuard)
+  @Get('/:id')
   async getEvent(
     @Param('id') eventId: string,
-    @JWTUser() user: TokenUser,
+    @JWTUser() user: TokenUser | undefined,
   ): Promise<EventResponse> {
     const event = await this.getEventById(eventId);
 
