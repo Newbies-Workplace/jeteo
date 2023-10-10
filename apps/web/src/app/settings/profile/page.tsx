@@ -9,6 +9,8 @@ import TextArea from "@/components/organisms/rateLecture/textArea/TextArea";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Button from "@/components/atoms/button/Button";
 import { useAuth } from "@/contexts/Auth.hook";
+import { UpdateUserRequest } from "shared/model/user/request/updateUser.request";
+import { myFetch } from "@/common/fetch";
 
 type ProfileForm = {
   name: string;
@@ -44,6 +46,25 @@ export default function Page() {
 
   const onSubmit: SubmitHandler<ProfileForm> = (data: ProfileForm) => {
     console.log(data);
+    myFetch(`/rest/v1/users/@me`, {
+      method: "PUT",
+      body: JSON.stringify(getUpdateUserRequestData(data)),
+    }).then((res) => res.json());
+  };
+
+  const getUpdateUserRequestData = (form: ProfileForm): UpdateUserRequest => {
+    return {
+      avatar: undefined,
+      name: form.name,
+      // jobTitle: "",
+      description: form.description,
+      socials: {
+        mail: form.socials.mail,
+        linkedIn: form.socials.linkedIn,
+        twitter: form.socials.twitter,
+        github: form.socials.github,
+      },
+    };
   };
 
   return (
