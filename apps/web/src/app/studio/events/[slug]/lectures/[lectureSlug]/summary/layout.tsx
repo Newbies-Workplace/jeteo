@@ -18,7 +18,6 @@ export default async function Layout({
     params.lectureSlug
   );
 
-  console.log(params.lectureSlug);
   return (
     <div className={styles.page}>
       <StudioHeader title={lecture.title} />
