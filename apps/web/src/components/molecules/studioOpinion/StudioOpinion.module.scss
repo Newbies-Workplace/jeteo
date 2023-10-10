@@ -1,0 +1,43 @@
+@use "@/colors.module.scss" as colors;
+
+.opinion {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  align-items: start;
+  justify-content: space-between;
+  padding: 4px;
+  gap: 4px;
+  background-color: colors.$surface;
+  border-radius: 16px;
+  border: 1px solid var(--stroke, colors.$stroke);
+
+  .opinionText {
+    display: flex;
+    padding: 0 10px 10px 10px;
+
+  }
+
+  .ratings {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    .ratingItem {
+      min-width: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: colors.$background;
+      border-radius: 8px;
+      padding: 5px;
+      border: 1px solid var(--stroke, colors.$stroke);
+
+      .ratingText {
+          color: colors.$primary;
+      }
+    }
+  }
+}
