@@ -11,9 +11,13 @@ import { Map } from "@/components/molecules/map/Map";
 import cs from "classnames";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
 import { UserSocials } from "@/components/molecules/userSocials/UserSocials";
+import { getEventLectures } from "@/common/getLecture";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const event = await getEvent(params.slug);
+  const lectures = await getEventLectures(params.slug);
+  console.log(lectures);
+
   if (!event) {
     notFound();
   }
@@ -51,39 +55,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 <Text variant={"headS"} bold>
                   Agenda
                 </Text>
-                <LectureCard
-                  from={"2023-08-16T17:19:08.398Z"}
-                  to={"2023-08-16T17:19:08.398Z"}
-                  title={"AAA"}
-                  description={"aaa"}
-                  speakers={[
-                    {
-                      name: "Jan Kowalski",
-                      description: "Januszex CEO",
-                    },
-                    {
-                      name: "Karol Kowalski",
-                      description: "Woźny",
-                    },
-                  ]}
-                />
-                <div className={styles.separator} />
-                <LectureCard
-                  from={"2023-08-16T17:19:08.398Z"}
-                  to={"2023-08-16T17:19:08.398Z"}
-                  title={"BBB"}
-                  description={"bbb"}
-                  speakers={[
-                    {
-                      name: "Jan Kowalski",
-                      description: "Januszex CEO",
-                    },
-                    {
-                      name: "Karol Kowalski",
-                      description: "Woźny",
-                    },
-                  ]}
-                />
+
+                {lectures.length > 0 &&
+                  lectures.map((lecture, index) => (
+                    <>
+                      {index !== 0 && <div className={styles.separator} />}
+                      <LectureCard
+                        key={lecture.id}
+                        from={lecture.from}
+                        to={lecture.to}
+                        title={lecture.title}
+                        description={lecture.description}
+                        speakers={lecture.speakers}
+                      />
+                    </>
+                  ))}
               </div>
             </div>
 
@@ -94,10 +80,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   src={event.host.avatar}
                   className={styles.avatar}
                 />
-
                 <Text variant={"headS"} bold>
                   {event.host.name}
                 </Text>
+                {event.host.jobTitle && (
+                  <Text
+                    variant={"bodyM"}
+                    bold
+                    style={{ textAlign: "center", marginTop: -15 }}
+                  >
+                    {event.host.jobTitle}
+                  </Text>
+                )}
                 {event.host.description && (
                   <Text variant={"bodyM"} style={{ textAlign: "justify" }}>
                     {event.host.description}

@@ -12,6 +12,7 @@ model User {
   name        String
   avatar      String?
   google_id   String   @unique
+  jobTitle    String?
   description String?
   mail        String?
   linkedin    String?

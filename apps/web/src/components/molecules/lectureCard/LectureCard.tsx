@@ -40,7 +40,7 @@ export const LectureCard: React.FC<LectureProps> = ({
                   key={item.name}
                   avatar={item.avatar}
                   name={item.name}
-                  description={item.description}
+                  jobTitle={item.jobTitle}
                   socials={item.socials}
                 />
               );

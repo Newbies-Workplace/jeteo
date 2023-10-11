@@ -35,7 +35,7 @@ export default function Page() {
 
     reset({
       name: user.name,
-      jobTitle: "",
+      jobTitle: user.jobTitle,
       description: user.description,
       socials: {
         mail: user.socials.mail,
@@ -58,7 +58,7 @@ export default function Page() {
     return {
       avatar: undefined,
       name: form.name,
-      // jobTitle: "",
+      jobTitle: form.jobTitle,
       description: form.description,
       socials: {
         mail: form.socials.mail,
