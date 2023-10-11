@@ -1,12 +1,11 @@
 "use client";
-import React from "react";
+
+import React, { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import { Section } from "@/components/molecules/section/Section";
-import { FileItem } from "@/components/molecules/fileItem/FileItem";
 import { FileUpload } from "@/components/molecules/fileUpload/FileUpload";
 import { ControlledInput } from "@/components/atoms/input/ControlledInput";
-import TextArea from "@/components/organisms/rateLecture/textArea/TextArea";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "@/components/atoms/button/Button";
 import { useAuth } from "@/contexts/Auth.hook";
 import { UpdateUserRequest } from "shared/model/user/request/updateUser.request";
@@ -26,12 +25,15 @@ type ProfileForm = {
 
 export default function Page() {
   const { user } = useAuth();
-  if (user === null) {
-    return <div></div>;
-  }
+  const [isInitialized, setIsInitialized] = useState(false);
+  const { control, handleSubmit, reset } = useForm<ProfileForm>();
 
-  const { control, handleSubmit } = useForm<ProfileForm>({
-    defaultValues: {
+  useEffect(() => {
+    if (!user || isInitialized) return;
+
+    setIsInitialized(true);
+
+    reset({
       name: user.name,
       jobTitle: "",
       description: user.description,
@@ -41,8 +43,8 @@ export default function Page() {
         twitter: user.socials.twitter,
         github: user.socials.github,
       },
-    },
-  });
+    });
+  }, [user, isInitialized]);
 
   const onSubmit: SubmitHandler<ProfileForm> = (data: ProfileForm) => {
     console.log(data);
