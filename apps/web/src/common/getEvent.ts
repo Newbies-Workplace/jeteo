@@ -2,9 +2,10 @@ import { EventResponse } from "shared/model/event/response/event.response";
 import { myFetch, urlParams } from "@/common/fetch";
 import { GetEventsQuery } from "shared/model/event/request/getEvents.query";
 import { cookies } from "next/headers";
+import { getIdFromSlug } from "shared/util";
 
 export const getEvent = async (eventSlug: string): Promise<EventResponse> => {
-  const eventId = eventSlug; //todo get id from slug
+  const eventId = getIdFromSlug(eventSlug);
   const res = await myFetch(
     `/rest/v1/events/${eventId}`,
     {

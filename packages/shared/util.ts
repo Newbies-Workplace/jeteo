@@ -24,3 +24,7 @@ export const trimIfExists = (
 
   return value.trim();
 };
+
+export const getIdFromSlug = (slug: string): string => {
+  return slug.split("-").pop()!;
+};

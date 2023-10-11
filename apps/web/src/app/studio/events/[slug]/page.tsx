@@ -4,6 +4,8 @@ import { Text } from "@/components/atoms/text/Text";
 import styles from "./page.module.scss";
 import { getEvent } from "@/common/getEvent";
 import { notFound } from "next/navigation";
+import { StudioLectureCard } from "@/components/molecules/studioLectureCard/StudioLectureCard";
+import React from "react";
 import { getEventLectures } from "@/common/getLecture";
 import { EventLecturesForm } from "@/components/organisms/eventForm/lectures/EventLecturesForm";
 
@@ -32,7 +34,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <StudioFunctionCard href="#" title="Usuń" subtitle="wydarzenie" />
       </div>
 
-      <Text variant="headL">Prelekcje</Text>
+      <Text variant="headL" style={{ marginTop: 16, marginBottom: 16 }}>
+        Prelekcje
+      </Text>
       <EventLecturesForm eventSlug={params.slug} lectures={lectures} />
     </div>
   );

@@ -5,11 +5,12 @@ import {
 } from "shared/model/lecture/response/lecture.response";
 import { GetLecturesQuery } from "shared/model/lecture/request/getLectures.query";
 import { cookies } from "next/headers";
+import { getIdFromSlug } from "shared/util";
 
 export const getLecture = async (
   lectureSlug: string
 ): Promise<LectureResponse> => {
-  const lectureId = lectureSlug; //todo get id from slug
+  const lectureId = getIdFromSlug(lectureSlug);
   const res = await myFetch(
     `/rest/v1/lectures/${lectureId}`,
     {
@@ -27,7 +28,7 @@ export const getLecture = async (
 export const getLectureDetails = async (
   lectureSlug: string
 ): Promise<LectureDetailsResponse> => {
-  const lectureId = lectureSlug; //todo get id from slug
+  const lectureId = getIdFromSlug(lectureSlug);
   const res = await myFetch(
     `/rest/v1/lectures/${lectureId}/details`,
     {
@@ -45,7 +46,7 @@ export const getLectureDetails = async (
 export const getEventLectures = async (
   eventSlug: string
 ): Promise<LectureResponse[]> => {
-  const eventId = eventSlug; //todo get id from slug
+  const eventId = getIdFromSlug(eventSlug);
   const params: GetLecturesQuery = {
     eventId: eventId,
     page: 1,

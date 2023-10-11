@@ -3,6 +3,7 @@ import { PrismaService } from '@/config/prisma.service';
 import { CreateEventRequest } from 'shared/model/event/request/createEvent.request';
 import { Event } from '@prisma/client';
 import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.request';
+import { nanoid } from '@/common/nanoid';
 
 @Injectable()
 export class EventService {
@@ -44,6 +45,7 @@ export class EventService {
   ): Promise<Event> {
     return this.prismaService.event.create({
       data: {
+        id: nanoid(),
         title: createEventDto.title,
         subtitle: createEventDto.subtitle,
         description: createEventDto.description,
