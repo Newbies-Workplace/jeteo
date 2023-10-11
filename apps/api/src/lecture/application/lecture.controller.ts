@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Param,
   Patch,
+  Post,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -27,6 +28,7 @@ import {
   assertEventWriteAccess,
   assertLectureReadAccess,
 } from '@/auth/auth.methods';
+import { RateLectureRequest } from 'shared/model/lecture/request/rateLecture.request';
 
 @Controller('/rest/v1/lectures')
 export class LectureController {
@@ -56,6 +58,7 @@ export class LectureController {
         Event: true,
         Invites: true,
         Speakers: true,
+        Rate: true,
       },
       where: {
         eventId: query.eventId,
@@ -118,6 +121,25 @@ export class LectureController {
     return this.lectureConverter.convertDetails(updatedLecture);
   }
 
+  @Post('/:id/rate')
+  @UseGuards(OptionalJwtGuard)
+  async rateLecture(
+    @Param('id') id: string,
+    @Body() request: RateLectureRequest,
+    @JWTUser() user?: TokenUser,
+  ): Promise<LectureDetailsResponse> {
+    const lecture = await this.getLectureDetailsById(id);
+
+    assertLectureReadAccess(user, lecture, 'public');
+
+    const updatedLecture = await this.lectureService.rateLecture(
+      lecture,
+      request,
+    );
+
+    return this.lectureConverter.convertDetails(updatedLecture);
+  }
+
   private async getLectureDetailsById(id: string): Promise<LectureDetails> {
     const lecture: LectureDetails = await this.prismaService.lecture.findUnique(
       {
@@ -128,6 +150,7 @@ export class LectureController {
           Invites: true,
           Speakers: true,
           Event: true,
+          Rate: true,
         },
       },
     );

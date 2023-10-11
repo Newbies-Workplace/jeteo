@@ -4,6 +4,7 @@ import { PrismaService } from '@/config/prisma.service';
 import { UpdateLectureRequest } from 'shared/model/lecture/request/updateLecture.request';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { nanoid } from '@/common/nanoid';
+import { RateLectureRequest } from 'shared/model/lecture/request/rateLecture.request';
 
 @Injectable()
 export class LectureService {
@@ -38,6 +39,7 @@ export class LectureService {
         Event: true,
         Invites: true,
         Speakers: true,
+        Rate: true,
       },
     });
   }
@@ -110,6 +112,34 @@ export class LectureService {
         Event: true,
         Invites: true,
         Speakers: true,
+        Rate: true,
+      },
+    });
+  }
+
+  async rateLecture(
+    lecture: LectureDetails,
+    rateLectureRequest: RateLectureRequest,
+  ): Promise<LectureDetails> {
+    await this.prismaService.rate.create({
+      data: {
+        id: nanoid(),
+        lectureId: lecture.id,
+        overallRate: rateLectureRequest.overallRate,
+        topicRate: rateLectureRequest.topicRate,
+        opinion: rateLectureRequest.opinion,
+      },
+    });
+
+    return this.prismaService.lecture.findUnique({
+      where: {
+        id: lecture.id,
+      },
+      include: {
+        Event: true,
+        Invites: true,
+        Speakers: true,
+        Rate: true,
       },
     });
   }

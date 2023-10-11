@@ -21,6 +21,7 @@ import {
   LectureDetailsResponse,
 } from "shared/model/lecture/response/lecture.response";
 import { UpdateLectureRequest } from "shared/model/lecture/request/updateLecture.request";
+import { getIdFromSlug } from "shared/util";
 
 type BasicForm = {
   title: string;
@@ -68,7 +69,7 @@ const getRequest = async (
       body: JSON.stringify(getUpdateRequestData(data)),
     }).then((res) => res.json());
   } else {
-    return myFetch(`/rest/v1/events/${eventSlug}/lectures`, {
+    return myFetch(`/rest/v1/events/${getIdFromSlug(eventSlug)}/lectures`, {
       method: "POST",
       body: JSON.stringify(getCreateRequestData(data)),
     }).then((res) => res.json());
