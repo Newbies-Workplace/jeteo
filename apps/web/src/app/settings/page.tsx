@@ -1,5 +1,5 @@
-import { Text } from "@/components/atoms/text/Text";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <Text>Ustawienia</Text>;
+  redirect("/settings/profile");
 }
