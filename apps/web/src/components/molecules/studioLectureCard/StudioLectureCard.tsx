@@ -71,6 +71,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
           <Link
             className={styles.action}
             href={`/studio/events/edit/${eventSlug}/lectures/edit/${lectureSlug}/basic`}
+            onClick={(e) => e.stopPropagation()}
           >
             <Image src={Edit} alt={"Edit"} width={24} height={24} />
           </Link>
