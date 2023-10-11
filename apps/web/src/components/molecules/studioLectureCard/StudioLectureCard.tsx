@@ -10,6 +10,7 @@ import {
 } from "@/components/molecules/lectureCard/SpeakerCard/SpeakerCard";
 import { Timer } from "@/components/molecules/timer/Timer";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface StudioLectureCardProps {
   eventSlug: string;
@@ -30,10 +31,17 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
   description,
   speakers,
 }) => {
+  const navigate = useRouter();
+  const navigateToSummary = () => {
+    navigate.replace(
+      `/studio/events/${eventSlug}/lectures/${lectureSlug}/summary`
+    );
+  };
+
   return (
     <div className={styles.content}>
       <Timer from={from} to={to} />
-      <div className={styles.card}>
+      <div className={styles.card} onClick={navigateToSummary}>
         <div className={styles.description}>
           <div className={styles.titles}>
             <Text variant="headS" bold>
@@ -61,15 +69,10 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
 
         <div className={styles.actions}>
           <Link
+            className={styles.action}
             href={`/studio/events/edit/${eventSlug}/lectures/edit/${lectureSlug}/basic`}
           >
-            <Image
-              className={styles.action}
-              src={Edit}
-              alt={"Edit"}
-              width={24}
-              height={24}
-            />
+            <Image src={Edit} alt={"Edit"} width={24} height={24} />
           </Link>
 
           <Image
@@ -79,6 +82,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
             width={24}
             height={24}
           />
+          <div className={styles.cardOverwrite}></div>
         </div>
       </div>
     </div>
