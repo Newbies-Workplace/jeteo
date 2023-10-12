@@ -59,7 +59,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 {lectures.length > 0 &&
                   lectures.map((lecture, index) => (
                     <>
-                      {index !== 0 && <div className={styles.separator} />}
+                      {index !== 0 && <div className={styles.separator} key={lecture.id + "-separator"} />}
                       <LectureCard
                         key={lecture.id}
                         from={lecture.from}
