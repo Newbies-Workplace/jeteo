@@ -7,7 +7,7 @@ import { UserSocials } from "@/components/molecules/userSocials/UserSocials";
 export interface SpeakerCardProps {
   avatar?: string;
   name: string;
-  description?: string;
+  jobTitle?: string;
   socials?: {
     mail?: string;
     twitter?: string;
@@ -19,7 +19,7 @@ export interface SpeakerCardProps {
 export const SpeakerCard: React.FC<SpeakerCardProps> = ({
   avatar,
   name,
-  description,
+  jobTitle,
   socials,
 }) => {
   return (
@@ -30,7 +30,7 @@ export const SpeakerCard: React.FC<SpeakerCardProps> = ({
           {name}
         </Text>
 
-        {description && <Text variant="bodyS">{description}</Text>}
+        {jobTitle && <Text variant="bodyS">{jobTitle}</Text>}
 
         <UserSocials socials={socials} />
       </div>
