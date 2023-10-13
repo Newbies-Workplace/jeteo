@@ -6,7 +6,15 @@ import { Tag } from "@/components/atoms/tag/Tag";
 import LocationIcon from "@/assets/location.svg";
 import ClockIcon from "@/assets/clock.svg";
 import dayjs from "dayjs";
+import "dayjs/locale/pl";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
+import { EventResponse } from "shared/.dist/model/event/response/event.response";
+import {
+  EventCardActionsArchive,
+  EventCardActionsFresh,
+  EventCardActionsFuture,
+  EventCardActionsLive,
+} from "@/components/molecules/eventCard/EventCardActions";
 
 export interface EventCardProps {
   title: string;
@@ -79,5 +87,42 @@ export const EventCard: React.FC<EventCardProps> = ({
 
       {children}
     </div>
+  );
+};
+
+export const SmartEventCard: React.FC<{ event: EventResponse }> = ({
+  event,
+}) => {
+  const now = dayjs();
+  const start = dayjs(event.from);
+  const end = dayjs(event.to);
+  const freshnessEnd = dayjs(event.from).add(3, "day");
+
+  const isFuture = now.isBefore(start);
+  const isFresh = now.isAfter(end) && now.isBefore(freshnessEnd);
+  const isArchive = now.isAfter(end);
+  const isLive = now.isAfter(start) && now.isBefore(end);
+
+  return (
+    <EventCard
+      title={event.title}
+      subtitle={event.subtitle}
+      host={{
+        name: event.host.name,
+        avatar: event.host.avatar,
+      }}
+      place={
+        event.address
+          ? event.address.city + ", " + event.address.place
+          : undefined
+      }
+      tags={event.tags}
+      startDate={event.from}
+    >
+      {isFuture && <EventCardActionsFuture event={event} />}
+      {isFresh && <EventCardActionsFresh event={event} />}
+      {isArchive && <EventCardActionsArchive event={event} />}
+      {isLive && <EventCardActionsLive event={event} />}
+    </EventCard>
   );
 };

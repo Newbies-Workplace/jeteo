@@ -4,56 +4,90 @@ import React from "react";
 import styles from "./EventCardActions.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import cs from "classnames";
+import { EventResponse } from "shared/model/event/response/event.response";
+import dayjs from "dayjs";
+import "dayjs/locale/pl";
+import relativeTime from "dayjs/plugin/relativeTime";
+import Link from "next/link";
 
-export const EventCardActionsFuture: React.FC = () => {
+export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
+  event,
+}) => {
+  dayjs.extend(relativeTime);
+  dayjs.locale("pl");
+
+  const timeLeft = dayjs().to(event.from, true);
+
   return (
     <div className={styles.actions}>
-      <Text className={styles.action} bold>
-        Dodaj przypomnienie
-      </Text>
-
       <Text className={cs(styles.action, styles.stretched)} bold>
-        Rozpoczęcie za 2 dni
+        Rozpoczęcie za {timeLeft}
       </Text>
     </div>
   );
 };
-export const EventCardActionsLive: React.FC = () => {
+export const EventCardActionsLive: React.FC<{
+  event: EventResponse;
+}> = ({ event }) => {
+  dayjs.extend(relativeTime);
+  dayjs.locale("pl");
+
+  const timeLeft = dayjs(event.to).fromNow(true);
+
   return (
     <div className={styles.actions}>
-      <Text className={cs(styles.action, styles.live)} bold>
-        Kliknij aby ocenić
-      </Text>
+      <RateButton event={event} />
 
       <Text className={cs(styles.action, styles.live, styles.stretched)} bold>
-        Na żywo, pozostały 4 godziny
+        Na żywo, {timeLeft} do zakończenia
       </Text>
     </div>
   );
 };
 
-export const EventCardActionsFresh: React.FC = () => {
+export const EventCardActionsFresh: React.FC<{ event: EventResponse }> = ({
+  event,
+}) => {
   return (
     <div className={styles.actions}>
+      <RateButton event={event} />
+
+      <EventRating event={event} />
+    </div>
+  );
+};
+
+export const EventCardActionsArchive: React.FC<{ event: EventResponse }> = ({
+  event,
+}) => {
+  return (
+    <div className={styles.actions}>
+      <EventRating event={event} />
+    </div>
+  );
+};
+
+const RateButton: React.FC<{ event: EventResponse }> = ({ event }) => {
+  return (
+    <Link
+      href={`/events/${event.slug}#rate`}
+      onClick={(e) => e.stopPropagation()}
+    >
       <Text className={cs(styles.action, styles.live)} bold>
         Kliknij aby ocenić
       </Text>
-
-      <Text className={cs(styles.action, styles.rate, styles.stretched)} bold>
-        <span className={styles.rateAverage}>Średnia ocena: 4.5</span>
-        <div className={styles.stars}>* * * * *</div>
-      </Text>
-    </div>
+    </Link>
   );
 };
 
-export const EventCardActionsArchive: React.FC = () => {
+const EventRating: React.FC<{ event: EventResponse }> = ({ event }) => {
   return (
-    <div className={styles.actions}>
-      <Text className={cs(styles.action, styles.rate, styles.stretched)} bold>
-        <span className={styles.rateAverage}>Średnia ocena: 4.5</span>
-        <div className={styles.stars}>* * * * *</div>
-      </Text>
-    </div>
+    <Text className={cs(styles.action, styles.rate, styles.stretched)} bold>
+      <span className={styles.rateAverage}>Średnia ocena</span>
+
+      <div className={styles.stars}>
+        {event.ratingSummary.average.toFixed(2)}
+      </div>
+    </Text>
   );
 };

@@ -24,7 +24,7 @@ export class EventConverter {
       subtitle: event.subtitle,
       description: event.description,
       from: event.from.toISOString(),
-      to: event.from.toISOString(),
+      to: event.to.toISOString(),
       address: event.city &&
         event.place && {
           city: event.city,
@@ -37,6 +37,11 @@ export class EventConverter {
               },
             }),
         },
+      ratingSummary: {
+        // todo
+        average: 1.23,
+        count: 12,
+      },
       host: this.userConverter.convert(author),
       createdAt: event.createdAt.toISOString(),
       links: event.links,

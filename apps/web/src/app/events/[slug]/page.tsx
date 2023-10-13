@@ -51,7 +51,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
                 <EventDescription description={event.description} />
               </div>
-              <div className={cs(styles.agenda, styles.agenda)}>
+              <div id="rate" className={cs(styles.agenda, styles.agenda)}>
                 <Text variant={"headS"} bold>
                   Agenda
                 </Text>
@@ -59,14 +59,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 {lectures.length > 0 &&
                   lectures.map((lecture, index) => (
                     <>
-                      {index !== 0 && <div className={styles.separator} key={lecture.id + "-separator"} />}
+                      {index !== 0 && (
+                        <div
+                          className={styles.separator}
+                          key={lecture.id + "-separator"}
+                        />
+                      )}
                       <LectureCard
                         key={lecture.id}
                         from={lecture.from}
                         to={lecture.to}
                         title={lecture.title}
                         description={lecture.description}
-                        speakers={lecture.speakers}
+                        speakers={[...lecture.speakers, ...lecture.invites]}
                       />
                     </>
                   ))}

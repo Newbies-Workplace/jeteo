@@ -24,6 +24,10 @@
   .live {
     color: colors.$white;
     background-color: colors.$live;
+
+    &:hover {
+      background-color: colors.$liveHover;
+    }
   }
 
   .rate {
