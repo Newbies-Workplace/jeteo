@@ -1,6 +1,6 @@
 import { Providers } from "@/providers";
 import React from "react";
-import "@/global.css";
+import "@/global.scss";
 import colors from "@/colors.module.scss";
 import "dayjs/locale/pl";
 import dayjs from "dayjs";
