@@ -26,7 +26,6 @@
     "@nestjs/passport": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.1.1",
-    "@svgr/webpack": "^8.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "color-convert": "^2.0.1",

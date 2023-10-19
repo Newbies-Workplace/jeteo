@@ -69,8 +69,6 @@ export const SmartLectureCard: React.FC<{
       speakers={[...lecture.speakers, ...lecture.invites]}
     >
       {lecture._metadata.canBeRated && <LectureRateAction onPress={openRate} />}
-
-      <LectureRateAction onPress={openRate} />
     </LectureCard>
   );
 };

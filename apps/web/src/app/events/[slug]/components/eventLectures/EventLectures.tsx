@@ -18,15 +18,9 @@ export const EventLectures: React.FC<EventLecturesProps> = ({ lectures }) => {
     <>
       {lectures.length > 0 &&
         lectures.map((lecture, index) => (
-          <div key={lecture.id + "-container"} style={{ width: "100%" }}>
-            {index !== 0 && (
-              <div
-                className={styles.separator}
-                key={lecture.id + "-separator"}
-              />
-            )}
+          <div key={lecture.id} style={{ width: "100%" }}>
+            {index !== 0 && <div className={styles.separator} />}
             <SmartLectureCard
-              key={lecture.id}
               lecture={lecture}
               openRate={() => setRatedLecture(lecture)}
             />

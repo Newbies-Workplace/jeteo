@@ -2,7 +2,7 @@
 
 import styles from "./LectureRateAction.module.scss";
 import { Text } from "@/components/atoms/text/Text";
-import Star from "@/assets/star.svg";
+import Star from "@/assets/star-white.svg";
 import React from "react";
 import Image from "next/image";
 
