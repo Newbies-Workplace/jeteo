@@ -70,12 +70,11 @@ export const EventCardActionsArchive: React.FC<{ event: EventResponse }> = ({
 const RateButton: React.FC<{ event: EventResponse }> = ({ event }) => {
   return (
     <Link
+      className={cs(styles.action, styles.live)}
       href={`/events/${event.slug}#rate`}
       onClick={(e) => e.stopPropagation()}
     >
-      <Text className={cs(styles.action, styles.live)} bold>
-        Kliknij aby ocenić
-      </Text>
+      <Text bold>Kliknij aby ocenić</Text>
     </Link>
   );
 };

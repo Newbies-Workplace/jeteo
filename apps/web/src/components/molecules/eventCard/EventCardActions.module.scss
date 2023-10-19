@@ -41,13 +41,3 @@
     align-self: stretch;
   }
 }
-
-@include responsiveness.mobile {
-  .rateAverage {
-    display: none;
-  }
-
-  .rate {
-    flex-direction: row-reverse;
-  }
-}

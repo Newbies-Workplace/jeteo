@@ -3,6 +3,8 @@ import styles from "./LectureCard.module.scss";
 import { SpeakerCard, SpeakerCardProps } from "./SpeakerCard/SpeakerCard";
 import { Text } from "@/components/atoms/text/Text";
 import { Timer } from "@/components/molecules/timer/Timer";
+import { LectureResponse } from "shared/.dist/model/lecture/response/lecture.response";
+import { LectureRateAction } from "@/components/molecules/lectureCard/RateAction/LectureRateAction";
 
 interface LectureProps {
   from: string;
@@ -51,5 +53,24 @@ export const LectureCard: React.FC<LectureProps> = ({
         {children}
       </div>
     </div>
+  );
+};
+
+export const SmartLectureCard: React.FC<{
+  lecture: LectureResponse;
+  openRate?: () => void;
+}> = ({ lecture, openRate }) => {
+  return (
+    <LectureCard
+      from={lecture.from}
+      to={lecture.to}
+      title={lecture.title}
+      description={lecture.description}
+      speakers={[...lecture.speakers, ...lecture.invites]}
+    >
+      {lecture._metadata.canBeRated && <LectureRateAction onPress={openRate} />}
+
+      <LectureRateAction onPress={openRate} />
+    </LectureCard>
   );
 };

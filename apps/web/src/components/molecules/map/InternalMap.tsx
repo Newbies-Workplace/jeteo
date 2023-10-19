@@ -9,7 +9,7 @@ import ZoomIcon from "@/assets/zoom.svg";
 import CloseIcon from "@/assets/close-black.svg";
 import "leaflet/dist/leaflet.css";
 import styles from "./InternalMap.module.scss";
-import { useScrollBlockHook } from "@/contexts/useScrollBlock.hook";
+import { useScrollBlock } from "@/contexts/useScrollBlock";
 
 export interface MapProps {
   coordinates: {
@@ -83,7 +83,7 @@ const LocationDialog: React.FC<LocationDialogProps> = ({
   closeDialog,
   coordinates,
 }) => {
-  useScrollBlockHook();
+  useScrollBlock();
 
   return (
     <>
