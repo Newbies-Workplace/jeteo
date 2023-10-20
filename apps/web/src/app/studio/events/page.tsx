@@ -2,10 +2,9 @@ import { Text } from "@/components/atoms/text/Text";
 import Button from "@/components/atoms/button/Button";
 import styles from "./page.module.scss";
 import Link from "next/link";
-import { EventCard } from "@/components/molecules/eventCard/EventCard";
+import { SmartEventCard } from "@/components/molecules/eventCard/EventCard";
 import React from "react";
 import { getMyEvents } from "@/common/getEvent";
-import dayjs from "dayjs";
 
 export default async function Page() {
   const events = await getMyEvents();
@@ -36,21 +35,7 @@ export default async function Page() {
               href={`/studio/events/${event.slug}`}
               style={{ alignSelf: "stretch" }}
             >
-              <EventCard
-                title={event.title}
-                subtitle={event.subtitle}
-                host={{
-                  name: event.host.name,
-                  avatar: event.host.avatar,
-                }}
-                place={
-                  event.address
-                    ? event.address.city + ", " + event.address.place
-                    : undefined
-                }
-                tags={event.tags}
-                startDate={event.from}
-              />
+              <SmartEventCard event={event} />
             </Link>
           );
         })}

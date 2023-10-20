@@ -3,6 +3,7 @@
 .rate {
   display: flex;
   padding: 0 16px;
+  min-height: 48px;
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
@@ -11,5 +12,26 @@
   background: colors.$primary;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 
+  cursor: pointer;
+
   color: colors.$white;
+
+  &:hover {
+    background-color: colors.$primaryHover;
+  }
+
+  &:active {
+    background-color: colors.$primaryActive;
+  }
+}
+
+.stars {
+  display: flex;
+  justify-content: flex-end;
+
+  .star {
+    width: 24px;
+    height: 24px;
+    user-select: none;
+  }
 }

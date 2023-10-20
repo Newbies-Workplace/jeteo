@@ -1,10 +1,12 @@
 @use '@/colors.module.scss' as colors;
 @use '@/typography.module.scss' as typography;
 
-.root{
-    width: 100%;
-    height: 100%;
+.root {
     position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     
     background-color: rgba($color: #000000, $alpha: .5);
 
@@ -12,14 +14,12 @@
     justify-content: center;
     align-items: center;
 
-
     @media (max-width: 600px) {
         align-items: flex-end;
     }
 }
 
-
-.rateLecture{
+.rateLecture {
     display: flex;
     flex-direction: column;
 
@@ -29,19 +29,18 @@
     gap: 24px;
 
     @media (max-width: 600px) {
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
     }
-
 }
 
-.vertical{
+.vertical {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.horizontal{
+.horizontal {
     display: flex;
     flex-direction: row;
     gap: 8px;
@@ -52,9 +51,4 @@
     grid-auto-columns: 1fr; 
     grid-template-columns: 1fr 3fr; 
     gap: 24px; 
-}
-
-.rateButton{
-    color: colors.$white;
-    background-color: colors.$primary;
 }

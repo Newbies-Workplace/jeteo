@@ -83,7 +83,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
             width={24}
             height={24}
           />
-          <div className={styles.cardOverwrite}></div>
+          <div className={styles.cardOverwrite} />
         </div>
       </div>
     </div>
