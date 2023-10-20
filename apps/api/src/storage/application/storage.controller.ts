@@ -1,24 +1,21 @@
-import {Controller, Get, Req, Res} from '@nestjs/common';
-import {StorageService} from '@/storage/domain/storage.service';
-import {Response} from 'express';
+import { Controller, Get, Req, Res } from '@nestjs/common';
+import { StorageService } from '@/storage/domain/storage.service';
+import { Response } from 'express';
 
-export const CONTROLLER_PREFIX = 'storage/v1/events';
+export const CONTROLLER_PREFIX = 'storage/v1';
 
 @Controller(CONTROLLER_PREFIX)
 export class StorageController {
-    constructor(
-       private readonly storageService: StorageService
-    ) {}
+  constructor(private readonly storageService: StorageService) {}
 
-    @Get('*')
-    get(@Req() request: Request, @Res() res: Response) {
-        const path = request.url.replace(`/api/${CONTROLLER_PREFIX}`, '');
-        try {
-            this.storageService.getFile(path)
-                .pipe(res);
-        } catch (e) {
-            console.log(e);
-            res.sendStatus(400);
-        }
+  @Get('*')
+  get(@Req() request: Request, @Res() res: Response) {
+    const path = request.url.replace(`/api/${CONTROLLER_PREFIX}`, '');
+    try {
+      this.storageService.getFile(path).pipe(res);
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(400);
     }
+  }
 }
