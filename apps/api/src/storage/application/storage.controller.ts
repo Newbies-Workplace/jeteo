@@ -14,7 +14,6 @@ export class StorageController {
     try {
       this.storageService.getFile(path).pipe(res);
     } catch (e) {
-      //todo check if file exists
       console.log(e);
       res.sendStatus(400);
     }
