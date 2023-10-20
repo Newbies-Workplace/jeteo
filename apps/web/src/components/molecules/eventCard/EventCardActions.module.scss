@@ -24,6 +24,10 @@
   .live {
     color: colors.$white;
     background-color: colors.$live;
+
+    &:hover {
+      background-color: colors.$liveHover;
+    }
   }
 
   .rate {
@@ -35,15 +39,5 @@
   .stretched {
     flex: 1 0 0;
     align-self: stretch;
-  }
-}
-
-@include responsiveness.mobile {
-  .rateAverage {
-    display: none;
-  }
-
-  .rate {
-    flex-direction: row-reverse;
   }
 }

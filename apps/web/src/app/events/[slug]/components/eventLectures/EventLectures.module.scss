@@ -1,0 +1,9 @@
+@use "@/colors.module.scss" as colors;
+
+.separator {
+  width: 6px;
+  height: 16px;
+  border-radius: 3px;
+  background: colors.$stroke;
+}
+

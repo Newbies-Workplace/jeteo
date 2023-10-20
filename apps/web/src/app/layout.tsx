@@ -21,7 +21,10 @@ export default function RootLayout({
           height: "100vh",
         }}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <div id={"portal"} />
+        </Providers>
       </body>
     </html>
   );

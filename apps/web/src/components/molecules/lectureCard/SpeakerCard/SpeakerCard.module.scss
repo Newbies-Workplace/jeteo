@@ -13,6 +13,10 @@
   border: 0.5px solid colors.$stroke;
   background-color: colors.$surface;
 
+  &:hover {
+    background-color: colors.$lightHover;
+  }
+
   .img {
     width: 32px;
     height: 32px;

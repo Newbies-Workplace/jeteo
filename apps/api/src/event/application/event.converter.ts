@@ -16,6 +16,20 @@ export class EventConverter {
     const author: User = await this.prismaService.user.findFirst({
       where: { id: event.userId },
     });
+    const rate = await this.prismaService.rate.aggregate({
+      _avg: {
+        topicRate: true,
+        overallRate: true,
+      },
+      _count: {
+        overallRate: true,
+      },
+      where: {
+        lecture: {
+          eventId: event.id,
+        },
+      },
+    });
 
     return {
       id: event.id,
@@ -24,7 +38,7 @@ export class EventConverter {
       subtitle: event.subtitle,
       description: event.description,
       from: event.from.toISOString(),
-      to: event.from.toISOString(),
+      to: event.to.toISOString(),
       address: event.city &&
         event.place && {
           city: event.city,
@@ -37,6 +51,10 @@ export class EventConverter {
               },
             }),
         },
+      ratingSummary: {
+        average: (rate._avg.overallRate + rate._avg.topicRate) / 2,
+        count: rate._count.overallRate,
+      },
       host: this.userConverter.convert(author),
       createdAt: event.createdAt.toISOString(),
       links: event.links,

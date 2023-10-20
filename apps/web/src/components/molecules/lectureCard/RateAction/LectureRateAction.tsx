@@ -2,16 +2,26 @@
 
 import styles from "./LectureRateAction.module.scss";
 import { Text } from "@/components/atoms/text/Text";
-import Link from "next/link";
+import Star from "@/assets/star-white.svg";
 import React from "react";
+import Image from "next/image";
 
-export const LectureRateAction: React.FC = () => {
+export const LectureRateAction: React.FC<{ onPress: () => void }> = ({
+  onPress,
+}) => {
   return (
-    <Link href="/" className={styles.rate}>
+    <div className={styles.rate} onClick={onPress}>
       <Text variant="headS" bold>
         Oceń prelekcję
       </Text>
-      <p>*****</p>
-    </Link>
+
+      <div className={styles.stars}>
+        <Image src={Star} alt={null} className={styles.star} />
+        <Image src={Star} alt={null} className={styles.star} />
+        <Image src={Star} alt={null} className={styles.star} />
+        <Image src={Star} alt={null} className={styles.star} />
+        <Image src={Star} alt={null} className={styles.star} />
+      </div>
+    </div>
   );
 };

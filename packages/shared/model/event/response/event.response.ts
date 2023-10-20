@@ -17,6 +17,10 @@ export interface EventResponse {
       longitude: number;
     };
   };
+  ratingSummary: {
+    average: number;
+    count: number;
+  };
   links: string[]; // todo change to name and href
   tags: string[];
   primaryColor: string;
