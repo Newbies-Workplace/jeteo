@@ -5,12 +5,14 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { GalaxyBackground } from "@/components/molecules/galaxyBackground/GalaxyBackground";
 import { Dialog } from "@/components/molecules/dialog/Dialog";
+import { toast } from "react-toastify";
 
 export default function Page() {
   const { fetchUser } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
+    toast.success("Pomyślnie zalogowano!");
     fetchUser().then(() => {
       router.push("/");
     });

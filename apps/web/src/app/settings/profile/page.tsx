@@ -11,6 +11,7 @@ import { useAuth } from "@/contexts/Auth.hook";
 import { UpdateUserRequest } from "shared/model/user/request/updateUser.request";
 import { myFetch } from "@/common/fetch";
 import { FileItem } from "@/components/molecules/fileItem/FileItem";
+import { toast } from "react-toastify";
 
 type ProfileForm = {
   name: string;
@@ -50,11 +51,24 @@ export default function Page() {
   }, [user, isInitialized]);
 
   const onSubmit: SubmitHandler<ProfileForm> = (data: ProfileForm) => {
-    console.log(data);
     myFetch(`/rest/v1/users/@me`, {
       method: "PUT",
       body: JSON.stringify(getUpdateUserRequestData(data)),
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        if (response.success) {
+          toast.success("Pomyślnie zaaktualizowano dane");
+        } else {
+          toast.error(
+            "Wystąpił błąd podczas aktualizacji danych, sprobój ponownie"
+          );
+        }
+      })
+      .catch((error) => {
+        toast.warning("Network error. Please check your internet connection.");
+        console.error(error);
+      });
   };
 
   const getUpdateUserRequestData = (form: ProfileForm): UpdateUserRequest => {

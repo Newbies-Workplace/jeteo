@@ -4,6 +4,8 @@ import "@/global.scss";
 import colors from "@/colors.module.scss";
 import "dayjs/locale/pl";
 import dayjs from "dayjs";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function RootLayout({
   children,
@@ -24,6 +26,18 @@ export default function RootLayout({
         <Providers>
           {children}
           <div id={"portal"} />
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover={false}
+            theme="colored"
+          />
         </Providers>
       </body>
     </html>
