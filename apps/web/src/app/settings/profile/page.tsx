@@ -57,18 +57,21 @@ export default function Page() {
     })
       .then((res) => res.json())
       .then((response) => {
-        if (response.success) {
-          toast.success("Pomyślnie zaaktualizowano dane");
-        } else {
-          toast.error(
-            "Wystąpił błąd podczas aktualizacji danych, sprobój ponownie"
-          );
-        }
-      })
-      .catch((error) => {
-        toast.warning("Network error. Please check your internet connection.");
-        console.error(error);
+        toast.success("Pomyślnie zakatualizowano dane");
       });
+    // ! IDEA
+    //   if (response.success) {
+    //     toast.success("Pomyślnie zaaktualizowano dane");
+    //   } else {
+    //     toast.error(
+    //       "Wystąpił błąd podczas aktualizacji danych, sprobój ponownie"
+    //     );
+    //   }
+    // })
+    // .catch((error) => {
+    //   toast.warning("Network error. Please check your internet connection.");
+    //   console.error(error);
+    // });
   };
 
   const getUpdateUserRequestData = (form: ProfileForm): UpdateUserRequest => {
