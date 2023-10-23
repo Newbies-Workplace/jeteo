@@ -1,7 +1,9 @@
-version: '3.1'
+version: '3.4'
+
+name: "jeteo-monorepo"
 
 services:
-  db:
+  jeteo-db:
     image: postgres:15.3
     restart: unless-stopped
     environment:
@@ -10,7 +12,31 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - jeteo-db-data:/var/lib/postgresql/data
+  jeteo-web:
+    image: ghcr.io/newbies-workplace/jeteo-web:latest
+    restart: unless-stopped
+    container_name: jeteo-web
+    ports:
+      - "3000:3000"
+  jeteo-api:
+    image: ghcr.io/newbies-workplace/jeteo-api:latest
+    restart: unless-stopped
+    container_name: jeteo-api
+    volumes:
+      - jeteo-api-storage:/storage
+    environment:
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_SECRET
+      - GOOGLE_CALLBACK_URL
+      - JWT_SECRET
+      - CLIENT_URL
+      - DATABASE_URL
+    ports:
+      - "3001:3001"
+    depends_on:
+      - jeteo-db
 
 volumes:
-  pgdata:
+  jeteo-db-data:
+  jeteo-api-storage:
