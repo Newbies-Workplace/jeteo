@@ -1,5 +1,7 @@
 FROM node:18.16.0 AS builder
 
+ARG NEXT_PUBLIC_BACKEND_URL
+
 # Create build directory
 WORKDIR /build
 

@@ -14,7 +14,6 @@ import { Avatar } from "@/components/atoms/avatar/Avatar";
 import { UserResponse } from "shared/model/user/response/user.response";
 import { CreateLectureInvite } from "shared/model/lecture/request/createLecture.request";
 import cs from "classnames";
-import * as process from "process";
 import { Validations } from "@/common/validations";
 
 interface SpeakerPickerProps {
@@ -172,7 +171,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
                       rightIcon={Copy}
                       onClick={() => {
                         copyTextToClipboard(
-                          `${process.env["NEXT_PUBLIC_FRONTEND_URL"]}/invite/${invite.id}`
+                          `${invite.id}` //todo get host
                         );
                       }}
                     ></Button>

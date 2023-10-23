@@ -7,8 +7,6 @@ import Link from "next/link";
 import Button from "@/components/atoms/button/Button";
 import { LectureResponse } from "shared/model/lecture/response/lecture.response";
 
-const baseUrl: string = process.env["NEXT_PUBLIC_FRONTEND_URL"];
-
 export const EventLecturesForm: React.FC<{
   eventSlug: string;
   lectures: LectureResponse[];
@@ -37,9 +35,7 @@ export const EventLecturesForm: React.FC<{
         ))}
       </div>
       <div className={styles.buttons}>
-        <Link
-          href={`${baseUrl}/studio/events/edit/${eventSlug}/lectures/create`}
-        >
+        <Link href={`/studio/events/edit/${eventSlug}/lectures/create`}>
           <Button>Dodaj</Button>
         </Link>
       </div>

@@ -14,13 +14,17 @@ services:
     volumes:
       - jeteo-db-data:/var/lib/postgresql/data
   jeteo-web:
-    image: ghcr.io/newbies-workplace/jeteo-web:latest
+    build:
+      context: ../
+      target: jeteo-web
     restart: unless-stopped
     container_name: jeteo-web
     ports:
       - "3000:3000"
   jeteo-api:
-    image: ghcr.io/newbies-workplace/jeteo-api:latest
+    build:
+      context: ../
+      target: jeteo-api
     restart: unless-stopped
     container_name: jeteo-api
     volumes:
