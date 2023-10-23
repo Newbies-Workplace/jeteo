@@ -31,7 +31,7 @@ jobs:
         id: api-meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/jeteo-api
+          images: ${{ env.REGISTRY }}/newbies-workplace/jeteo-api
 
       - name: "api: Build and push Docker image"
         uses: docker/build-push-action@v3
@@ -46,7 +46,7 @@ jobs:
         id: web-meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/jeteo-web
+          images: ${{ env.REGISTRY }}/newbies-workplace/jeteo-web
 
       - name: "web: Build and push Docker image"
         uses: docker/build-push-action@v3
