@@ -73,12 +73,12 @@ export class StorageService {
   }
 
   isValidFileName(filename: string): boolean {
-    const pathRegex = /^[a-z\-0-9]+$/g;
+    const pathRegex = /^[a-zA-Z\-0-9]+$/g;
     return pathRegex.test(filename);
   }
 
   isValidFolderPath(folderPath: string): boolean {
-    const pathRegex = /^(\/[a-z\-0-9]+)+$/g;
+    const pathRegex = /^(\/[a-zA-Z\-0-9]+)+$/g;
     return pathRegex.test(folderPath);
   }
 }
