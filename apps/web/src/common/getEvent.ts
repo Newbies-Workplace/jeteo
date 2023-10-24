@@ -10,6 +10,9 @@ export const getEvent = async (eventSlug: string): Promise<EventResponse> => {
     `/rest/v1/events/${eventId}`,
     {
       cache: "no-store",
+      headers: {
+        Cookie: cookies().toString(),
+      },
     },
     false
   );

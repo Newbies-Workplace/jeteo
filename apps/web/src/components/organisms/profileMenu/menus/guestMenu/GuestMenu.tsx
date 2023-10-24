@@ -14,7 +14,7 @@ export default function GuestMenu() {
         <Avatar size={64} src={undefined} />
 
         <Text variant="headS" bold={true} className={menuStyles.text}>
-          Gall anonim
+          Gość
         </Text>
       </div>
 

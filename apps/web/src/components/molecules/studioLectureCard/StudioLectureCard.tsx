@@ -11,6 +11,8 @@ import {
 import { Timer } from "@/components/molecules/timer/Timer";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { myFetch } from "@/common/fetch";
+import { getIdFromSlug } from "shared/util";
 
 interface StudioLectureCardProps {
   eventSlug: string;
@@ -31,11 +33,21 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
   description,
   speakers,
 }) => {
-  const navigate = useRouter();
+  const router = useRouter();
   const navigateToSummary = () => {
-    navigate.replace(
+    router.replace(
       `/studio/events/${eventSlug}/lectures/${lectureSlug}/summary`
     );
+  };
+
+  const onDeleteClick = () => {
+    myFetch(`/rest/v1/lectures/${getIdFromSlug(lectureSlug)}`, {
+      method: "DELETE",
+    })
+      .then((r) => {
+        router.refresh();
+      })
+      .catch((e) => console.error(e));
   };
 
   return (
@@ -80,6 +92,10 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
             className={styles.action}
             src={Delete}
             alt={"Delete"}
+            onClick={(e) => {
+              e.stopPropagation();
+              onDeleteClick();
+            }}
             width={24}
             height={24}
           />

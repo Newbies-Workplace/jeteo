@@ -143,4 +143,12 @@ export class LectureService {
       },
     });
   }
+
+  async deleteLecture(lectureId: string) {
+    await this.prismaService.lecture.delete({
+      where: {
+        id: lectureId,
+      },
+    });
+  }
 }

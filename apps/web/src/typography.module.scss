@@ -1,41 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
-
-@mixin  bodyS {
-    font-family: Lato;
+@mixin bodyS {
+    font-family: var(--font-lato);
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
 
-@mixin  bodyM {
-    font-family: Lato;
+@mixin bodyM {
+    font-family: var(--font-lato);
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
 
-@mixin  bodyL {
-    font-family: Lato;
+@mixin bodyL {
+    font-family: var(--font-lato);
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
 
-@mixin  headS {
-    font-family: Inter;
+@mixin headS {
+    font-family: var(--font-inter);
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
 
-@mixin  headM {
-    font-family: Inter;
+@mixin headM {
+    font-family: var(--font-inter);
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -43,24 +39,24 @@
 }
 
 
-@mixin  headL {
-    font-family: Inter;
+@mixin headL {
+    font-family: var(--font-inter);
     font-size: 38px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
 
-@mixin  logo {
-    font-family: Oswald;
+@mixin logo {
+    font-family: var(--font-oswald);
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
 
-@mixin  logoM {
-    font-family: Oswald;
+@mixin logoM {
+    font-family: var(--font-oswald);
     font-size: 32px;
     font-style: normal;
     font-weight: 400;

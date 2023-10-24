@@ -6,6 +6,9 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+env:
+  STORAGE_PATH: storage
+
 jobs:
   build:
     name: Build and Test

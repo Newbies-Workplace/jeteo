@@ -1,0 +1,83 @@
+name: Deploy
+
+concurrency:
+  group: prod
+  cancel-in-progress: true
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  docker:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "api: Extract metadata (tags, labels) for Docker"
+        id: api-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/newbies-workplace/jeteo-api
+
+      - name: "api: Build and push Docker image"
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          target: jeteo-api
+          push: true
+          build-args: |
+            NEXT_PUBLIC_BACKEND_URL=${{ secrets.NEXT_PUBLIC_BACKEND_URL }}
+          tags: ${{ steps.api-meta.outputs.tags }}
+          labels: ${{ steps.api-meta.outputs.labels }}
+
+      - name: "web: Extract metadata (tags, labels) for Docker"
+        id: web-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/newbies-workplace/jeteo-web
+
+      - name: "web: Build and push Docker image"
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          target: jeteo-web
+          push: true
+          build-args: |
+            NEXT_PUBLIC_BACKEND_URL=${{ secrets.NEXT_PUBLIC_BACKEND_URL }}
+          tags: ${{ steps.web-meta.outputs.tags }}
+          labels: ${{ steps.web-meta.outputs.labels }}
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: Production
+    needs: [ docker ]
+
+    steps:
+      - name: Deploy package to production
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.SSH_IP }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            docker-compose down
+            docker image rm ghcr.io/newbies-workplace/jeteo-web || true
+            docker image rm ghcr.io/newbies-workplace/jeteo-api || true
+            docker pull ghcr.io/newbies-workplace/jeteo-web:latest
+            docker pull ghcr.io/newbies-workplace/jeteo-api:latest
+            docker-compose up -d

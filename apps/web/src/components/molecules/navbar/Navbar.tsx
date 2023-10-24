@@ -3,7 +3,7 @@ import styles from "./Navbar.module.scss";
 import { Logo } from "@/components/atoms/logo/Logo";
 import Link from "next/link";
 import cs from "classnames";
-import ProfileMenu from "@/components/organisms/profileMenu/ProfileMenu";
+import { ProfileMenu } from "@/components/organisms/profileMenu/ProfileMenu";
 
 interface NavbarProps {
   invertColor?: boolean;
@@ -16,7 +16,7 @@ export const Navbar: React.FC<NavbarProps> = ({ invertColor }) => {
         <Logo invertColor={invertColor} />
       </Link>
       <div>
-        <ProfileMenu />
+        <ProfileMenu invertColors={invertColor} />
       </div>
     </div>
   );

@@ -46,8 +46,8 @@ const getDefaultValue = (event?: EventResponse): BasicForm => {
         title: event.title,
         subtitle: event.subtitle,
         description: event.description,
-        from: dayjs(event.from).format("YYYY-MM-DDThh:mm"),
-        to: dayjs(event.to).format("YYYY-MM-DDThh:mm"),
+        from: dayjs(event.from).format("YYYY-MM-DDTHH:mm"),
+        to: dayjs(event.to).format("YYYY-MM-DDTHH:mm"),
         location: event.address ? "location" : "online",
         address: {
           city: event.address?.city,
@@ -63,8 +63,8 @@ const getDefaultValue = (event?: EventResponse): BasicForm => {
         title: "",
         subtitle: "",
         description: "",
-        from: dayjs().format("YYYY-MM-DDThh:mm"),
-        to: dayjs().add(1, "h").format("YYYY-MM-DDThh:mm"),
+        from: dayjs().format("YYYY-MM-DDTHH:mm"),
+        to: dayjs().add(1, "h").format("YYYY-MM-DDTHH:mm"),
         location: "location",
         address: {
           city: "",
@@ -301,7 +301,7 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
         )}
       </Section>
 
-      <Section title={"Dla kogo?"}>
+      <Section title={"Tagi"}>
         <Controller
           name={"tags"}
           control={control}

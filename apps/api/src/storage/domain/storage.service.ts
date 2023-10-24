@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import fs from 'fs';
+import * as process from 'process';
 import { parse } from 'path';
 import { InvalidPathException } from './exceptions/InvalidPathException';
 
 @Injectable()
 export class StorageService {
-  private readonly storagePath = 'storage';
+  private readonly storagePath =
+    process.env['STORAGE_PATH'] ?? '/jeteo-api-storage';
 
   constructor() {
     if (!fs.existsSync(this.storagePath)) {
@@ -24,6 +26,8 @@ export class StorageService {
 
   async createFile(file: Buffer, folderPath: string): Promise<string> {
     if (!this.isValidPath(folderPath)) {
+      console.error(`invalid folder path ${folderPath}`);
+
       throw new InvalidPathException(folderPath);
     }
 
@@ -69,12 +73,12 @@ export class StorageService {
   }
 
   isValidFileName(filename: string): boolean {
-    const pathRegex = /^[a-z\-0-9]+$/g;
+    const pathRegex = /^[a-zA-Z\-0-9]+$/g;
     return pathRegex.test(filename);
   }
 
   isValidFolderPath(folderPath: string): boolean {
-    const pathRegex = /^(\/[a-z\-0-9]+)+$/g;
+    const pathRegex = /^(\/[a-zA-Z\-0-9]+)+$/g;
     return pathRegex.test(folderPath);
   }
 }

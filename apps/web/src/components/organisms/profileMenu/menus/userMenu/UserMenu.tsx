@@ -3,7 +3,6 @@
 import Button from "@/components/atoms/button/Button";
 import styles from "./UserMenu.module.scss";
 import { Text } from "@/components/atoms/text/Text";
-import profilePicture from "@/assets/images/default-profile-pic.svg";
 import Link from "next/link";
 import { useAuth } from "@/contexts/Auth.hook";
 import menuStyles from "../menus.module.scss";
