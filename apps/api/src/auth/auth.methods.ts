@@ -49,6 +49,7 @@ export const assertEventReadAccess = (
   user: TokenUser | undefined,
   event: Event,
 ) => {
+  console.log('user', user);
   if (event.visibility !== EventVisibility.PRIVATE) {
     return;
   }
