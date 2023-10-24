@@ -1,6 +1,4 @@
-version: '3.4'
-
-name: "jeteo-monorepo"
+version: '3.3'
 
 services:
   jeteo-db:

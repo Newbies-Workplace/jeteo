@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import fs from 'fs';
+import * as process from 'process';
 import { parse } from 'path';
 import { InvalidPathException } from './exceptions/InvalidPathException';
 
 @Injectable()
 export class StorageService {
-  private readonly storagePath = 'storage';
+  private readonly storagePath =
+    process.env['STORAGE_PATH'] ?? '/jeteo-api-storage';
 
   constructor() {
     if (!fs.existsSync(this.storagePath)) {

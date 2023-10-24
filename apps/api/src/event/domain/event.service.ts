@@ -57,6 +57,7 @@ export class EventService {
         longitude: createEventDto.address?.coordinates?.longitude,
         tags: createEventDto.tags,
         primaryColor: '#4340BE',
+        visibility: 'PUBLIC', // todo change to private when 404 on own event is fixed
         userId,
       },
     });
