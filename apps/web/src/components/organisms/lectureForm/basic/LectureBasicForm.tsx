@@ -5,7 +5,6 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Section } from "@/components/molecules/section/Section";
 import { ControlledInput } from "@/components/atoms/input/ControlledInput";
 import { Validations } from "@/common/validations";
-import { ControlledMarkdownInput } from "@/components/atoms/markdownInput/ControlledMarkdownInput";
 import dayjs from "dayjs";
 import { SpeakerPicker } from "@/components/molecules/speakerPicker/SpeakerPicker";
 import Button from "@/components/atoms/button/Button";
@@ -160,12 +159,11 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
           }}
         />
 
-        <ControlledMarkdownInput
+        <ControlledInput
           name={"description"}
           label={"Opis"}
           required
-          height={200}
-          textareaProps={{ maxLength: 10000 }}
+          multiline
           control={control}
           rules={{
             required: Validations.required,
