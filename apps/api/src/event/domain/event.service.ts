@@ -100,4 +100,12 @@ export class EventService {
       },
     });
   }
+
+  async deleteEvent(eventId: string) {
+    return this.prismaService.event.delete({
+      where: {
+        id: eventId,
+      },
+    });
+  }
 }

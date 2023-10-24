@@ -301,7 +301,7 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
         )}
       </Section>
 
-      <Section title={"Dla kogo?"}>
+      <Section title={"Tagi"}>
         <Controller
           name={"tags"}
           control={control}

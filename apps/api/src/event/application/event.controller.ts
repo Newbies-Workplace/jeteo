@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -122,6 +123,19 @@ export class EventController {
     );
 
     return await this.eventConverter.convert(updatedEvent);
+  }
+
+  @Delete('/:id')
+  @UseGuards(JwtGuard)
+  async deleteEvent(
+    @Param('id') eventId: string,
+    @JWTUser() user: TokenUser,
+  ): Promise<void> {
+    const event = await this.getEventById(eventId);
+
+    assertEventWriteAccess(user, event);
+
+    await this.eventService.deleteEvent(eventId);
   }
 
   @UseGuards(OptionalJwtGuard)

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -119,6 +120,19 @@ export class LectureController {
     );
 
     return this.lectureConverter.convertDetails(updatedLecture);
+  }
+
+  @Delete('/:id')
+  @UseGuards(JwtGuard)
+  async deleteLecture(
+    @Param('id') id: string,
+    @JWTUser() user: TokenUser,
+  ): Promise<void> {
+    const lecture = await this.getLectureDetailsById(id);
+
+    assertEventWriteAccess(user, lecture.Event);
+
+    await this.lectureService.deleteLecture(lecture.id);
   }
 
   @Post('/:id/rate')
