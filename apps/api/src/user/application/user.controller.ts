@@ -58,6 +58,8 @@ export class UserController {
       );
       return this.storagePath.convert(`${avatarPath}`);
     } catch (e) {
+      console.error(e);
+
       if (e instanceof InvalidPathException) {
         throw new BadRequestException();
       }

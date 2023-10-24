@@ -26,6 +26,8 @@ export class StorageService {
 
   async createFile(file: Buffer, folderPath: string): Promise<string> {
     if (!this.isValidPath(folderPath)) {
+      console.error(`invalid folder path ${folderPath}`);
+
       throw new InvalidPathException(folderPath);
     }
 

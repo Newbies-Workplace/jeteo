@@ -24,7 +24,7 @@ services:
     restart: unless-stopped
     container_name: jeteo-api
     volumes:
-      - jeteo-api-storage:/storage
+      - jeteo-api-storage:/jeteo-api-storage
     environment:
       - GOOGLE_CLIENT_ID
       - GOOGLE_SECRET
