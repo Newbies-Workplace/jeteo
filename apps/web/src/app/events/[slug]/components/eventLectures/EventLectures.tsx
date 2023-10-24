@@ -12,9 +12,7 @@ export interface EventLecturesProps {
 }
 
 export const EventLectures: React.FC<EventLecturesProps> = ({ lectures }) => {
-  const [ratedLecture, setRatedLecture] = useState<LectureResponse>(
-    lectures[0]
-  );
+  const [ratedLecture, setRatedLecture] = useState<LectureResponse>();
 
   return (
     <>

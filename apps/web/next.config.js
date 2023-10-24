@@ -5,7 +5,7 @@ module.exports = {
     esmExternals: "loose",
   },
   images: {
-    domains: ["jeteo.newbies.pl"], //todo fox hardcoded variable
+    domains: ["jeteo.newbies.pl"], //todo fix hardcoded variable
     remotePatterns: [
       {
         protocol: "http",

@@ -36,14 +36,16 @@ export default async function Page({
       <Section title={`Opinie (${lecture.ratingSummary.opinionCount})`}>
         <div className={styles.ratingsList}></div>
         {lecture.ratingSummary.opinionCount > 0 &&
-          lecture.ratings.map((opinion) => (
-            <StudioOpinion
-              key={opinion.id}
-              overallRate={opinion.overallRate}
-              topicRate={opinion.topicRate}
-              opinion={opinion.opinion}
-            />
-          ))}
+          lecture.ratings
+            .filter((rate) => rate.opinion)
+            .map((rate) => (
+              <StudioOpinion
+                key={rate.id}
+                overallRate={rate.overallRate}
+                topicRate={rate.topicRate}
+                opinion={rate.opinion}
+              />
+            ))}
       </Section>
     </div>
   );
