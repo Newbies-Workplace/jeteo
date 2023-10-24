@@ -15,7 +15,7 @@ export class EventService {
         visibility: 'PUBLIC',
       },
       orderBy: {
-        createdAt: 'asc',
+        from: 'asc',
       },
       skip: (page - 1) * size,
       take: size,
@@ -32,7 +32,7 @@ export class EventService {
         userId,
       },
       orderBy: {
-        createdAt: 'asc',
+        from: 'asc',
       },
       skip: (page - 1) * size,
       take: size,

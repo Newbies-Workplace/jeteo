@@ -65,7 +65,7 @@ export class LectureController {
         eventId: query.eventId,
       },
       orderBy: {
-        createdAt: 'asc',
+        from: 'asc',
       },
       skip: (query.page - 1) * query.size,
       take: query.size,
