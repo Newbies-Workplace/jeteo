@@ -18,7 +18,17 @@ export const EventLectures: React.FC<EventLecturesProps> = ({ lectures }) => {
     <>
       {lectures.length > 0 &&
         lectures.map((lecture, index) => (
-          <div key={lecture.id} style={{ width: "100%" }}>
+          <div
+            key={lecture.id}
+            style={{
+              width: "100%",
+              display: "flex",
+              gap: 16,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             {index !== 0 && <div className={styles.separator} />}
             <SmartLectureCard
               lecture={lecture}
