@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { SpeakerCard } from "@/components/molecules/lectureCard/SpeakerCard/SpeakerCard";
+import { SpeakerCard } from "@/components/molecules/speakerCard/SpeakerCard";
 
 const meta: Meta<typeof SpeakerCard> = {
-  title: "Components/Molecules/LectureCard/SpeakerCard",
+  title: "Components/Molecules/SpeakerCard",
   component: SpeakerCard,
 };
 

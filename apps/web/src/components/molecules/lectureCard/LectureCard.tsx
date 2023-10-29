@@ -1,6 +1,9 @@
 import React from "react";
 import styles from "./LectureCard.module.scss";
-import { SpeakerCard, SpeakerCardProps } from "./SpeakerCard/SpeakerCard";
+import {
+  SpeakerCard,
+  SpeakerCardProps,
+} from "@/components/molecules/speakerCard/SpeakerCard";
 import { Text } from "@/components/atoms/text/Text";
 import { Timer } from "@/components/molecules/timer/Timer";
 import { LectureResponse } from "shared/.dist/model/lecture/response/lecture.response";
