@@ -7,7 +7,7 @@ import { Text } from "@/components/atoms/text/Text";
 import {
   SpeakerCard,
   SpeakerCardProps,
-} from "@/components/molecules/lectureCard/SpeakerCard/SpeakerCard";
+} from "@/components/molecules/speakerCard/SpeakerCard";
 import { Timer } from "@/components/molecules/timer/Timer";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

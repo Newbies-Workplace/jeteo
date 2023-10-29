@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./RateLectureDialog.module.scss";
-import { SpeakerCard } from "@/components/molecules/lectureCard/SpeakerCard/SpeakerCard";
+import { SpeakerCard } from "@/components/molecules/speakerCard/SpeakerCard";
 import { Text } from "@/components/atoms/text/Text";
 import RateStars from "@/components/molecules/rateStars/RateStars";
 import TextArea from "./textArea/TextArea";
