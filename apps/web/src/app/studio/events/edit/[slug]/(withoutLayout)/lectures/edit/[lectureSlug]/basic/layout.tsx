@@ -19,7 +19,6 @@ export default async function Layout({
   if (!lecture) {
     notFound();
   }
-  //todo if create from /studio/events or /studio/events/edit
 
   return (
     <div className={styles.page}>
