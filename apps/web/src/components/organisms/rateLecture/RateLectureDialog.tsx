@@ -8,7 +8,7 @@ import TextArea from "./textArea/TextArea";
 import Button from "@/components/atoms/button/Button";
 import colors from "@/colors.module.scss";
 import React, { useState } from "react";
-import { LectureResponse } from "shared/.dist/model/lecture/response/lecture.response";
+import { LectureResponse } from "shared/model/lecture/response/lecture.response";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { myFetch } from "@/common/fetch";
 import { Validations } from "@/common/validations";
@@ -29,7 +29,6 @@ export const RateLectureDialog: React.FC<RateLectureProps> = ({
   lecture,
   onDismiss,
 }) => {
-  // useScrollBlock();
   const [confetti, setConfetti] = useState(false);
   const [isDialogVisible, setIsDialogVisible] = useState(true);
 
