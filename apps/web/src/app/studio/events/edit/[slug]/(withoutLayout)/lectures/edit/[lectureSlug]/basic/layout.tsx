@@ -19,10 +19,14 @@ export default async function Layout({
   if (!lecture) {
     notFound();
   }
+  //todo if create from /studio/events or /studio/events/edit
 
   return (
     <div className={styles.page}>
-      <StudioHeader title={"Edycja prelekcji"} />
+      <StudioHeader
+        title={"Edycja prelekcji"}
+        returnPath={`/studio/events/edit/${params.slug}/lectures`}
+      />
       <div className={styles.stepsContainer}>
         <StepButton title={"Podstawowe informacje"} active={true} />
       </div>
