@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className={styles.content}>
-      <StudioHeader title={event.title} />
+      <StudioHeader title={event.title} returnPath={"/studio/events"} />
 
       <div className={styles.cards}>
         <Link href={`/events/${event.slug}`}>

@@ -11,6 +11,7 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
   params: {
+    slug: string;
     lectureSlug: string;
   };
 }) {
@@ -20,7 +21,10 @@ export default async function Layout({
 
   return (
     <div className={styles.page}>
-      <StudioHeader title={lecture.title} />
+      <StudioHeader
+        title={lecture.title}
+        returnPath={`/studio/events/${params.slug}`}
+      />
       <div className={styles.stepsContainer}>
         <StepButton title={"Feedback"} active={true} />
       </div>
