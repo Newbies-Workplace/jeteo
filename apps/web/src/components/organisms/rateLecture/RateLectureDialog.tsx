@@ -7,12 +7,12 @@ import RateStars from "@/components/molecules/rateStars/RateStars";
 import TextArea from "./textArea/TextArea";
 import Button from "@/components/atoms/button/Button";
 import colors from "@/colors.module.scss";
-import React from "react";
+import React, { useState } from "react";
 import { LectureResponse } from "shared/.dist/model/lecture/response/lecture.response";
-import { useScrollBlock } from "@/contexts/useScrollBlock";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { myFetch } from "@/common/fetch";
 import { Validations } from "@/common/validations";
+import ConfettiExplosion from "react-confetti-explosion";
 
 type RateForm = {
   overallRate: number;
@@ -29,7 +29,9 @@ export const RateLectureDialog: React.FC<RateLectureProps> = ({
   lecture,
   onDismiss,
 }) => {
-  useScrollBlock();
+  // useScrollBlock();
+  const [confetti, setConfetti] = useState(false);
+  const [isDialogVisible, setIsDialogVisible] = useState(true);
 
   const { control, handleSubmit, reset, watch } = useForm<RateForm>();
 
@@ -45,8 +47,8 @@ export const RateLectureDialog: React.FC<RateLectureProps> = ({
       }),
     })
       .then(() => {
-        reset();
-        onDismiss();
+        setConfetti(true);
+        setIsDialogVisible(false);
       })
       .catch((e) => {
         console.log(e);
@@ -56,89 +58,114 @@ export const RateLectureDialog: React.FC<RateLectureProps> = ({
   const handleDismiss = () => {
     onDismiss();
   };
+  const handleConfettiCompleted = () => {
+    setConfetti(false);
+    reset();
+    onDismiss();
+    setIsDialogVisible(true);
+  };
 
   return (
-    <div className={styles.root} onClick={handleDismiss}>
-      <form
-        className={styles.rateLecture}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <div className={styles.vertical}>
-          <Text variant="headS" bold>
-            {lecture.title}
-          </Text>
-          <div className={styles.horizontal}>
-            {[...lecture.speakers, ...lecture.invites].map((speaker) => (
-              <SpeakerCard key={speaker.name} {...speaker} />
-            ))}
-          </div>
-          <div
-            style={{
-              width: "100%",
-              height: "1.5px",
-              backgroundColor: colors.stroke,
+    <>
+      {confetti && (
+        <ConfettiExplosion
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            width: "100%",
+            height: "100%",
+          }}
+          zIndex={10001}
+          onComplete={() => handleConfettiCompleted()}
+        />
+      )}
+      {isDialogVisible && (
+        <div className={styles.root} onClick={handleDismiss}>
+          <form
+            className={styles.rateLecture}
+            onClick={(e) => {
+              e.stopPropagation();
             }}
-          />
-        </div>
-        <Controller
-          name={"overallRate"}
-          control={control}
-          rules={{ required: Validations.required }}
-          render={({ field }) => (
-            <RateStars
-              title={"Jak oceniasz prelekcję?"}
-              subtitle={"(prezentacja, feeling, całokształt)"}
-              rating={field.value}
-              setRating={(rate) => {
-                field.onChange(rate);
-              }}
-            />
-          )}
-        />
-        <Controller
-          name={"topicRate"}
-          control={control}
-          rules={{ required: Validations.required }}
-          render={({ field }) => (
-            <RateStars
-              title={"Jak oceniasz temat?"}
-              subtitle={"(atrakcyjność tematu)"}
-              rating={field.value}
-              setRating={(rate) => {
-                field.onChange(rate);
-              }}
-            />
-          )}
-        />
-        <Controller
-          name={"opinion"}
-          control={control}
-          render={({ field }) => (
-            <TextArea
-              title={"Opinia dla prelegenta"}
-              text={field.value}
-              setText={(opinion) => {
-                field.onChange(opinion);
-              }}
-            />
-          )}
-        />
-        <div className={styles.buttonsWrapper}>
-          <Button size="medium" onClick={handleDismiss}>
-            <Text variant="bodyL">Anuluj</Text>
-          </Button>
-          <Button
-            size="medium"
-            primary
-            disabled={formValues.some((value) => value === undefined)}
-            onClick={handleSubmit(onSubmit)}
           >
-            <Text variant="bodyL">Oceń</Text>
-          </Button>
+            <div className={styles.vertical}>
+              <Text variant="headS" bold>
+                {lecture.title}
+              </Text>
+              <div className={styles.horizontal}>
+                {[...lecture.speakers, ...lecture.invites].map((speaker) => (
+                  <SpeakerCard key={speaker.name} {...speaker} />
+                ))}
+              </div>
+              <div
+                style={{
+                  width: "100%",
+                  height: "1.5px",
+                  backgroundColor: colors.stroke,
+                }}
+              />
+            </div>
+            <Controller
+              name={"overallRate"}
+              control={control}
+              rules={{ required: Validations.required }}
+              render={({ field }) => (
+                <RateStars
+                  title={"Jak oceniasz prelekcję?"}
+                  subtitle={"(prezentacja, feeling, całokształt)"}
+                  rating={field.value}
+                  setRating={(rate) => {
+                    field.onChange(rate);
+                  }}
+                />
+              )}
+            />
+            <Controller
+              name={"topicRate"}
+              control={control}
+              rules={{ required: Validations.required }}
+              render={({ field }) => (
+                <RateStars
+                  title={"Jak oceniasz temat?"}
+                  subtitle={"(atrakcyjność tematu)"}
+                  rating={field.value}
+                  setRating={(rate) => {
+                    field.onChange(rate);
+                  }}
+                />
+              )}
+            />
+            <Controller
+              name={"opinion"}
+              control={control}
+              render={({ field }) => (
+                <TextArea
+                  title={"Opinia dla prelegenta"}
+                  text={field.value}
+                  setText={(opinion) => {
+                    field.onChange(opinion);
+                  }}
+                />
+              )}
+            />
+            <div className={styles.buttonsWrapper}>
+              <Button size="medium" onClick={handleDismiss}>
+                <Text variant="bodyL">Anuluj</Text>
+              </Button>
+              <Button
+                size="medium"
+                primary
+                disabled={
+                  formValues.some((value) => value === undefined) || confetti
+                }
+                onClick={handleSubmit(onSubmit)}
+              >
+                <Text variant="bodyL">Oceń</Text>
+              </Button>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
+      )}
+    </>
   );
 };
