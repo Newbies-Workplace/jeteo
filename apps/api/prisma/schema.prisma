@@ -19,6 +19,7 @@ model User {
   linkedin          String?
   twitter           String?
   github            String?
+  isAuthorized      Boolean   @default(false)
   createdAt         DateTime  @default(now())
   CreatedInvites    Invite[]
   CreatedEvents     Event[]

@@ -11,7 +11,7 @@ import {
 import { JWTUser } from '@/auth/jwt/jwt.decorator';
 import { TokenUser } from '@/auth/jwt/jwt.model';
 import { JwtGuard } from '@/auth/jwt/jwt.guard';
-import { UserResponse } from 'shared/model/user/response/user.response';
+import { UserDetailsResponse } from 'shared/model/user/response/user.response';
 import { UserConverter } from '@/user/application/user.converter';
 import { UserService } from '@/user/domain/user.service';
 import { UpdateUserRequest } from 'shared/model/user/request/updateUser.request';
@@ -29,9 +29,9 @@ export class UserController {
 
   @Get('@me')
   @UseGuards(JwtGuard)
-  async getMe(@JWTUser() tokenUser: TokenUser): Promise<UserResponse> {
+  async getMe(@JWTUser() tokenUser: TokenUser): Promise<UserDetailsResponse> {
     const user = await this.userService.getUser(tokenUser.id);
-    return this.userConverter.convert(user);
+    return this.userConverter.convertDetails(user);
   }
 
   @Put('@me')
@@ -39,9 +39,9 @@ export class UserController {
   async putMe(
     @JWTUser() tokenUser: TokenUser,
     @Body() updatedUser: UpdateUserRequest,
-  ): Promise<UserResponse> {
+  ): Promise<UserDetailsResponse> {
     const user = await this.userService.updateUser(tokenUser.id, updatedUser);
-    return this.userConverter.convert(user);
+    return this.userConverter.convertDetails(user);
   }
 
   @Put('@me/avatar')

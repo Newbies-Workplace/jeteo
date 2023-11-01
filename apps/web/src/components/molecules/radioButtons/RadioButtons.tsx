@@ -11,6 +11,7 @@ export interface RadioItem {
   id: string;
   name: string;
   description?: string;
+  disabled?: boolean;
 }
 
 export interface RadioButtonsProps {
@@ -27,7 +28,7 @@ export const RadioButtons: React.FC<RadioButtonsProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onItemClick = (index: number, item: RadioItem) => {
-    if (index !== selectedValueIndex) {
+    if (!item.disabled && index !== selectedValueIndex) {
       onChange(item);
     }
   };
@@ -39,6 +40,7 @@ export const RadioButtons: React.FC<RadioButtonsProps> = ({
           <div
             className={cs(styles.item, {
               [styles.selected]: selectedValueIndex === index,
+              [styles.disabled]: item.disabled,
             })}
             onClick={() => onItemClick(index, item)}
             key={item.id}
@@ -49,6 +51,7 @@ export const RadioButtons: React.FC<RadioButtonsProps> = ({
                 type="radio"
                 value={item.id}
                 checked={selectedValueIndex === index}
+                disabled={item.disabled}
                 onChange={() => onItemClick(index, item)}
               />
 

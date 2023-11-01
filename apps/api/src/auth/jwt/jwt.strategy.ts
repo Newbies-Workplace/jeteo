@@ -34,6 +34,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       id: user.id,
       google_id: user.google_id,
       name: user.name,
+      _permissions: {
+        isAuthorized: user.isAuthorized,
+      },
     };
   }
 }
