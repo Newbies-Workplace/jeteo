@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import styles from "./EventCardActions.module.scss";
+import styles from "./CardActions.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import cs from "classnames";
 import { EventResponse } from "shared/model/event/response/event.response";
@@ -26,6 +26,7 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
     </div>
   );
 };
+
 export const EventCardActionsLive: React.FC<{
   event: EventResponse;
 }> = ({ event }) => {
@@ -70,7 +71,7 @@ export const EventCardActionsArchive: React.FC<{ event: EventResponse }> = ({
 const RateButton: React.FC<{ event: EventResponse }> = ({ event }) => {
   return (
     <Link
-      className={cs(styles.action, styles.live)}
+      className={cs(styles.action, styles.liveAction)}
       href={`/events/${event.slug}#rate`}
       onClick={(e) => e.stopPropagation()}
     >

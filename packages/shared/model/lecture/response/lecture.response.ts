@@ -23,9 +23,6 @@ export interface LectureResponse {
     topicAverage: number;
   };
   createdAt: DateTime;
-  _metadata: {
-    canBeRated: boolean;
-  };
 }
 
 export interface LectureDetailsResponse extends LectureResponse {
