@@ -11,11 +11,11 @@ export class StorageController {
   @Get('*')
   get(@Req() request: Request, @Res() res: Response) {
     const path = request.url.replace(`/api/${CONTROLLER_PREFIX}`, '');
-    try {
-      this.storageService.getFile(path).pipe(res);
-    } catch (e) {
-      console.log(e);
-      res.sendStatus(400);
-    }
+    this.storageService
+      .getFile(path)
+      .on('error', (e) => {
+        res.sendStatus(404);
+      })
+      .pipe(res);
   }
 }

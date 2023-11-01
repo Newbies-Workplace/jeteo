@@ -39,10 +39,13 @@ export class StorageService {
   }
 
   async replaceFile(file: Buffer, filePath: string): Promise<string> {
-    if (!this.isValidFolderPath(filePath))
+    if (!this.isValidFolderPath(filePath)) {
       throw new InvalidPathException(filePath);
+    }
 
-    await fs.promises.unlink(this.formatPath(filePath));
+    await fs.promises.unlink(this.formatPath(filePath)).catch(() => {
+      console.error(`file ${filePath} not found`);
+    });
     const parsedPath = parse(filePath);
     return this.createFile(file, parsedPath.dir);
   }
