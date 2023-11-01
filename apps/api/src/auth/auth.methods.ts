@@ -19,7 +19,7 @@ export const assertLectureReadAccess = (
 
   if (
     user &&
-    (lecture.Event.userId === user.id ||
+    (lecture.Event.authorId === user.id ||
       lecture.Speakers.map((speaker) => speaker.id).includes(user.id))
   ) {
     return;
@@ -35,7 +35,7 @@ export const assertEventWriteAccess = (
   user: TokenUser | undefined,
   event: Event,
 ) => {
-  if (user && event.userId === user.id) {
+  if (user && event.authorId === user.id) {
     return;
   }
 
@@ -54,11 +54,10 @@ export const assertEventReadAccess = (
     return;
   }
 
-  if (user && event.userId === user.id) {
+  if (user && event.authorId === user.id) {
     return;
   }
 
-  //todo fix queries without token (on website)
   throw new HttpException(
     'User is not allowed to see this event',
     HttpStatus.FORBIDDEN,

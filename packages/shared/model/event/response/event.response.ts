@@ -21,7 +21,6 @@ export interface EventResponse {
     average: number;
     count: number;
   };
-  links: string[]; // todo change to name and href
   tags: string[];
   primaryColor: string;
   coverImage?: string;
