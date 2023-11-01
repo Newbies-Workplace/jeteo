@@ -6,26 +6,24 @@ import {
 import { UserConverter } from '@/user/application/user.converter';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { generateSlug } from '@/common/slugs';
-import dayjs from 'dayjs';
 
 @Injectable()
 export class LectureConverter {
   constructor(private readonly userConverter: UserConverter) {}
 
   convert(lecture: LectureDetails): LectureResponse {
-    const now = dayjs();
-    const canBeRated =
-      now.isAfter(dayjs(lecture.from)) &&
-      now.isBefore(dayjs(lecture.to).add(3, 'd'));
-
     const overallAverage =
-      lecture.Rate.reduce((acc, rate) => acc + rate.overallRate, 0) /
-      lecture.Rate.length;
+      lecture.Rate.length === 0
+        ? 0
+        : lecture.Rate.reduce((acc, rate) => acc + rate.overallRate, 0) /
+          lecture.Rate.length;
     const topicAverage =
-      lecture.Rate.reduce((acc, rate) => acc + rate.topicRate, 0) /
-      lecture.Rate.length;
+      lecture.Rate.length === 0
+        ? 0
+        : lecture.Rate.reduce((acc, rate) => acc + rate.topicRate, 0) /
+          lecture.Rate.length;
 
-    const average = overallAverage + topicAverage / 2;
+    const average = (overallAverage + topicAverage) / 2;
 
     return {
       id: lecture.id,
@@ -51,9 +49,6 @@ export class LectureConverter {
       speakers: lecture.Speakers.map((user) =>
         this.userConverter.convert(user),
       ),
-      _metadata: {
-        canBeRated: canBeRated,
-      },
     };
   }
 

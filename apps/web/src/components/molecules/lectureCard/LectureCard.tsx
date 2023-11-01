@@ -6,8 +6,13 @@ import {
 } from "@/components/molecules/speakerCard/SpeakerCard";
 import { Text } from "@/components/atoms/text/Text";
 import { Timer } from "@/components/molecules/timer/Timer";
-import { LectureResponse } from "shared/.dist/model/lecture/response/lecture.response";
-import { LectureRateAction } from "@/components/molecules/lectureCard/RateAction/LectureRateAction";
+import { LectureResponse } from "shared/model/lecture/response/lecture.response";
+import {
+  LectureCardActionsArchive,
+  LectureCardActionsFresh,
+  LectureCardActionsLive,
+} from "@/components/molecules/cardActions/LectureCardActions";
+import dayjs from "dayjs";
 
 interface LectureProps {
   from: string;
@@ -61,8 +66,16 @@ export const LectureCard: React.FC<LectureProps> = ({
 
 export const SmartLectureCard: React.FC<{
   lecture: LectureResponse;
-  openRate?: () => void;
-}> = ({ lecture, openRate }) => {
+}> = ({ lecture }) => {
+  const now = dayjs();
+  const start = dayjs(lecture.from);
+  const end = dayjs(lecture.to);
+  const freshnessEnd = dayjs(lecture.from).add(2, "day");
+
+  const isLive = now.isAfter(start) && now.isBefore(end);
+  const isFresh = now.isAfter(end) && now.isBefore(freshnessEnd);
+  const isArchive = now.isAfter(freshnessEnd);
+
   return (
     <LectureCard
       from={lecture.from}
@@ -71,7 +84,9 @@ export const SmartLectureCard: React.FC<{
       description={lecture.description}
       speakers={[...lecture.speakers, ...lecture.invites]}
     >
-      {lecture._metadata.canBeRated && <LectureRateAction onPress={openRate} />}
+      {isLive && <LectureCardActionsLive lecture={lecture} />}
+      {isFresh && <LectureCardActionsFresh lecture={lecture} />}
+      {isArchive && <LectureCardActionsArchive lecture={lecture} />}
     </LectureCard>
   );
 };

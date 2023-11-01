@@ -14,7 +14,7 @@ import {
   EventCardActionsFresh,
   EventCardActionsFuture,
   EventCardActionsLive,
-} from "@/components/molecules/eventCard/EventCardActions";
+} from "@/components/molecules/cardActions/EventCardActions";
 
 export interface EventCardProps {
   title: string;
@@ -96,7 +96,7 @@ export const SmartEventCard: React.FC<{ event: EventResponse }> = ({
   const now = dayjs();
   const start = dayjs(event.from);
   const end = dayjs(event.to);
-  const freshnessEnd = dayjs(event.from).add(3, "day");
+  const freshnessEnd = dayjs(event.from).add(2, "day");
 
   const isFuture = now.isBefore(start);
   const isLive = now.isAfter(start) && now.isBefore(end);

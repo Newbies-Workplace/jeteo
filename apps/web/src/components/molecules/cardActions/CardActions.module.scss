@@ -1,5 +1,5 @@
-@use '@/colors.module.scss' as colors;
-@use '@/responsiveness.module.scss' as responsiveness;
+@use '@/colors.module' as colors;
+@use '@/responsiveness.module' as responsiveness;
 
 .actions {
   display: flex;
@@ -11,6 +11,7 @@
 
   .action {
     display: flex;
+    flex: 1;
     justify-content: center;
     align-items: center;
     padding: 4px 16px;
@@ -24,6 +25,12 @@
   .live {
     color: colors.$white;
     background-color: colors.$live;
+  }
+
+  .liveAction {
+    cursor: pointer;
+    color: colors.$white;
+    background-color: colors.$live;
 
     &:hover {
       background-color: colors.$liveHover;
@@ -32,7 +39,7 @@
 
   .rate {
     color: colors.$white;
-    background-color: colors.$black;
+    background-color: #080736;
     justify-content: space-between;
   }
 
