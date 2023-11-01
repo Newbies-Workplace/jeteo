@@ -39,7 +39,9 @@ export const LectureCard: React.FC<LectureProps> = ({
           <Text variant="headS" bold>
             {title}
           </Text>
-          <Text variant="headS">{description}</Text>
+          <Text variant="headS" style={{ whiteSpace: "pre-line" }}>
+            {description}
+          </Text>
         </div>
 
         {speakers.length >= 1 && (
