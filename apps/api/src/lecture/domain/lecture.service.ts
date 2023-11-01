@@ -19,7 +19,7 @@ export class LectureService {
       data: {
         id: nanoid(),
         eventId: eventId,
-        userId: userId,
+        authorId: userId,
         title: createLectureRequest.title,
         description: createLectureRequest.description,
         from: new Date(createLectureRequest.from),
@@ -70,7 +70,7 @@ export class LectureService {
         return {
           id: invite.id,
           name: invite.name,
-          userId: lecture.userId,
+          userId: lecture.authorId,
           mail: invite.mail,
         };
       })

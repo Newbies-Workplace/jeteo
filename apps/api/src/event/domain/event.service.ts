@@ -29,7 +29,7 @@ export class EventService {
   ): Promise<Event[]> {
     return this.prismaService.event.findMany({
       where: {
-        userId,
+        authorId: userId,
       },
       orderBy: {
         from: 'desc',
@@ -58,7 +58,7 @@ export class EventService {
         tags: createEventDto.tags,
         primaryColor: '#4340BE',
         visibility: 'PRIVATE',
-        userId,
+        authorId: userId,
       },
     });
   }

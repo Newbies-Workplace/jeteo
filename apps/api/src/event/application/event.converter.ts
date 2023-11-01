@@ -14,7 +14,7 @@ export class EventConverter {
 
   async convert(event: Event): Promise<EventResponse> {
     const author: User = await this.prismaService.user.findFirst({
-      where: { id: event.userId },
+      where: { id: event.authorId },
     });
     const rate = await this.prismaService.rate.aggregate({
       _avg: {
@@ -25,7 +25,7 @@ export class EventConverter {
         overallRate: true,
       },
       where: {
-        lecture: {
+        Lecture: {
           eventId: event.id,
         },
       },
@@ -57,12 +57,11 @@ export class EventConverter {
       },
       host: this.userConverter.convert(author),
       createdAt: event.createdAt.toISOString(),
-      links: event.links,
       tags: event.tags,
       primaryColor: event.primaryColor,
       coverImage: event.coverImage,
       visibility: event.visibility,
-      userId: event.userId,
+      userId: event.authorId,
     };
   }
 }
