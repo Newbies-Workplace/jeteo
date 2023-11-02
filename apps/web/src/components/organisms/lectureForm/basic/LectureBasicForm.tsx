@@ -113,13 +113,11 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
 
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
     toast.promise(
-      getRequest(data, eventSlug, lecture)
-        .then((res: LectureDetailsResponse) => {
+      getRequest(data, eventSlug, lecture).then(
+        (res: LectureDetailsResponse) => {
           onSubmitted?.(res);
-        })
-        .catch((e) => {
-          console.log(e);
-        }),
+        }
+      ),
       {
         loading: "Zapisywanie...",
         success: <b>Wydarzenie zapisano pomyślnie!</b>,
