@@ -16,6 +16,7 @@ import { UpdateEventRequest } from "shared/model/event/request/updateEvent.reque
 import { Validations } from "@/common/validations";
 import { ControlledMarkdownInput } from "@/components/atoms/markdownInput/ControlledMarkdownInput";
 import { TagPicker } from "@/components/molecules/tagPicker/TagPicker";
+import toast from "react-hot-toast";
 
 const locationOptions = [
   { id: "location", name: "Na miejscu" },
@@ -167,13 +168,16 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
   );
 
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
-    getRequest(data, event)
-      .then((res: EventResponse) => {
+    toast.promise(
+      getRequest(data, event).then((res: EventResponse) => {
         onSubmitted?.(res);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      }),
+      {
+        loading: "Zapisywanie...",
+        success: <b>Wydarzenie zapisano pomyślnie!</b>,
+        error: <b>Wystąpił błąd</b>,
+      }
+    );
   };
 
   return (

@@ -11,6 +11,7 @@ import { useAuth } from "@/contexts/Auth.hook";
 import { UpdateUserRequest } from "shared/model/user/request/updateUser.request";
 import { myFetch } from "@/common/fetch";
 import { FileItem } from "@/components/molecules/fileItem/FileItem";
+import toast from "react-hot-toast";
 
 type ProfileForm = {
   name: string;
@@ -50,11 +51,17 @@ export default function Page() {
   }, [user, isInitialized]);
 
   const onSubmit: SubmitHandler<ProfileForm> = (data: ProfileForm) => {
-    console.log(data);
-    myFetch(`/rest/v1/users/@me`, {
-      method: "PUT",
-      body: JSON.stringify(getUpdateUserRequestData(data)),
-    }).then((res) => res.json());
+    toast.promise(
+      myFetch(`/rest/v1/users/@me`, {
+        method: "PUT",
+        body: JSON.stringify(getUpdateUserRequestData(data)),
+      }),
+      {
+        loading: "Zapisywanie...",
+        success: <b>Profil zapisano pomyślnie!</b>,
+        error: <b>Wystąpił błąd</b>,
+      }
+    );
   };
 
   const getUpdateUserRequestData = (form: ProfileForm): UpdateUserRequest => {

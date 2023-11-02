@@ -21,6 +21,7 @@ import {
 } from "shared/model/lecture/response/lecture.response";
 import { UpdateLectureRequest } from "shared/model/lecture/request/updateLecture.request";
 import { getIdFromSlug } from "shared/util";
+import toast from "react-hot-toast";
 
 type BasicForm = {
   title: string;
@@ -111,13 +112,18 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   });
 
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
-    getRequest(data, eventSlug, lecture)
-      .then((res: LectureDetailsResponse) => {
-        onSubmitted?.(res);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    toast.promise(
+      getRequest(data, eventSlug, lecture).then(
+        (res: LectureDetailsResponse) => {
+          onSubmitted?.(res);
+        }
+      ),
+      {
+        loading: "Zapisywanie...",
+        success: <b>Wydarzenie zapisano pomyślnie!</b>,
+        error: <b>Wystąpił błąd</b>,
+      }
+    );
   };
 
   return (
