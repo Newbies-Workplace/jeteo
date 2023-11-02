@@ -123,7 +123,7 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
       {
         loading: "Zapisywanie...",
         success: <b>Wydarzenie zapisano pomyślnie!</b>,
-        error: <b>Wystąpił błąd spróbuj ponownie</b>,
+        error: <b>Wystąpił błąd</b>,
       }
     );
   };

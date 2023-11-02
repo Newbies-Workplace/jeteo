@@ -42,7 +42,6 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
   };
 
   const onDeleteClick = () => {
-    toast.error("do mnie");
     toast.promise(
       myFetch(`/rest/v1/lectures/${getIdFromSlug(lectureSlug)}`, {
         method: "DELETE",
@@ -50,9 +49,9 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
         router.refresh();
       }),
       {
-        loading: "Zapisywanie...",
-        success: <b>Usunięto wydarzenie pomyślnie!</b>,
-        error: <b>Wystąpił błąd spróbuj ponownie</b>,
+        loading: "Usuwanie...",
+        success: <b>Prelekcję usunięto pomyślnie!</b>,
+        error: <b>Wystąpił błąd</b>,
       }
     );
   };

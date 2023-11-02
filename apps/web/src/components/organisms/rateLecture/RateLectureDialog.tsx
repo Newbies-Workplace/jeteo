@@ -13,6 +13,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { myFetch } from "@/common/fetch";
 import { Validations } from "@/common/validations";
 import ConfettiExplosion from "react-confetti-explosion";
+import toast from "react-hot-toast";
 
 type RateForm = {
   overallRate: number;
@@ -37,26 +38,30 @@ export const RateLectureDialog: React.FC<RateLectureProps> = ({
   const formValues = watch(["overallRate", "topicRate"]);
 
   const onSubmit: SubmitHandler<RateForm> = (data: RateForm) => {
-    myFetch(`/rest/v1/lectures/${lecture.id}/rate`, {
-      method: "POST",
-      body: JSON.stringify({
-        overallRate: data.overallRate,
-        topicRate: data.topicRate,
-        opinion: data.opinion ? data.opinion : undefined,
-      }),
-    })
-      .then(() => {
+    toast.promise(
+      myFetch(`/rest/v1/lectures/${lecture.id}/rate`, {
+        method: "POST",
+        body: JSON.stringify({
+          overallRate: data.overallRate,
+          topicRate: data.topicRate,
+          opinion: data.opinion ? data.opinion : undefined,
+        }),
+      }).then(() => {
         setConfetti(true);
         setIsDialogVisible(false);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      }),
+      {
+        loading: "Zapisywanie...",
+        success: <b>Ocena wystawiona pomyślnie!</b>,
+        error: <b>Wystąpił błąd</b>,
+      }
+    );
   };
 
   const handleDismiss = () => {
     onDismiss();
   };
+
   const handleConfettiCompleted = () => {
     setConfetti(false);
     reset();
@@ -79,6 +84,7 @@ export const RateLectureDialog: React.FC<RateLectureProps> = ({
           onComplete={() => handleConfettiCompleted()}
         />
       )}
+
       {isDialogVisible && (
         <div className={styles.root} onClick={handleDismiss}>
           <form

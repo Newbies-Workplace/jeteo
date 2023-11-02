@@ -175,7 +175,7 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
       {
         loading: "Zapisywanie...",
         success: <b>Wydarzenie zapisano pomyślnie!</b>,
-        error: <b>Wystąpił błąd spróbuj ponownie</b>,
+        error: <b>Wystąpił błąd</b>,
       }
     );
   };

@@ -53,6 +53,7 @@ export default function RootLayout({
             reverseOrder={false}
             toastOptions={{
               success: {
+                className: inter.className,
                 duration: 3000,
                 iconTheme: {
                   primary: "white",
@@ -64,6 +65,7 @@ export default function RootLayout({
                 },
               },
               error: {
+                className: inter.className,
                 duration: 3000,
                 iconTheme: {
                   primary: "white",
