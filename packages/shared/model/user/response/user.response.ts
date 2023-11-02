@@ -11,3 +11,9 @@ export interface UserResponse {
     linkedIn: string | null;
   };
 }
+
+export interface UserDetailsResponse extends UserResponse {
+  _permissions: {
+    isAuthorized: boolean;
+  };
+}

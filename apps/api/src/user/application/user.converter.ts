@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { UserResponse } from 'shared/model/user/response/user.response';
+import {
+  UserDetailsResponse,
+  UserResponse,
+} from 'shared/model/user/response/user.response';
 import { User } from '@prisma/client';
 import { StoragePathConverter } from '@/storage/application/converters/storagePath.converter';
 
@@ -21,6 +24,15 @@ export class UserConverter {
         github: user.github,
         twitter: user.twitter,
         linkedIn: user.linkedin,
+      },
+    };
+  }
+
+  convertDetails(user: User): UserDetailsResponse {
+    return {
+      ...this.convert(user),
+      _permissions: {
+        isAuthorized: user.isAuthorized,
       },
     };
   }

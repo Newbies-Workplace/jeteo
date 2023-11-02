@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { Section } from "@/components/molecules/section/Section";
 import {
   RadioButtons,
@@ -11,20 +11,8 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { EventResponse } from "shared/model/event/response/event.response";
 import { myFetch } from "@/common/fetch";
 import { useRouter } from "next/navigation";
-
-const visibilities: RadioItem[] = [
-  {
-    id: "PRIVATE",
-    name: "Prywatna",
-    description: "Widoczna tylko dla Ciebie i prelegentów",
-  },
-  {
-    id: "HIDDEN",
-    name: "Niepubliczna",
-    description: "Widoczna tylko dla osób posiadających link wydarzenia",
-  },
-  { id: "PUBLIC", name: "Publiczna", description: "Widoczna dla każdego" },
-];
+import { useAuth } from "@/contexts/Auth.hook";
+import { Text } from "@/components/atoms/text/Text";
 
 type VisibilityForm = {
   visibility: "PRIVATE" | "HIDDEN" | "PUBLIC";
@@ -38,6 +26,7 @@ interface EventVisibilityFormProps {
 export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
   event,
 }) => {
+  const { user } = useAuth();
   const router = useRouter();
   const {
     control,
@@ -48,6 +37,29 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
       visibility: event.visibility,
     },
   });
+
+  const visibilities: RadioItem[] = useMemo(
+    () => [
+      {
+        id: "PRIVATE",
+        name: "Prywatna",
+        description: "Widoczna tylko dla Ciebie i prelegentów",
+      },
+      {
+        id: "HIDDEN",
+        name: "Niepubliczna",
+        description: "Widoczna tylko dla osób posiadających link wydarzenia",
+      },
+      {
+        id: "PUBLIC",
+        name: "Publiczna",
+        description: "Widoczna dla każdego",
+        disabled: user?._permissions.isAuthorized === false,
+      },
+    ],
+    [user]
+  );
+
   const onSubmit: SubmitHandler<VisibilityForm> = (data: VisibilityForm) => {
     myFetch(`/rest/v1/events/${event.id}`, {
       method: "PATCH",
@@ -58,6 +70,10 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
         router.refresh();
       });
   };
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <form style={{ display: "flex", flexDirection: "column" }}>
@@ -75,6 +91,13 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
             />
           )}
         />
+        {user._permissions.isAuthorized === false && (
+          <Text variant={"bodyS"}>
+            Publiczne prelekcje dostępne są tylko dla zautoryzowanych
+            użytkowników, aby uzyskać autoryzację skontaktuj się z nami{" "}
+            <a href={"mailto:newbies@rst.com.pl"}>tutaj</a>
+          </Text>
+        )}
       </Section>
       <Button
         primary

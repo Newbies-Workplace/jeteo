@@ -118,6 +118,7 @@ export class EventController {
     assertEventWriteAccess(user, event);
 
     const updatedEvent = await this.eventService.updateEvent(
+      user,
       eventId,
       updateEventRequest,
     );
