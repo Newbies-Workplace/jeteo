@@ -4,7 +4,7 @@ import { Text } from "@/components/atoms/text/Text";
 import MDEditor from "@uiw/react-md-editor";
 import React from "react";
 import { ITextAreaProps } from "@uiw/react-md-editor/lib/components/TextArea";
-import { Label } from "@/components/atoms/label/Label";
+import { TextLabel } from "@/components/atoms/textLabel/TextLabel";
 import styles from "@/components/atoms/input/Input.module.scss";
 
 export interface MarkdownInputProps {
@@ -32,7 +32,7 @@ export const MarkdownInput: React.FC<MarkdownInputProps> = ({
 }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-      <Label label={label} required={required} />
+      <TextLabel label={label} required={required} />
 
       <div data-color-mode="light">
         <MDEditor

@@ -7,6 +7,7 @@ import ChevronIcon from "@/assets/chevron-stroke.svg";
 import { LectureCardActionsArchive } from "@/components/molecules/cardActions/LectureCardActions";
 import Link from "next/link";
 import { formatFromToDates } from "@/common/utils";
+import { Label } from "@/components/atoms/label/Label";
 
 export interface StudioMyLectureCardProps {
   lecture: LectureResponse;
@@ -26,9 +27,7 @@ export const StudioMyLectureCard: React.FC<StudioMyLectureCardProps> = ({
             {lecture.title}
           </Text>
 
-          <div className={styles.time}>
-            <Text>{formatFromToDates(lecture.from, lecture.to)}</Text>
-          </div>
+          <Label text={formatFromToDates(lecture.from, lecture.to)} />
         </div>
 
         <Text variant="bodyM" style={{ whiteSpace: "pre-line" }}>

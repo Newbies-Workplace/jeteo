@@ -3,23 +3,15 @@ import React from "react";
 import styles from "./page.module.scss";
 import { getMyLectures } from "@/common/getLecture";
 import { StudioMyLectureCard } from "@/components/molecules/studioLectureCard/StudioMyLectureCard";
+import { InviteCard } from "@/components/molecules/inviteCard/InviteCard";
 
 export default async function Page() {
-  const lectures = await getMyLectures();
-
   return (
     <div className={styles.container}>
       <Text variant={"headM"} bold>
-        Moje prelekcje
+        Zaproszenia
       </Text>
-
-      {lectures.length === 0 && (
-        <Text variant={"bodyM"}>Nie prowadziłeś jeszcze żadnych prelekcji</Text>
-      )}
-
-      {lectures.map((lecture) => (
-        <StudioMyLectureCard lecture={lecture} key={lecture.id} />
-      ))}
+      <InviteCard />
     </div>
   );
 }

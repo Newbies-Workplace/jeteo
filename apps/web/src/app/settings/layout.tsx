@@ -1,9 +1,9 @@
 import { Navbar } from "@/components/molecules/navbar/Navbar";
 import React from "react";
 import styles from "./layout.module.scss";
-import Link from "next/link";
 import Image from "next/image";
 import person from "@/assets/person.svg";
+import { NavButton } from "@/components/molecules/navButton/NavButton";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -22,14 +22,3 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
-const NavButton: React.FC<{ children: React.ReactNode; href: string }> = ({
-  children,
-  href,
-}) => {
-  return (
-    <Link href={href} className={styles.navButton}>
-      {children}
-    </Link>
-  );
-};

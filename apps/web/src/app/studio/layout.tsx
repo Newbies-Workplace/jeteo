@@ -1,10 +1,11 @@
 import { Navbar } from "@/components/molecules/navbar/Navbar";
 import React from "react";
 import styles from "./layout.module.scss";
-import Link from "next/link";
 import Image from "next/image";
 import calendarIcon from "@/assets/calendar.svg";
 import lectureIcon from "@/assets/lecture.svg";
+import inviteIcon from "@/assets/invite.svg";
+import { NavButton } from "@/components/molecules/navButton/NavButton";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -21,20 +22,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Image src={lectureIcon} alt={"Prelekcje"} />
             Moje prelekcje
           </NavButton>
+          <NavButton href={"/studio/invites"}>
+            <Image src={inviteIcon} alt={"Zaproszenia"} />
+            Zaproszenia
+          </NavButton>
         </div>
         <div className={styles.content}>{children}</div>
       </div>
     </div>
   );
 }
-
-const NavButton: React.FC<{ children: React.ReactNode; href: string }> = ({
-  children,
-  href,
-}) => {
-  return (
-    <Link href={href} className={styles.navButton}>
-      {children}
-    </Link>
-  );
-};
