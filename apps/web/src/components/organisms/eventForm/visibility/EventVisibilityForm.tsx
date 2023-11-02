@@ -13,6 +13,7 @@ import { myFetch } from "@/common/fetch";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/Auth.hook";
 import { Text } from "@/components/atoms/text/Text";
+import toast from "react-hot-toast";
 
 type VisibilityForm = {
   visibility: "PRIVATE" | "HIDDEN" | "PUBLIC";
@@ -61,14 +62,21 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
   );
 
   const onSubmit: SubmitHandler<VisibilityForm> = (data: VisibilityForm) => {
-    myFetch(`/rest/v1/events/${event.id}`, {
-      method: "PATCH",
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        router.refresh();
-      });
+    toast.promise(
+      myFetch(`/rest/v1/events/${event.id}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then(() => {
+          router.refresh();
+        }),
+      {
+        loading: "Zapisywanie...",
+        success: <b>Wydarzenie zapisano pomyślnie!</b>,
+        error: <b>Wystąpił błąd spróbuj ponownie</b>,
+      }
+    );
   };
 
   if (!user) {

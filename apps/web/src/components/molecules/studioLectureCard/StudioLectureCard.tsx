@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { myFetch } from "@/common/fetch";
 import { getIdFromSlug } from "shared/util";
+import toast from "react-hot-toast";
 
 interface StudioLectureCardProps {
   eventSlug: string;
@@ -41,13 +42,19 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
   };
 
   const onDeleteClick = () => {
-    myFetch(`/rest/v1/lectures/${getIdFromSlug(lectureSlug)}`, {
-      method: "DELETE",
-    })
-      .then((r) => {
+    toast.error("do mnie");
+    toast.promise(
+      myFetch(`/rest/v1/lectures/${getIdFromSlug(lectureSlug)}`, {
+        method: "DELETE",
+      }).then((r) => {
         router.refresh();
-      })
-      .catch((e) => console.error(e));
+      }),
+      {
+        loading: "Zapisywanie...",
+        success: <b>Usunięto wydarzenie pomyślnie!</b>,
+        error: <b>Wystąpił błąd spróbuj ponownie</b>,
+      }
+    );
   };
 
   return (
