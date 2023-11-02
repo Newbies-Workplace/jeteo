@@ -15,7 +15,10 @@ import {
   LectureDetailsResponse,
   LectureResponse,
 } from 'shared/model/lecture/response/lecture.response';
-import { GetLecturesQuery } from 'shared/model/lecture/request/getLectures.query';
+import {
+  GetLecturesQuery,
+  GetMyLecturesQuery,
+} from 'shared/model/lecture/request/getLectures.query';
 import { LectureService } from '@/lecture/domain/lecture.service';
 import { LectureConverter } from '@/lecture/application/lecture.converter';
 import { PrismaService } from '@/config/prisma.service';
@@ -72,6 +75,37 @@ export class LectureController {
     });
 
     assertEventReadAccess(user, event);
+
+    return await Promise.all(
+      lectures.map((lecture) => this.lectureConverter.convert(lecture)),
+    );
+  }
+  @Get('/@me')
+  @UseGuards(JwtGuard)
+  async getMyLectures(
+    @Query() query: GetMyLecturesQuery,
+    @JWTUser() user: TokenUser,
+  ): Promise<LectureResponse[]> {
+    const lectures = await this.prismaService.lecture.findMany({
+      include: {
+        Event: true,
+        Invites: true,
+        Speakers: true,
+        Rate: true,
+      },
+      where: {
+        Speakers: {
+          some: {
+            id: user.id,
+          },
+        },
+      },
+      orderBy: {
+        from: 'asc',
+      },
+      skip: (query.page - 1) * query.size,
+      take: query.size,
+    });
 
     return await Promise.all(
       lectures.map((lecture) => this.lectureConverter.convert(lecture)),

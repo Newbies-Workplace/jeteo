@@ -4,6 +4,7 @@ import styles from "./layout.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import calendarIcon from "@/assets/calendar.svg";
+import lectureIcon from "@/assets/lecture.svg";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -13,8 +14,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className={styles.navigation}>
           <span className={styles.studioLogo}>Studio</span>
           <NavButton href={"/studio/events"}>
-            <Image src={calendarIcon} alt={""} />
+            <Image src={calendarIcon} alt={"Wydarzenia"} />
             Wydarzenia
+          </NavButton>
+          <NavButton href={"/studio/my-lectures"}>
+            <Image src={lectureIcon} alt={"Prelekcje"} />
+            Moje prelekcje
           </NavButton>
         </div>
         <div className={styles.content}>{children}</div>
