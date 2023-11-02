@@ -1,0 +1,64 @@
+@use "@/colors.module.scss" as colors;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  align-self: stretch;
+  border-radius: 16px;
+  border: 1px solid colors.$stroke;
+  background: colors.$surface;
+  color: colors.$black;
+}
+
+.titleBar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.event {
+  display: flex;
+  padding: 8px;
+  align-items: center;
+  gap: 5px;
+  border-radius: 8px;
+  border: 0.5px solid colors.$stroke;
+  background: colors.$surface;
+  cursor: pointer;
+  color: colors.$black;
+
+  .eventTexts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    align-self: stretch;
+  }
+
+  &:hover {
+    background-color: colors.$lightHover;
+  }
+
+  &:active {
+    background-color: colors.$lightActive;
+  }
+}
+
+.time {
+  padding: 4px;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 4px;
+  background-color: colors.$light;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}

@@ -8,7 +8,12 @@ import {
 export interface LectureResponse {
   id: string;
   slug: string;
-  eventId: string;
+  event: {
+    id: string;
+    slug: string;
+    title: string;
+    subtitle?: string;
+  };
   title: string;
   description: string;
   from: DateTime;

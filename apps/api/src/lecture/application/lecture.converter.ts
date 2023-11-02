@@ -28,7 +28,12 @@ export class LectureConverter {
     return {
       id: lecture.id,
       slug: generateSlug(lecture.title, lecture.id),
-      eventId: lecture.eventId,
+      event: {
+        id: lecture.Event.id,
+        slug: generateSlug(lecture.Event.title, lecture.Event.id),
+        title: lecture.Event.title,
+        subtitle: lecture.Event.subtitle,
+      },
       title: lecture.title,
       description: lecture.description,
       from: lecture.from.toISOString(),
