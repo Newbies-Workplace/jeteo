@@ -29,10 +29,6 @@ export const LectureRateBarChart: React.FC<LectureRateBarChartProps> = ({
 }) => {
   const options = {
     responsive: true,
-    animation: {
-      duration: 1000,
-      easing: "easeInOutSine",
-    },
     plugins: {
       legend: {
         position: "top" as const,
