@@ -15,6 +15,7 @@ $primaryActive: #363398;
 $light: #ECECF9;
 $lightHover: #E3E2F5;
 $lightActive: #C5C4EB;
+$success: #6BBC91;
 
 :export {
   primary: $primary;
@@ -32,4 +33,5 @@ $lightActive: #C5C4EB;
   light: $light;
   lightHover: $lightHover;
   lightActive: $lightActive;
+  success: $success;
 }

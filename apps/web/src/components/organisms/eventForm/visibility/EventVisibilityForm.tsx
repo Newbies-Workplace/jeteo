@@ -66,11 +66,9 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
       myFetch(`/rest/v1/events/${event.id}`, {
         method: "PATCH",
         body: JSON.stringify(data),
-      })
-        .then((res) => res.json())
-        .then(() => {
-          router.refresh();
-        }),
+      }).then(() => {
+        router.refresh();
+      }),
       {
         loading: "Zapisywanie...",
         success: <b>Wydarzenie zapisano pomyślnie!</b>,

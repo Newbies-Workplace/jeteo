@@ -29,7 +29,7 @@ export const RateProgress: React.FC<RateProgressProps> = ({
         label: "Średnia ocen",
         data: [value, max - value],
         backgroundColor: ["rgba(67,64,190, 1)", "rgba(196,196,196, 1)"],
-        borderColor: ["rgba(67,64,190, 1)", "rgba(196,196,196, 1)"],
+        borderColor: ["rgba(67,64,190, 1)", "rgba(196,196,196, 1)"], //todo przekazywac color w props
         borderWidth: 1,
       },
     ],
