@@ -58,6 +58,21 @@ export class LectureConverter {
   }
 
   convertDetails(lecture: LectureDetails): LectureDetailsResponse {
+    //todo pobranie danych z bazy
+    const overallRatesCounts = [
+      { 1: 12 },
+      { 2: 9 },
+      { 3: 15 },
+      { 4: 33 },
+      { 5: 27 },
+    ];
+    const topicRatesCounts = [
+      { 1: 3 },
+      { 2: 12 },
+      { 3: 8 },
+      { 4: 23 },
+      { 5: 44 },
+    ];
     return {
       ...this.convert(lecture),
       ratings: lecture.Rate.map((rate) => ({
@@ -72,6 +87,8 @@ export class LectureConverter {
         name: invite.name,
         mail: invite.mail,
       })),
+      overallRatesCounts: overallRatesCounts,
+      topicRatesCounts: topicRatesCounts,
     };
   }
 }

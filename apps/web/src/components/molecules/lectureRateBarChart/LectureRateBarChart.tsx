@@ -15,7 +15,6 @@ import styles from "@/components/molecules/lectureRateBarChart/LectureRateBarCha
 import colors from "@/colors.module.scss";
 
 interface LectureRateBarChartProps {
-  color?: string;
   overallRatesCounts: { [key: number]: number }[];
   topicRatesCounts: { [key: number]: number }[];
 }
@@ -23,7 +22,6 @@ interface LectureRateBarChartProps {
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Legend, Tooltip);
 
 export const LectureRateBarChart: React.FC<LectureRateBarChartProps> = ({
-  //todo przekazywac color w props  import colors from "@/colors.module.scss";
   overallRatesCounts: overallRatesCounts,
   topicRatesCounts: topicRatesCounts,
 }) => {
@@ -69,16 +67,12 @@ export const LectureRateBarChart: React.FC<LectureRateBarChartProps> = ({
     },
   };
 
-  const overallLabels = overallRatesCounts.map((rate) =>
-    Object.keys(rate)[0].toString()
-  );
-
   const data = {
-    labels: overallLabels,
+    labels: ["1", "2", "3", "4", "5"],
     datasets: [
       {
         label: "Oceny prelekcji",
-        data: overallRatesCounts.map((rate) => Object.values(rate)[0]),
+        data: overallRatesCounts?.map((rate) => Object.values(rate)[0]),
         backgroundColor: [`${colors.primary}`],
         borderColor: [`${colors.primary}`],
         borderWidth: 0,
@@ -86,7 +80,7 @@ export const LectureRateBarChart: React.FC<LectureRateBarChartProps> = ({
       },
       {
         label: "Oceny tematu",
-        data: topicRatesCounts.map((rate) => Object.values(rate)[0]),
+        data: topicRatesCounts?.map((rate) => Object.values(rate)[0]),
         backgroundColor: [`${colors.success}`],
         borderColor: [`${colors.success}`],
         borderWidth: 0,

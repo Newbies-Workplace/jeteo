@@ -16,6 +16,7 @@ export default async function Page({
   const lecture: LectureDetailsResponse = await getLectureDetails(
     params.lectureSlug
   );
+
   return (
     <div>
       <Section title={`Oceny (${lecture.ratingSummary.count})`}>
@@ -39,22 +40,12 @@ export default async function Page({
         )}
       </Section>
       <Section title={`Podział ocen`}>
-        <LectureRateBarChart
-          overallRatesCounts={[
-            { 1: 12 },
-            { 2: 9 },
-            { 3: 15 },
-            { 4: 33 },
-            { 5: 27 },
-          ]}
-          topicRatesCounts={[
-            { 1: 3 },
-            { 2: 12 },
-            { 3: 8 },
-            { 4: 23 },
-            { 5: 44 },
-          ]}
-        />
+        {lecture.topicRatesCounts && lecture.overallRatesCounts && (
+          <LectureRateBarChart
+            overallRatesCounts={lecture.overallRatesCounts}
+            topicRatesCounts={lecture.topicRatesCounts}
+          />
+        )}
       </Section>
       <Section title={`Opinie (${lecture.ratingSummary.opinionCount})`}>
         <div className={styles.ratingsList}></div>
