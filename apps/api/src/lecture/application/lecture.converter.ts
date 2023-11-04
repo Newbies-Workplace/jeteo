@@ -7,7 +7,6 @@ import { UserConverter } from '@/user/application/user.converter';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { generateSlug } from '@/common/slugs';
 import { PrismaService } from '../../config/prisma.service';
-import { log } from 'console';
 
 @Injectable()
 export class LectureConverter {
