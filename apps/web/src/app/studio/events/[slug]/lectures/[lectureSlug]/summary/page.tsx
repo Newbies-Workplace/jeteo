@@ -26,14 +26,14 @@ export default async function Page({
               value={lecture.ratingSummary.overallAverage}
               label={"prelekcja"}
               description={"Średnia ocena prelekcji"}
-              color={`${colors.primary}`}
+              color={colors.primary}
             />
             <RateProgress
               max={5}
               value={lecture.ratingSummary.topicAverage}
               label={"temat"}
               description={"Średnia ocena tematu"}
-              color={`${colors.success}`}
+              color={colors.success}
             />
           </div>
         )}
