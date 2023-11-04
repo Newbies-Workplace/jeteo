@@ -64,29 +64,33 @@ export class LectureConverter {
   async convertDetails(
     lecture: LectureDetails,
   ): Promise<LectureDetailsResponse> {
-    //todo pobranie danych z bazy
     const overallRatesCounts = await this.prismaService.rate.groupBy({
       by: ['overallRate'],
       _count: {
         overallRate: true,
       },
       where: {
-        lectureId: lecture.id, // tutaj podaj ID prelekcji
+        lectureId: lecture.id,
+      },
+    });
+    const topicRatesCounts = await this.prismaService.rate.groupBy({
+      by: ['topicRate'],
+      _count: {
+        topicRate: true,
+      },
+      where: {
+        lectureId: lecture.id,
       },
     });
 
-    const overallRatesCountsMap = new Map();
-    overallRatesCounts.forEach((rateGroup) => {
-      overallRatesCountsMap.set(rateGroup.overallRate, rateGroup._count);
-    });
-    console.log(overallRatesCountsMap);
-    const topicRatesCounts = [
-      { 1: 3 },
-      { 2: 12 },
-      { 3: 8 },
-      { 4: 23 },
-      { 5: 44 },
-    ];
+    const formattedOverallRatesCounts = overallRatesCounts.map((item) => ({
+      [item.overallRate]: item._count.overallRate,
+    }));
+
+    const formattedTopicRatesCounts = topicRatesCounts.map((item) => ({
+      [item.topicRate]: item._count.topicRate,
+    }));
+
     return {
       ...this.convert(lecture),
       ratings: lecture.Rate.map((rate) => ({
@@ -101,8 +105,8 @@ export class LectureConverter {
         name: invite.name,
         mail: invite.mail,
       })),
-      overallRatesCounts: overallRatesCountsMap,
-      topicRatesCounts: topicRatesCounts,
+      overallRatesCounts: formattedOverallRatesCounts,
+      topicRatesCounts: formattedTopicRatesCounts,
     };
   }
 }

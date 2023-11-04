@@ -5,7 +5,6 @@ import styles from "./page.module.scss";
 import { RateProgress } from "@/components/molecules/rateProgress/RateProgress";
 import { StudioOpinion } from "@/components/molecules/studioOpinion/StudioOpinion";
 import { LectureRateBarChart } from "@/components/molecules/lectureRateBarChart/LectureRateBarChart";
-import { Text } from "@/components/atoms/text/Text";
 import colors from "@/colors.module.scss";
 
 export default async function Page({
