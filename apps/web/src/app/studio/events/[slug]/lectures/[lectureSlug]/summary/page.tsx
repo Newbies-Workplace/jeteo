@@ -16,7 +16,6 @@ export default async function Page({
     params.lectureSlug
   );
 
-  console.log(`Lecture: ${JSON.stringify(lecture)}`);
   return (
     <div>
       <Section title={`Oceny (${lecture.ratingSummary.count})`}>
