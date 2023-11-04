@@ -6,6 +6,7 @@ import { RateProgress } from "@/components/molecules/rateProgress/RateProgress";
 import { StudioOpinion } from "@/components/molecules/studioOpinion/StudioOpinion";
 import { LectureRateBarChart } from "@/components/molecules/lectureRateBarChart/LectureRateBarChart";
 import { Text } from "@/components/atoms/text/Text";
+import colors from "@/colors.module.scss";
 
 export default async function Page({
   params,
@@ -18,7 +19,6 @@ export default async function Page({
   return (
     <div>
       <Section title={`Oceny (${lecture.ratingSummary.count})`}>
-        <Text variant={"bodyL"}>Średnie oceny</Text>
         {lecture.ratingSummary.count > 0 && (
           <div className={styles.ratingSummary}>
             <RateProgress
@@ -26,19 +26,19 @@ export default async function Page({
               value={lecture.ratingSummary.overallAverage}
               label={"prelekcja"}
               description={"Średnia ocena prelekcji"}
+              color={`${colors.primary}`}
             />
             <RateProgress
               max={5}
               value={lecture.ratingSummary.topicAverage}
               label={"temat"}
               description={"Średnia ocena tematu"}
+              color={`${colors.success}`}
             />
           </div>
         )}
-
-        <Text variant={"bodyL"} style={{ marginTop: 50 }}>
-          Ilość Ocen
-        </Text>
+      </Section>
+      <Section title={`Podział ocen`}>
         <LectureRateBarChart
           overallRatesCounts={[
             { 1: 12 },
