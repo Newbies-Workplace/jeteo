@@ -6,10 +6,14 @@ import {
 import { UserConverter } from '@/user/application/user.converter';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { generateSlug } from '@/common/slugs';
+import { PrismaService } from '../../config/prisma.service';
 
 @Injectable()
 export class LectureConverter {
-  constructor(private readonly userConverter: UserConverter) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly userConverter: UserConverter,
+  ) {}
 
   convert(lecture: LectureDetails): LectureResponse {
     const overallAverage =
@@ -57,15 +61,25 @@ export class LectureConverter {
     };
   }
 
-  convertDetails(lecture: LectureDetails): LectureDetailsResponse {
+  async convertDetails(
+    lecture: LectureDetails,
+  ): Promise<LectureDetailsResponse> {
     //todo pobranie danych z bazy
-    const overallRatesCounts = [
-      { 1: 12 },
-      { 2: 9 },
-      { 3: 15 },
-      { 4: 33 },
-      { 5: 27 },
-    ];
+    const overallRatesCounts = await this.prismaService.rate.groupBy({
+      by: ['overallRate'],
+      _count: {
+        overallRate: true,
+      },
+      where: {
+        lectureId: lecture.id, // tutaj podaj ID prelekcji
+      },
+    });
+
+    const overallRatesCountsMap = new Map();
+    overallRatesCounts.forEach((rateGroup) => {
+      overallRatesCountsMap.set(rateGroup.overallRate, rateGroup._count);
+    });
+    console.log(overallRatesCountsMap);
     const topicRatesCounts = [
       { 1: 3 },
       { 2: 12 },
@@ -87,7 +101,7 @@ export class LectureConverter {
         name: invite.name,
         mail: invite.mail,
       })),
-      overallRatesCounts: overallRatesCounts,
+      overallRatesCounts: overallRatesCountsMap,
       topicRatesCounts: topicRatesCounts,
     };
   }
