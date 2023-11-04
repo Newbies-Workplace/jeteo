@@ -7,6 +7,7 @@ import { UserConverter } from '@/user/application/user.converter';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { generateSlug } from '@/common/slugs';
 import { PrismaService } from '../../config/prisma.service';
+import { log } from 'console';
 
 @Injectable()
 export class LectureConverter {
@@ -83,13 +84,27 @@ export class LectureConverter {
       },
     });
 
-    const formattedOverallRatesCounts = overallRatesCounts.map((item) => ({
-      [item.overallRate]: item._count.overallRate,
-    }));
+    const formattedOverallRatesCounts = Array.from({ length: 5 }, (_, i) => {
+      const overallRate = i + 1;
+      const item = overallRatesCounts.find(
+        (rate) => rate.overallRate === overallRate,
+      );
 
-    const formattedTopicRatesCounts = topicRatesCounts.map((item) => ({
-      [item.topicRate]: item._count.topicRate,
-    }));
+      return {
+        [overallRate]: item ? item._count.overallRate : 0,
+      };
+    });
+
+    const formattedTopicRatesCounts = Array.from({ length: 5 }, (_, i) => {
+      const topicRate = i + 1;
+      const item = topicRatesCounts.find(
+        (rate) => rate.topicRate === topicRate,
+      );
+
+      return {
+        [topicRate]: item ? item._count.topicRate : 0,
+      };
+    });
 
     return {
       ...this.convert(lecture),
