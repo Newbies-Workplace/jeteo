@@ -5,10 +5,14 @@ import { Event } from '@prisma/client';
 import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.request';
 import { nanoid } from '@/common/nanoid';
 import { TokenUser } from '@/auth/jwt/jwt.model';
+import { StorageService } from '@/storage/domain/storage.service';
 
 @Injectable()
 export class EventService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly storageService: StorageService,
+  ) {}
 
   async getPublicEvents(page: number, size: number): Promise<Event[]> {
     return this.prismaService.event.findMany({
@@ -106,6 +110,44 @@ export class EventService {
         id: eventId,
       },
     });
+  }
+
+  async updateEventCover(
+    eventId: string,
+    cover: Express.Multer.File,
+  ): Promise<string> {
+    const event = await this.prismaService.event.findUnique({
+      where: {
+        id: eventId,
+      },
+    });
+
+    let filename = event.coverImage;
+
+    if (!event.coverImage) {
+      filename = await this.storageService.createFile(
+        cover.buffer,
+        `/events/${eventId}`,
+      );
+    } else {
+      filename = await this.storageService.replaceFile(
+        cover.buffer,
+        event.coverImage,
+      );
+    }
+
+    const filePath = `/events/${eventId}/${filename}`;
+
+    await this.prismaService.event.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        coverImage: filePath,
+      },
+    });
+
+    return filePath;
   }
 
   async deleteEvent(eventId: string) {

@@ -9,9 +9,39 @@
 }
 
 .header {
+  position: relative;
   display: flex;
   align-self: stretch;
   background-color: colors.$primary;
+  min-height: 320px;
+  border-radius: 0 0 16px 16px;
+}
+
+.backgroundImage {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  min-height: 320px;
+  border-radius: 0 0 16px 16px;
+  opacity: 0.33;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.backgroundColor {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
   min-height: 320px;
   border-radius: 0 0 16px 16px;
 }

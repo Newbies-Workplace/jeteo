@@ -12,6 +12,7 @@ import { Avatar } from "@/components/atoms/avatar/Avatar";
 import { UserSocials } from "@/components/molecules/userSocials/UserSocials";
 import { getEventLectures } from "@/common/getLecture";
 import { EventLectures } from "@/app/events/[slug]/components/eventLectures/EventLectures";
+import colors from "@/colors.module.scss";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const event = await getEvent(params.slug);
@@ -23,8 +24,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <div className={styles.page}>
       <Navbar />
-      <div className={styles.header} />
-      <div className={styles.containerWrapper}>
+      <div className={styles.header}>
+        <div
+          className={styles.backgroundImage}
+          style={{
+            backgroundImage: `url('${event.coverImage}')`,
+          }}
+        />
+        <div
+          className={styles.backgroundColor}
+          style={{
+            background: `linear-gradient(to right, ${event.primaryColor}, ${colors.primary})`,
+          }}
+        />
+      </div>
+      <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
         <div className={styles.container}>
           <div className={styles.titleAnchor}>
             <div className={styles.title}>
