@@ -28,6 +28,7 @@ export interface EventCardProps {
   startDate: string;
   tags: string[];
   color: string;
+  coverImage?: string;
   children?: React.ReactNode;
 }
 
@@ -39,6 +40,7 @@ export const EventCard: React.FC<EventCardProps> = ({
   startDate,
   tags,
   color,
+  coverImage,
   children,
 }) => {
   return (
@@ -46,7 +48,7 @@ export const EventCard: React.FC<EventCardProps> = ({
       <div
         className={styles.backgroundImage}
         style={{
-          backgroundImage: `url('https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg')`,
+          backgroundImage: `url('${coverImage}')`,
         }}
       />
       <div
@@ -55,7 +57,6 @@ export const EventCard: React.FC<EventCardProps> = ({
           background: `linear-gradient(to right, ${color}, ${colors.primary})`,
         }}
       />
-
       <div className={styles.top}>
         <div className={styles.texts}>
           <Text variant={"headM"} bold className={styles.title}>
@@ -119,6 +120,7 @@ export const SmartEventCard: React.FC<{ event: EventResponse }> = ({
   const isFresh = now.isAfter(end) && now.isBefore(freshnessEnd);
   const isArchive = now.isAfter(freshnessEnd);
 
+  console.log(`coverImage: ${event.coverImage}`);
   return (
     <EventCard
       title={event.title}
@@ -135,11 +137,14 @@ export const SmartEventCard: React.FC<{ event: EventResponse }> = ({
       tags={event.tags}
       startDate={event.from}
       color={event.primaryColor}
+      coverImage={event.coverImage}
     >
-      {isFuture && <EventCardActionsFuture event={event} />}
-      {isFresh && <EventCardActionsFresh event={event} />}
-      {isArchive && <EventCardActionsArchive event={event} />}
-      {isLive && <EventCardActionsLive event={event} />}
+      <div style={{ zIndex: 3, width: "100%" }}>
+        {isFuture && <EventCardActionsFuture event={event} />}
+        {isFresh && <EventCardActionsFresh event={event} />}
+        {isArchive && <EventCardActionsArchive event={event} />}
+        {isLive && <EventCardActionsLive event={event} />}
+      </div>
     </EventCard>
   );
 };

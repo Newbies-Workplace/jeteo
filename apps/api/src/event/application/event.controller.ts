@@ -13,6 +13,7 @@ import {
   UseGuards,
   UploadedFile,
   BadRequestException,
+  UseInterceptors,
 } from '@nestjs/common';
 import { EventService } from '../domain/event.service';
 import { CreateEventRequest } from 'shared/model/event/request/createEvent.request';
@@ -35,6 +36,7 @@ import {
 } from '@/auth/auth.methods';
 import { StoragePathConverter } from '@/storage/application/converters/storagePath.converter';
 import { InvalidPathException } from '@/storage/domain/exceptions/InvalidPathException';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('/rest/v1/events')
 export class EventController {
@@ -134,6 +136,7 @@ export class EventController {
 
   @Put('/:id/cover')
   @UseGuards(JwtGuard)
+  @UseInterceptors(FileInterceptor('coverImage'))
   async putEventCover(
     @Param('id') eventId: string,
     @UploadedFile() file: Express.Multer.File,

@@ -1,4 +1,9 @@
 .themeContainer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+.imageInputs {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
 }
