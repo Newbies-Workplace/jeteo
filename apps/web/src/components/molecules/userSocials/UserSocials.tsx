@@ -13,7 +13,7 @@ interface UserSocialsProps {
   socials: {
     mail?: string;
     twitter?: string;
-    linkedIn?: string;
+    linkedin?: string;
     github?: string;
   };
 }
@@ -36,9 +36,9 @@ const socialsData: {
     icon: GithubIcon,
     alt: "github",
   },
-  linkedIn: {
+  linkedin: {
     icon: LinkedInIcon,
-    alt: "linkedIn",
+    alt: "linkedin",
   },
   twitter: {
     icon: TwitterIcon,

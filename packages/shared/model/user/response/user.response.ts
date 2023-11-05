@@ -8,7 +8,7 @@ export interface UserResponse {
     mail: string | null;
     github: string | null;
     twitter: string | null;
-    linkedIn: string | null;
+    linkedin: string | null;
   };
 }
 

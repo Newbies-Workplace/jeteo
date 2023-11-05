@@ -42,7 +42,7 @@ export class UserService {
         mail: updatedUser.socials.mail,
         github: updatedUser.socials.github,
         twitter: updatedUser.socials.twitter,
-        linkedin: updatedUser.socials.linkedIn,
+        linkedin: updatedUser.socials.linkedin,
       },
     });
   }

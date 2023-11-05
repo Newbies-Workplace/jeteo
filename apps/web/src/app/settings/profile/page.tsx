@@ -19,7 +19,7 @@ type ProfileForm = {
   description: string;
   socials: {
     mail: string;
-    linkedIn: string;
+    linkedin: string;
     twitter: string;
     github: string;
   };
@@ -43,7 +43,7 @@ export default function Page() {
       description: user.description,
       socials: {
         mail: user.socials.mail,
-        linkedIn: user.socials.linkedIn,
+        linkedin: user.socials.linkedin,
         twitter: user.socials.twitter,
         github: user.socials.github,
       },
@@ -72,7 +72,7 @@ export default function Page() {
       description: form.description,
       socials: {
         mail: form.socials.mail,
-        linkedIn: form.socials.linkedIn,
+        linkedin: form.socials.linkedin,
         twitter: form.socials.twitter,
         github: form.socials.github,
       },
@@ -134,7 +134,7 @@ export default function Page() {
           />
           <ControlledInput
             control={control}
-            name="socials.linkedIn"
+            name="socials.linkedin"
             label="LinkedIn"
           />
           <ControlledInput

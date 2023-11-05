@@ -23,7 +23,7 @@ export class UserConverter {
         mail: user.mail,
         github: user.github,
         twitter: user.twitter,
-        linkedIn: user.linkedin,
+        linkedin: user.linkedin,
       },
     };
   }
