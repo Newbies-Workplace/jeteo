@@ -3,7 +3,7 @@ import { UserResponse } from "../../user/response/user.response";
 import {
   InviteResponse,
   InviteDetailsResponse,
-} from "../../invite/response/inviteDetailsResponse";
+} from "../../invite/response/inviteResponse";
 
 export interface LectureResponse {
   id: string;

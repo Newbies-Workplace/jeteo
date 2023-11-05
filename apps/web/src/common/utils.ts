@@ -1,6 +1,9 @@
+import "dayjs/locale/pl";
 import dayjs from "dayjs";
 
 export const formatFromToDates = (from: string, to: string): string => {
+  dayjs.locale("pl");
+
   const fromDate = dayjs(from);
   const toDate = dayjs(to);
 

@@ -6,10 +6,14 @@ import {
 import { UserConverter } from '@/user/application/user.converter';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { generateSlug } from '@/common/slugs';
+import { InviteConverter } from '@/invite/application/invite.converter';
 
 @Injectable()
 export class LectureConverter {
-  constructor(private readonly userConverter: UserConverter) {}
+  constructor(
+    private readonly userConverter: UserConverter,
+    private readonly inviteConverter: InviteConverter,
+  ) {}
 
   convert(lecture: LectureDetails): LectureResponse {
     const overallAverage =
@@ -46,18 +50,24 @@ export class LectureConverter {
         overallAverage: overallAverage,
         topicAverage: topicAverage,
       },
-      invites: lecture.Invites.map((invite) => ({
-        id: invite.id,
-        name: invite.name,
-        createdAt: invite.createdAt.toISOString(),
-      })),
+      invites: lecture.Invites.map((invite) =>
+        this.inviteConverter.convert(invite),
+      ),
       speakers: lecture.Speakers.map((user) =>
         this.userConverter.convert(user),
       ),
     };
   }
 
-  convertDetails(lecture: LectureDetails): LectureDetailsResponse {
+  async convertDetails(
+    lecture: LectureDetails,
+  ): Promise<LectureDetailsResponse> {
+    const invites = await Promise.all(
+      lecture.Invites.map((invite) =>
+        this.inviteConverter.convertDetails(invite),
+      ),
+    );
+
     return {
       ...this.convert(lecture),
       ratings: lecture.Rate.map((rate) => ({
@@ -67,11 +77,7 @@ export class LectureConverter {
         topicRate: rate.topicRate,
         createdAt: rate.createdAt.toISOString(),
       })),
-      invites: lecture.Invites.map((invite) => ({
-        id: invite.id,
-        name: invite.name,
-        mail: invite.mail,
-      })),
+      invites: invites,
     };
   }
 }

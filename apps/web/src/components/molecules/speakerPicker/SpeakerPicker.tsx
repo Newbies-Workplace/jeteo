@@ -163,19 +163,19 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
                   <Text variant={"bodyM"}>{invite.name}</Text>
                 </td>
                 <td>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <Button
-                      style={{ minWidth: "unset" }}
-                      primary
-                      size="small"
-                      rightIcon={Copy}
-                      onClick={() => {
-                        copyTextToClipboard(
-                          `${invite.id}` //todo get host
-                        );
-                      }}
-                    ></Button>
-                  </div>
+                  {/*<div style={{ display: "flex", alignItems: "center" }}>*/}
+                  {/*  <Button*/}
+                  {/*    style={{ minWidth: "unset" }}*/}
+                  {/*    primary*/}
+                  {/*    size="small"*/}
+                  {/*    rightIcon={Copy}*/}
+                  {/*    onClick={() => {*/}
+                  {/*      copyTextToClipboard(*/}
+                  {/*        `${invite.id}`}
+                  {/*      );*/}
+                  {/*    }}*/}
+                  {/*  ></Button>*/}
+                  {/*</div>*/}
                 </td>
                 <td>
                   <div style={{ display: "flex", alignItems: "center" }}>
@@ -227,8 +227,8 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
         </Text>
       )}
       <Text variant={"bodyS"}>
-        Maksymlanie 2 prelegentów. Linki z zaproszeniami będą aktywowane i
-        wysłane mailem po zapisaniu prelekcji.
+        Maksymlanie 2 prelegentów. Pamiętaj aby wysłać zaproszenie na adres,
+        którym prelegent jest zalogowany w serwisie.
       </Text>
     </div>
   );
