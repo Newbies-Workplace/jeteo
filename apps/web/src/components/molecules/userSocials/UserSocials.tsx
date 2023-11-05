@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./UserSocials.module.scss";
 import Link from "next/link";
-import Image from "next/image";
 import EmailIcon from "@/assets/email.svg";
 import TwitterIcon from "@/assets/twitter.svg";
-import LinkedinIcon from "@/assets/linkedin.svg";
+import LinkedInIcon from "@/assets/linkedin.svg";
 import GithubIcon from "@/assets/github.svg";
+import { IconButton } from "@/components/atoms/iconButton/IconButton";
 
 interface UserSocialsProps {
   size?: number;
@@ -13,7 +13,7 @@ interface UserSocialsProps {
   socials: {
     mail?: string;
     twitter?: string;
-    linkedin?: string;
+    linkedIn?: string;
     github?: string;
   };
 }
@@ -36,9 +36,9 @@ const socialsData: {
     icon: GithubIcon,
     alt: "github",
   },
-  linkedin: {
-    icon: LinkedinIcon,
-    alt: "linkedin",
+  linkedIn: {
+    icon: LinkedInIcon,
+    alt: "linkedIn",
   },
   twitter: {
     icon: TwitterIcon,
@@ -52,7 +52,7 @@ export const UserSocials: React.FC<UserSocialsProps> = ({
   socials,
 }) => {
   if (!socials) {
-    return null; 
+    return null;
   }
 
   const socialEntries = Object.entries(socials).filter(([key, _]) => {
@@ -74,10 +74,9 @@ export const UserSocials: React.FC<UserSocialsProps> = ({
         if (!href) return;
 
         const { icon, alt, hrefPrefix } = socialsData[key];
-
         return (
           <Link href={`${hrefPrefix || ""}${href}`} key={key}>
-            <Image alt={alt} src={icon} width={size} height={size} />
+            <IconButton icon={icon} alt={alt} />
           </Link>
         );
       })}
