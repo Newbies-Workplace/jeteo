@@ -7,9 +7,12 @@ import {
   HttpStatus,
   Param,
   Patch,
+  Put,
   Post,
   Query,
   UseGuards,
+  UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
 import { EventService } from '../domain/event.service';
 import { CreateEventRequest } from 'shared/model/event/request/createEvent.request';
@@ -30,6 +33,8 @@ import {
   assertEventReadAccess,
   assertEventWriteAccess,
 } from '@/auth/auth.methods';
+import { StoragePathConverter } from '@/storage/application/converters/storagePath.converter';
+import { InvalidPathException } from '@/storage/domain/exceptions/InvalidPathException';
 
 @Controller('/rest/v1/events')
 export class EventController {
@@ -39,6 +44,7 @@ export class EventController {
     private readonly eventConverter: EventConverter,
     private readonly lectureService: LectureService,
     private readonly lectureConverter: LectureConverter,
+    private readonly storagePath: StoragePathConverter,
   ) {}
 
   @Post('/')
@@ -124,6 +130,30 @@ export class EventController {
     );
 
     return await this.eventConverter.convert(updatedEvent);
+  }
+
+  @Put('/:id/cover')
+  @UseGuards(JwtGuard)
+  async putEventCover(
+    @Param('id') eventId: string,
+    @UploadedFile() file: Express.Multer.File,
+    @JWTUser() user: TokenUser,
+  ): Promise<string> {
+    const event = await this.getEventById(eventId);
+
+    assertEventWriteAccess(user, event);
+
+    try {
+      let coverPath = await this.eventService.updateEventCover(event.id, file);
+      return this.storagePath.convert(`${coverPath}`);
+    } catch (e) {
+      console.error(e);
+
+      if (e instanceof InvalidPathException) {
+        throw new BadRequestException();
+      }
+      throw e;
+    }
   }
 
   @Delete('/:id')

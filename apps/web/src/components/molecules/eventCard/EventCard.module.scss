@@ -11,10 +11,39 @@
   color: colors.$white;
 
   border-radius: 16px;
-  background: colors.$primary;
+
+  position: relative;
+
+    .backgroundImage {
+      z-index: 2;
+      display: flex;
+      position: absolute;
+      width: 50%;
+      height: inherit;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      border-top-left-radius: 16px;
+      border-bottom-left-radius: 16px;
+      
+    } 
+    .backgroundColor {
+      z-index: 1;
+      opacity: 1;
+      position: absolute;
+      width: inherit;
+      height: inherit;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: 16px;
+    }
 }
 
+
 .top {
+  z-index: 3;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;

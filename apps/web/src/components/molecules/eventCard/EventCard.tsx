@@ -8,13 +8,14 @@ import ClockIcon from "@/assets/clock.svg";
 import dayjs from "dayjs";
 import "dayjs/locale/pl";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
-import { EventResponse } from "shared/.dist/model/event/response/event.response";
+import { EventResponse } from "shared/model/event/response/event.response";
 import {
   EventCardActionsArchive,
   EventCardActionsFresh,
   EventCardActionsFuture,
   EventCardActionsLive,
 } from "@/components/molecules/cardActions/EventCardActions";
+import colors from "@/colors.module.scss";
 
 export interface EventCardProps {
   title: string;
@@ -26,6 +27,7 @@ export interface EventCardProps {
   place?: string;
   startDate: string;
   tags: string[];
+  color: string;
   children?: React.ReactNode;
 }
 
@@ -36,10 +38,24 @@ export const EventCard: React.FC<EventCardProps> = ({
   place,
   startDate,
   tags,
+  color,
   children,
 }) => {
   return (
     <div className={styles.card}>
+      <div
+        className={styles.backgroundImage}
+        style={{
+          backgroundImage: `url('https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg')`,
+        }}
+      />
+      <div
+        className={styles.backgroundColor}
+        style={{
+          background: `linear-gradient(to right, ${color}, ${colors.primary})`,
+        }}
+      />
+
       <div className={styles.top}>
         <div className={styles.texts}>
           <Text variant={"headM"} bold className={styles.title}>
@@ -118,6 +134,7 @@ export const SmartEventCard: React.FC<{ event: EventResponse }> = ({
       }
       tags={event.tags}
       startDate={event.from}
+      color={event.primaryColor}
     >
       {isFuture && <EventCardActionsFuture event={event} />}
       {isFresh && <EventCardActionsFresh event={event} />}
