@@ -1,5 +1,4 @@
 @use '@/typography.module.scss' as typography;
-@use '@/colors.module.scss' as colors;
 
 .page {
   display: flex;
@@ -30,24 +29,4 @@
 .studioLogo {
   @include typography.logoM;
   font-weight: bold;
-}
-
-.navButton {
-  display: flex;
-  flex-direction: row;
-  padding: 8px;
-  align-self: stretch;
-  align-items: center;
-  gap: 8px;
-  max-width: 300px;
-
-  border-radius: 8px;
-  border: 2px solid colors.$primary;
-  background: colors.$surface;
-
-  box-shadow: 0 2px 8px 0 rgba(94, 0, 255, 0.25);
-
-  text-decoration: none;
-  color: colors.$black;
-  @include typography.bodyM;
 }

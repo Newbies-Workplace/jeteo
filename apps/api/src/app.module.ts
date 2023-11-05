@@ -6,7 +6,8 @@ import { PrismaModule } from '@/config/prisma.module';
 import { UserModule } from '@/user/user.module';
 import { EventModule } from '@/event/event.module';
 import { LectureModule } from '@/lecture/lecture.module';
-import {StorageModule} from '@/storage/storage.module';
+import { StorageModule } from '@/storage/storage.module';
+import { InviteModule } from '@/invite/invite.module';
 
 @Module({
   imports: [
@@ -17,8 +18,9 @@ import {StorageModule} from '@/storage/storage.module';
     AuthModule,
     UserModule,
     LectureModule,
+    InviteModule,
     EventModule,
-    StorageModule
+    StorageModule,
   ],
   controllers: [AppController],
 })

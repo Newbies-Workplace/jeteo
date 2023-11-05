@@ -6,13 +6,15 @@ import {
 import { UserConverter } from '@/user/application/user.converter';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { generateSlug } from '@/common/slugs';
-import { PrismaService } from '../../config/prisma.service';
+import { InviteConverter } from '@/invite/application/invite.converter';
+import { PrismaService } from '@/config/prisma.service';
 
 @Injectable()
 export class LectureConverter {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly userConverter: UserConverter,
+    private readonly inviteConverter: InviteConverter,
   ) {}
 
   convert(lecture: LectureDetails): LectureResponse {
@@ -50,11 +52,9 @@ export class LectureConverter {
         overallAverage: overallAverage,
         topicAverage: topicAverage,
       },
-      invites: lecture.Invites.map((invite) => ({
-        id: invite.id,
-        name: invite.name,
-        createdAt: invite.createdAt.toISOString(),
-      })),
+      invites: lecture.Invites.map((invite) =>
+        this.inviteConverter.convert(invite),
+      ),
       speakers: lecture.Speakers.map((user) =>
         this.userConverter.convert(user),
       ),
@@ -64,6 +64,11 @@ export class LectureConverter {
   async convertDetails(
     lecture: LectureDetails,
   ): Promise<LectureDetailsResponse> {
+    const invites = await Promise.all(
+      lecture.Invites.map((invite) =>
+        this.inviteConverter.convertDetails(invite),
+      ),
+    );
     const overallRatesCounts = await this.prismaService.rate.groupBy({
       by: ['overallRate'],
       _count: {
@@ -114,11 +119,7 @@ export class LectureConverter {
         topicRate: rate.topicRate,
         createdAt: rate.createdAt.toISOString(),
       })),
-      invites: lecture.Invites.map((invite) => ({
-        id: invite.id,
-        name: invite.name,
-        mail: invite.mail,
-      })),
+      invites: invites,
       overallRatesCounts: formattedOverallRatesCounts,
       topicRatesCounts: formattedTopicRatesCounts,
     };

@@ -34,6 +34,7 @@ export class AuthService {
         id: queryUser.id,
         name: queryUser.name,
         google_id: queryUser.google_id,
+        google_mail: googleUser.email,
         _permissions: {
           isAuthorized: queryUser.isAuthorized,
         },

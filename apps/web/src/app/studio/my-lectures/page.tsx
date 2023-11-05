@@ -14,7 +14,7 @@ export default async function Page() {
       </Text>
 
       {lectures.length === 0 && (
-        <Text variant={"bodyM"}>Nie masz jeszcze żadnych prelekcji</Text>
+        <Text variant={"bodyM"}>Nie prowadziłeś jeszcze żadnych prelekcji</Text>
       )}
 
       {lectures.map((lecture) => (

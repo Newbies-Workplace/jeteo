@@ -1,5 +1,5 @@
 import { TokenUser } from '@/auth/jwt/jwt.model';
-import { Event, EventVisibility } from '@prisma/client';
+import { Event, EventVisibility, Invite } from '@prisma/client';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 
@@ -60,6 +60,20 @@ export const assertEventReadAccess = (
 
   throw new HttpException(
     'User is not allowed to see this event',
+    HttpStatus.FORBIDDEN,
+  );
+};
+
+export const assertInviteWriteAccess = (
+  user: TokenUser | undefined,
+  invite: Invite,
+) => {
+  if (user.google_mail === invite.mail) {
+    return;
+  }
+
+  throw new HttpException(
+    'User is not allowed to edit this invite',
     HttpStatus.FORBIDDEN,
   );
 };
