@@ -18,22 +18,21 @@
   }
 
   td {
+    horiz-align: center;
     overflow: hidden;
     border: solid 1px colors.$stroke;
-    padding: 6px 4px;
+    padding: 4px 4px;
   }
   td:first-child {
     width: 45px;
-    padding-left: 8px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
   }
   td:nth-child(4) {
-    width: 54px;
+    width: 50px;
   }
   td:last-child {
-    width: 36px;
-    padding-right: 8px;
+    width: 55px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
   }

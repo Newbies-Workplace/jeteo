@@ -1,6 +1,5 @@
 import styles from "./StudioLectureCard.module.scss";
 import React from "react";
-import Image from "next/image";
 import Delete from "@/assets/delete.svg";
 import Edit from "@/assets/edit.svg";
 import { Text } from "@/components/atoms/text/Text";
@@ -14,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { myFetch } from "@/common/fetch";
 import { getIdFromSlug } from "shared/util";
 import toast from "react-hot-toast";
+import { IconButton } from "@/components/atoms/iconButton/IconButton";
 
 interface StudioLectureCardProps {
   eventSlug: string;
@@ -91,20 +91,18 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
             href={`/studio/events/edit/${eventSlug}/lectures/edit/${lectureSlug}/basic`}
             onClick={(e) => e.stopPropagation()}
           >
-            <Image src={Edit} alt={"Edit"} width={24} height={24} />
+            <IconButton icon={Edit} />
           </Link>
 
-          <Image
+          <div
             className={styles.action}
-            src={Delete}
-            alt={"Delete"}
             onClick={(e) => {
               e.stopPropagation();
               onDeleteClick();
             }}
-            width={24}
-            height={24}
-          />
+          >
+            <IconButton icon={Delete} />
+          </div>
           <div className={styles.cardOverwrite} />
         </div>
       </div>
