@@ -4,17 +4,17 @@ import React, { useState } from "react";
 import styles from "./SpeakerPicker.module.scss";
 import GreyCircle from "@/assets/images/speaker-picker-circle-grey.svg";
 import PrimaryCircle from "@/assets/images/speaker-picker-circle-primary.svg";
-import Add from "@/assets/add.svg";
+import AddSlim from "@/assets/AddSlim.svg";
 import Delete from "@/assets/delete.svg";
 import Copy from "@/assets/copy.svg";
 import Image from "next/image";
 import { Text } from "@/components/atoms/text/Text";
-import Button from "@/components/atoms/button/Button";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
 import { UserResponse } from "shared/model/user/response/user.response";
 import { CreateLectureInvite } from "shared/model/lecture/request/createLecture.request";
 import cs from "classnames";
 import { Validations } from "@/common/validations";
+import { IconButton } from "@/components/atoms/iconButton/IconButton";
 
 interface SpeakerPickerProps {
   onAddInvite?: (mail: string, name: string) => void;
@@ -129,16 +129,14 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
             <td />
 
             <td>
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 {canAdd && (
-                  <Image
-                    className={styles.iconButton}
-                    src={Add}
-                    alt={"add"}
-                    width={24}
-                    height={24}
-                    onClick={onSubmit}
-                  />
+                  <IconButton icon={AddSlim} primary onClick={onSubmit} />
                 )}
               </div>
             </td>
@@ -164,27 +162,21 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
                 </td>
                 <td>
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <Button
-                      style={{ minWidth: "unset" }}
+                    <IconButton
+                      icon={Copy}
                       primary
-                      size="small"
-                      rightIcon={Copy}
                       onClick={() => {
                         copyTextToClipboard(
                           `${invite.id}` //todo get host
                         );
                       }}
-                    ></Button>
+                    />
                   </div>
                 </td>
                 <td>
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <Image
-                      className={styles.iconButton}
-                      src={Delete}
-                      alt={"Delete"}
-                      width={24}
-                      height={24}
+                    <IconButton
+                      icon={Delete}
                       onClick={() => onDeleteInvite(invite.id)}
                     />
                   </div>
@@ -207,12 +199,8 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
 
                 <td>
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <Image
-                      className={styles.iconButton}
-                      src={Delete}
-                      alt={"Delete"}
-                      width={24}
-                      height={24}
+                    <IconButton
+                      icon={Delete}
                       onClick={() => onDeleteSpeaker(speaker.id)}
                     />
                   </div>
