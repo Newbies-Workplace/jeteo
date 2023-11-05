@@ -4,12 +4,14 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/config/prisma.service';
 import { UserConverter } from '@/user/application/user.converter';
 import { generateSlug } from '@/common/slugs';
+import { StoragePathConverter } from '@/storage/application/converters/storagePath.converter';
 
 @Injectable()
 export class EventConverter {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly userConverter: UserConverter,
+    private readonly storagePathConverter: StoragePathConverter,
   ) {}
 
   async convert(event: Event): Promise<EventResponse> {
@@ -59,7 +61,9 @@ export class EventConverter {
       createdAt: event.createdAt.toISOString(),
       tags: event.tags,
       primaryColor: event.primaryColor,
-      coverImage: event.coverImage,
+      coverImage: event.coverImage
+        ? this.storagePathConverter.convert(event.coverImage)
+        : null,
       visibility: event.visibility,
       userId: event.authorId,
     };

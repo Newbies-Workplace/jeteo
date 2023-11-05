@@ -39,4 +39,6 @@ export interface LectureDetailsResponse extends LectureResponse {
     opinion: string;
     createdAt: DateTime;
   }[];
+  overallRatesCounts: { [key: number]: number }[];
+  topicRatesCounts: { [key: number]: number }[];
 }

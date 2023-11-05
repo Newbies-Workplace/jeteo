@@ -14,6 +14,7 @@ interface RateProgressProps {
   value: number;
   label?: string;
   description?: string;
+  color: string;
 }
 
 export const RateProgress: React.FC<RateProgressProps> = ({
@@ -21,6 +22,7 @@ export const RateProgress: React.FC<RateProgressProps> = ({
   value,
   label,
   description,
+  color
 }) => {
   const data = {
     labels: ["Oceny"],
@@ -28,8 +30,8 @@ export const RateProgress: React.FC<RateProgressProps> = ({
       {
         label: "Średnia ocen",
         data: [value, max - value],
-        backgroundColor: ["rgba(67,64,190, 1)", "rgba(196,196,196, 1)"],
-        borderColor: ["rgba(67,64,190, 1)", "rgba(196,196,196, 1)"],
+        backgroundColor: [color, "rgba(196,196,196, 1)"],
+        borderColor: [color, "rgba(196,196,196, 1)"],
         borderWidth: 1,
       },
     ],

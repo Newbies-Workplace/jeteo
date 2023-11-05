@@ -7,10 +7,12 @@ import { UserConverter } from '@/user/application/user.converter';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { generateSlug } from '@/common/slugs';
 import { InviteConverter } from '@/invite/application/invite.converter';
+import { PrismaService } from '@/config/prisma.service';
 
 @Injectable()
 export class LectureConverter {
   constructor(
+    private readonly prismaService: PrismaService,
     private readonly userConverter: UserConverter,
     private readonly inviteConverter: InviteConverter,
   ) {}
@@ -67,6 +69,46 @@ export class LectureConverter {
         this.inviteConverter.convertDetails(invite),
       ),
     );
+    const overallRatesCounts = await this.prismaService.rate.groupBy({
+      by: ['overallRate'],
+      _count: {
+        overallRate: true,
+      },
+      where: {
+        lectureId: lecture.id,
+      },
+    });
+    const topicRatesCounts = await this.prismaService.rate.groupBy({
+      by: ['topicRate'],
+      _count: {
+        topicRate: true,
+      },
+      where: {
+        lectureId: lecture.id,
+      },
+    });
+
+    const formattedOverallRatesCounts = Array.from({ length: 5 }, (_, i) => {
+      const overallRate = i + 1;
+      const item = overallRatesCounts.find(
+        (rate) => rate.overallRate === overallRate,
+      );
+
+      return {
+        [overallRate]: item ? item._count.overallRate : 0,
+      };
+    });
+
+    const formattedTopicRatesCounts = Array.from({ length: 5 }, (_, i) => {
+      const topicRate = i + 1;
+      const item = topicRatesCounts.find(
+        (rate) => rate.topicRate === topicRate,
+      );
+
+      return {
+        [topicRate]: item ? item._count.topicRate : 0,
+      };
+    });
 
     return {
       ...this.convert(lecture),
@@ -78,6 +120,8 @@ export class LectureConverter {
         createdAt: rate.createdAt.toISOString(),
       })),
       invites: invites,
+      overallRatesCounts: formattedOverallRatesCounts,
+      topicRatesCounts: formattedTopicRatesCounts,
     };
   }
 }
