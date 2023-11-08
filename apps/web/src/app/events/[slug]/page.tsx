@@ -13,6 +13,41 @@ import { UserSocials } from "@/components/molecules/userSocials/UserSocials";
 import { getEventLectures } from "@/common/getLecture";
 import { EventLectures } from "@/app/events/[slug]/components/eventLectures/EventLectures";
 import colors from "@/colors.module.scss";
+import { Metadata } from "next";
+import socialpreview from "@/assets/social-preview.png";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const event = await getEvent(params.slug);
+  if (!event) {
+    notFound();
+  }
+  let title = event.title;
+  if (event.subtitle) {
+    title += " " + event.subtitle;
+  }
+  return {
+    openGraph: {
+      title: title.substring(0, 55) + "...",
+      description: event.description.substring(0, 150) + "...",
+      url: `https://jeteo.newbies.pl/events/${event.slug}`,
+      siteName: "Jeteo",
+      images: [
+        {
+          url: socialpreview.src,
+          width: 1280,
+          height: 600,
+          alt: "jeteo",
+        },
+      ],
+      locale: "pl_PL",
+      type: "website",
+    },
+  };
+}
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const event = await getEvent(params.slug);

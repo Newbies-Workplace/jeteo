@@ -8,6 +8,7 @@ import { Inter, Oswald, Lato } from "next/font/google";
 import cs from "classnames";
 import { Toaster } from "react-hot-toast";
 import { Metadata } from "next";
+import socialpreview from "@/assets/social-preview.png";
 
 export const metadata: Metadata = {
   openGraph: {
@@ -17,13 +18,13 @@ export const metadata: Metadata = {
     siteName: "Jeteo",
     images: [
       {
-        url: "@/assets/social-preview.png",
+        url: socialpreview.src,
         width: 1280,
         height: 600,
         alt: "jeteo",
       },
     ],
-    locale: "en_GB",
+    locale: "pl_PL",
     type: "website",
   },
 };
@@ -97,7 +98,6 @@ export default function RootLayout({
               },
             }}
           />
-          p[]{" "}
         </Providers>
       </body>
     </html>
