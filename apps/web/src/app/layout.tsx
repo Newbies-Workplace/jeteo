@@ -7,7 +7,27 @@ import dayjs from "dayjs";
 import { Inter, Oswald, Lato } from "next/font/google";
 import cs from "classnames";
 import { Toaster } from "react-hot-toast";
+import { Metadata } from "next";
+import socialpreview from "@/assets/social-preview.png";
 
+export const metadata: Metadata = {
+  openGraph: {
+    title: "Jeteo",
+    description: "Portal do dzielenia się wiedzą!",
+    url: "https://jeteo.newbies.pl",
+    siteName: "Jeteo",
+    images: [
+      {
+        url: socialpreview.src,
+        width: 1280,
+        height: 600,
+        alt: "jeteo",
+      },
+    ],
+    locale: "pl_PL",
+    type: "website",
+  },
+};
 const inter = Inter({
   variable: "--font-inter",
   preload: false,
