@@ -42,7 +42,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
       `/studio/events/${eventSlug}/lectures/${lectureSlug}/summary`
     );
   };
-  const [isDialogOpened, setIsDialogOpened] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
   const onDeleteClick = () => {
     toast.promise(
@@ -100,18 +100,18 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
           <div
             className={styles.action}
             onClick={(e) => {
-              setIsDialogOpened(true);
+              setIsConfirmVisible(true);
             }}
           >
             <IconButton icon={Delete} />
           </div>
           <div className={styles.cardOverwrite} />
-          {isDialogOpened && (
+          {isConfirmVisible && (
             <Portal>
               <ConfirmCard
                 title={title}
                 description="Tej akcji nie można cofnąć"
-                onDimiss={() => setIsDialogOpened(false)}
+                onDimiss={() => setIsConfirmVisible(false)}
                 onDeleteAction={() => onDeleteClick()}
               />
             </Portal>
