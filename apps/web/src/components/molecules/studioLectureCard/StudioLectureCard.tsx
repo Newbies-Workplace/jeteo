@@ -1,5 +1,5 @@
 import styles from "./StudioLectureCard.module.scss";
-import React from "react";
+import React, { useState } from "react";
 import Delete from "@/assets/delete.svg";
 import Edit from "@/assets/edit.svg";
 import { Text } from "@/components/atoms/text/Text";
@@ -14,6 +14,7 @@ import { myFetch } from "@/common/fetch";
 import { getIdFromSlug } from "shared/util";
 import toast from "react-hot-toast";
 import { IconButton } from "@/components/atoms/iconButton/IconButton";
+import { ConfirmCard } from "../confirmCard/confirmCard";
 
 interface StudioLectureCardProps {
   eventSlug: string;
@@ -40,6 +41,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
       `/studio/events/${eventSlug}/lectures/${lectureSlug}/summary`
     );
   };
+  const [isOpened, setIsOpened] = useState(false);
 
   const onDeleteClick = () => {
     toast.promise(
@@ -56,10 +58,12 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
     );
   };
 
+  // onClick={navigateToSummary}
+
   return (
     <div className={styles.content}>
       <Timer from={from} to={to} />
-      <div className={styles.card} onClick={navigateToSummary}>
+      <div className={styles.card}>
         <div className={styles.description}>
           <div className={styles.titles}>
             <Text variant="headS" bold>
@@ -97,13 +101,15 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
           <div
             className={styles.action}
             onClick={(e) => {
-              e.stopPropagation();
-              onDeleteClick();
+              // e.stopPropagation();
+              // onDeleteClick();
+              setIsOpened(!isOpened);
             }}
           >
             <IconButton icon={Delete} />
           </div>
           <div className={styles.cardOverwrite} />
+          {isOpened && <ConfirmCard />}
         </div>
       </div>
     </div>
