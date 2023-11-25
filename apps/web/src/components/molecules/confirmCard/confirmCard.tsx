@@ -1,26 +1,45 @@
 import React from "react";
-import styles from "./confirmCard.module.scss";
+import styles from "./ConfirmCard.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import Button from "@/components/atoms/button/Button";
 
-export const ConfirmCard = () => {
+interface ConfirmCardProps {
+  title: string;
+  description: string;
+  onDimiss: () => void;
+  onDeleteAction: () => void;
+}
+
+export const ConfirmCard: React.FC<ConfirmCardProps> = ({
+  title,
+  description,
+  onDimiss,
+  onDeleteAction,
+}) => {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.root}>
       <div className={styles.content}>
         <Text variant="headS">
-          ucieczka w polske{" "}
+          Czy na pewno chcesz usunąć prelekcję{" "}
           <Text variant="headS" bold>
-            dobrze kurtka znam
+            {title}
           </Text>
         </Text>
 
         <span className={styles.description}>
-          <Text variant="bodyM">Krew</Text>
+          <Text variant="bodyM">{description}</Text>
         </span>
         <div className={styles.buttons}>
-          <Button className={styles.cancel}>szykuje mi się krawa jesień</Button>
-          <Button className={styles.delete}>
-            szykuje mi się krawy wrzesień
+          <Button onClick={onDimiss} className={styles.delete}>
+            <Text variant="bodyL" className={styles.deletetext}>
+              Anuluj
+            </Text>
+          </Button>
+
+          <Button onClick={onDeleteAction} className={styles.delete}>
+            <Text variant="bodyL" className={styles.deletetext}>
+              Usuń
+            </Text>
           </Button>
         </div>
       </div>

@@ -15,6 +15,7 @@ import { getIdFromSlug } from "shared/util";
 import toast from "react-hot-toast";
 import { IconButton } from "@/components/atoms/iconButton/IconButton";
 import { ConfirmCard } from "../confirmCard/confirmCard";
+import { Portal } from "../portal/Portal";
 
 interface StudioLectureCardProps {
   eventSlug: string;
@@ -41,7 +42,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
       `/studio/events/${eventSlug}/lectures/${lectureSlug}/summary`
     );
   };
-  const [isOpened, setIsOpened] = useState(false);
+  const [isDialogOpened, setIsDialogOpened] = useState(false);
 
   const onDeleteClick = () => {
     toast.promise(
@@ -101,15 +102,23 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
           <div
             className={styles.action}
             onClick={(e) => {
-              // e.stopPropagation();
-              // onDeleteClick();
-              setIsOpened(!isOpened);
+              e.stopPropagation();
+              setIsDialogOpened(true);
             }}
           >
             <IconButton icon={Delete} />
           </div>
           <div className={styles.cardOverwrite} />
-          {isOpened && <ConfirmCard />}
+          {isDialogOpened && (
+            <Portal>
+              <ConfirmCard
+                title={title}
+                description="Tej akcji nie można cofnąć"
+                onDimiss={() => setIsDialogOpened(false)}
+                onDeleteAction={() => onDeleteClick()}
+              />
+            </Portal>
+          )}
         </div>
       </div>
     </div>
