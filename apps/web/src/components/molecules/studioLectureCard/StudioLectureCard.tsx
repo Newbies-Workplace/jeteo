@@ -14,7 +14,7 @@ import { myFetch } from "@/common/fetch";
 import { getIdFromSlug } from "shared/util";
 import toast from "react-hot-toast";
 import { IconButton } from "@/components/atoms/iconButton/IconButton";
-import { ConfirmCard } from "../confirmCard/confirmCard";
+import { ConfirmCard } from "../confirmCard/ConfirmCard";
 import { Portal } from "../portal/Portal";
 
 interface StudioLectureCardProps {
@@ -59,13 +59,11 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
     );
   };
 
-  // onClick={navigateToSummary}
-
   return (
     <div className={styles.content}>
       <Timer from={from} to={to} />
       <div className={styles.card}>
-        <div className={styles.description}>
+        <div className={styles.description} onClick={navigateToSummary}>
           <div className={styles.titles}>
             <Text variant="headS" bold>
               {title}
@@ -102,7 +100,6 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
           <div
             className={styles.action}
             onClick={(e) => {
-              e.stopPropagation();
               setIsDialogOpened(true);
             }}
           >

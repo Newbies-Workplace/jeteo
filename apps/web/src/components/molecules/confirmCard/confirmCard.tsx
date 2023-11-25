@@ -30,7 +30,7 @@ export const ConfirmCard: React.FC<ConfirmCardProps> = ({
           <Text variant="bodyM">{description}</Text>
         </span>
         <div className={styles.buttons}>
-          <Button onClick={onDimiss} className={styles.delete}>
+          <Button onClick={onDimiss} className={styles.cancel}>
             <Text variant="bodyL" className={styles.deletetext}>
               Anuluj
             </Text>

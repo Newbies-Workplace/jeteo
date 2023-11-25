@@ -38,8 +38,10 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 24px;
+    gap: clamp(5px, 2vw, 24px);
     align-self: stretch;
+    flex-wrap: wrap;
+
     .cancel {
       display: flex;
       min-width: 100px;
@@ -50,7 +52,15 @@
       flex: 1 0 0;
       border-radius: 16px;
       border: 0.5px solid colors.$stroke;
-      background: #fff;
+      background: colors.$white;
+
+      &:hover {
+        background-color: colors.$lightGrayHover;
+      }
+
+      &:active {
+        background-color: colors.$lightGray;
+      }
 
       .canceltext {
         color: colors.$black;
@@ -67,6 +77,13 @@
       flex: 1 0 0;
       border-radius: 16px;
       background: colors.$live;
+
+      &:hover {
+        background-color: colors.$liveHover;
+      }
+      &:active {
+        background-color: colors.$liveActive;
+      }
 
       .deletetext {
         color: colors.$white;
