@@ -120,7 +120,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
                 title={title}
                 description="Tej akcji nie można cofnąć"
                 onDimiss={() => handleDismiss()}
-                onDeleteAction={() => handleDelete()}
+                onConfirm={() => handleDelete()}
               />
             </Portal>
           )}

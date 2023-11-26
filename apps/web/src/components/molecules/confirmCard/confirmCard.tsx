@@ -7,22 +7,26 @@ interface ConfirmCardProps {
   title: string;
   description: string;
   onDimiss: () => void;
-  onDeleteAction: () => void;
+  onConfirm: () => void;
+  titletext?: string;
   dismisstext?: string;
-  deletetext?: string;
+  confirmtext?: string;
 }
 
 export const ConfirmCard: React.FC<ConfirmCardProps> = ({
   title,
   description,
   onDimiss,
-  onDeleteAction,
+  onConfirm,
+  titletext,
+  dismisstext,
+  confirmtext,
 }) => {
   return (
     <div className={styles.root}>
       <div className={styles.content}>
         <Text variant="headS">
-          Czy na pewno chcesz usunąć{" "}
+          {titletext ? titletext : "Czy napewno chcesz usunąć"}{" "}
           <Text variant="headS" bold>
             {title}
           </Text>
@@ -32,15 +36,15 @@ export const ConfirmCard: React.FC<ConfirmCardProps> = ({
           <Text variant="bodyM">{description}</Text>
         </span>
         <div className={styles.buttons}>
-          <Button onClick={onDimiss} className={styles.cancel}>
-            <Text variant="bodyL" className={styles.deletetext}>
-              Anuluj
+          <Button onClick={onDimiss} className={styles.dismiss}>
+            <Text variant="bodyL" className={styles.dismisstext}>
+              {dismisstext ? dismisstext : "Anuluj"}
             </Text>
           </Button>
 
-          <Button onClick={onDeleteAction} className={styles.delete}>
-            <Text variant="bodyL" className={styles.deletetext}>
-              Usuń
+          <Button onClick={onConfirm} className={styles.confirm}>
+            <Text variant="bodyL" className={styles.confirmtext}>
+              {confirmtext ? confirmtext : "Usuń"}
             </Text>
           </Button>
         </div>

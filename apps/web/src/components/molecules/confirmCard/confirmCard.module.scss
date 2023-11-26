@@ -42,7 +42,7 @@
     align-self: stretch;
     flex-wrap: wrap;
 
-    .cancel {
+    .dismiss {
       display: flex;
       min-width: 100px;
       padding: 8px 16px;
@@ -62,12 +62,12 @@
         background-color: colors.$lightGray;
       }
 
-      .canceltext {
+      .dismisstext {
         color: colors.$black;
         text-align: center;
       }
     }
-    .delete {
+    .confirm {
       display: flex;
       min-width: 100px;
       padding: 8px 16px;
@@ -85,7 +85,7 @@
         background-color: colors.$liveActive;
       }
 
-      .deletetext {
+      .confirmtext {
         color: colors.$white;
         text-align: center;
       }

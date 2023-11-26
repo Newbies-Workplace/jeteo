@@ -61,7 +61,7 @@ export const DeleteEventCard: React.FC<DeleteEventCardProps> = ({
             title={eventTitle}
             description="Tej akcji nie można cofnąć"
             onDimiss={() => handleDismiss()}
-            onDeleteAction={() => handleDelete()}
+            onConfirm={() => handleDelete()}
           />
         </Portal>
       )}
