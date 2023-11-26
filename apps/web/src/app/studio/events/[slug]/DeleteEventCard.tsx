@@ -47,12 +47,14 @@ export const DeleteEventCard: React.FC<DeleteEventCardProps> = ({
   };
 
   return (
-    <div
-      onClick={() => {
-        setIsConfirmVisible(true);
-      }}
-    >
-      <StudioFunctionCard title="Usuń" subtitle="wydarzenie" />
+    <>
+      <div
+        onClick={() => {
+          setIsConfirmVisible(true);
+        }}
+      >
+        <StudioFunctionCard title="Usuń" subtitle="wydarzenie" />
+      </div>
       {isConfirmVisible && (
         <Portal>
           <ConfirmCard
@@ -63,6 +65,6 @@ export const DeleteEventCard: React.FC<DeleteEventCardProps> = ({
           />
         </Portal>
       )}
-    </div>
+    </>
   );
 };

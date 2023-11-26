@@ -8,6 +8,8 @@ interface ConfirmCardProps {
   description: string;
   onDimiss: () => void;
   onDeleteAction: () => void;
+  dismisstext?: string;
+  deletetext?: string;
 }
 
 export const ConfirmCard: React.FC<ConfirmCardProps> = ({
