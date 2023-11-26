@@ -59,6 +59,14 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
     );
   };
 
+  const handleDismiss = () => {
+    setIsConfirmVisible(false);
+  };
+
+  const handleDelete = () => {
+    onDeleteClick();
+  };
+
   return (
     <div className={styles.content}>
       <Timer from={from} to={to} />
@@ -99,7 +107,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
 
           <div
             className={styles.action}
-            onClick={(e) => {
+            onClick={() => {
               setIsConfirmVisible(true);
             }}
           >
@@ -111,8 +119,8 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
               <ConfirmCard
                 title={title}
                 description="Tej akcji nie można cofnąć"
-                onDimiss={() => setIsConfirmVisible(false)}
-                onDeleteAction={() => onDeleteClick()}
+                onDimiss={() => handleDismiss()}
+                onDeleteAction={() => handleDelete()}
               />
             </Portal>
           )}

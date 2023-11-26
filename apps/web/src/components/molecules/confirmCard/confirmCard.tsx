@@ -20,7 +20,7 @@ export const ConfirmCard: React.FC<ConfirmCardProps> = ({
     <div className={styles.root}>
       <div className={styles.content}>
         <Text variant="headS">
-          Czy na pewno chcesz usunąć prelekcję{" "}
+          Czy na pewno chcesz usunąć{" "}
           <Text variant="headS" bold>
             {title}
           </Text>
