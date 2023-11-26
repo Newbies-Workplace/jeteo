@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { getIdFromSlug } from "shared/.dist/util";
 import { useState } from "react";
-import { ConfirmCard } from "@/components/molecules/confirmCard/ConfirmCard";
+import { ConfirmDialog } from "@/components/molecules/confirmDialog/ConfirmDialog";
 import { Portal } from "@/components/molecules/portal/Portal";
 
 interface DeleteEventCardProps {
@@ -57,8 +57,8 @@ export const DeleteEventCard: React.FC<DeleteEventCardProps> = ({
       </div>
       {isConfirmVisible && (
         <Portal>
-          <ConfirmCard
-            title={eventTitle}
+          <ConfirmDialog
+            title={`Czy na pewno chcesz usunąć ${eventTitle}`}
             description="Tej akcji nie można cofnąć"
             onDimiss={() => handleDismiss()}
             onConfirm={() => handleDelete()}

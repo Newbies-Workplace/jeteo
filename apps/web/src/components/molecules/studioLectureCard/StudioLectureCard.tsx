@@ -14,7 +14,7 @@ import { myFetch } from "@/common/fetch";
 import { getIdFromSlug } from "shared/util";
 import toast from "react-hot-toast";
 import { IconButton } from "@/components/atoms/iconButton/IconButton";
-import { ConfirmCard } from "../confirmCard/ConfirmCard";
+import { ConfirmDialog } from "../confirmDialog/ConfirmDialog";
 import { Portal } from "../portal/Portal";
 
 interface StudioLectureCardProps {
@@ -116,7 +116,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
           <div className={styles.cardOverwrite} />
           {isConfirmVisible && (
             <Portal>
-              <ConfirmCard
+              <ConfirmDialog
                 title={title}
                 description="Tej akcji nie można cofnąć"
                 onDimiss={() => handleDismiss()}
