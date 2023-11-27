@@ -32,7 +32,7 @@ export const SpeakerCard: React.FC<SpeakerCardProps> = ({
 
         {jobTitle && <Text variant="bodyS">{jobTitle}</Text>}
 
-        <UserSocials socials={socials} size={12} btnSize={20}/>
+        <UserSocials socials={socials} size={18} btnSize={30}/>
       </div>
     </div>
   );
