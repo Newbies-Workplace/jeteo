@@ -52,4 +52,17 @@
 
     @include typography.bodyM;
   }
+
+  &.disabled {
+    background-color: colors.$stroke;
+
+    cursor: not-allowed;
+
+    &:active {
+      background-color: colors.$stroke;
+    }
+    &:hover {
+      background-color: colors.$stroke;
+    }
+  }
 }

@@ -3,9 +3,10 @@ import { LectureController } from '@/lecture/application/lecture.controller';
 import { LectureService } from '@/lecture/domain/lecture.service';
 import { LectureConverter } from '@/lecture/application/lecture.converter';
 import { UserModule } from '@/user/user.module';
+import { InviteModule } from '@/invite/invite.module';
 
 @Module({
-  imports: [UserModule],
+  imports: [UserModule, InviteModule],
   controllers: [LectureController],
   providers: [LectureService, LectureConverter],
   exports: [LectureService, LectureConverter],

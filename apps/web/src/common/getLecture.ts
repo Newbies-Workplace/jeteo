@@ -3,7 +3,10 @@ import {
   LectureDetailsResponse,
   LectureResponse,
 } from "shared/model/lecture/response/lecture.response";
-import { GetLecturesQuery } from "shared/model/lecture/request/getLectures.query";
+import {
+  GetLecturesQuery,
+  GetMyLecturesQuery,
+} from "shared/model/lecture/request/getLectures.query";
 import { cookies } from "next/headers";
 import { getIdFromSlug } from "shared/util";
 
@@ -55,6 +58,26 @@ export const getEventLectures = async (
 
   const res = await myFetch(
     `/rest/v1/lectures?${urlParams(params)}`,
+    {
+      cache: "no-store",
+      headers: {
+        Cookie: cookies().toString(),
+      },
+    },
+    false
+  );
+  if (!res.ok) return undefined;
+  return res.json();
+};
+
+export const getMyLectures = async (): Promise<LectureResponse[]> => {
+  const params: GetMyLecturesQuery = {
+    page: 1,
+    size: 100,
+  };
+
+  const res = await myFetch(
+    `/rest/v1/lectures/@me?${urlParams(params)}`,
     {
       cache: "no-store",
       headers: {

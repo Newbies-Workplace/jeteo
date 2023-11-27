@@ -22,7 +22,10 @@ export default async function Layout({
 
   return (
     <div className={styles.page}>
-      <StudioHeader title={"Edycja prelekcji"} />
+      <StudioHeader
+        title={"Edycja prelekcji"}
+        returnPath={`/studio/events/edit/${params.slug}/lectures`}
+      />
       <div className={styles.stepsContainer}>
         <StepButton title={"Podstawowe informacje"} active={true} />
       </div>

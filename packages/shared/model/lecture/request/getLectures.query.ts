@@ -12,3 +12,12 @@ export class GetLecturesQuery {
   @IsNumber()
   size: number;
 }
+
+export class GetMyLecturesQuery {
+  @Type(() => Number)
+  @IsNumber()
+  page: number;
+  @Type(() => Number)
+  @IsNumber()
+  size: number;
+}

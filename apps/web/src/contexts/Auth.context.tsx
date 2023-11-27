@@ -2,12 +2,12 @@
 
 import React, { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { UserResponse } from "shared/model/user/response/user.response";
+import { UserDetailsResponse } from "shared/model/user/response/user.response";
 import { myFetch } from "@/common/fetch";
 
 interface AuthContext {
   fetchUser: () => Promise<void>;
-  user: UserResponse | null;
+  user: UserDetailsResponse | null;
 }
 
 export const AuthContext = createContext<AuthContext>({
@@ -16,7 +16,7 @@ export const AuthContext = createContext<AuthContext>({
 });
 
 export const AuthContextProvider: React.FC<any> = ({ children }) => {
-  const [user, setUser] = useState<UserResponse | null>(null);
+  const [user, setUser] = useState<UserDetailsResponse | null>(null);
 
   useEffect(() => {
     if (!Cookies.get("token") && !user) {
@@ -25,8 +25,8 @@ export const AuthContextProvider: React.FC<any> = ({ children }) => {
   }, []);
 
   const fetchUser = async () => {
-    const user: UserResponse = await myFetch("/rest/v1/users/@me").then((res) =>
-      res.json()
+    const user: UserDetailsResponse = await myFetch("/rest/v1/users/@me").then(
+      (res) => res.json()
     );
 
     setUser(user);

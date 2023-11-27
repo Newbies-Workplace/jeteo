@@ -5,11 +5,12 @@ module.exports = {
     esmExternals: "loose",
   },
   images: {
+    domains: ["jeteo.newbies.pl"], //todo fix hardcoded variable
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: '127.0.0.1',
+        protocol: "http",
+        hostname: "127.0.0.1",
       },
     ],
-  }
+  },
 };

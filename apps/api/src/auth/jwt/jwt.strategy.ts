@@ -33,7 +33,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return {
       id: user.id,
       google_id: user.google_id,
+      google_mail: payload.user.google_mail,
       name: user.name,
+      _permissions: {
+        isAuthorized: user.isAuthorized,
+      },
     };
   }
 }

@@ -23,7 +23,7 @@ class UserSocials {
 
   @IsOptional()
   @IsString()
-  linkedIn: string | null;
+  linkedin: string | null;
 }
 
 export class UpdateUserRequest {

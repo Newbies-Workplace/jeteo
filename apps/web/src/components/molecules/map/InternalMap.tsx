@@ -5,11 +5,12 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import { Marker, MarkerLayer } from "react-leaflet-marker";
 import Image from "next/image";
 import PinIcon from "@/assets/pin.svg";
-import ZoomIcon from "@/assets/zoom.svg";
-import CloseIcon from "@/assets/close-black.svg";
+import ZoomIcon from "@/assets/ZoomIn.svg";
+import CloseIcon from "@/assets/close.svg";
 import "leaflet/dist/leaflet.css";
 import styles from "./InternalMap.module.scss";
-import { useScrollBlockHook } from "@/contexts/useScrollBlock.hook";
+import { useScrollBlock } from "@/contexts/useScrollBlock";
+import { IconButton } from "@/components/atoms/iconButton/IconButton";
 
 export interface MapProps {
   coordinates: {
@@ -38,12 +39,13 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
           onDoubleClick={() => setMapPopupOpen(false)}
         />
 
-        <button
-          className={styles.zoomButton}
-          onClick={() => setMapPopupOpen(!isMapPopupOpen)}
-        >
-          <Image src={ZoomIcon} width={16} height={16} alt={"pin"} />
-        </button>
+        <div className={styles.zoomButton}>
+          <IconButton
+            icon={ZoomIcon}
+            primary
+            onClick={() => setMapPopupOpen(!isMapPopupOpen)}
+          />
+        </div>
 
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
@@ -83,7 +85,7 @@ const LocationDialog: React.FC<LocationDialogProps> = ({
   closeDialog,
   coordinates,
 }) => {
-  useScrollBlockHook();
+  useScrollBlock();
 
   return (
     <>
@@ -102,9 +104,9 @@ const LocationDialog: React.FC<LocationDialogProps> = ({
         zoomControl={false}
         scrollWheelZoom
       >
-        <button className={styles.zoomButton} onClick={() => closeDialog()}>
-          <Image src={CloseIcon} width={16} height={16} alt={"close"} />
-        </button>
+        <div className={styles.zoomButton}>
+          <IconButton icon={CloseIcon} primary onClick={() => closeDialog()} />
+        </div>
 
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 

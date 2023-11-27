@@ -10,6 +10,8 @@ import Button from "@/components/atoms/button/Button";
 import { useAuth } from "@/contexts/Auth.hook";
 import { UpdateUserRequest } from "shared/model/user/request/updateUser.request";
 import { myFetch } from "@/common/fetch";
+import { FileItem } from "@/components/molecules/fileItem/FileItem";
+import toast from "react-hot-toast";
 
 type ProfileForm = {
   name: string;
@@ -17,7 +19,7 @@ type ProfileForm = {
   description: string;
   socials: {
     mail: string;
-    linkedIn: string;
+    linkedin: string;
     twitter: string;
     github: string;
   };
@@ -27,19 +29,21 @@ export default function Page() {
   const { user } = useAuth();
   const [isInitialized, setIsInitialized] = useState(false);
   const { control, handleSubmit, reset } = useForm<ProfileForm>();
+  const [avatarUrl, setAvatarUrl] = useState<string>(user?.avatar);
 
   useEffect(() => {
     if (!user || isInitialized) return;
 
     setIsInitialized(true);
 
+    setAvatarUrl(user.avatar);
     reset({
       name: user.name,
       jobTitle: user.jobTitle,
       description: user.description,
       socials: {
         mail: user.socials.mail,
-        linkedIn: user.socials.linkedIn,
+        linkedin: user.socials.linkedin,
         twitter: user.socials.twitter,
         github: user.socials.github,
       },
@@ -47,11 +51,17 @@ export default function Page() {
   }, [user, isInitialized]);
 
   const onSubmit: SubmitHandler<ProfileForm> = (data: ProfileForm) => {
-    console.log(data);
-    myFetch(`/rest/v1/users/@me`, {
-      method: "PUT",
-      body: JSON.stringify(getUpdateUserRequestData(data)),
-    }).then((res) => res.json());
+    toast.promise(
+      myFetch(`/rest/v1/users/@me`, {
+        method: "PUT",
+        body: JSON.stringify(getUpdateUserRequestData(data)),
+      }),
+      {
+        loading: "Zapisywanie...",
+        success: <b>Profil zapisano pomyślnie!</b>,
+        error: <b>Wystąpił błąd</b>,
+      }
+    );
   };
 
   const getUpdateUserRequestData = (form: ProfileForm): UpdateUserRequest => {
@@ -62,19 +72,39 @@ export default function Page() {
       description: form.description,
       socials: {
         mail: form.socials.mail,
-        linkedIn: form.socials.linkedIn,
+        linkedin: form.socials.linkedin,
         twitter: form.socials.twitter,
         github: form.socials.github,
       },
     };
   };
 
+  const saveAvatar = async (file: File) => {
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    const res = await myFetch(`/rest/v1/users/@me/avatar`, {
+      method: "PUT",
+      body: formData,
+      headers: undefined,
+    });
+    res.text().then((avatarUrl) => {
+      setAvatarUrl(avatarUrl);
+    });
+  };
+
   return (
     <form style={{ display: "flex", flexDirection: "column" }}>
       <div className={styles.container}>
         <Section title="Zdjęcie profilowe">
-          {/* <FileItem url="" /> */}
-          <FileUpload onChange={() => {}} />
+          <div className={styles.imageInputs}>
+            <FileUpload
+              onChange={(files) => {
+                saveAvatar(files[0]);
+              }}
+            />
+            <FileItem url={avatarUrl} />
+          </div>
         </Section>
         <Section title="Dane podstawowe">
           <ControlledInput
@@ -104,7 +134,7 @@ export default function Page() {
           />
           <ControlledInput
             control={control}
-            name="socials.linkedIn"
+            name="socials.linkedin"
             label="LinkedIn"
           />
           <ControlledInput

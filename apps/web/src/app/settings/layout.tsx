@@ -1,10 +1,9 @@
 import { Navbar } from "@/components/molecules/navbar/Navbar";
 import React from "react";
 import styles from "./layout.module.scss";
-import Link from "next/link";
 import Image from "next/image";
 import person from "@/assets/person.svg";
-import { useAuth } from "@/contexts/Auth.hook";
+import { NavButton } from "@/components/molecules/navButton/NavButton";
 import AuthRoot from "@/contexts/Auth.root";
 import { SettingsPage } from "@/contexts/loaders/settings.page";
 
@@ -27,14 +26,3 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </AuthRoot>
   );
 }
-
-const NavButton: React.FC<{ children: React.ReactNode; href: string }> = ({
-  children,
-  href,
-}) => {
-  return (
-    <Link href={href} className={styles.navButton}>
-      {children}
-    </Link>
-  );
-};

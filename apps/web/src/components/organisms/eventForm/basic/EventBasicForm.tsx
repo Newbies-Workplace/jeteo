@@ -16,6 +16,7 @@ import { UpdateEventRequest } from "shared/model/event/request/updateEvent.reque
 import { Validations } from "@/common/validations";
 import { ControlledMarkdownInput } from "@/components/atoms/markdownInput/ControlledMarkdownInput";
 import { TagPicker } from "@/components/molecules/tagPicker/TagPicker";
+import toast from "react-hot-toast";
 
 const locationOptions = [
   { id: "location", name: "Na miejscu" },
@@ -46,8 +47,8 @@ const getDefaultValue = (event?: EventResponse): BasicForm => {
         title: event.title,
         subtitle: event.subtitle,
         description: event.description,
-        from: dayjs(event.from).format("YYYY-MM-DDThh:mm"),
-        to: dayjs(event.to).format("YYYY-MM-DDThh:mm"),
+        from: dayjs(event.from).format("YYYY-MM-DDTHH:mm"),
+        to: dayjs(event.to).format("YYYY-MM-DDTHH:mm"),
         location: event.address ? "location" : "online",
         address: {
           city: event.address?.city,
@@ -63,8 +64,8 @@ const getDefaultValue = (event?: EventResponse): BasicForm => {
         title: "",
         subtitle: "",
         description: "",
-        from: dayjs().format("YYYY-MM-DDThh:mm"),
-        to: dayjs().add(1, "h").format("YYYY-MM-DDThh:mm"),
+        from: dayjs().format("YYYY-MM-DDTHH:mm"),
+        to: dayjs().add(1, "h").format("YYYY-MM-DDTHH:mm"),
         location: "location",
         address: {
           city: "",
@@ -167,13 +168,16 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
   );
 
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
-    getRequest(data, event)
-      .then((res: EventResponse) => {
+    toast.promise(
+      getRequest(data, event).then((res: EventResponse) => {
         onSubmitted?.(res);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      }),
+      {
+        loading: "Zapisywanie...",
+        success: <b>Wydarzenie zapisano pomyślnie!</b>,
+        error: <b>Wystąpił błąd</b>,
+      }
+    );
   };
 
   return (
@@ -301,7 +305,7 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
         )}
       </Section>
 
-      <Section title={"Dla kogo?"}>
+      <Section title={"Tagi"}>
         <Controller
           name={"tags"}
           control={control}

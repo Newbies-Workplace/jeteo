@@ -4,10 +4,11 @@ import { Text } from "@/components/atoms/text/Text";
 import styles from "./page.module.scss";
 import { getEvent } from "@/common/getEvent";
 import { notFound } from "next/navigation";
-import { StudioLectureCard } from "@/components/molecules/studioLectureCard/StudioLectureCard";
 import React from "react";
 import { getEventLectures } from "@/common/getLecture";
 import { EventLecturesForm } from "@/components/organisms/eventForm/lectures/EventLecturesForm";
+import Link from "next/link";
+import { DeleteEventCard } from "@/app/studio/events/[slug]/DeleteEventCard";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const event = await getEvent(params.slug);
@@ -18,25 +19,22 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className={styles.content}>
-      <StudioHeader title={event.title} />
+      <StudioHeader title={event.title} returnPath={"/studio/events"} />
 
       <div className={styles.cards}>
-        <StudioFunctionCard
-          href={`/events/${event.slug}`}
-          title="Zobacz"
-          subtitle="wydarzenie"
-        />
-        <StudioFunctionCard
-          href={`/studio/events/edit/${event.slug}/basic`}
-          title="Edytuj"
-          subtitle="wydarzenie"
-        />
-        <StudioFunctionCard href="#" title="Usuń" subtitle="wydarzenie" />
+        <Link href={`/events/${event.slug}`}>
+          <StudioFunctionCard title="Zobacz" subtitle="wydarzenie" />
+        </Link>
+        <Link href={`/studio/events/edit/${event.slug}/basic`}>
+          <StudioFunctionCard title="Edytuj" subtitle="wydarzenie" />
+        </Link>
+        <DeleteEventCard eventId={event.id} />
       </div>
 
       <Text variant="headL" style={{ marginTop: 16, marginBottom: 16 }}>
         Prelekcje
       </Text>
+
       <EventLecturesForm eventSlug={params.slug} lectures={lectures} />
     </div>
   );

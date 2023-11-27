@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/molecules/navbar/Navbar";
 import { GetUser } from "@/components/home/GetUser";
 import styles from "@/app/page.module.scss";
-import { EventCard } from "@/components/molecules/eventCard/EventCard";
+import { SmartEventCard } from "@/components/molecules/eventCard/EventCard";
 import Link from "next/link";
 import React from "react";
 import { Text } from "@/components/atoms/text/Text";
@@ -29,21 +29,7 @@ export default async function Page() {
                     href={`/events/${event.slug}`}
                     style={{ alignSelf: "stretch" }}
                   >
-                    <EventCard
-                      title={event.title}
-                      subtitle={event.subtitle}
-                      host={{
-                        name: event.host.name,
-                        avatar: event.host.avatar,
-                      }}
-                      place={
-                        event.address
-                          ? event.address.city + ", " + event.address.place
-                          : undefined
-                      }
-                      tags={event.tags}
-                      startDate={event.from}
-                    />
+                    <SmartEventCard event={event} />
                   </Link>
                 );
               })}

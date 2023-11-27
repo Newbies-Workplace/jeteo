@@ -9,9 +9,13 @@ import { useRouter } from "next/navigation";
 
 interface StudioHeaderProps {
   title: string;
+  returnPath?: string;
 }
 
-export const StudioHeader: React.FC<StudioHeaderProps> = ({ title }) => {
+export const StudioHeader: React.FC<StudioHeaderProps> = ({
+  title,
+  returnPath,
+}) => {
   const router = useRouter();
 
   return (
@@ -20,7 +24,9 @@ export const StudioHeader: React.FC<StudioHeaderProps> = ({ title }) => {
         className={styles.icon}
         src={arrowBack}
         alt="Arrow back"
-        onClick={() => router.back()}
+        onClick={() => {
+          returnPath ? router.replace(returnPath) : router.back();
+        }}
       />
 
       <Text variant="headM" bold>

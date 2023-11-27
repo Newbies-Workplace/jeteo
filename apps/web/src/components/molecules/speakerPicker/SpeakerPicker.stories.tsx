@@ -17,7 +17,10 @@ export default meta;
 type Story = StoryObj<typeof SpeakerPicker>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    invites: [],
+    speakers: [],
+  },
 };
 
 export const WithInvites: Story = {

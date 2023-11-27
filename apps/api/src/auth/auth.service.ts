@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '@/config/prisma.service';
 import { GoogleUser } from './strategies/google.model';
 import { nanoid } from '@/common/nanoid';
+import { Token, TokenUser } from '@/auth/jwt/jwt.model';
 
 @Injectable()
 export class AuthService {
@@ -28,14 +29,18 @@ export class AuthService {
       });
     }
 
-    return this.jwtService.sign(
-      {
-        user: {
-          id: queryUser.id,
-          google_id: googleUser.id,
+    const payload: Token = {
+      user: {
+        id: queryUser.id,
+        name: queryUser.name,
+        google_id: queryUser.google_id,
+        google_mail: googleUser.email,
+        _permissions: {
+          isAuthorized: queryUser.isAuthorized,
         },
       },
-      { secret: process.env['JWT_SECRET'] },
-    );
+    };
+
+    return this.jwtService.sign(payload, { secret: process.env['JWT_SECRET'] });
   }
 }

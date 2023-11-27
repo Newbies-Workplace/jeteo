@@ -6,31 +6,40 @@ import {
 import { UserConverter } from '@/user/application/user.converter';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { generateSlug } from '@/common/slugs';
-import dayjs from 'dayjs';
+import { InviteConverter } from '@/invite/application/invite.converter';
+import { PrismaService } from '@/config/prisma.service';
 
 @Injectable()
 export class LectureConverter {
-  constructor(private readonly userConverter: UserConverter) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly userConverter: UserConverter,
+    private readonly inviteConverter: InviteConverter,
+  ) {}
 
   convert(lecture: LectureDetails): LectureResponse {
-    const now = dayjs();
-    const canBeRated =
-      now.isAfter(dayjs(lecture.from)) &&
-      now.isBefore(dayjs(lecture.to).add(3, 'd'));
-
     const overallAverage =
-      lecture.Rate.reduce((acc, rate) => acc + rate.overallRate, 0) /
-      lecture.Rate.length;
+      lecture.Rate.length === 0
+        ? 0
+        : lecture.Rate.reduce((acc, rate) => acc + rate.overallRate, 0) /
+          lecture.Rate.length;
     const topicAverage =
-      lecture.Rate.reduce((acc, rate) => acc + rate.topicRate, 0) /
-      lecture.Rate.length;
+      lecture.Rate.length === 0
+        ? 0
+        : lecture.Rate.reduce((acc, rate) => acc + rate.topicRate, 0) /
+          lecture.Rate.length;
 
-    const average = overallAverage + topicAverage / 2;
+    const average = (overallAverage + topicAverage) / 2;
 
     return {
       id: lecture.id,
       slug: generateSlug(lecture.title, lecture.id),
-      eventId: lecture.eventId,
+      event: {
+        id: lecture.Event.id,
+        slug: generateSlug(lecture.Event.title, lecture.Event.id),
+        title: lecture.Event.title,
+        subtitle: lecture.Event.subtitle,
+      },
       title: lecture.title,
       description: lecture.description,
       from: lecture.from.toISOString(),
@@ -43,21 +52,64 @@ export class LectureConverter {
         overallAverage: overallAverage,
         topicAverage: topicAverage,
       },
-      invites: lecture.Invites.map((invite) => ({
-        id: invite.id,
-        name: invite.name,
-        createdAt: invite.createdAt.toISOString(),
-      })),
+      invites: lecture.Invites.map((invite) =>
+        this.inviteConverter.convert(invite),
+      ),
       speakers: lecture.Speakers.map((user) =>
         this.userConverter.convert(user),
       ),
-      _metadata: {
-        canBeRated: canBeRated,
-      },
     };
   }
 
-  convertDetails(lecture: LectureDetails): LectureDetailsResponse {
+  async convertDetails(
+    lecture: LectureDetails,
+  ): Promise<LectureDetailsResponse> {
+    const invites = await Promise.all(
+      lecture.Invites.map((invite) =>
+        this.inviteConverter.convertDetails(invite),
+      ),
+    );
+    const overallRatesCounts = await this.prismaService.rate.groupBy({
+      by: ['overallRate'],
+      _count: {
+        overallRate: true,
+      },
+      where: {
+        lectureId: lecture.id,
+      },
+    });
+    const topicRatesCounts = await this.prismaService.rate.groupBy({
+      by: ['topicRate'],
+      _count: {
+        topicRate: true,
+      },
+      where: {
+        lectureId: lecture.id,
+      },
+    });
+
+    const formattedOverallRatesCounts = Array.from({ length: 5 }, (_, i) => {
+      const overallRate = i + 1;
+      const item = overallRatesCounts.find(
+        (rate) => rate.overallRate === overallRate,
+      );
+
+      return {
+        [overallRate]: item ? item._count.overallRate : 0,
+      };
+    });
+
+    const formattedTopicRatesCounts = Array.from({ length: 5 }, (_, i) => {
+      const topicRate = i + 1;
+      const item = topicRatesCounts.find(
+        (rate) => rate.topicRate === topicRate,
+      );
+
+      return {
+        [topicRate]: item ? item._count.topicRate : 0,
+      };
+    });
+
     return {
       ...this.convert(lecture),
       ratings: lecture.Rate.map((rate) => ({
@@ -67,11 +119,9 @@ export class LectureConverter {
         topicRate: rate.topicRate,
         createdAt: rate.createdAt.toISOString(),
       })),
-      invites: lecture.Invites.map((invite) => ({
-        id: invite.id,
-        name: invite.name,
-        mail: invite.mail,
-      })),
+      invites: invites,
+      overallRatesCounts: formattedOverallRatesCounts,
+      topicRatesCounts: formattedTopicRatesCounts,
     };
   }
 }

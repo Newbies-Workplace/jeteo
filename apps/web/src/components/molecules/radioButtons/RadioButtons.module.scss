@@ -60,6 +60,19 @@
       background-color: colors.$primaryActive;
     }
   }
+
+  &.disabled {
+    background-color: colors.$lightGray;
+    color: colors.$black;
+
+    &:hover {
+      background-color: colors.$lightGray;
+    }
+
+    &:active {
+      background-color: colors.$lightGray;
+    }
+  }
 }
 
 .help {

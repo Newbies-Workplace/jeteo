@@ -5,7 +5,6 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Section } from "@/components/molecules/section/Section";
 import { ControlledInput } from "@/components/atoms/input/ControlledInput";
 import { Validations } from "@/common/validations";
-import { ControlledMarkdownInput } from "@/components/atoms/markdownInput/ControlledMarkdownInput";
 import dayjs from "dayjs";
 import { SpeakerPicker } from "@/components/molecules/speakerPicker/SpeakerPicker";
 import Button from "@/components/atoms/button/Button";
@@ -22,6 +21,7 @@ import {
 } from "shared/model/lecture/response/lecture.response";
 import { UpdateLectureRequest } from "shared/model/lecture/request/updateLecture.request";
 import { getIdFromSlug } from "shared/util";
+import toast from "react-hot-toast";
 
 type BasicForm = {
   title: string;
@@ -39,8 +39,8 @@ const getDefaultValue = (lecture?: LectureDetailsResponse): BasicForm => {
     ? {
         title: lecture.title,
         description: lecture.description,
-        from: dayjs(lecture.from).format("YYYY-MM-DDThh:mm"),
-        to: dayjs(lecture.to).format("YYYY-MM-DDThh:mm"),
+        from: dayjs(lecture.from).format("YYYY-MM-DDTHH:mm"),
+        to: dayjs(lecture.to).format("YYYY-MM-DDTHH:mm"),
         speakersAndInvites: {
           invites: lecture.invites,
           speakers: lecture.speakers,
@@ -49,8 +49,8 @@ const getDefaultValue = (lecture?: LectureDetailsResponse): BasicForm => {
     : {
         title: "",
         description: "",
-        from: dayjs().format("YYYY-MM-DDThh:mm"),
-        to: dayjs().add(1, "h").format("YYYY-MM-DDThh:mm"),
+        from: dayjs().format("YYYY-MM-DDTHH:mm"),
+        to: dayjs().add(1, "h").format("YYYY-MM-DDTHH:mm"),
         speakersAndInvites: {
           invites: [],
           speakers: [],
@@ -80,8 +80,8 @@ const getCreateRequestData = (form: BasicForm): CreateLectureRequest => {
   return {
     title: form.title,
     description: form.description,
-    from: form.from,
-    to: form.to,
+    from: dayjs(form.from).toISOString(),
+    to: dayjs(form.to).toISOString(),
     invites: form.speakersAndInvites.invites,
   };
 };
@@ -89,8 +89,8 @@ const getUpdateRequestData = (form: BasicForm): UpdateLectureRequest => {
   return {
     title: form.title,
     description: form.description,
-    from: form.from,
-    to: form.to,
+    from: dayjs(form.from).toISOString(),
+    to: dayjs(form.to).toISOString(),
     invites: form.speakersAndInvites.invites,
     speakerIds: form.speakersAndInvites.speakers.map((speaker) => speaker.id),
   };
@@ -112,13 +112,18 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   });
 
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
-    getRequest(data, eventSlug, lecture)
-      .then((res: LectureDetailsResponse) => {
-        onSubmitted?.(res);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    toast.promise(
+      getRequest(data, eventSlug, lecture).then(
+        (res: LectureDetailsResponse) => {
+          onSubmitted?.(res);
+        }
+      ),
+      {
+        loading: "Zapisywanie...",
+        success: <b>Wydarzenie zapisano pomyślnie!</b>,
+        error: <b>Wystąpił błąd</b>,
+      }
+    );
   };
 
   return (
@@ -160,12 +165,11 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
           }}
         />
 
-        <ControlledMarkdownInput
+        <ControlledInput
           name={"description"}
           label={"Opis"}
           required
-          height={200}
-          textareaProps={{ maxLength: 10000 }}
+          multiline
           control={control}
           rules={{
             required: Validations.required,

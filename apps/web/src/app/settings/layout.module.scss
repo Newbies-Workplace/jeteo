@@ -31,22 +31,3 @@
   @include typography.logoM;
   font-weight: bold;
 }
-
-.navButton {
-  display: flex;
-  padding: 8px;
-  align-items: center;
-  gap: 8px;
-  align-self: stretch;
-  max-width: 300px;
-
-  border-radius: 8px;
-  border: 2px solid colors.$primary;
-  background: colors.$surface;
-
-  box-shadow: 0px 2px 8px 0px rgba(0, 133, 255, 0.25);
-
-  text-decoration: none;
-  color: colors.$black;
-  @include typography.bodyM;
-}

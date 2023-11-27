@@ -94,6 +94,7 @@ $shadows-big: create-stars(200);
 .ufo {
     position: relative;
     height: 30px;
+    width: auto;
 
     &:nth-child(1) {
         animation: ufoUpDown 2s alternate infinite ease-in-out;
@@ -121,6 +122,7 @@ $shadows-big: create-stars(200);
     right: 0;
 
     height: 100px;
+    width: auto;
 
     animation: circle 16s linear infinite;
 }

@@ -3,12 +3,17 @@ import { UserResponse } from "../../user/response/user.response";
 import {
   InviteResponse,
   InviteDetailsResponse,
-} from "../../invite/response/inviteDetailsResponse";
+} from "../../invite/response/inviteResponse";
 
 export interface LectureResponse {
   id: string;
   slug: string;
-  eventId: string;
+  event: {
+    id: string;
+    slug: string;
+    title: string;
+    subtitle?: string;
+  };
   title: string;
   description: string;
   from: DateTime;
@@ -23,9 +28,6 @@ export interface LectureResponse {
     topicAverage: number;
   };
   createdAt: DateTime;
-  _metadata: {
-    canBeRated: boolean;
-  };
 }
 
 export interface LectureDetailsResponse extends LectureResponse {
@@ -37,4 +39,6 @@ export interface LectureDetailsResponse extends LectureResponse {
     opinion: string;
     createdAt: DateTime;
   }[];
+  overallRatesCounts: { [key: number]: number }[];
+  topicRatesCounts: { [key: number]: number }[];
 }

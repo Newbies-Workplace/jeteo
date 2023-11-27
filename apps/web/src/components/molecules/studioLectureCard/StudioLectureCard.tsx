@@ -1,16 +1,19 @@
 import styles from "./StudioLectureCard.module.scss";
 import React from "react";
-import Image from "next/image";
 import Delete from "@/assets/delete.svg";
 import Edit from "@/assets/edit.svg";
 import { Text } from "@/components/atoms/text/Text";
 import {
   SpeakerCard,
   SpeakerCardProps,
-} from "@/components/molecules/lectureCard/SpeakerCard/SpeakerCard";
+} from "@/components/molecules/speakerCard/SpeakerCard";
 import { Timer } from "@/components/molecules/timer/Timer";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { myFetch } from "@/common/fetch";
+import { getIdFromSlug } from "shared/util";
+import toast from "react-hot-toast";
+import { IconButton } from "@/components/atoms/iconButton/IconButton";
 
 interface StudioLectureCardProps {
   eventSlug: string;
@@ -31,10 +34,25 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
   description,
   speakers,
 }) => {
-  const navigate = useRouter();
+  const router = useRouter();
   const navigateToSummary = () => {
-    navigate.replace(
+    router.replace(
       `/studio/events/${eventSlug}/lectures/${lectureSlug}/summary`
+    );
+  };
+
+  const onDeleteClick = () => {
+    toast.promise(
+      myFetch(`/rest/v1/lectures/${getIdFromSlug(lectureSlug)}`, {
+        method: "DELETE",
+      }).then((r) => {
+        router.refresh();
+      }),
+      {
+        loading: "Usuwanie...",
+        success: <b>Prelekcję usunięto pomyślnie!</b>,
+        error: <b>Wystąpił błąd</b>,
+      }
     );
   };
 
@@ -73,17 +91,19 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
             href={`/studio/events/edit/${eventSlug}/lectures/edit/${lectureSlug}/basic`}
             onClick={(e) => e.stopPropagation()}
           >
-            <Image src={Edit} alt={"Edit"} width={24} height={24} />
+            <IconButton icon={Edit} />
           </Link>
 
-          <Image
+          <div
             className={styles.action}
-            src={Delete}
-            alt={"Delete"}
-            width={24}
-            height={24}
-          />
-          <div className={styles.cardOverwrite}></div>
+            onClick={(e) => {
+              e.stopPropagation();
+              onDeleteClick();
+            }}
+          >
+            <IconButton icon={Delete} />
+          </div>
+          <div className={styles.cardOverwrite} />
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -14,7 +15,10 @@ import {
   LectureDetailsResponse,
   LectureResponse,
 } from 'shared/model/lecture/response/lecture.response';
-import { GetLecturesQuery } from 'shared/model/lecture/request/getLectures.query';
+import {
+  GetLecturesQuery,
+  GetMyLecturesQuery,
+} from 'shared/model/lecture/request/getLectures.query';
 import { LectureService } from '@/lecture/domain/lecture.service';
 import { LectureConverter } from '@/lecture/application/lecture.converter';
 import { PrismaService } from '@/config/prisma.service';
@@ -64,13 +68,44 @@ export class LectureController {
         eventId: query.eventId,
       },
       orderBy: {
-        createdAt: 'asc',
+        from: 'asc',
       },
       skip: (query.page - 1) * query.size,
       take: query.size,
     });
 
     assertEventReadAccess(user, event);
+
+    return await Promise.all(
+      lectures.map((lecture) => this.lectureConverter.convert(lecture)),
+    );
+  }
+  @Get('/@me')
+  @UseGuards(JwtGuard)
+  async getMyLectures(
+    @Query() query: GetMyLecturesQuery,
+    @JWTUser() user: TokenUser,
+  ): Promise<LectureResponse[]> {
+    const lectures = await this.prismaService.lecture.findMany({
+      include: {
+        Event: true,
+        Invites: true,
+        Speakers: true,
+        Rate: true,
+      },
+      where: {
+        Speakers: {
+          some: {
+            id: user.id,
+          },
+        },
+      },
+      orderBy: {
+        from: 'asc',
+      },
+      skip: (query.page - 1) * query.size,
+      take: query.size,
+    });
 
     return await Promise.all(
       lectures.map((lecture) => this.lectureConverter.convert(lecture)),
@@ -119,6 +154,19 @@ export class LectureController {
     );
 
     return this.lectureConverter.convertDetails(updatedLecture);
+  }
+
+  @Delete('/:id')
+  @UseGuards(JwtGuard)
+  async deleteLecture(
+    @Param('id') id: string,
+    @JWTUser() user: TokenUser,
+  ): Promise<void> {
+    const lecture = await this.getLectureDetailsById(id);
+
+    assertEventWriteAccess(user, lecture.Event);
+
+    await this.lectureService.deleteLecture(lecture.id);
   }
 
   @Post('/:id/rate')

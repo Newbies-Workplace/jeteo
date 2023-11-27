@@ -4,11 +4,16 @@ import UserMenu from "./menus/userMenu/UserMenu";
 import GuestMenu from "./menus/guestMenu/GuestMenu";
 import { useAuth } from "@/contexts/Auth.hook";
 import Image from "next/image";
-import burger from "@/assets/Burger.svg";
+import burger from "@/assets/burger.svg";
+import burgerWhite from "@/assets/burger-white.svg";
 import styles from "./ProfileMenu.module.scss";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
-export default function ProfileMenu() {
+export interface ProfileMenuProps {
+  invertColors?: boolean;
+}
+
+export const ProfileMenu: React.FC<ProfileMenuProps> = ({ invertColors }) => {
   const { user } = useAuth();
 
   const [showMenu, setShowMenu] = useState(false);
@@ -36,7 +41,7 @@ export default function ProfileMenu() {
       <Image
         style={{ cursor: "pointer" }}
         alt="Open menu"
-        src={burger}
+        src={invertColors ? burgerWhite : burger}
         onClick={() => setShowMenu(!showMenu)}
       />
       <div className={styles.menuContainer}>
@@ -44,4 +49,4 @@ export default function ProfileMenu() {
       </div>
     </div>
   );
-}
+};

@@ -6,7 +6,10 @@ import React from "react";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.page}>
-      <StudioHeader title={"Kreator wydarzenia"} />
+      <StudioHeader
+        title={"Kreator wydarzenia"}
+        returnPath={"/studio/events"}
+      />
       <div className={styles.stepsContainer}>
         <StepButton title={"Podstawowe informacje"} active={true} />
         <StepButton title={"Wygląd"} active={false} disabled />

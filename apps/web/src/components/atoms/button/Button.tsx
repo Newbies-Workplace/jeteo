@@ -8,6 +8,7 @@ import Image from "next/image";
 interface ButtonProps {
   className?: string;
   primary?: boolean;
+  disabled?: boolean;
   style?: React.CSSProperties;
   leftIcon?: string;
   rightIcon?: string;
@@ -21,6 +22,7 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   children,
   className,
   primary = false,
+  disabled = false,
   type = "button",
   onClick,
   size = "medium",
@@ -32,8 +34,10 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   return (
     <button
       type={type}
+      disabled={disabled}
       className={cs(className, styles.button, {
         [styles.primary]: primary,
+        [styles.disabled]: disabled,
         [styles.medium]: size === "medium",
         [styles.small]: size === "small",
       })}

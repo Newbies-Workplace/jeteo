@@ -20,7 +20,10 @@ export default async function Layout({
 
   return (
     <div className={styles.page}>
-      <StudioHeader title={`Edycja wydarzenia: ${event.title}`} />
+      <StudioHeader
+        title={`Edycja wydarzenia: ${event.title}`}
+        returnPath={`/studio/events/${params.slug}`}
+      />
       <StepNavigation
         links={[
           {
