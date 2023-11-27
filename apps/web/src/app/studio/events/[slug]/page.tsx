@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <Link href={`/studio/events/edit/${event.slug}/basic`}>
           <StudioFunctionCard title="Edytuj" subtitle="wydarzenie" />
         </Link>
-        <DeleteEventCard eventId={event.id} />
+        <DeleteEventCard eventId={event.id} eventTitle={event.title} />
       </div>
 
       <Text variant="headL" style={{ marginTop: 16, marginBottom: 16 }}>
