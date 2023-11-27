@@ -8,6 +8,7 @@ interface IconButtonProps {
   alt?: string;
   primary?: boolean;
   size?: number;
+  btnSize?: number;
   onClick?: () => void;
 }
 
@@ -17,6 +18,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   onClick,
   primary = false,
   size=24,
+  btnSize=40,
 
 }) => {
   return (
@@ -24,6 +26,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
       className={cs(styles.iconButton, {
         [styles.primary]: primary,
       })}
+      style={{width: btnSize, height: btnSize}}
     >
       <Image
         src={icon}
