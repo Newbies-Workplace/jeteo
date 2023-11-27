@@ -33,7 +33,6 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
   const [color, setColor] = useState(event?.primaryColor);
   const [coverImage, setCoverImage] = useState<string>(event?.coverImage);
 
-  console.log(`coverImage: ${coverImage}`);
   const onSubmit = () => {
     toast.promise(
       getRequest(color, event).then((res: EventResponse) => {

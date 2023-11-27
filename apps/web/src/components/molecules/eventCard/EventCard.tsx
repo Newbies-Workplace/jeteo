@@ -120,7 +120,6 @@ export const SmartEventCard: React.FC<{ event: EventResponse }> = ({
   const isFresh = now.isAfter(end) && now.isBefore(freshnessEnd);
   const isArchive = now.isAfter(freshnessEnd);
 
-  console.log(`coverImage: ${event.coverImage}`);
   return (
     <EventCard
       title={event.title}
