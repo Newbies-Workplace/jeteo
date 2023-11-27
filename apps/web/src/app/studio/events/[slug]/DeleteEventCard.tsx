@@ -5,7 +5,6 @@ import { StudioFunctionCard } from "@/components/molecules/studioFunctionCard/St
 import { myFetch } from "@/common/fetch";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { getIdFromSlug } from "shared/.dist/util";
 import { useState } from "react";
 import { ConfirmDialog } from "@/components/molecules/confirmDialog/ConfirmDialog";
 import { Portal } from "@/components/molecules/portal/Portal";
@@ -21,14 +20,6 @@ export const DeleteEventCard: React.FC<DeleteEventCardProps> = ({
 }) => {
   const router = useRouter();
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
-
-  const handleDismiss = () => {
-    setIsConfirmVisible(false);
-  };
-
-  const handleDelete = () => {
-    onDelete();
-  };
 
   const onDelete = () => {
     toast.promise(
@@ -55,13 +46,14 @@ export const DeleteEventCard: React.FC<DeleteEventCardProps> = ({
       >
         <StudioFunctionCard title="Usuń" subtitle="wydarzenie" />
       </div>
+
       {isConfirmVisible && (
         <Portal>
           <ConfirmDialog
-            title={`Czy na pewno chcesz usunąć ${eventTitle}`}
+            title={`Czy na pewno chcesz usunąć ${eventTitle}?`}
             description="Tej akcji nie można cofnąć"
-            onDimiss={() => handleDismiss()}
-            onConfirm={() => handleDelete()}
+            onDismiss={() => setIsConfirmVisible(false)}
+            onConfirm={() => onDelete()}
           />
         </Portal>
       )}

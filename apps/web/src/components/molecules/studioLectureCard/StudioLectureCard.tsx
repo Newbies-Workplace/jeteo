@@ -59,14 +59,6 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
     );
   };
 
-  const handleDismiss = () => {
-    setIsConfirmVisible(false);
-  };
-
-  const handleDelete = () => {
-    onDeleteClick();
-  };
-
   return (
     <div className={styles.content}>
       <Timer from={from} to={to} />
@@ -114,13 +106,14 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
             <IconButton icon={Delete} />
           </div>
           <div className={styles.cardOverwrite} />
+
           {isConfirmVisible && (
             <Portal>
               <ConfirmDialog
-                title={title}
+                title={`Czy na pewno chcesz usunąć ${title}?`}
                 description="Tej akcji nie można cofnąć"
-                onDimiss={() => handleDismiss()}
-                onConfirm={() => handleDelete()}
+                onDismiss={() => setIsConfirmVisible(false)}
+                onConfirm={() => onDeleteClick()}
               />
             </Portal>
           )}

@@ -6,38 +6,44 @@ import Button from "@/components/atoms/button/Button";
 interface ConfirmDialogProps {
   title: string;
   description: string;
-  onDimiss: () => void;
+  onDismiss: () => void;
   onConfirm: () => void;
-  dismisstext?: string;
-  confirmtext?: string;
+  dismissText?: string;
+  confirmText?: string;
 }
 
 export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   title,
   description,
-  onDimiss,
+  onDismiss,
   onConfirm,
-  dismisstext = "Anuluj",
-  confirmtext = "Potwierdź",
+  dismissText = "Anuluj",
+  confirmText = "Potwierdź",
 }) => {
   return (
-    <div className={styles.root}>
-      <div className={styles.content}>
+    <div className={styles.root} onClick={onDismiss}>
+      <div
+        className={styles.content}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <Text variant="headS">{title}</Text>
 
         <span className={styles.description}>
           <Text variant="bodyM">{description}</Text>
         </span>
+
         <div className={styles.buttons}>
-          <Button onClick={onDimiss} className={styles.dismiss}>
+          <Button onClick={onDismiss} className={styles.dismiss}>
             <Text variant="bodyL" className={styles.dismisstext}>
-              {dismisstext}
+              {dismissText}
             </Text>
           </Button>
 
           <Button onClick={onConfirm} className={styles.confirm}>
             <Text variant="bodyL" className={styles.confirmtext}>
-              {confirmtext}
+              {confirmText}
             </Text>
           </Button>
         </div>
