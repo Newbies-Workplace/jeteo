@@ -6,10 +6,12 @@ import calendarIcon from "@/assets/calendar.svg";
 import lectureIcon from "@/assets/lecture.svg";
 import inviteIcon from "@/assets/invite.svg";
 import { NavButton } from "@/components/molecules/navButton/NavButton";
+import AuthRoot from "@/contexts/Auth.root";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={styles.page}>
+    <AuthRoot>
+      <div className={styles.page}>
       <Navbar />
       <div className={styles.container}>
         <div className={styles.navigation}>
@@ -30,5 +32,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className={styles.content}>{children}</div>
       </div>
     </div>
-  );
+  </AuthRoot>
+);
 }
