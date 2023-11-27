@@ -108,6 +108,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </div>
 
             <div className={styles.side}>
+              {/* TODO: extract to separate component */}
               <div className={cs(styles.box, styles.host)}>
                 <Avatar
                   size={86}

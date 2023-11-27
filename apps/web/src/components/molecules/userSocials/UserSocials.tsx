@@ -47,7 +47,7 @@ const socialsData: {
 };
 
 export const UserSocials: React.FC<UserSocialsProps> = ({
-  size = 16,
+  size = 24,
   direction = "row",
   socials,
 }) => {
@@ -76,7 +76,7 @@ export const UserSocials: React.FC<UserSocialsProps> = ({
         const { icon, alt, hrefPrefix } = socialsData[key];
         return (
           <Link href={`${hrefPrefix || ""}${href}`} key={key}>
-            <IconButton icon={icon} alt={alt} />
+            <IconButton icon={icon} alt={alt} size={size}/>
           </Link>
         );
       })}

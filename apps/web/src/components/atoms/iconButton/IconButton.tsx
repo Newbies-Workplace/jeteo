@@ -7,6 +7,7 @@ interface IconButtonProps {
   icon: string;
   alt?: string;
   primary?: boolean;
+  size?: number;
   onClick?: () => void;
 }
 
@@ -15,6 +16,8 @@ export const IconButton: React.FC<IconButtonProps> = ({
   alt,
   onClick,
   primary = false,
+  size=24,
+
 }) => {
   return (
     <div
@@ -26,8 +29,8 @@ export const IconButton: React.FC<IconButtonProps> = ({
         src={icon}
         alt={alt ?? "iconButton"}
         onClick={onClick}
-        width={24}
-        height={24}
+        width={size}
+        height={size}
       />
     </div>
   );
