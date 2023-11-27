@@ -18,7 +18,7 @@ cp .env.template .env
 
 To start the database:
 ```
-docker-compose up -d
+docker-compose up -d -f .docker/docker-compose.local.yaml jeteo-db
 ```
 
 To generate the prisma client and types:
