@@ -42,7 +42,7 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
           startTime={parseTime(event.from)}
           endTime={parseTime(event.to)}
           timeZone="Europe/Warsaw"
-          location={JSON.stringify(event.address)??"online"}
+          location={event.address?`${event.address.city} ${event.address.place}`:"online"}
 
         
         />
