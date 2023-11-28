@@ -1,17 +1,27 @@
 import { AddToCalendarButton } from "add-to-calendar-button-react";
+import { AddToCalendarButtonProps } from "add-to-calendar-button-react/dist/AddToCalendarButton";
 import React from "react";
 
-const CallendarButton = () => {
+const CallendarButton = (props:AddToCalendarButtonProps) => {
+  
   return (
     <AddToCalendarButton
-      name="Title"
-      options={["Apple", "Google"]}
-      location="World Wide Web"
-      startDate="2023-10-23"
-      endDate="2023-10-23"
-      startTime="10:15"
-      endTime="23:30"
-      timeZone="America/Los_Angeles"
+      name={props.name}
+      options={["Apple", "Google", "iCal", "Microsoft365", "MicrosoftTeams", "Outlook.com", "Yahoo"]}
+      location={props.location}
+      startDate={props.startDate}
+      endDate={props.endDate}
+      startTime={props.startTime}
+      endTime={props.endTime}
+      timeZone={props.timeZone}
+      forceOverlay={true}
+      // buttonStyle="custom"
+      // customCss="margin: 0; border: 5px solid black"
+
+      // probably without it look better the checkmark is unnecessary
+      hideCheckmark={true}
+      hideBackground={true}
+      
     ></AddToCalendarButton>
   );
 };

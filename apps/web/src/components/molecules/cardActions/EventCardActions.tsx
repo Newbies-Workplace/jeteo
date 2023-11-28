@@ -19,6 +19,14 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
 
   const timeLeft = dayjs().to(event.from, true);
 
+  function parseDate(date: string) {
+ 
+    return dayjs(date).format("YYYY-MM-DD")
+  }
+
+  function parseTime(date: string) {
+    return dayjs(date).format("HH:mm");
+  }
   return (
     <div className={styles.actions}>
       <Text className={cs(styles.action, styles.stretched)} bold>
@@ -27,7 +35,17 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
       </Text>
       
       <div>
-        <CallendarButton />
+        <CallendarButton 
+          name={event.title}
+          startDate={parseDate(event.from)}
+          endDate={parseDate(event.to)}
+          startTime={parseTime(event.from)}
+          endTime={parseTime(event.to)}
+          timeZone="Europe/Warsaw"
+          location={JSON.stringify(event.address)??"online"}
+
+        
+        />
       </div>
     </div>
   );
