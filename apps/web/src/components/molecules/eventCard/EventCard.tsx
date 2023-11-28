@@ -144,6 +144,7 @@ export const SmartEventCard: React.FC<{ event: EventResponse }> = ({
         {isFresh && <EventCardActionsFresh event={event} />}
         {isArchive && <EventCardActionsArchive event={event} />}
         {isLive && <EventCardActionsLive event={event} />}
+        
       </div>
     </EventCard>
   );

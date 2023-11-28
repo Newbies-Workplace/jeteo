@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pl";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
+import CallendarButton from "@/components/atoms/button/callendarButton/CallendarButton";
 
 export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
   event,
@@ -22,7 +23,12 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
     <div className={styles.actions}>
       <Text className={cs(styles.action, styles.stretched)} bold>
         Rozpoczęcie za {timeLeft}
+        
       </Text>
+      
+      <div>
+        <CallendarButton />
+      </div>
     </div>
   );
 };
