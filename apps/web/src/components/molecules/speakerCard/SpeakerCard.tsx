@@ -24,7 +24,7 @@ export const SpeakerCard: React.FC<SpeakerCardProps> = ({
 }) => {
   return (
     <div className={styles.card}>
-       {/* <Avatar size={52} src={avatar} />
+       <Avatar size={52} src={avatar} />
       <div className={styles.info}>
         <Text variant="bodyM" bold>
           {name}
@@ -32,23 +32,10 @@ export const SpeakerCard: React.FC<SpeakerCardProps> = ({
 
         {jobTitle && <Text variant="bodyS">{jobTitle}</Text>}
 
-        <UserSocials socials={socials} size={18} btnSize={30}/>
-      </div> */}
-
-      <div className={styles.header}>
-        <Avatar size={52} src={avatar} />
-        <div className={styles.info}>
-          <Text variant="bodyM" bold>
-            {name}
-          </Text>
-        </div>
-      
-
-        {jobTitle && <Text variant="bodyS">{jobTitle}</Text>}
-
-        
+        <UserSocials socials={socials} size={"small"}/>
       </div>
-      <UserSocials socials={socials} size={18} btnSize={30}/>
+
+     
     </div>
   );
 };

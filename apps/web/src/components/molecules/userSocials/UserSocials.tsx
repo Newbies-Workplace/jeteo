@@ -8,8 +8,7 @@ import GithubIcon from "@/assets/github.svg";
 import { IconButton } from "@/components/atoms/iconButton/IconButton";
 
 interface UserSocialsProps {
-  size?: number;
-  btnSize?: number;
+  size?: "medium" | "small";
   direction?: "row" | "column";
   socials: {
     mail?: string;
@@ -48,10 +47,10 @@ const socialsData: {
 };
 
 export const UserSocials: React.FC<UserSocialsProps> = ({
-  size = 24,
+  size = "medium",
   direction = "row",
   socials,
-  btnSize=40,
+  
 }) => {
   if (!socials) {
     return null;
@@ -78,7 +77,7 @@ export const UserSocials: React.FC<UserSocialsProps> = ({
         const { icon, alt, hrefPrefix } = socialsData[key];
         return (
           <Link href={`${hrefPrefix || ""}${href}`} key={key}>
-            <IconButton icon={icon} alt={alt} size={size} btnSize={btnSize}/>
+            <IconButton icon={icon} alt={alt} size={size}/>
           </Link>
         );
       })}
