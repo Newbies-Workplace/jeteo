@@ -20,58 +20,35 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
 
   const timeLeft = dayjs().to(event.from, true);
 
-  function parseDate(date: string) {
- 
-    return dayjs(date).format("YYYY-MM-DD")
-  }
-
-  function parseTime(date: string) {
-    return dayjs(date).format("HH:mm");
-  }
-
   function parseDataTime(date: string) {
     // 20231130T123900 - format
     return dayjs(date).format("YYYYMMDDTHHmmss");
   }
 
-
   return (
-    
     <div className={styles.actions}>
-      <div style={{
-        
-
-        maxHeight: "100px",
-        
-        
-      }}>
-        <CallendarButton 
+      <div
+        style={{
+          maxHeight: "100px",
+        }}
+      >
+        <BasicCallendarButton
           name={event.title}
-          startDate={parseDate(event.from)}
-          endDate={parseDate(event.to)}
-          startTime={parseTime(event.from)}
-          endTime={parseTime(event.to)}
+          startTime={parseDataTime(event.from)}
+          endTime={parseDataTime(event.to)}
           timeZone="Europe/Warsaw"
-          location={event.address?`${event.address.city} ${event.address.place}`:"online"}
-
-        
-        />
-
-        <BasicCallendarButton 
-          name={event.title}
-          startTime={ parseDataTime(event.from)}
-          endTime={ parseDataTime(event.to)}
-          timeZone="Europe/Warsaw"
-          location={event.address?`${event.address.city} ${event.address.place}`:"online"}
+          location={
+            event.address
+              ? `${event.address.city} ${event.address.place}`
+              : "online"
+          }
+          className={cs(styles.action, styles.stretched)}
         />
       </div>
 
       <Text className={cs(styles.action, styles.stretched)} bold>
         Rozpoczęcie za {timeLeft}
-        
       </Text>
-      
-      
     </div>
   );
 };
