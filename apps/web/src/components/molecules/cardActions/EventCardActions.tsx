@@ -10,6 +10,7 @@ import "dayjs/locale/pl";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
 import CallendarButton from "@/components/atoms/button/callendarButton/CallendarButton";
+import BasicCallendarButton from "@/components/atoms/button/callendarButton/BasicCallendarButton";
 
 export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
   event,
@@ -27,14 +28,23 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
   function parseTime(date: string) {
     return dayjs(date).format("HH:mm");
   }
+
+  function parseDataTime(date: string) {
+    // 20231130T123900 - format
+    return dayjs(date).format("YYYYMMDDTHHmmss");
+  }
+
+
   return (
+    
     <div className={styles.actions}>
-      <Text className={cs(styles.action, styles.stretched)} bold>
-        Rozpoczęcie za {timeLeft}
+      <div style={{
         
-      </Text>
-      
-      <div>
+
+        maxHeight: "100px",
+        
+        
+      }}>
         <CallendarButton 
           name={event.title}
           startDate={parseDate(event.from)}
@@ -46,7 +56,22 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
 
         
         />
+
+        <BasicCallendarButton 
+          name={event.title}
+          startTime={ parseDataTime(event.from)}
+          endTime={ parseDataTime(event.to)}
+          timeZone="Europe/Warsaw"
+          location={event.address?`${event.address.city} ${event.address.place}`:"online"}
+        />
       </div>
+
+      <Text className={cs(styles.action, styles.stretched)} bold>
+        Rozpoczęcie za {timeLeft}
+        
+      </Text>
+      
+      
     </div>
   );
 };
