@@ -1,6 +1,6 @@
-import { IconButton } from "../../iconButton/IconButton";
-import CallendarIcon from "@/assets/calendar.svg";
+import CallendarIcon from "@/assets/calendar-primary.svg";
 import Button from "../Button";
+import cs from "classnames";
 import styles from "./CallendarButton.module.scss";
 interface EventProps {
   name: string;
@@ -36,8 +36,8 @@ const BasicCallendarButton = (event: EventProps) => {
         console.log("calendar");
         window.open(googleCalendarUrl, "_blank");
       }}
-    //   className={styles.callendarButton}
-    className={event.className}
+      //   className={styles.callendarButton}
+      className={cs(styles.callendarButton, event.className)}
     >
       Dodaj do kalendarza
     </Button>

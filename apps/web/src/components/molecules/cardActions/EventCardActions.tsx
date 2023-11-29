@@ -9,7 +9,6 @@ import dayjs from "dayjs";
 import "dayjs/locale/pl";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
-import CallendarButton from "@/components/atoms/button/callendarButton/CallendarButton";
 import BasicCallendarButton from "@/components/atoms/button/callendarButton/BasicCallendarButton";
 
 export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({

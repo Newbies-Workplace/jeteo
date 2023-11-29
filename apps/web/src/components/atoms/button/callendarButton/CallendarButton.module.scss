@@ -1,18 +1,9 @@
 @use '@/colors.module.scss' as colors;
 
 .callendarButton{
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    padding: 4px 16px;
-    gap: 10px;
-    align-self: stretch;
+    // background-color: rgb(40, 163, 163);
+    border: 0;
+    font-weight: bold !important;
+    color: colors.$primary;
 
-    border-radius: 8px;
-    background-color: colors.$white;
-
-    font-weight: bold;
-    border: none;
- 
 }
