@@ -1,4 +1,4 @@
-@use '@/colors.module.scss' as colors;
+@use "@/colors.module.scss" as colors;
 
 .card {
   display: flex;
@@ -8,25 +8,21 @@
   align-self: stretch;
 
   gap: 8px;
-  padding: 12px;
+  padding: 8px;
 
   border-radius: 8px;
   border: 0.5px solid colors.$stroke;
   background-color: colors.$surface;
-//   -webkit-box-shadow: 4px 4px 8px 0px rgba(66, 68, 90, 1);
-// -moz-box-shadow: 4px 4px 8px 0px rgba(66, 68, 90, 1);
-// box-shadow: 4px 4px 8px 0px rgba(66, 68, 90, 1);
 
   &:hover {
     background-color: colors.$lightHover;
   }
 
-
   .img {
     width: 32px;
     height: 32px;
     border-radius: 16px;
-  };
+  }
 
   .info {
     display: flex;
