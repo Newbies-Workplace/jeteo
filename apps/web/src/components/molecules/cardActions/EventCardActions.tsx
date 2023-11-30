@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pl";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
-import BasicCallendarButton from "@/components/atoms/button/callendarButton/BasicCallendarButton";
+import BasicCallendarButton from "@/components/atoms/button/calendarButton/BasicCalendarButton";
 
 export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
   event,
@@ -19,10 +19,7 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
 
   const timeLeft = dayjs().to(event.from, true);
 
-  function parseDataTime(date: string) {
-    // 20231130T123900 - format
-    return dayjs(date).format("YYYYMMDDTHHmmss");
-  }
+
 
   return (
     <div className={styles.actions}>
@@ -33,8 +30,8 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
       >
         <BasicCallendarButton
           name={event.title}
-          startTime={parseDataTime(event.from)}
-          endTime={parseDataTime(event.to)}
+          startTime={event.from}
+          endTime={event.to}
           timeZone="Europe/Warsaw"
           location={
             event.address

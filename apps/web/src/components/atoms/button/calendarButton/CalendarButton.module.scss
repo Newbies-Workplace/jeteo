@@ -1,7 +1,6 @@
 @use '@/colors.module.scss' as colors;
 
 .callendarButton{
-    // background-color: rgb(40, 163, 163);
     border: 0;
     font-weight: bold !important;
     color: colors.$primary;

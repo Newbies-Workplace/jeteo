@@ -1,7 +1,8 @@
 import CallendarIcon from "@/assets/calendar-primary.svg";
 import Button from "../Button";
 import cs from "classnames";
-import styles from "./CallendarButton.module.scss";
+import styles from "./CalendarButton.module.scss";
+import dayjs from "dayjs";
 interface EventProps {
   name: string;
   startTime: string;
@@ -12,9 +13,17 @@ interface EventProps {
 }
 
 function generateGoogleCalendarUrl(event: EventProps): string {
-  const { startTime, endTime, timeZone, name, location } = event;
-  const startDateTime = startTime;
-  const endDateTime = endTime;
+
+  function parseDataTime(date: string) {
+    return dayjs(date).format("YYYYMMDDTHHmmss");
+  }
+
+  const { startTime, endTime } = event;
+  const startDateTime = parseDataTime(startTime);
+  const endDateTime = parseDataTime(endTime);
+
+ 
+  
 
   const encodedName = encodeURIComponent(event.name);
   const encodedLocation = encodeURIComponent(event.location);
@@ -33,10 +42,8 @@ const BasicCallendarButton = (event: EventProps) => {
       leftIcon={CallendarIcon}
       size="small"
       onClick={() => {
-        console.log("calendar");
         window.open(googleCalendarUrl, "_blank");
       }}
-      //   className={styles.callendarButton}
       className={cs(styles.callendarButton, event.className)}
     >
       Dodaj do kalendarza
