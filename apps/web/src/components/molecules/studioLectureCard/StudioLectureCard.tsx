@@ -1,5 +1,5 @@
 import styles from "./StudioLectureCard.module.scss";
-import React from "react";
+import React, { useState } from "react";
 import Delete from "@/assets/delete.svg";
 import Edit from "@/assets/edit.svg";
 import { Text } from "@/components/atoms/text/Text";
@@ -14,6 +14,8 @@ import { myFetch } from "@/common/fetch";
 import { getIdFromSlug } from "shared/util";
 import toast from "react-hot-toast";
 import { IconButton } from "@/components/atoms/iconButton/IconButton";
+import { ConfirmDialog } from "../confirmDialog/ConfirmDialog";
+import { Portal } from "../portal/Portal";
 
 interface StudioLectureCardProps {
   eventSlug: string;
@@ -40,6 +42,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
       `/studio/events/${eventSlug}/lectures/${lectureSlug}/summary`
     );
   };
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
   const onDeleteClick = () => {
     toast.promise(
@@ -59,8 +62,8 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
   return (
     <div className={styles.content}>
       <Timer from={from} to={to} />
-      <div className={styles.card} onClick={navigateToSummary}>
-        <div className={styles.description}>
+      <div className={styles.card}>
+        <div className={styles.description} onClick={navigateToSummary}>
           <div className={styles.titles}>
             <Text variant="headS" bold>
               {title}
@@ -96,14 +99,24 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
 
           <div
             className={styles.action}
-            onClick={(e) => {
-              e.stopPropagation();
-              onDeleteClick();
+            onClick={() => {
+              setIsConfirmVisible(true);
             }}
           >
             <IconButton icon={Delete} />
           </div>
           <div className={styles.cardOverwrite} />
+
+          {isConfirmVisible && (
+            <Portal>
+              <ConfirmDialog
+                title={`Czy na pewno chcesz usunąć ${title}?`}
+                description="Tej akcji nie można cofnąć"
+                onDismiss={() => setIsConfirmVisible(false)}
+                onConfirm={() => onDeleteClick()}
+              />
+            </Portal>
+          )}
         </div>
       </div>
     </div>

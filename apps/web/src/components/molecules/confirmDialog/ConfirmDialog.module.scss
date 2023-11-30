@@ -1,0 +1,89 @@
+@use "@/colors.module.scss" as colors;
+
+.root {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 600px) {
+    align-items: flex-end;
+  }
+
+  .content {
+    display: flex;
+    min-width: 420px;
+    padding: 24px;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    border-radius: 16px;
+    background: colors.$surface;
+    z-index: 60;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(5px, 2vw, 24px);
+    align-self: stretch;
+    flex-wrap: wrap;
+
+    .dismiss {
+      display: flex;
+      min-width: 100px;
+      padding: 8px 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex: 1 0 0;
+      border-radius: 16px;
+      border: 0.5px solid colors.$stroke;
+      background: colors.$white;
+
+      &:hover {
+        background-color: colors.$lightGrayHover;
+      }
+
+      &:active {
+        background-color: colors.$lightGray;
+      }
+
+      .dismisstext {
+        color: colors.$black;
+        text-align: center;
+      }
+    }
+    .confirm {
+      display: flex;
+      min-width: 100px;
+      padding: 8px 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex: 1 0 0;
+      border-radius: 16px;
+      background: colors.$live;
+
+      &:hover {
+        background-color: colors.$liveHover;
+      }
+      &:active {
+        background-color: colors.$liveActive;
+      }
+
+      .confirmtext {
+        color: colors.$white;
+        text-align: center;
+      }
+    }
+  }
+}
