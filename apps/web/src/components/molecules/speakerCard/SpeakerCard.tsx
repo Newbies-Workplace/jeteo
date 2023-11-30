@@ -24,16 +24,18 @@ export const SpeakerCard: React.FC<SpeakerCardProps> = ({
 }) => {
   return (
     <div className={styles.card}>
-      <Avatar size={32} src={avatar} />
+       <Avatar size={52} src={avatar} />
       <div className={styles.info}>
-        <Text variant="bodyS" bold>
+        <Text variant="bodyM" bold>
           {name}
         </Text>
 
         {jobTitle && <Text variant="bodyS">{jobTitle}</Text>}
 
-        <UserSocials socials={socials} />
+        <UserSocials socials={socials} size={"small"}/>
       </div>
+
+     
     </div>
   );
 };

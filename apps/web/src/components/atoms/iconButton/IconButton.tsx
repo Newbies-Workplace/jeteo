@@ -8,6 +8,7 @@ interface IconButtonProps {
   alt?: string;
   primary?: boolean;
   onClick?: () => void;
+  size?: "medium" | "small";
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -15,19 +16,24 @@ export const IconButton: React.FC<IconButtonProps> = ({
   alt,
   onClick,
   primary = false,
+  size = "medium",
 }) => {
+  const imageSize = size === "medium" ? 24 : 18;
+
   return (
     <div
       className={cs(styles.iconButton, {
         [styles.primary]: primary,
+        [styles.medium]: size === "medium",
+        [styles.small]: size === "small",
       })}
     >
       <Image
         src={icon}
         alt={alt ?? "iconButton"}
         onClick={onClick}
-        width={24}
-        height={24}
+        width={imageSize}
+        height={imageSize}
       />
     </div>
   );
