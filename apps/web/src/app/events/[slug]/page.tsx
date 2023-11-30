@@ -15,6 +15,7 @@ import { EventLectures } from "@/app/events/[slug]/components/eventLectures/Even
 import colors from "@/colors.module.scss";
 import { Metadata } from "next";
 import socialpreview from "@/assets/social-preview.png";
+import BasicCallendarButton from "@/components/atoms/button/calendarButton/BasicCalendarButton";
 
 export async function generateMetadata({
   params,
@@ -65,18 +66,41 @@ export default async function Page({ params }: { params: { slug: string } }) {
           style={{
             backgroundImage: `url('${event.coverImage}')`,
           }}
-        />
+        >
+
+          
+        </div>
+
         <div
           className={styles.backgroundColor}
           style={{
             background: `linear-gradient(to right, ${event.primaryColor}, ${colors.primary})`,
           }}
         />
+        <div className={styles.actionBox}>
+            <BasicCallendarButton
+                name={event.title}
+                startTime={event.from}
+                endTime={event.to}
+                timeZone="Europe/Warsaw"
+                location={
+                  event.address
+                    ? `${event.address.city} ${event.address.place}`
+                    : "online"
+                }
+                className={styles.btn}
+              />
+          </div>
+        
       </div>
       <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
         <div className={styles.container}>
+          
+        
           <div className={styles.titleAnchor}>
+            
             <div className={styles.title}>
+              
               <div className={styles.tags}>
                 {event.tags.map((tag) => (
                   <Tag key={tag} text={tag} />
@@ -108,7 +132,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </div>
 
             <div className={styles.side}>
-              {/* TODO: extract to separate component */}
               <div className={cs(styles.box, styles.host)}>
                 <Avatar
                   size={86}
@@ -132,7 +155,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     {event.host.description}
                   </Text>
                 )}
-                <UserSocials  socials={event.host.socials} />
+                <UserSocials socials={event.host.socials} />
               </div>
               <div className={cs(styles.box, styles.timeBox)}>
                 <Text variant={"headS"} bold>

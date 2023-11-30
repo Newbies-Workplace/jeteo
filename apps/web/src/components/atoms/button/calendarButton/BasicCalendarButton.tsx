@@ -1,3 +1,4 @@
+'use client';
 import CallendarIcon from "@/assets/calendar-primary.svg";
 import Button from "../Button";
 import cs from "classnames";
@@ -33,7 +34,7 @@ function generateGoogleCalendarUrl(event: EventProps): string {
   return calendarUrl;
 }
 
-const BasicCallendarButton = (event: EventProps) => {
+const BasicCalendarButton = (event: EventProps) => {
   const googleCalendarUrl = generateGoogleCalendarUrl(event);
   console.log("Google Calendar URL:", googleCalendarUrl);
 
@@ -51,4 +52,4 @@ const BasicCallendarButton = (event: EventProps) => {
   );
 };
 
-export default BasicCallendarButton;
+export default BasicCalendarButton;
