@@ -12,7 +12,19 @@ type Story = StoryObj<typeof UserSocials>;
 
 export const Default: Story = {
     args: {
-        size: 20,
+        size: "medium",
+        direction: "row",
+        socials: {
+            mail: "exmple@gmail.com",
+            github: "github.com",
+            twitter: "twitter.pl",
+            linkedin: "linkedin.pl",
+        }
+    },
+};
+export const Small: Story = {
+    args: {
+        size: "small",
         direction: "row",
         socials: {
             mail: "exmple@gmail.com",
@@ -24,14 +36,14 @@ export const Default: Story = {
 };
 export const Empty: Story = {
     args: {
-        size: 20,
+        size: "medium",
         direction: "row",
         socials: {}
     },
 };
 export const Invalid: Story = {
     args: {
-        size: 20,
+        size: "medium",
         direction: "row",
         socials: {
             mail: "exmple@gmail.com",
@@ -43,7 +55,7 @@ export const Invalid: Story = {
 
 export const OnlyInvalid: Story = {
     args: {
-        size: 20,
+        size: "medium",
         direction: "row",
         socials: {
             //@ts-ignore
