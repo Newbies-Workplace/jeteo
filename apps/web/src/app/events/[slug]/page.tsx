@@ -16,6 +16,7 @@ import colors from "@/colors.module.scss";
 import { Metadata } from "next";
 import socialpreview from "@/assets/social-preview.png";
 import BasicCallendarButton from "@/components/atoms/button/calendarButton/BasicCalendarButton";
+import dayjs from "dayjs";
 
 export async function generateMetadata({
   params,
@@ -57,6 +58,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
   const lectures = await getEventLectures(params.slug);
 
+  const now = dayjs();
+  const start = dayjs(event.from);
+  const isFuture = now.isBefore(start);
+
   return (
     <div className={styles.page}>
       <Navbar />
@@ -74,7 +79,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             background: `linear-gradient(to right, ${event.primaryColor}, ${colors.primary})`,
           }}
         />
-        <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
+        {isFuture&&<div className={styles.containerWrapper} style={{ zIndex: 3 }}>
           <div className={styles.container}>
             <div className={styles.actionBox}>
               <BasicCallendarButton
@@ -91,7 +96,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               />
             </div>
           </div>
-        </div>
+        </div>}
       </div>
       <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
         <div className={styles.container}>
