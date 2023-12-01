@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pl";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
-import BasicCallendarButton from "@/components/atoms/button/calendarButton/BasicCalendarButton";
+import BasicCalendarButton from "@/components/atoms/button/calendarButton/BasicCalendarButton";
 
 export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
   event,
@@ -28,7 +28,7 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
           maxHeight: "100px",
         }}
       >
-        <BasicCallendarButton
+        <BasicCalendarButton
           name={event.title}
           startTime={event.from}
           endTime={event.to}

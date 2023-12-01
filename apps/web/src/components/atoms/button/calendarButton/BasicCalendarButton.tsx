@@ -1,5 +1,5 @@
 'use client';
-import CallendarIcon from "@/assets/calendar-primary.svg";
+import CalendarIcon from "@/assets/calendar-primary.svg";
 import Button from "../Button";
 import cs from "classnames";
 import styles from "./CalendarButton.module.scss";
@@ -40,12 +40,12 @@ const BasicCalendarButton = (event: EventProps) => {
 
   return (
     <Button
-      leftIcon={CallendarIcon}
+      leftIcon={CalendarIcon}
       size="small"
       onClick={() => {
         window.open(googleCalendarUrl, "_blank");
       }}
-      className={cs(styles.callendarButton, event.className)}
+      className={cs(styles.calendarButton, event.className)}
     >
       Dodaj do kalendarza
     </Button>
