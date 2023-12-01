@@ -146,10 +146,19 @@
 //  border: 5px solid black;
 z-index: 10;
 width: 100%;
-padding: 24px;
+// padding: 24px;
 display: flex;
 flex-direction: row-reverse;
-max-height: 100px;
+
+align-items:flex-start;
+// max-height: 100px;
+// height: auto;
+// margin: auto;
+margin-top: 80px;
+height: 100%;
+
+// max-width: responsiveness.$content-width;
+// margin: 0px auto 16px;
   
 }
 
@@ -162,6 +171,8 @@ max-height: 100px;
     margin: -48px 0 0;
     padding: 0 8px;
   }
+
+
 
   .content {
     flex-direction: column;

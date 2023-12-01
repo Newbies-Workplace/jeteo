@@ -66,10 +66,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           style={{
             backgroundImage: `url('${event.coverImage}')`,
           }}
-        >
-
-          
-        </div>
+        ></div>
 
         <div
           className={styles.backgroundColor}
@@ -77,8 +74,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
             background: `linear-gradient(to right, ${event.primaryColor}, ${colors.primary})`,
           }}
         />
-        <div className={styles.actionBox}>
-            <BasicCallendarButton
+        <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
+          <div className={styles.container}>
+            <div className={styles.actionBox}>
+              <BasicCallendarButton
                 name={event.title}
                 startTime={event.from}
                 endTime={event.to}
@@ -90,17 +89,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 }
                 className={styles.btn}
               />
+            </div>
           </div>
-        
+        </div>
       </div>
       <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
         <div className={styles.container}>
-          
-        
           <div className={styles.titleAnchor}>
-            
             <div className={styles.title}>
-              
               <div className={styles.tags}>
                 {event.tags.map((tag) => (
                   <Tag key={tag} text={tag} />

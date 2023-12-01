@@ -7,7 +7,6 @@ interface IconButtonProps {
   icon: string;
   alt?: string;
   primary?: boolean;
-  btnSize?: number;
   onClick?: () => void;
   size?: "medium" | "small";
 }
