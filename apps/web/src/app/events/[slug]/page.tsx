@@ -15,6 +15,8 @@ import { EventLectures } from "@/app/events/[slug]/components/eventLectures/Even
 import colors from "@/colors.module.scss";
 import { Metadata } from "next";
 import socialpreview from "@/assets/social-preview.png";
+import BasicCallendarButton from "@/components/atoms/button/calendarButton/BasicCalendarButton";
+import dayjs from "dayjs";
 
 export async function generateMetadata({
   params,
@@ -56,6 +58,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
   const lectures = await getEventLectures(params.slug);
 
+  const now = dayjs();
+  const start = dayjs(event.from);
+  const isFuture = now.isBefore(start);
+
   return (
     <div className={styles.page}>
       <Navbar />
@@ -65,13 +71,32 @@ export default async function Page({ params }: { params: { slug: string } }) {
           style={{
             backgroundImage: `url('${event.coverImage}')`,
           }}
-        />
+        ></div>
+
         <div
           className={styles.backgroundColor}
           style={{
             background: `linear-gradient(to right, ${event.primaryColor}, ${colors.primary})`,
           }}
         />
+        {isFuture&&<div className={styles.containerWrapper} style={{ zIndex: 3 }}>
+          <div className={styles.container}>
+            <div className={styles.actionBox}>
+              <BasicCallendarButton
+                name={event.title}
+                startTime={event.from}
+                endTime={event.to}
+                timeZone="Europe/Warsaw"
+                location={
+                  event.address
+                    ? `${event.address.city} ${event.address.place}`
+                    : "online"
+                }
+                className={styles.btn}
+              />
+            </div>
+          </div>
+        </div>}
       </div>
       <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
         <div className={styles.container}>
@@ -131,7 +156,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     {event.host.description}
                   </Text>
                 )}
-                <UserSocials  socials={event.host.socials} />
+                <UserSocials socials={event.host.socials} />
               </div>
               <div className={cs(styles.box, styles.timeBox)}>
                 <Text variant={"headS"} bold>

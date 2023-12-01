@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pl";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
+import BasicCalendarButton from "@/components/atoms/button/calendarButton/BasicCalendarButton";
 
 export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
   event,
@@ -18,8 +19,29 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
 
   const timeLeft = dayjs().to(event.from, true);
 
+
+
   return (
     <div className={styles.actions}>
+      <div
+        style={{
+          maxHeight: "100px",
+        }}
+      >
+        <BasicCalendarButton
+          name={event.title}
+          startTime={event.from}
+          endTime={event.to}
+          timeZone="Europe/Warsaw"
+          location={
+            event.address
+              ? `${event.address.city} ${event.address.place}`
+              : "online"
+          }
+          className={cs(styles.action, styles.stretched)}
+        />
+      </div>
+
       <Text className={cs(styles.action, styles.stretched)} bold>
         Rozpoczęcie za {timeLeft}
       </Text>

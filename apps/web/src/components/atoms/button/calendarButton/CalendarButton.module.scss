@@ -1,0 +1,8 @@
+@use '@/colors.module.scss' as colors;
+
+.calendarButton{
+    border: 0;
+    font-weight: bold !important;
+    color: colors.$primary;
+
+}
