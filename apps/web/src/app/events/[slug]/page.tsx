@@ -23,9 +23,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const event = await getEvent(params.slug);
   const lectures = await getEventLectures(params.slug);
+
   if (!event) {
     notFound();
   }
+  lectures;
   let title = event.title;
   if (event.subtitle) {
     title += " " + event.subtitle;
@@ -39,10 +41,21 @@ export async function generateMetadata({
     event.description = event.description.substring(0, 100) + "...";
   }
 
+  function getSpeakersNames() {
+    const speakers = [];
+    lectures.map((lecture) => {
+      lecture.speakers.map((speaker) => {
+        speakers.push(speaker.name);
+      });
+    });
+    return speakers;
+  }
+
   return {
     metadataBase: new URL(`https://jeteo.newbies.pl/events/${event.slug}`),
     keywords: event.tags,
     creator: event.host.name,
+    authors: getSpeakersNames(),
     openGraph: {
       title: title,
       description: event.description,
