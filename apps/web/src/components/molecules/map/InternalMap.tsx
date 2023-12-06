@@ -7,6 +7,7 @@ import Image from "next/image";
 import PinIcon from "@/assets/pin.svg";
 import ZoomIcon from "@/assets/ZoomIn.svg";
 import CloseIcon from "@/assets/close.svg";
+import MapIcon from "@/assets/map.svg";
 import "leaflet/dist/leaflet.css";
 import styles from "./InternalMap.module.scss";
 import { useScrollBlock } from "@/contexts/useScrollBlock";
@@ -21,6 +22,13 @@ export interface MapProps {
 
 const Map: React.FC<MapProps> = ({ coordinates }) => {
   const [isMapPopupOpen, setMapPopupOpen] = useState<boolean>(false);
+
+  const openGoogleMaps = () => {
+    window.open(
+      `https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}`,
+      "_blank"
+    );
+  };
 
   return (
     <>
@@ -45,6 +53,10 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
             primary
             onClick={() => setMapPopupOpen(!isMapPopupOpen)}
           />
+        </div>
+
+        <div className={styles.googleMapButton}>
+          <IconButton icon={MapIcon} primary onClick={() => openGoogleMaps()} />
         </div>
 
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
