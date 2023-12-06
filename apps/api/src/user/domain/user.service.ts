@@ -80,4 +80,21 @@ export class UserService {
 
     return filePath;
   }
+
+  async deleteUserAvatar(userId: string): Promise<void> {
+    const user = await this.getUser(userId);
+
+    if (user.avatar) {
+      await this.storageService.deleteFile(user.avatar);
+    }
+
+    await this.prismaService.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        avatar: null,
+      },
+    });
+  }
 }
