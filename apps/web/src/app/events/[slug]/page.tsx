@@ -27,8 +27,9 @@ export async function generateMetadata({
   if (!event) {
     notFound();
   }
-  lectures;
+
   let title = event.title;
+  let description = event.description;
   if (event.subtitle) {
     title += " " + event.subtitle;
   }
@@ -37,8 +38,8 @@ export async function generateMetadata({
     title = title.substring(0, 55) + "...";
   }
 
-  if (event.description.length > 100) {
-    event.description = event.description.substring(0, 100) + "...";
+  if (description.length > 100) {
+    description = description.substring(0, 100) + "...";
   }
 
   function getSpeakersNames() {
@@ -52,13 +53,12 @@ export async function generateMetadata({
   }
 
   return {
-    metadataBase: new URL(`https://jeteo.newbies.pl/events/${event.slug}`),
     keywords: event.tags,
     creator: event.host.name,
     authors: getSpeakersNames(),
     openGraph: {
       title: title,
-      description: event.description,
+      description: description,
       siteName: "Jeteo",
       images: [
         {
