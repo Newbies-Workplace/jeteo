@@ -20,7 +20,11 @@ export default function Page() {
           alignItems: "center",
         }}
       >
-        <Dialog title="Zaczynamy przygodę 🚀" arrowBack style={{ zIndex: 1 }}>
+        <Dialog
+          title="Zaczynamy przygodę 🚀"
+          arrowBack
+          style={{ zIndex: 1, position: "fixed" }}
+        >
           <Text variant={"bodyM"}>Kontynuuj przez:</Text>
           <div className={styles.buttons}>
             <Link href={`${baseUrl}/auth/google/redirect`}>
