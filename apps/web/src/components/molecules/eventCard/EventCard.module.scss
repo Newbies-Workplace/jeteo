@@ -63,6 +63,8 @@
     .title {
       display: flex;
       align-self: stretch;
+      word-break: break-word;
+      margin-right: 20px;
     }
 
     .subtitle {
