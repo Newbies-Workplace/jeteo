@@ -24,18 +24,43 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const event = await getEvent(params.slug);
+  const lectures = await getEventLectures(params.slug);
+
   if (!event) {
     notFound();
   }
+
   let title = event.title;
+  let description = event.description;
   if (event.subtitle) {
     title += " " + event.subtitle;
   }
+
+  if (title.length > 55) {
+    title = title.substring(0, 55) + "...";
+  }
+
+  if (description.length > 100) {
+    description = description.substring(0, 100) + "...";
+  }
+
+  function getSpeakersNames() {
+    const speakers = [];
+    lectures.map((lecture) => {
+      lecture.speakers.map((speaker) => {
+        speakers.push(speaker.name);
+      });
+    });
+    return speakers;
+  }
+
   return {
+    keywords: event.tags,
+    creator: event.host.name,
+    authors: getSpeakersNames(),
     openGraph: {
-      title: title.substring(0, 55) + "...",
-      description: event.description.substring(0, 150) + "...",
-      url: `https://jeteo.newbies.pl/events/${event.slug}`,
+      title: title,
+      description: description,
       siteName: "Jeteo",
       images: [
         {
