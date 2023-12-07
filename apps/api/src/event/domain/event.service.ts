@@ -62,7 +62,7 @@ export class EventService {
         longitude: createEventDto.address?.coordinates?.longitude,
         tags: createEventDto.tags,
         primaryColor: '#4340BE',
-        visibility: 'PRIVATE',
+        visibility: 'HIDDEN',
         authorId: userId,
       },
     });
