@@ -157,10 +157,11 @@ export class EventService {
       },
     });
 
-    if (event.coverImage) {
-      await this.storageService.deleteFile(event.coverImage);
+    if (!event.coverImage) {
+      return;
     }
 
+    await this.storageService.deleteFile(event.coverImage);
     await this.prismaService.event.update({
       where: {
         id: eventId,
