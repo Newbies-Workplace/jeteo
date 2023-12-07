@@ -150,6 +150,28 @@ export class EventService {
     return filePath;
   }
 
+  async deleteEventCover(eventId: string): Promise<void> {
+    const event = await this.prismaService.event.findUnique({
+      where: {
+        id: eventId,
+      },
+    });
+
+    if (!event.coverImage) {
+      return;
+    }
+
+    await this.storageService.deleteFile(event.coverImage);
+    await this.prismaService.event.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        coverImage: null,
+      },
+    });
+  }
+
   async deleteEvent(eventId: string) {
     return this.prismaService.event.delete({
       where: {

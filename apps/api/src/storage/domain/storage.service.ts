@@ -38,16 +38,18 @@ export class StorageService {
     return filename;
   }
 
-  async replaceFile(file: Buffer, filePath: string): Promise<string> {
-    if (!this.isValidFolderPath(filePath)) {
+  async deleteFile(filePath: string): Promise<void> {
+    if (!this.isValidPath(filePath)) {
       throw new InvalidPathException(filePath);
     }
-
     await fs.promises.unlink(this.formatPath(filePath)).catch(() => {
       console.error(`file ${filePath} not found`);
     });
-    const parsedPath = parse(filePath);
-    return this.createFile(file, parsedPath.dir);
+  }
+
+  async replaceFile(file: Buffer, filePath: string): Promise<string> {
+    await this.deleteFile(filePath);
+    return this.createFile(file, parse(filePath).dir);
   }
 
   formatPath(folderPath: string, filename?: string): string {

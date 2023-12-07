@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Put,
   UploadedFile,
@@ -63,7 +64,21 @@ export class UserController {
       if (e instanceof InvalidPathException) {
         throw new BadRequestException();
       }
+      throw e;
+    }
+  }
 
+  @Delete('@me/avatar')
+  @UseGuards(JwtGuard)
+  async deleteMeAvatar(@JWTUser() tokenUser: TokenUser): Promise<void> {
+    try {
+      await this.userService.deleteUserAvatar(tokenUser.id);
+    } catch (e) {
+      console.error(e);
+
+      if (e instanceof InvalidPathException) {
+        throw new BadRequestException();
+      }
       throw e;
     }
   }

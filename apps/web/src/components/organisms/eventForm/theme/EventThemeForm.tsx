@@ -50,17 +50,22 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
     const formData = new FormData();
     formData.append("coverImage", file);
 
-    const res = await myFetch(`/rest/v1/events/${event?.id}/cover`, {
+    await myFetch(`/rest/v1/events/${event?.id}/cover`, {
       method: "PUT",
       body: formData,
       headers: undefined,
-    });
-
-    res.text().then((coverImageUrl) => {
-      setCoverImage(coverImageUrl);
+    }).then((res) => {
+      res.ok && res.text().then(setCoverImage);
     });
   };
 
+  const deleteCoverImage = async () => {
+    await myFetch(`/rest/v1/events/${event?.id}/cover`, {
+      method: "DELETE",
+    }).then((res) => {
+      res.ok && setCoverImage(null);
+    });
+  };
   return (
     <>
       <Section title={"Motyw"}>
@@ -76,10 +81,9 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
                 saveCoverImage(files[0]);
               }}
             />
-            <FileItem
-              url={coverImage}
-              onDeleteClick={() => setCoverImage(undefined)}
-            />
+            {coverImage && (
+              <FileItem url={coverImage} onDeleteClick={deleteCoverImage} />
+            )}
           </div>
         </div>
       </Section>
