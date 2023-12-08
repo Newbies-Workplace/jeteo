@@ -14,9 +14,9 @@ import { getEventLectures } from "@/common/getLecture";
 import { EventLectures } from "@/app/events/[slug]/components/eventLectures/EventLectures";
 import colors from "@/colors.module.scss";
 import { Metadata } from "next";
-import socialpreview from "@/assets/social-preview.png";
-import BasicCallendarButton from "@/components/atoms/button/calendarButton/BasicCalendarButton";
+import SocialPreview from "@/assets/social-preview.png";
 import dayjs from "dayjs";
+import { CalendarButton } from "@/components/atoms/calendarButton/CalendarButton";
 
 export async function generateMetadata({
   params,
@@ -64,7 +64,7 @@ export async function generateMetadata({
       siteName: "Jeteo",
       images: [
         {
-          url: socialpreview.src,
+          url: SocialPreview.src,
           width: 1280,
           height: 600,
           alt: "jeteo",
@@ -96,7 +96,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           style={{
             backgroundImage: `url('${event.coverImage}')`,
           }}
-        ></div>
+        />
 
         <div
           className={styles.backgroundColor}
@@ -104,24 +104,27 @@ export default async function Page({ params }: { params: { slug: string } }) {
             background: `linear-gradient(to right, ${event.primaryColor}, ${colors.primary})`,
           }}
         />
-        {isFuture&&<div className={styles.containerWrapper} style={{ zIndex: 3 }}>
-          <div className={styles.container}>
-            <div className={styles.actionBox}>
-              <BasicCallendarButton
-                name={event.title}
-                startTime={event.from}
-                endTime={event.to}
-                timeZone="Europe/Warsaw"
-                location={
-                  event.address
-                    ? `${event.address.city} ${event.address.place}`
-                    : "online"
-                }
-                className={styles.btn}
-              />
+
+        {!isFuture && (
+          <div className={styles.actionBoxWrapper}>
+            <div className={styles.actionBoxContainer}>
+              <div className={styles.actionBox}>
+                <CalendarButton
+                  name={event.title}
+                  startTime={event.from}
+                  endTime={event.to}
+                  timeZone="Europe/Warsaw"
+                  location={
+                    event.address
+                      ? `${event.address.city} ${event.address.place}`
+                      : "online"
+                  }
+                  className={styles.actionButton}
+                />
+              </div>
             </div>
           </div>
-        </div>}
+        )}
       </div>
       <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
         <div className={styles.container}>
