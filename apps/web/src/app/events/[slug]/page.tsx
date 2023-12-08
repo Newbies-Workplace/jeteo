@@ -58,6 +58,7 @@ export async function generateMetadata({
     keywords: event.tags,
     creator: event.host.name,
     authors: getSpeakersNames(),
+    description: description,
     openGraph: {
       title: title,
       description: description,
@@ -104,24 +105,26 @@ export default async function Page({ params }: { params: { slug: string } }) {
             background: `linear-gradient(to right, ${event.primaryColor}, ${colors.primary})`,
           }}
         />
-        {isFuture&&<div className={styles.containerWrapper} style={{ zIndex: 3 }}>
-          <div className={styles.container}>
-            <div className={styles.actionBox}>
-              <BasicCallendarButton
-                name={event.title}
-                startTime={event.from}
-                endTime={event.to}
-                timeZone="Europe/Warsaw"
-                location={
-                  event.address
-                    ? `${event.address.city} ${event.address.place}`
-                    : "online"
-                }
-                className={styles.btn}
-              />
+        {isFuture && (
+          <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
+            <div className={styles.container}>
+              <div className={styles.actionBox}>
+                <BasicCallendarButton
+                  name={event.title}
+                  startTime={event.from}
+                  endTime={event.to}
+                  timeZone="Europe/Warsaw"
+                  location={
+                    event.address
+                      ? `${event.address.city} ${event.address.place}`
+                      : "online"
+                  }
+                  className={styles.btn}
+                />
+              </div>
             </div>
           </div>
-        </div>}
+        )}
       </div>
       <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
         <div className={styles.container}>
