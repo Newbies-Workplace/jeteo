@@ -53,6 +53,10 @@ export class UserService {
   ): Promise<string> {
     const user = await this.getUser(userId);
 
+    if (!user) {
+      throw new UserNotFoundException();
+    }
+
     let filename: string;
 
     if (!user.avatar) {

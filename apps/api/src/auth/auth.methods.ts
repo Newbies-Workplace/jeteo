@@ -1,7 +1,12 @@
 import { TokenUser } from '@/auth/jwt/jwt.model';
 import { Event, EventVisibility, Invite } from '@prisma/client';
-import { HttpException, HttpStatus } from '@nestjs/common';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
+import { NotAllowedToEditEventException } from '@/auth/exceptions/NotAllowedToEditEventException';
+import { NotAllowedToEditInviteException } from '@/auth/exceptions/NotAllowedToEditInviteException';
+import { NotAllowedToSeeEventException } from '@/auth/exceptions/NotAllowedToSeeEventException';
+import { NotAllowedToSeeLectureException } from '@/auth/exceptions/NotAllowedToSeeLectureException';
+import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.request';
+import { NotAllowedToCreatePublicEventException } from '@/auth/exceptions/NotAllowedToCreatePublicEventException';
 
 export const assertLectureReadAccess = (
   user: TokenUser | undefined,
@@ -25,10 +30,7 @@ export const assertLectureReadAccess = (
     return;
   }
 
-  throw new HttpException(
-    'User is not allowed to see this lecture',
-    HttpStatus.FORBIDDEN,
-  );
+  throw new NotAllowedToSeeLectureException();
 };
 
 export const assertEventWriteAccess = (
@@ -39,10 +41,7 @@ export const assertEventWriteAccess = (
     return;
   }
 
-  throw new HttpException(
-    'User is not allowed to edit this event',
-    HttpStatus.FORBIDDEN,
-  );
+  throw new NotAllowedToEditEventException();
 };
 
 export const assertEventReadAccess = (
@@ -58,10 +57,7 @@ export const assertEventReadAccess = (
     return;
   }
 
-  throw new HttpException(
-    'User is not allowed to see this event',
-    HttpStatus.FORBIDDEN,
-  );
+  throw new NotAllowedToSeeEventException();
 };
 
 export const assertInviteWriteAccess = (
@@ -72,8 +68,17 @@ export const assertInviteWriteAccess = (
     return;
   }
 
-  throw new HttpException(
-    'User is not allowed to edit this invite',
-    HttpStatus.FORBIDDEN,
-  );
+  throw new NotAllowedToEditInviteException();
+};
+
+export const assertEventVisibilityAccess = (
+  user: TokenUser,
+  updateEventRequest: UpdateEventRequest,
+) => {
+  if (
+    !user._permissions.isAuthorized &&
+    updateEventRequest.visibility === 'PUBLIC'
+  ) {
+    throw new NotAllowedToCreatePublicEventException();
+  }
 };
