@@ -3,8 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpException,
-  HttpStatus,
   Param,
   Patch,
   Post,
@@ -33,6 +31,8 @@ import {
   assertLectureReadAccess,
 } from '@/auth/auth.methods';
 import { RateLectureRequest } from 'shared/model/lecture/request/rateLecture.request';
+import { EventNotFoundException } from '@/event/domain/exceptions/EventNotFoundException';
+import { LectureNotFoundException } from '@/lecture/domain/exceptions/LectureNotFoundException';
 
 @Controller('/rest/v1/lectures')
 export class LectureController {
@@ -54,7 +54,7 @@ export class LectureController {
       },
     });
     if (!event) {
-      throw new HttpException('Event not Found', HttpStatus.NOT_FOUND);
+      throw new EventNotFoundException();
     }
 
     const lectures = await this.prismaService.lecture.findMany({
@@ -203,7 +203,7 @@ export class LectureController {
       },
     );
     if (!lecture) {
-      throw new HttpException('Lecture not Found', HttpStatus.NOT_FOUND);
+      throw new LectureNotFoundException();
     }
 
     return lecture;

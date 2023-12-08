@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -18,7 +17,6 @@ import { UserService } from '@/user/domain/user.service';
 import { UpdateUserRequest } from 'shared/model/user/request/updateUser.request';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { StoragePathConverter } from '@/storage/application/converters/storagePath.converter';
-import { InvalidPathException } from '@/storage/domain/exceptions/InvalidPathException';
 
 @Controller('rest/v1/users')
 export class UserController {
@@ -52,34 +50,16 @@ export class UserController {
     @JWTUser() tokenUser: TokenUser,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<string> {
-    try {
-      let avatarPath = await this.userService.updateUserAvatar(
-        tokenUser.id,
-        file,
-      );
-      return this.storagePath.convert(`${avatarPath}`);
-    } catch (e) {
-      console.error(e);
-
-      if (e instanceof InvalidPathException) {
-        throw new BadRequestException();
-      }
-      throw e;
-    }
+    let avatarPath = await this.userService.updateUserAvatar(
+      tokenUser.id,
+      file,
+    );
+    return this.storagePath.convert(`${avatarPath}`);
   }
 
   @Delete('@me/avatar')
   @UseGuards(JwtGuard)
   async deleteMeAvatar(@JWTUser() tokenUser: TokenUser): Promise<void> {
-    try {
-      await this.userService.deleteUserAvatar(tokenUser.id);
-    } catch (e) {
-      console.error(e);
-
-      if (e instanceof InvalidPathException) {
-        throw new BadRequestException();
-      }
-      throw e;
-    }
+    await this.userService.deleteUserAvatar(tokenUser.id);
   }
 }

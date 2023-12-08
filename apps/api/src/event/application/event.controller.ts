@@ -1,11 +1,8 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
-  HttpException,
-  HttpStatus,
   Param,
   Patch,
   Post,
@@ -32,11 +29,12 @@ import { LectureConverter } from '@/lecture/application/lecture.converter';
 import { PrismaService } from '@/config/prisma.service';
 import {
   assertEventReadAccess,
+  assertEventVisibilityAccess,
   assertEventWriteAccess,
 } from '@/auth/auth.methods';
 import { StoragePathConverter } from '@/storage/application/converters/storagePath.converter';
-import { InvalidPathException } from '@/storage/domain/exceptions/InvalidPathException';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { EventNotFoundException } from '@/event/domain/exceptions/EventNotFoundException';
 
 @Controller('/rest/v1/events')
 export class EventController {
@@ -124,9 +122,9 @@ export class EventController {
     const event = await this.getEventById(eventId);
 
     assertEventWriteAccess(user, event);
+    assertEventVisibilityAccess(user, updateEventRequest);
 
     const updatedEvent = await this.eventService.updateEvent(
-      user,
       eventId,
       updateEventRequest,
     );
@@ -146,17 +144,8 @@ export class EventController {
 
     assertEventWriteAccess(user, event);
 
-    try {
-      let coverPath = await this.eventService.updateEventCover(event.id, file);
-      return this.storagePath.convert(`${coverPath}`);
-    } catch (e) {
-      console.error(e);
-
-      if (e instanceof InvalidPathException) {
-        throw new BadRequestException();
-      }
-      throw e;
-    }
+    let coverPath = await this.eventService.updateEventCover(event.id, file);
+    return this.storagePath.convert(`${coverPath}`);
   }
 
   @Delete('/:id/cover')
@@ -168,16 +157,7 @@ export class EventController {
     const event = await this.getEventById(eventId);
     assertEventWriteAccess(user, event);
 
-    try {
-      await this.eventService.deleteEventCover(eventId);
-    } catch (e) {
-      console.error(e);
-
-      if (e instanceof InvalidPathException) {
-        throw new BadRequestException();
-      }
-      throw e;
-    }
+    await this.eventService.deleteEventCover(eventId);
   }
 
   @Delete('/:id')
@@ -214,7 +194,7 @@ export class EventController {
     });
 
     if (!event) {
-      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+      throw new EventNotFoundException();
     }
 
     return event;
