@@ -148,6 +148,18 @@ export class EventController {
     return this.storagePath.convert(`${coverPath}`);
   }
 
+  @Delete('/:id/cover')
+  @UseGuards(JwtGuard)
+  async deleteEventCover(
+    @Param('id') eventId: string,
+    @JWTUser() user: TokenUser,
+  ): Promise<void> {
+    const event = await this.getEventById(eventId);
+    assertEventWriteAccess(user, event);
+
+    await this.eventService.deleteEventCover(eventId);
+  }
+
   @Delete('/:id')
   @UseGuards(JwtGuard)
   async deleteEvent(

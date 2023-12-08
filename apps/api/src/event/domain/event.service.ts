@@ -1,10 +1,9 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/config/prisma.service';
 import { CreateEventRequest } from 'shared/model/event/request/createEvent.request';
 import { Event } from '@prisma/client';
 import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.request';
 import { nanoid } from '@/common/nanoid';
-import { TokenUser } from '@/auth/jwt/jwt.model';
 import { StorageService } from '@/storage/domain/storage.service';
 
 @Injectable()
@@ -68,13 +67,7 @@ export class EventService {
     });
   }
 
-  async updateEvent(
-    user: TokenUser,
-    eventId: string,
-    updateEventRequest: UpdateEventRequest,
-  ) {
-    this.assertEventVisibilityAccess(user, updateEventRequest);
-
+  async updateEvent(eventId: string, updateEventRequest: UpdateEventRequest) {
     const address = {
       city:
         updateEventRequest.address === null
@@ -178,13 +171,5 @@ export class EventService {
         id: eventId,
       },
     });
-  }
-
-  assertEventVisibilityAccess(user: TokenUser, event: UpdateEventRequest) {
-    if (!user._permissions.isAuthorized && event.visibility === 'PUBLIC') {
-      throw new ForbiddenException(
-        'You are not authorized to create public events',
-      );
-    }
   }
 }
