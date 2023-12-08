@@ -2,6 +2,6 @@ import { ForbiddenException } from '@nestjs/common';
 
 export class NotAllowedToEditInviteException extends ForbiddenException {
   constructor() {
-    super('User is not allowed to edit this invite');
+    super('You are not allowed to edit this invite');
   }
 }

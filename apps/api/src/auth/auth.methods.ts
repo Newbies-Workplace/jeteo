@@ -3,10 +3,10 @@ import { Event, EventVisibility, Invite } from '@prisma/client';
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { NotAllowedToEditEventException } from '@/auth/exceptions/NotAllowedToEditEventException';
 import { NotAllowedToEditInviteException } from '@/auth/exceptions/NotAllowedToEditInviteException';
-import { NotAllowedToSeeEventException } from '@/auth/exceptions/NotAllowedToSeeEventException';
-import { NotAllowedToSeeLectureException } from '@/auth/exceptions/NotAllowedToSeeLectureException';
+import { NotAllowedToReadLectureException } from '@/auth/exceptions/NotAllowedToReadLectureException';
 import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.request';
 import { NotAllowedToCreatePublicEventException } from '@/auth/exceptions/NotAllowedToCreatePublicEventException';
+import { NotAllowedToReadEventException } from '@/auth/exceptions/NotAllowedToReadEventException';
 
 export const assertLectureReadAccess = (
   user: TokenUser | undefined,
@@ -30,7 +30,7 @@ export const assertLectureReadAccess = (
     return;
   }
 
-  throw new NotAllowedToSeeLectureException();
+  throw new NotAllowedToReadLectureException();
 };
 
 export const assertEventWriteAccess = (
@@ -57,7 +57,7 @@ export const assertEventReadAccess = (
     return;
   }
 
-  throw new NotAllowedToSeeEventException();
+  throw new NotAllowedToReadEventException();
 };
 
 export const assertInviteWriteAccess = (
