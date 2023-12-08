@@ -58,6 +58,7 @@ export async function generateMetadata({
     keywords: event.tags,
     creator: event.host.name,
     authors: getSpeakersNames(),
+    description: description,
     openGraph: {
       title: title,
       description: description,
@@ -105,7 +106,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           }}
         />
 
-        {!isFuture && (
+        {isFuture && (
           <div className={styles.actionBoxWrapper}>
             <div className={styles.actionBoxContainer}>
               <div className={styles.actionBox}>
@@ -126,6 +127,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         )}
       </div>
+
       <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
         <div className={styles.container}>
           <div className={styles.titleAnchor}>
