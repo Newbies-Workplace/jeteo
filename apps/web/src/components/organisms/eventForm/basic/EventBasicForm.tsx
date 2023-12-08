@@ -84,8 +84,8 @@ const getCreateRequestData = (form: BasicForm): CreateEventRequest => {
     title: form.title,
     subtitle: notBlank(form.subtitle),
     description: form.description,
-    from: form.from,
-    to: form.to,
+    from: dayjs(form.from).toISOString(),
+    to: dayjs(form.to).toISOString(),
     address:
       form.location === "location" &&
       form.address &&
@@ -108,8 +108,8 @@ const getUpdateRequestData = (form: BasicForm): UpdateEventRequest => {
     title: form.title,
     subtitle: notBlankOrNull(form.subtitle),
     description: form.description,
-    from: form.from,
-    to: form.to,
+    from: dayjs(form.from).toISOString(),
+    to: dayjs(form.to).toISOString(),
     address:
       form.location === "location" &&
       form.address &&
