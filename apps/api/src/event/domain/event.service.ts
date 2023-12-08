@@ -62,7 +62,7 @@ export class EventService {
         longitude: createEventDto.address?.coordinates?.longitude,
         tags: createEventDto.tags,
         primaryColor: '#4340BE',
-        visibility: 'PRIVATE',
+        visibility: 'HIDDEN',
         authorId: userId,
       },
     });
@@ -148,6 +148,28 @@ export class EventService {
     });
 
     return filePath;
+  }
+
+  async deleteEventCover(eventId: string): Promise<void> {
+    const event = await this.prismaService.event.findUnique({
+      where: {
+        id: eventId,
+      },
+    });
+
+    if (!event.coverImage) {
+      return;
+    }
+
+    await this.storageService.deleteFile(event.coverImage);
+    await this.prismaService.event.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        coverImage: null,
+      },
+    });
   }
 
   async deleteEvent(eventId: string) {

@@ -83,13 +83,20 @@ export default function Page() {
     const formData = new FormData();
     formData.append("avatar", file);
 
-    const res = await myFetch(`/rest/v1/users/@me/avatar`, {
+    await myFetch(`/rest/v1/users/@me/avatar`, {
       method: "PUT",
       body: formData,
       headers: undefined,
+    }).then((res) => {
+      res.ok && res.text().then(setAvatarUrl);
     });
-    res.text().then((avatarUrl) => {
-      setAvatarUrl(avatarUrl);
+  };
+
+  const deleteAvatar = async () => {
+    await myFetch(`/rest/v1/users/@me/avatar`, {
+      method: "DELETE",
+    }).then((res) => {
+      res.ok && setAvatarUrl(null);
     });
   };
 
@@ -103,7 +110,9 @@ export default function Page() {
                 saveAvatar(files[0]);
               }}
             />
-            <FileItem url={avatarUrl} />
+            {avatarUrl && (
+              <FileItem url={avatarUrl} onDeleteClick={deleteAvatar} />
+            )}
           </div>
         </Section>
         <Section title="Dane podstawowe">

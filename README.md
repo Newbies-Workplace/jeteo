@@ -21,16 +21,9 @@ To start the database:
 docker compose -f .docker/docker-compose.local.yaml up jeteo-db -d
 ```
 
-To generate the prisma client and types:
+To install all dependencies:
 ```
-# run in ./apps/api/
-npm run generate
-``` 
-
-To run the migrations on your database:
-```
-# run in ./apps/api/
-npm run migrate
+npm install
 ```
 
 And finally, to start the development server:

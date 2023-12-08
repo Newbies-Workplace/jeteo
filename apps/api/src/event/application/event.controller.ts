@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -7,12 +8,11 @@ import {
   HttpStatus,
   Param,
   Patch,
-  Put,
   Post,
+  Put,
   Query,
-  UseGuards,
   UploadedFile,
-  BadRequestException,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { EventService } from '../domain/event.service';
@@ -149,6 +149,27 @@ export class EventController {
     try {
       let coverPath = await this.eventService.updateEventCover(event.id, file);
       return this.storagePath.convert(`${coverPath}`);
+    } catch (e) {
+      console.error(e);
+
+      if (e instanceof InvalidPathException) {
+        throw new BadRequestException();
+      }
+      throw e;
+    }
+  }
+
+  @Delete('/:id/cover')
+  @UseGuards(JwtGuard)
+  async deleteEventCover(
+    @Param('id') eventId: string,
+    @JWTUser() user: TokenUser,
+  ): Promise<void> {
+    const event = await this.getEventById(eventId);
+    assertEventWriteAccess(user, event);
+
+    try {
+      await this.eventService.deleteEventCover(eventId);
     } catch (e) {
       console.error(e);
 

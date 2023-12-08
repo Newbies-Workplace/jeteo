@@ -11,10 +11,10 @@ import { Metadata } from "next";
 import socialpreview from "@/assets/social-preview.png";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env["NEXT_PUBLIC_FRONTEND_URL"]),
   openGraph: {
     title: "Jeteo",
     description: "Portal do dzielenia się wiedzą!",
-    url: "https://jeteo.newbies.pl",
     siteName: "Jeteo",
     images: [
       {

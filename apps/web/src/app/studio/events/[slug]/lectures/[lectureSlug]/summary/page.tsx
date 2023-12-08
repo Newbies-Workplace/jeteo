@@ -39,13 +39,12 @@ export default async function Page({
         )}
       </Section>
       <Section title={`Podział ocen`}>
-        {lecture.topicRatesCounts.length > 0 &&
-          lecture.overallRatesCounts.length > 0 && (
-            <LectureRateBarChart
-              overallRatesCounts={lecture.overallRatesCounts}
-              topicRatesCounts={lecture.topicRatesCounts}
-            />
-          )}
+        {lecture.ratingSummary.count > 0 && (
+          <LectureRateBarChart
+            overallRatesCounts={lecture.overallRatesCounts}
+            topicRatesCounts={lecture.topicRatesCounts}
+          />
+        )}
       </Section>
       <Section title={`Opinie (${lecture.ratingSummary.opinionCount})`}>
         <div className={styles.ratingsList}></div>
