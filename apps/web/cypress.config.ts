@@ -10,7 +10,7 @@ export default defineConfig({
     viewportHeight: 1080,
     waitForAnimations: true,
     supportFile: "cypress/support/e2e.ts",
-    specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}", //todo można określić ścieŹki do testów np. src/app/**/*.spec.{js,jsx,ts,tsx}"
+    specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
     testIsolation: true,
     experimentalModifyObstructiveThirdPartyCode: true,
   },

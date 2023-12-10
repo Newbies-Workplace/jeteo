@@ -9,8 +9,6 @@ import burgerWhite from "@/assets/burger-white.svg";
 import styles from "./ProfileMenu.module.scss";
 import React, { useEffect, useRef, useState } from "react";
 
-const isDev: boolean = process.env["ENV"] === "dev";
-
 export interface ProfileMenuProps {
   invertColors?: boolean;
 }
@@ -41,7 +39,7 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ invertColors }) => {
   return (
     <div className={styles.menuContainer} ref={dropdownRef}>
       <Image
-        data-cy={isDev ? "open-menu" : undefined}
+        data-cy={"open-menu"}
         style={{ cursor: "pointer" }}
         alt="Open menu"
         src={invertColors ? burgerWhite : burger}

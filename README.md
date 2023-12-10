@@ -4,7 +4,6 @@
 
 - `api`: a Nest.js API
 - `web`: a Next.js web application
-- `tests e2e`: a Cypress for web app
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 

@@ -7,8 +7,6 @@ import menuStyles from "../menus.module.scss";
 import Link from "next/link";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
 
-const isDev: boolean = process.env["ENV"] === "dev";
-
 export default function GuestMenu() {
   return (
     <div className={styles.menu}>
@@ -21,7 +19,7 @@ export default function GuestMenu() {
       </div>
 
       <div className={menuStyles.buttonContainer}>
-        <Link href={"/auth/signin"} data-cy={isDev ? "signin-link" : undefined}>
+        <Link href={"/auth/signin"} data-cy={"signin-link"}>
           <Button size="small" className={menuStyles.button}>
             <Text variant="bodyM">Zaloguj się</Text>
           </Button>
