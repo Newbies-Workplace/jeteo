@@ -29,7 +29,7 @@
   &.primary {
     background-color: colors.$primary;
     color: colors.$white;
-    border: 0;
+    border: 1px solid colors.$primary;
     border-radius: 16px;
 
     &:hover {
