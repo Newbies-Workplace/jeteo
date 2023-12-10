@@ -40,3 +40,13 @@ To build all apps and packages, run the following command:
 ```
 npm run build
 ```
+
+### Test E2E
+To open the Cypress application for debugging tests, go to `cd /apps/web` and run the next command:
+```
+npm run cypress
+```
+To run tests in the background (without a visible interface), use the main `package.json` command:
+```
+npm run test
+```

@@ -27,7 +27,10 @@ export default function Page() {
         >
           <Text variant={"bodyM"}>Kontynuuj przez:</Text>
           <div className={styles.buttons}>
-            <Link href={`${baseUrl}/auth/google/redirect`}>
+            <Link
+              href={`${baseUrl}/auth/google/redirect`}
+              data-cy={"google-button"}
+            >
               <SignInButton icon={Google}>Google</SignInButton>
             </Link>
           </div>
@@ -37,7 +40,7 @@ export default function Page() {
               <br />
             </Text>
             <Link href={"/privacy-policy"} className={styles.link}>
-              politykę prywatnosci
+              politykę prywatności
             </Link>
           </div>
         </Dialog>

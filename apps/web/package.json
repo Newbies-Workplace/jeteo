@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "cypress": "cypress open",
+    "test": "cypress run"
   },
   "dependencies": {
     "@react-spring/parallax": "^9.7.3",
@@ -47,6 +49,7 @@
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
     "@types/uuid": "^9.0.2",
+    "cypress": "^13.6.1",
     "eslint-config-custom": "*",
     "eslint-plugin-storybook": "^0.6.15",
     "sass": "^1.63.6",
