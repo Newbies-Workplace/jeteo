@@ -39,8 +39,6 @@ jobs:
         run: npm run build
 
       - name: Cypress Tests
-        run: npm run test
-        with:
-          browser: chrome
-          start: npm run start
-          wait-on: "http://127.0.0.1:3000"
+        run: |
+          npm run start 
+          npm run test
