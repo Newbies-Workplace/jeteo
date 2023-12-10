@@ -3,7 +3,7 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   defaultCommandTimeout: 10000,
   e2e: {
-    baseUrl: "http://127.0.0.1:3000", //todo hardcoded
+    baseUrl: "http://127.0.0.1:3000",
     video: false,
     chromeWebSecurity: false,
     viewportWidth: 1920,
