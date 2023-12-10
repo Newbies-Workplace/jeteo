@@ -39,9 +39,8 @@ jobs:
         run: npm run build
 
       - name: Cypress Tests
-        uses: cypress-io/github-action@v3
+        run: npm run test
         with:
-          project: ./jeteo
           browser: chrome
           start: npm run start
           wait-on: "http://127.0.0.1:3000"
