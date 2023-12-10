@@ -7,6 +7,7 @@ import Google from "@/assets/google.svg";
 import { SignInButton } from "@/app/auth/signin/components/SignInButton";
 
 const baseUrl: string = process.env["NEXT_PUBLIC_BACKEND_URL"];
+const isDev: boolean = process.env["ENV"] === "dev";
 
 export default function Page() {
   return (
@@ -27,7 +28,10 @@ export default function Page() {
         >
           <Text variant={"bodyM"}>Kontynuuj przez:</Text>
           <div className={styles.buttons}>
-            <Link href={`${baseUrl}/auth/google/redirect`}>
+            <Link
+              href={`${baseUrl}/auth/google/redirect`}
+              data-cy={isDev ? "google-button" : undefined}
+            >
               <SignInButton icon={Google}>Google</SignInButton>
             </Link>
           </div>
@@ -37,7 +41,7 @@ export default function Page() {
               <br />
             </Text>
             <Link href={"/privacy-policy"} className={styles.link}>
-              politykę prywatnosci
+              politykę prywatności
             </Link>
           </div>
         </Dialog>

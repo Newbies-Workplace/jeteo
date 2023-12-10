@@ -4,6 +4,7 @@
 
 - `api`: a Nest.js API
 - `web`: a Next.js web application
+- `tests e2e`: a Cypress for web app
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
@@ -39,4 +40,14 @@ To build all apps and packages, run the following command:
 
 ```
 npm run build
+```
+
+### Test E2E
+To open the Cypress application for debugging tests, go to `cd /apps/web` and run the next command:
+```
+npm run cypress
+```
+To run tests in the background (without a visible interface), use the main `package.json` command:
+```
+npm run test
 ```

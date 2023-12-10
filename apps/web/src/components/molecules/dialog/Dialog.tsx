@@ -8,6 +8,8 @@ import Image from "next/image";
 import arrowBackIcon from "@/assets/arrow-back.svg";
 import { useRouter } from "next/navigation";
 
+const isDev: boolean = process.env["ENV"] === "dev";
+
 interface DialogProps {
   title: string;
   arrowBack?: boolean;
@@ -41,6 +43,7 @@ export const Dialog: React.FC<DialogProps> = ({
             src={arrowBackIcon}
             alt="Arrow back"
             onClick={() => router.back()}
+            data-cy={isDev ? "back-button" : undefined}
           />
         </div>
       )}
