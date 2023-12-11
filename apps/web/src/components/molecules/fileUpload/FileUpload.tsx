@@ -21,6 +21,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDraggingFile, setDraggingFile] = useState(false);
   const [isDialogVisable, setIsDialogVisable] = useState(false);
+  const [imageSrc, setImageSrc] = useState({});
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -46,6 +47,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
       setIsDialogVisable(true);
+      setImageSrc(e.target.files);
       // onChange(e.target.files);
     }
   };
@@ -86,6 +88,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
             title="Wykadruj zdjęcie"
             confirmText="Gotowe"
             dismissText="Anuluj"
+            imgSrc={""}
           />
         </Portal>
       )}
