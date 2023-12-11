@@ -1,0 +1,18 @@
+version: '3.5'
+name: "jeteo-test"
+
+services:
+  jeteo-db:
+    image: postgres:15.3
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: jeteo
+      POSTGRES_PASSWORD: jeteo
+    ports:
+      - "5432:5432"
+    volumes:
+      - jeteo-db-data:/var/lib/postgresql/data
+
+
+volumes:
+  jeteo-db-data:
