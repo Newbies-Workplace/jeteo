@@ -1,5 +1,4 @@
 version: '3.4'
-name: "jeteo-test"
 
 services:
   jeteo-db:
