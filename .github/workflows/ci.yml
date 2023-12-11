@@ -11,6 +11,7 @@ env:
   NEXT_PUBLIC_BACKEND_URL: http://127.0.0.1:3001/api
   NEXT_PUBLIC_FRONTEND_URL: https://127.0.0.1:3000
   DOCKER_COMPOSE_FILE: .docker/docker-compose.ci.yaml
+  DATABASE_URL: postgresql://jeteo:jeteo@localhost:5432/jeteo?schema=public
 
 jobs:
   setup-database:
@@ -42,15 +43,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
-      - name: Restore npm cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
@@ -69,7 +62,7 @@ jobs:
 
     steps:
       - name: Wait for App to Start
-        run: sleep 10  # Adjust the sleep duration based on your app's startup time
+        run: sleep 10
 
       - name: Check out code
         uses: actions/checkout@v3
@@ -80,15 +73,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
-      - name: Restore npm cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
@@ -104,6 +89,8 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
+    needs: test
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -114,15 +101,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
-      - name: Restore npm cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
