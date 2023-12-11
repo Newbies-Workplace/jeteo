@@ -35,6 +35,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        with:
+          cache: 'dependencies'
 
       - name: Run App
         run: npm run dev &
