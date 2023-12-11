@@ -10,7 +10,7 @@ env:
   STORAGE_PATH: storage
   NEXT_PUBLIC_BACKEND_URL: http://127.0.0.1:3001/api
   NEXT_PUBLIC_FRONTEND_URL: https://127.0.0.1:3000
-  DOCKER_COMPOSE_FILE: jeteo/.docker/docker-compose.ci.yaml
+  DOCKER_COMPOSE_FILE: .docker/docker-compose.ci.yaml
 
 jobs:
   setup-database:
