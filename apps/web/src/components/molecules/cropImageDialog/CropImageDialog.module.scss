@@ -1,0 +1,76 @@
+@use "@/colors.module.scss" as colors;
+
+.root {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 600px) {
+    align-items: flex-end;
+  }
+}
+
+.wrapper {
+  display: flex;
+  width: 614px;
+  padding: 16px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border-radius: 16px;
+  background: colors.$surface;
+
+  .title {
+    align-self: stretch;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+
+    .dismiss {
+      display: flex;
+      min-width: 100px;
+      padding: 8px 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      background: colors.$white;
+      border-radius: 16px;
+      border: 0.5px solid colors.$stroke;
+
+      .dismisstext {
+        color: colors.$black;
+        text-align: center;
+      }
+    }
+
+    .confirm {
+      display: flex;
+      min-width: 100px;
+      padding: 8px 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex: 1 0 0;
+      border-radius: 16px;
+      background: colors.$primary;
+
+      .confirmtext {
+        color: colors.$white;
+        text-align: center;
+      }
+    }
+  }
+}
