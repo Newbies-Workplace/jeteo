@@ -5,6 +5,8 @@ import { UpdateLectureRequest } from 'shared/model/lecture/request/updateLecture
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { nanoid } from '@/common/nanoid';
 import { RateLectureRequest } from 'shared/model/lecture/request/rateLecture.request';
+import dayjs from 'dayjs';
+import { LectureInvalidDatesException } from '@/lecture/domain/exceptions/LectureInvalidDatesException';
 
 @Injectable()
 export class LectureService {
@@ -15,6 +17,11 @@ export class LectureService {
     userId: string,
     createLectureRequest: CreateLectureRequest,
   ) {
+    this.assertDates(
+      dayjs(createLectureRequest.from),
+      dayjs(createLectureRequest.to),
+    );
+
     return this.prismaService.lecture.create({
       data: {
         id: nanoid(),
@@ -48,6 +55,16 @@ export class LectureService {
     lecture: LectureDetails,
     updateLectureRequest: UpdateLectureRequest,
   ): Promise<LectureDetails> {
+    const from = updateLectureRequest.from
+      ? dayjs(updateLectureRequest.from)
+      : dayjs(lecture.from);
+
+    const to = updateLectureRequest.to
+      ? dayjs(updateLectureRequest.to)
+      : dayjs(lecture.to);
+
+    this.assertDates(from, to);
+
     // delete old speakers
     const speakersToDelete = lecture.Speakers.filter(
       (speaker) =>
@@ -150,5 +167,11 @@ export class LectureService {
         id: lectureId,
       },
     });
+  }
+
+  private assertDates(from: dayjs.Dayjs, to: dayjs.Dayjs) {
+    if (from.isAfter(to)) {
+      throw new LectureInvalidDatesException();
+    }
   }
 }

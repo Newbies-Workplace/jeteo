@@ -5,6 +5,8 @@ import { Event } from '@prisma/client';
 import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.request';
 import { nanoid } from '@/common/nanoid';
 import { StorageService } from '@/storage/domain/storage.service';
+import dayjs from 'dayjs';
+import { EventInvalidDatesException } from '@/event/domain/exceptions/EventInvalidDatesException';
 
 @Injectable()
 export class EventService {
@@ -47,6 +49,8 @@ export class EventService {
     userId: string,
     createEventDto: CreateEventRequest,
   ): Promise<Event> {
+    this.assertDates(dayjs(createEventDto.from), dayjs(createEventDto.to));
+
     return this.prismaService.event.create({
       data: {
         id: nanoid(),
@@ -68,6 +72,19 @@ export class EventService {
   }
 
   async updateEvent(eventId: string, updateEventRequest: UpdateEventRequest) {
+    const event = await this.prismaService.event.findUnique({
+      where: {
+        id: eventId,
+      },
+    });
+    const from = updateEventRequest.from
+      ? dayjs(updateEventRequest.from)
+      : dayjs(event.from);
+    const to = updateEventRequest.to
+      ? dayjs(updateEventRequest.to)
+      : dayjs(event.to);
+
+    this.assertDates(from, to);
     const address = {
       city:
         updateEventRequest.address === null
@@ -171,5 +188,11 @@ export class EventService {
         id: eventId,
       },
     });
+  }
+
+  private assertDates(from: dayjs.Dayjs, to: dayjs.Dayjs) {
+    if (from.isAfter(to)) {
+      throw new EventInvalidDatesException();
+    }
   }
 }
