@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./FileUpload.module.scss";
 import Button from "@/components/atoms/button/Button";
 import cs from "classnames";
@@ -20,8 +20,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDraggingFile, setDraggingFile] = useState(false);
-  const [isDialogVisable, setIsDialogVisable] = useState(false);
-  const [imageSrc, setImageSrc] = useState({});
+  const [imageSrc, setImageSrc] = useState<File>();
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -38,16 +37,19 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     e.stopPropagation();
     setDraggingFile(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setIsDialogVisable(true);
+      setImageSrc(e.dataTransfer.files.item(0));
       // onChange(e.dataTransfer.files);
     }
   };
 
+  useEffect(() => {
+    console.log(imageSrc);
+  }, [imageSrc]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      setIsDialogVisable(true);
-      setImageSrc(e.target.files);
+      setImageSrc(e.target.files.item(0));
       // onChange(e.target.files);
     }
   };
@@ -82,13 +84,13 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         </Button>
       </div>
 
-      {isDialogVisable && (
+      {imageSrc && (
         <Portal>
           <CropImageDialog
             title="Wykadruj zdjęcie"
             confirmText="Gotowe"
             dismissText="Anuluj"
-            imgSrc={""}
+            imgSrc={URL.createObjectURL(imageSrc)}
           />
         </Portal>
       )}

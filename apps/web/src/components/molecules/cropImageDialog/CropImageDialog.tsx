@@ -3,7 +3,6 @@ import styles from "./CropImageDialog.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import ReactCrop, { type Crop } from "react-image-crop";
 import { useState } from "react";
-import Image from "next/image";
 
 interface CropImageProps {
   title: string;
@@ -33,7 +32,7 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
           onChange={(c) => setCrop(c)}
           aspect={aspectRatio}
         >
-          <Image src={imgSrc} alt="obraz" />
+          <img src={imgSrc} alt="obraz" />
         </ReactCrop>
         <div className={styles.buttons}>
           <Button className={styles.dismiss}>
