@@ -7,11 +7,13 @@ import { myFetch } from "@/common/fetch";
 
 interface AuthContext {
   fetchUser: () => Promise<void>;
+  logout: () => void;
   user: UserDetailsResponse | null;
 }
 
 export const AuthContext = createContext<AuthContext>({
   fetchUser: async () => {},
+  logout: async () => {},
   user: null,
 });
 
@@ -22,7 +24,7 @@ export const AuthContextProvider: React.FC<any> = ({ children }) => {
     if (!!Cookies.get("token") && !user) {
       fetchUser();
     }
-  }, []);
+  }, [user]);
 
   const fetchUser = async () => {
     const user: UserDetailsResponse = await myFetch("/rest/v1/users/@me").then(
@@ -32,8 +34,14 @@ export const AuthContextProvider: React.FC<any> = ({ children }) => {
     setUser(user);
   };
 
+  const logout = () => {
+    Cookies.remove("token");
+    setUser(null);
+    window.location.reload();
+  };
+
   return (
-    <AuthContext.Provider value={{ user, fetchUser }}>
+    <AuthContext.Provider value={{ user, fetchUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

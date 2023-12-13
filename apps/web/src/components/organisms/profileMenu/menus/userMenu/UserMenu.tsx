@@ -8,16 +8,9 @@ import { useAuth } from "@/contexts/Auth.hook";
 import menuStyles from "../menus.module.scss";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
 import cs from "classnames";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 
 export default function UserMenu() {
-  const { user } = useAuth();
-  const router = useRouter();
-  const logout = () => {
-    Cookies.remove("token");
-    window.location.reload();
-  };
+  const { user, logout } = useAuth();
 
   return (
     <div className={styles.menu}>
