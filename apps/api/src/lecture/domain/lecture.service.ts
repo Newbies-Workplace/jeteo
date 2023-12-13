@@ -55,13 +55,13 @@ export class LectureService {
     lecture: LectureDetails,
     updateLectureRequest: UpdateLectureRequest,
   ): Promise<LectureDetails> {
-    const from = updateLectureRequest.from
-      ? dayjs(updateLectureRequest.from)
-      : dayjs(lecture.from);
+    const from = dayjs(
+      updateLectureRequest.from ? updateLectureRequest.from : lecture.from,
+    );
 
-    const to = updateLectureRequest.to
-      ? dayjs(updateLectureRequest.to)
-      : dayjs(lecture.to);
+    const to = dayjs(
+      updateLectureRequest.to ? updateLectureRequest.to : lecture.to,
+    );
 
     this.assertDates(from, to);
 

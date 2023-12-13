@@ -77,12 +77,10 @@ export class EventService {
         id: eventId,
       },
     });
-    const from = updateEventRequest.from
-      ? dayjs(updateEventRequest.from)
-      : dayjs(event.from);
-    const to = updateEventRequest.to
-      ? dayjs(updateEventRequest.to)
-      : dayjs(event.to);
+    const from = dayjs(
+      updateEventRequest.from ? updateEventRequest.from : event.from,
+    );
+    const to = dayjs(updateEventRequest.to ? updateEventRequest.to : event.to);
 
     this.assertDates(from, to);
     const address = {
