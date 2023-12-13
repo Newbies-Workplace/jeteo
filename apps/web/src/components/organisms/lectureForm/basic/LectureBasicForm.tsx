@@ -16,8 +16,8 @@ import {
   CreateLectureRequest,
 } from "shared/model/lecture/request/createLecture.request";
 import {
-  LectureResponse,
   LectureDetailsResponse,
+  LectureResponse,
 } from "shared/model/lecture/response/lecture.response";
 import { UpdateLectureRequest } from "shared/model/lecture/request/updateLecture.request";
 import { getIdFromSlug } from "shared/util";
@@ -107,7 +107,7 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   lecture,
   onSubmitted,
 }) => {
-  const { control, handleSubmit } = useForm<BasicForm>({
+  const { control, handleSubmit, watch } = useForm<BasicForm>({
     defaultValues: getDefaultValue(lecture),
   });
 
@@ -142,14 +142,20 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
             label={"Rozpoczęcie"}
             control={control}
             type={"datetime-local"}
-            rules={{ required: Validations.required }}
+            rules={{
+              required: Validations.required,
+              validate: (value) => Validations.dateRange(value, watch("to")),
+            }}
           />
           <ControlledInput
             name={"to"}
             label={"Zakończenie"}
             control={control}
             type={"datetime-local"}
-            rules={{ required: Validations.required }}
+            rules={{
+              required: Validations.required,
+              validate: (value) => Validations.dateRange(watch("from"), value),
+            }}
           />
         </div>
 
