@@ -9,7 +9,11 @@ const AuthRoot = ({ children, loader: Loader = <div>Loading...</div> }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    !!Cookies.get("token") ? setIsLoading(!user) : redirect("/../");
+    if (!!Cookies.get("token")) {
+      setIsLoading(!user);
+    } else {
+      redirect("/");
+    }
   }, [user, isLoading]);
 
   return isLoading ? Loader : <div>{children}</div>;
