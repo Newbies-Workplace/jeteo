@@ -30,13 +30,11 @@ export const AuthContextProvider: React.FC<any> = ({ children }) => {
     const user: UserDetailsResponse = await myFetch("/rest/v1/users/@me").then(
       (res) => res.json()
     );
-
     setUser(user);
   };
 
   const logout = () => {
     Cookies.remove("token");
-    setUser(null);
     window.location.reload();
   };
 

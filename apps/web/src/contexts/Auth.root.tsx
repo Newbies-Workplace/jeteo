@@ -1,29 +1,18 @@
-'use client'
-import React, { useState, useEffect } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "./Auth.hook";
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
+import Cookies from "js-cookie";
 
 const AuthRoot = ({ children, loader: Loader = <div>Loading...</div> }) => {
-  const authContext = useAuth();
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await authContext.fetchUser();
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-      }
-    };
+    !!Cookies.get("token") ? setIsLoading(!user) : redirect("/../");
+  }, [user, isLoading]);
 
-    if (isLoading) {
-      fetchData();
-    }
-  }, [authContext, isLoading]);
-
-  return isLoading ? Loader :
-    authContext.user ? <div>{children}</div> : redirect("/../");
+  return isLoading ? Loader : <div>{children}</div>;
 };
 
 export default AuthRoot;
