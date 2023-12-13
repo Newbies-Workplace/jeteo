@@ -11,7 +11,7 @@ import { Metadata } from "next";
 import socialpreview from "@/assets/social-preview.png";
 import { GoogleAnalytics } from "@/components/organisms/analytics/GoogleAnalytics";
 import Head from "next/head";
-import { CookieDialog } from "@/components/organisms/analytics/CookieDialog";
+import { CookieDialog } from "@/components/organisms/analytics/cookieDialog/CookieDialog";
 
 const inter = Inter({
   variable: "--font-inter",
