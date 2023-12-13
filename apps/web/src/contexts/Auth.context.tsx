@@ -19,7 +19,7 @@ export const AuthContextProvider: React.FC<any> = ({ children }) => {
   const [user, setUser] = useState<UserDetailsResponse | null>(null);
 
   useEffect(() => {
-    if (!Cookies.get("token") && !user) {
+    if (!!Cookies.get("token") && !user) {
       fetchUser();
     }
   }, []);

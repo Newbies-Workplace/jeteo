@@ -21,7 +21,7 @@ export class GoogleController {
 
     res.cookie('token', token, {
       sameSite: true,
-      httpOnly: true,
+      httpOnly: false,
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
     });
     return res.redirect(process.env['CLIENT_URL']);
