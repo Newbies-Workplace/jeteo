@@ -20,6 +20,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDraggingFile, setDraggingFile] = useState(false);
+  const [isCropDialogVisable, setIsCropDialogVisable] = useState(false);
   const [imageSrc, setImageSrc] = useState<File>();
 
   const handleDrag = (e: React.DragEvent) => {
@@ -37,20 +38,16 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     e.stopPropagation();
     setDraggingFile(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      setIsCropDialogVisable(true);
       setImageSrc(e.dataTransfer.files.item(0));
-      // onChange(e.dataTransfer.files);
     }
   };
-
-  useEffect(() => {
-    console.log(imageSrc);
-  }, [imageSrc]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
+      setIsCropDialogVisable(true);
       setImageSrc(e.target.files.item(0));
-      // onChange(e.target.files);
     }
   };
 
@@ -84,12 +81,18 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         </Button>
       </div>
 
-      {imageSrc && (
+      {isCropDialogVisable && (
         <Portal>
           <CropImageDialog
             title="Wykadruj zdjęcie"
             confirmText="Gotowe"
             dismissText="Anuluj"
+            confirmAction={(crop) => {
+              setIsCropDialogVisable(false);
+            }}
+            dismissAction={() => {
+              setIsCropDialogVisable(false);
+            }}
             imgSrc={URL.createObjectURL(imageSrc)}
           />
         </Portal>
