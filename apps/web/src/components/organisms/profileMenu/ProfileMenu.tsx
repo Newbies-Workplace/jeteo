@@ -7,7 +7,7 @@ import Image from "next/image";
 import burger from "@/assets/burger.svg";
 import burgerWhite from "@/assets/burger-white.svg";
 import styles from "./ProfileMenu.module.scss";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export interface ProfileMenuProps {
   invertColors?: boolean;
@@ -39,6 +39,7 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ invertColors }) => {
   return (
     <div className={styles.menuContainer} ref={dropdownRef}>
       <Image
+        data-cy={"open-menu"}
         style={{ cursor: "pointer" }}
         alt="Open menu"
         src={invertColors ? burgerWhite : burger}

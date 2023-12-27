@@ -19,7 +19,7 @@ export default function GuestMenu() {
       </div>
 
       <div className={menuStyles.buttonContainer}>
-        <Link href={"/auth/signin"}>
+        <Link href={"/auth/signin"} data-cy={"signin-link"}>
           <Button size="small" className={menuStyles.button}>
             <Text variant="bodyM">Zaloguj się</Text>
           </Button>

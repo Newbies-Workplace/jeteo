@@ -48,7 +48,7 @@ export const EventCard: React.FC<EventCardProps> = ({
       <div
         className={styles.backgroundImage}
         style={{
-          backgroundImage: `url('${coverImage}')`,
+          backgroundImage: coverImage ? `url('${coverImage}')` : undefined,
         }}
       />
       <div
@@ -143,7 +143,6 @@ export const SmartEventCard: React.FC<{ event: EventResponse }> = ({
         {isFresh && <EventCardActionsFresh event={event} />}
         {isArchive && <EventCardActionsArchive event={event} />}
         {isLive && <EventCardActionsLive event={event} />}
-        
       </div>
     </EventCard>
   );

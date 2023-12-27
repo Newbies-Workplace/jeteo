@@ -95,7 +95,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <div
           className={styles.backgroundImage}
           style={{
-            backgroundImage: `url('${event.coverImage}')`,
+            backgroundImage: event.coverImage
+              ? `url('${event.coverImage}')`
+              : undefined,
           }}
         />
 

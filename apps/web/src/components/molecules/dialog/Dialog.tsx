@@ -41,6 +41,7 @@ export const Dialog: React.FC<DialogProps> = ({
             src={arrowBackIcon}
             alt="Arrow back"
             onClick={() => router.back()}
+            data-cy={"back-button"}
           />
         </div>
       )}
