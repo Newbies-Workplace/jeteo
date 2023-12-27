@@ -1,18 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text } from "@/components/atoms/text/Text";
 import Button from "@/components/atoms/button/Button";
 import styles from "./CookieDialog.module.scss";
 import Image from "next/image";
 import CookieImage from "@/assets/images/cookie.svg";
-
-interface CookieDialogProps {}
+import { getLocalStorage, setLocalStorage } from "@/lib/storageHelper";
 
 export const CookieDialog: React.FC = () => {
-  const onCookiesAccepted = () => {};
+  const [cookieConsent, setCookieConsent] = useState(false);
 
-  const onCookiesRejected = () => {};
+  useEffect(() => {
+    const storedCookieConsent = getLocalStorage("cookie_consent", null);
+
+    setCookieConsent(storedCookieConsent);
+  }, [setCookieConsent]);
+
+  useEffect(() => {
+    const newValue = cookieConsent ? "granted" : "denied";
+
+    window.gtag("consent", "update", {
+      analytics_storage: newValue,
+    });
+
+    setLocalStorage("cookie_consent", cookieConsent);
+  }, [cookieConsent]);
+
+  if (cookieConsent != null) return null;
 
   return (
     <div className={styles.backdrop}>
@@ -27,13 +42,12 @@ export const CookieDialog: React.FC = () => {
 
         <div className={styles.texts}>
           <Text variant={"headM"} bold>
-            🍪Kosmiczne ciasteczka🍪
+            🍪Ciasteczka🍪
           </Text>
           <Text variant={"bodyS"}>
-            Witaj w kosmicznej sferze informacji! Poprzez kliknięcie "Zgadzam
-            się" wchodzisz w orbitę naszej innowacyjnej analizy danych. Nasze
-            niezwykłe ciasteczka pełnią rolę narzędzi, zbierając cenne
-            informacje, które pomagają nam doskonalić nasze usługi.
+            Strona jeteo korzysta z plików cookies, klikając „Zezwól”, zgadzasz
+            się na przechowywanie plików cookie na swoim urządzeniu w celu
+            usprawnienia nawigacji w witrynie i analizy korzystania z witryny.
           </Text>
         </div>
 
@@ -45,13 +59,13 @@ export const CookieDialog: React.FC = () => {
               backgroundColor: "transparent",
               color: "white",
             }}
-            onClick={onCookiesRejected}
+            onClick={() => setCookieConsent(false)}
           >
             Odrzuć
           </Button>
 
-          <Button primary size={"small"} onClick={onCookiesAccepted}>
-            Zgadzam się
+          <Button primary size={"small"} onClick={() => setCookieConsent(true)}>
+            Zezwól
           </Button>
         </div>
       </div>
