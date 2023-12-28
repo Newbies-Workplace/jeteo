@@ -14,7 +14,7 @@ interface ButtonProps {
   rightIcon?: string;
   iconSize?: number;
   type?: "submit" | "reset" | "button";
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   size?: "medium" | "small";
 }
 
