@@ -9,6 +9,23 @@ import cs from "classnames";
 import { Toaster } from "react-hot-toast";
 import { Metadata } from "next";
 import socialpreview from "@/assets/social-preview.png";
+import { GoogleAnalytics } from "@/components/organisms/analytics/GoogleAnalytics";
+import Head from "next/head";
+import { CookieDialog } from "@/components/organisms/analytics/cookieDialog/CookieDialog";
+
+const inter = Inter({
+  variable: "--font-inter",
+  preload: false,
+});
+const oswald = Oswald({
+  variable: "--font-oswald",
+  preload: false,
+});
+const lato = Lato({
+  variable: "--font-lato",
+  weight: "400",
+  preload: false,
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env["NEXT_PUBLIC_FRONTEND_URL"]),
@@ -28,19 +45,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-const inter = Inter({
-  variable: "--font-inter",
-  preload: false,
-});
-const oswald = Oswald({
-  variable: "--font-oswald",
-  preload: false,
-});
-const lato = Lato({
-  variable: "--font-lato",
-  weight: "400",
-  preload: false,
-});
 
 export default function RootLayout({
   children,
@@ -51,12 +55,17 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <head>
+      <Head>
         <link rel="icon" href="favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="favicon.ico" sizes="any" />
 
         <title>jeteo</title>
-      </head>
+      </Head>
+
+      <GoogleAnalytics
+        measurementId={process.env["NEXT_PUBLIC_GOOGLE_ANALYTICS"]}
+      />
+
       <body
         className={cs(inter.variable, oswald.variable, lato.variable)}
         style={{
@@ -99,6 +108,8 @@ export default function RootLayout({
             }}
           />
         </Providers>
+
+        <CookieDialog />
       </body>
     </html>
   );

@@ -5,8 +5,10 @@ import cs from "classnames";
 import styles from "./CalendarButton.module.scss";
 import dayjs from "dayjs";
 import Button from "@/components/atoms/button/Button";
+import { logEvent } from "@/lib/analytics";
 
 interface CalendarButtonProps {
+  id: string;
   name: string;
   startTime: string;
   endTime: string;
@@ -24,6 +26,10 @@ export const CalendarButton = (props: CalendarButtonProps) => {
       leftIcon={CalendarIcon}
       size="small"
       onClick={() => {
+        logEvent("reminder_add", {
+          event_id: props.id,
+        });
+
         window.open(googleCalendarUrl, "_blank");
       }}
       className={cs(styles.calendarButton, props.className)}

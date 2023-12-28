@@ -4,6 +4,7 @@ import React, { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { UserDetailsResponse } from "shared/model/user/response/user.response";
 import { myFetch } from "@/common/fetch";
+import { logUserId } from "@/lib/analytics";
 
 interface AuthContext {
   fetchUser: () => Promise<void>;
@@ -31,6 +32,7 @@ export const AuthContextProvider: React.FC<any> = ({ children }) => {
       (res) => res.json()
     );
     setUser(user);
+    logUserId(user.id);
   };
 
   const logout = () => {
