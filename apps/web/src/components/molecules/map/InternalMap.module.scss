@@ -7,20 +7,15 @@
   border-radius: 16px;
 }
 
-.zoomButton {
+.buttons {
   position: absolute;
   top: 10px;
   left: 10px;
   z-index: 400;
-  backdrop-filter: blur(5px);
-}
 
-.googleMapButton {
-  position: absolute;
-  top: 10px;
-  left: 58px;
-  z-index: 400;
-  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
 }
 
 .mapBigDisplay {

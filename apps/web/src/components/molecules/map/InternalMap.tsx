@@ -42,21 +42,22 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
         zoomControl={false}
         scrollWheelZoom
       >
-        <div
-          className={styles.mapContainerOverlay}
-          onDoubleClick={() => setMapPopupOpen(false)}
-        />
+        <div onDoubleClick={() => setMapPopupOpen(false)} />
 
-        <div className={styles.zoomButton}>
+        <div className={styles.buttons}>
           <IconButton
             icon={ZoomIcon}
             primary
+            size={"small"}
             onClick={() => setMapPopupOpen(!isMapPopupOpen)}
           />
-        </div>
 
-        <div className={styles.googleMapButton}>
-          <IconButton icon={MapIcon} primary onClick={() => openGoogleMaps()} />
+          <IconButton
+            icon={MapIcon}
+            primary
+            size={"small"}
+            onClick={() => openGoogleMaps()}
+          />
         </div>
 
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -116,8 +117,13 @@ const LocationDialog: React.FC<LocationDialogProps> = ({
         zoomControl={false}
         scrollWheelZoom
       >
-        <div className={styles.zoomButton}>
-          <IconButton icon={CloseIcon} primary onClick={() => closeDialog()} />
+        <div className={styles.buttons}>
+          <IconButton
+            icon={CloseIcon}
+            primary
+            size={"small"}
+            onClick={() => closeDialog()}
+          />
         </div>
 
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
