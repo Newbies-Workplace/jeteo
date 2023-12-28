@@ -19,13 +19,13 @@ interface CalendarButtonProps {
 
 export const CalendarButton = (props: CalendarButtonProps) => {
   const googleCalendarUrl = generateGoogleCalendarUrl(props);
-  console.log("Google Calendar URL:", googleCalendarUrl);
 
   return (
     <Button
       leftIcon={CalendarIcon}
       size="small"
-      onClick={() => {
+      onClick={(e) => {
+        e.preventDefault();
         logEvent("reminder_add", {
           event_id: props.id,
         });
