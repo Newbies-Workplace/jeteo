@@ -6,7 +6,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useReportWebVitals } from "next/web-vitals";
 
-const env = process.env.NODE_ENV;
+const env = process.env["NODE_ENV"];
 
 interface GoogleAnalyticsProps {
   measurementId: string;
