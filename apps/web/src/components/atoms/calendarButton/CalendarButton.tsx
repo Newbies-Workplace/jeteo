@@ -17,13 +17,13 @@ interface CalendarButtonProps {
 
 export const CalendarButton = (props: CalendarButtonProps) => {
   const googleCalendarUrl = generateGoogleCalendarUrl(props);
-  console.log("Google Calendar URL:", googleCalendarUrl);
 
   return (
     <Button
       leftIcon={CalendarIcon}
       size="small"
-      onClick={() => {
+      onClick={(e) => {
+        e.preventDefault();
         window.open(googleCalendarUrl, "_blank");
       }}
       className={cs(styles.calendarButton, props.className)}
