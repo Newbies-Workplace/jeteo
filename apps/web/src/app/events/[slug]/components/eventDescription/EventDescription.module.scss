@@ -1,4 +1,4 @@
-@use "@/typography.module" as typography;
+@use "@/typography.module.scss" as typography;
 
 .description {
   @include typography.bodyM();
