@@ -27,11 +27,11 @@ export const IconButton: React.FC<IconButtonProps> = ({
         [styles.medium]: size === "medium",
         [styles.small]: size === "small",
       })}
+      onClick={onClick}
     >
       <Image
         src={icon}
         alt={alt ?? "iconButton"}
-        onClick={onClick}
         width={imageSize}
         height={imageSize}
       />

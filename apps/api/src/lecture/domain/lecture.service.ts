@@ -31,6 +31,7 @@ export class LectureService {
         description: createLectureRequest.description,
         from: new Date(createLectureRequest.from),
         to: new Date(createLectureRequest.to),
+        youtubeVideoId: createLectureRequest.youtubeVideoId,
         Invites: {
           createMany: {
             data: createLectureRequest.invites.map((invite) => ({
@@ -107,6 +108,7 @@ export class LectureService {
         description: updateLectureRequest.description,
         from: new Date(updateLectureRequest.from),
         to: new Date(updateLectureRequest.to),
+        youtubeVideoId: updateLectureRequest.youtubeVideoId,
         Speakers: {
           deleteMany: {
             id: {
