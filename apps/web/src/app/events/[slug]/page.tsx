@@ -14,7 +14,6 @@ import { getEventLectures } from "@/common/getLecture";
 import { EventLectures } from "@/app/events/[slug]/components/eventLectures/EventLectures";
 import colors from "@/colors.module.scss";
 import { Metadata } from "next";
-import SocialPreview from "@/assets/social-preview.png";
 import dayjs from "dayjs";
 import { CalendarButton } from "@/components/atoms/calendarButton/CalendarButton";
 
@@ -65,7 +64,7 @@ export async function generateMetadata({
       siteName: "Jeteo",
       images: [
         {
-          url: SocialPreview.src,
+          url: `/events/${event.slug}/cover`,
           width: 1280,
           height: 600,
           alt: "jeteo",
