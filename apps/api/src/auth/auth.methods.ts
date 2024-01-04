@@ -33,6 +33,21 @@ export const assertLectureReadAccess = (
   throw new NotAllowedToReadLectureException();
 };
 
+export const assertLectureWriteAccess = (
+  user: TokenUser | undefined,
+  lecture: LectureDetails,
+) => {
+  if (
+    user &&
+    (lecture.Event.authorId === user.id ||
+      lecture.Speakers.map((speaker) => speaker.id).includes(user.id))
+  ) {
+    return;
+  }
+
+  throw new NotAllowedToEditEventException();
+};
+
 export const assertEventWriteAccess = (
   user: TokenUser | undefined,
   event: Event,

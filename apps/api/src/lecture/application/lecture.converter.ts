@@ -44,6 +44,7 @@ export class LectureConverter {
       description: lecture.description,
       from: lecture.from.toISOString(),
       to: lecture.to.toISOString(),
+      youtubeVideoId: lecture.youtubeVideoId,
       createdAt: lecture.createdAt.toISOString(),
       ratingSummary: {
         average: average,

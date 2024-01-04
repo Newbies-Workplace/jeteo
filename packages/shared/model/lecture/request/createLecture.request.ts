@@ -3,8 +3,10 @@ import {
   IsArray,
   IsDateString,
   IsEmail,
+  IsOptional,
   IsString,
   IsUUID,
+  Length,
   ValidateNested,
 } from "class-validator";
 import { Type } from "class-transformer";
@@ -18,6 +20,10 @@ export class CreateLectureRequest {
   from: string;
   @IsDateString()
   to: string;
+  @Length(11, 11)
+  @IsString()
+  @IsOptional()
+  youtubeVideoId?: string;
   @IsArray()
   @ArrayMaxSize(2)
   @ValidateNested({ each: true })
