@@ -1,9 +1,10 @@
 import Button from "@/components/atoms/button/Button";
 import styles from "./CropImageDialog.module.scss";
 import { Text } from "@/components/atoms/text/Text";
-import ReactCrop, { type Crop } from "react-image-crop";
+import ReactCrop, { PixelCrop } from "react-image-crop";
 import "react-image-crop/src/ReactCrop.scss";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { canvasPreview } from "@/components/molecules/cropImageDialog/canvasPreview";
 
 export type CropImageProps = {
   title: string;
@@ -24,7 +25,9 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
   imgSrc,
   aspectRatio,
 }) => {
-  const [crop, setCrop] = useState<Crop>({
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const [crop, setCrop] = useState<PixelCrop>({
     unit: "px",
     x: 25,
     y: 25,
@@ -36,31 +39,17 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
     confirmAction(await getCroppedImg(imgSrc, crop));
   };
 
-  const getCroppedImg = async (imageSrc: string, crop: Crop): Promise<File> =>
+  const getCroppedImg = async (
+    imageSrc: string,
+    crop: PixelCrop
+  ): Promise<File> =>
     new Promise((resolve, reject) => {
       const image = new Image();
       image.src = imageSrc;
       image.onload = () => {
         const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
 
-        const scaleX = image.naturalWidth / image.width;
-        const scaleY = image.naturalHeight / image.height;
-
-        canvas.width = crop.width;
-        canvas.height = crop.height;
-
-        ctx.drawImage(
-          image,
-          crop.x * scaleX,
-          crop.y * scaleY,
-          crop.width * scaleX,
-          crop.height * scaleY,
-          0,
-          0,
-          crop.width,
-          crop.height
-        );
+        canvasPreview(imgRef.current, canvas, crop, 1, 0);
 
         canvas.toBlob((blob) => {
           if (!blob) {
@@ -85,7 +74,7 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
           onChange={(c) => setCrop(c)}
           aspect={aspectRatio}
         >
-          <img src={imgSrc} alt="obraz" />
+          <img src={imgSrc} ref={imgRef} alt="obraz" />
         </ReactCrop>
         <div className={styles.buttons}>
           <Button className={styles.dismiss} onClick={dismissAction}>
