@@ -5,15 +5,15 @@ import ReactCrop, { type Crop } from "react-image-crop";
 import "react-image-crop/src/ReactCrop.scss";
 import React, { useState } from "react";
 
-interface CropImageProps {
+export type CropImageProps = {
   title: string;
   dismissText: string;
   confirmText: string;
   dismissAction: () => void;
-  confirmAction: (croppedImage: Blob) => void;
+  confirmAction: (croppedImage: File) => void;
   imgSrc: string;
   aspectRatio?: number;
-}
+};
 
 export const CropImageDialog: React.FC<CropImageProps> = ({
   title,
@@ -36,7 +36,7 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
     confirmAction(await getCroppedImg(imgSrc, crop));
   };
 
-  const getCroppedImg = async (imageSrc: string, crop: Crop): Promise<Blob> =>
+  const getCroppedImg = async (imageSrc: string, crop: Crop): Promise<File> =>
     new Promise((resolve, reject) => {
       const image = new Image();
       image.src = imageSrc;
@@ -64,17 +64,19 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
 
         canvas.toBlob((blob) => {
           if (!blob) {
-            console.error("Canvas is empty");
-            return;
+            reject(new Error("Canvas is empty"));
           }
-          resolve(blob);
+
+          const file = new File([blob], "croppedImage", { type: blob.type });
+
+          resolve(file);
         }, "image/jpeg");
       };
     });
 
   return (
-    <div className={styles.root}>
-      <div className={styles.wrapper}>
+    <div className={styles.root} onClick={dismissAction}>
+      <div className={styles.wrapper} onClick={(e) => e.stopPropagation()}>
         <Text variant="headS" bold className={styles.title}>
           {title}
         </Text>

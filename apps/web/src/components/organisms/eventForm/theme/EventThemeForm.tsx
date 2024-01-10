@@ -14,6 +14,7 @@ import { FileItem } from "@/components/molecules/fileItem/FileItem";
 import { FileUpload } from "@/components/molecules/fileUpload/FileUpload";
 import { Portal } from "@/components/molecules/portal/Portal";
 import { CropImageDialog } from "@/components/molecules/cropImageDialog/CropImageDialog";
+import { useCropDialog } from "@/contexts/useCropDialog";
 
 const getRequest = async (
   color: string,
@@ -34,7 +35,17 @@ interface EventThemeFormProps {
 export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
   const [color, setColor] = useState(event?.primaryColor);
   const [coverImage, setCoverImage] = useState<string>(event?.coverImage);
-  const [imageSrc, setImageSrc] = useState<File>();
+
+  const { CropDialog, openCropDialog } = useCropDialog({
+    aspectRatio: 3,
+    title: "Wykadruj zdjęcie",
+    confirmText: "Gotowe",
+    dismissText: "Anuluj",
+    confirmAction: (file) => {
+      saveCoverImage(file);
+    },
+    dismissAction: () => {},
+  });
 
   const onSubmit = () => {
     toast.promise(
@@ -71,6 +82,7 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
   };
   return (
     <>
+      <CropDialog />
       <Section title={"Motyw"}>
         <div className={styles.themeContainer}>
           <Text variant="headS">Kolor przewodni</Text>
@@ -79,28 +91,9 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
             Okładka
           </Text>
           <div className={styles.imageInputs}>
-            {imageSrc && (
-              <Portal>
-                <CropImageDialog
-                  title="Wykadruj zdjęcie"
-                  confirmText="Gotowe"
-                  dismissText="Anuluj"
-                  confirmAction={(blob) => {
-                    const file = new File([blob], "a", { type: blob.type });
-                    saveCoverImage(file);
-                    setImageSrc(null);
-                  }}
-                  dismissAction={() => {
-                    setImageSrc(null);
-                  }}
-                  imgSrc={URL.createObjectURL(imageSrc)}
-                  aspectRatio={3}
-                />
-              </Portal>
-            )}
             <FileUpload
               onChange={(files) => {
-                setImageSrc(files[0]);
+                openCropDialog(URL.createObjectURL(files[0]));
               }}
             />
             {coverImage && (
