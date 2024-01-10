@@ -25,7 +25,7 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
   aspectRatio,
 }) => {
   const [crop, setCrop] = useState<Crop>({
-    unit: "%",
+    unit: "px",
     x: 25,
     y: 25,
     width: 50,
