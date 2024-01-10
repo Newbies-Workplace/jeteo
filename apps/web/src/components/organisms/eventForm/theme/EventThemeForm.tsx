@@ -12,6 +12,8 @@ import toast from "react-hot-toast";
 import { myFetch } from "@/common/fetch";
 import { FileItem } from "@/components/molecules/fileItem/FileItem";
 import { FileUpload } from "@/components/molecules/fileUpload/FileUpload";
+import { Portal } from "@/components/molecules/portal/Portal";
+import { CropImageDialog } from "@/components/molecules/cropImageDialog/CropImageDialog";
 
 const getRequest = async (
   color: string,
@@ -32,6 +34,7 @@ interface EventThemeFormProps {
 export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
   const [color, setColor] = useState(event?.primaryColor);
   const [coverImage, setCoverImage] = useState<string>(event?.coverImage);
+  const [imageSrc, setImageSrc] = useState<File>();
 
   const onSubmit = () => {
     toast.promise(
@@ -76,9 +79,28 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
             Okładka
           </Text>
           <div className={styles.imageInputs}>
+            {imageSrc && (
+              <Portal>
+                <CropImageDialog
+                  title="Wykadruj zdjęcie"
+                  confirmText="Gotowe"
+                  dismissText="Anuluj"
+                  confirmAction={(blob) => {
+                    const file = new File([blob], "a", { type: blob.type });
+                    saveCoverImage(file);
+                    setImageSrc(null);
+                  }}
+                  dismissAction={() => {
+                    setImageSrc(null);
+                  }}
+                  imgSrc={URL.createObjectURL(imageSrc)}
+                  aspectRatio={3}
+                />
+              </Portal>
+            )}
             <FileUpload
               onChange={(files) => {
-                saveCoverImage(files[0]);
+                setImageSrc(files[0]);
               }}
             />
             {coverImage && (

@@ -11,8 +11,8 @@ interface CropImageProps {
   confirmText: string;
   dismissAction: () => void;
   confirmAction: (croppedImage: Blob) => void;
-  imgSrc: any; // todo change
-  aspectRatio?: any; // todo change
+  imgSrc: string;
+  aspectRatio?: number;
 }
 
 export const CropImageDialog: React.FC<CropImageProps> = ({
@@ -64,7 +64,6 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
 
         canvas.toBlob((blob) => {
           if (!blob) {
-            //reject new Error('Canvas is empty');
             console.error("Canvas is empty");
             return;
           }

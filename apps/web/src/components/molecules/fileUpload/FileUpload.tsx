@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./FileUpload.module.scss";
 import Button from "@/components/atoms/button/Button";
 import cs from "classnames";
 import { ALLOWED_IMAGE_EXTENSIONS } from "@/common/constants";
 import { Text } from "@/components/atoms/text/Text";
-import { CropImageDialog } from "../cropImageDialog/CropImageDialog";
-import { Portal } from "@/components/molecules/portal/Portal";
 
 interface FileUploadProps {
   accept?: string;
@@ -20,8 +18,6 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDraggingFile, setDraggingFile] = useState(false);
-  const [isCropDialogVisible, setIsCropDialogVisible] = useState(false);
-  const [imageSrc, setImageSrc] = useState<File>();
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -38,68 +34,44 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     e.stopPropagation();
     setDraggingFile(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setIsCropDialogVisible(true);
-      setImageSrc(e.dataTransfer.files.item(0));
+      onChange(e.dataTransfer.files);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      setIsCropDialogVisible(true);
-      setImageSrc(e.target.files.item(0));
+      onChange(e.target.files);
     }
   };
 
   return (
-    <>
-      <div
-        className={cs(styles.container, { [styles.hovering]: isDraggingFile })}
-        onDragEnter={handleDrag}
-        onDragLeave={handleDrag}
-        onDragOver={handleDrag}
-        onDrop={handleDrop}
+    <div
+      className={cs(styles.container, { [styles.hovering]: isDraggingFile })}
+      onDragEnter={handleDrag}
+      onDragLeave={handleDrag}
+      onDragOver={handleDrag}
+      onDrop={handleDrop}
+    >
+      <Text variant="bodyL">Przeciągnij plik tutaj lub</Text>
+
+      <input
+        ref={inputRef}
+        type={"file"}
+        className={styles.input}
+        accept={accept}
+        onChange={handleChange}
+      />
+
+      <Button
+        className={styles.button}
+        primary
+        size={"small"}
+        type={"button"}
+        onClick={() => inputRef?.current?.click()}
       >
-        <Text variant="bodyL">Przeciągnij plik tutaj lub</Text>
-
-        <input
-          ref={inputRef}
-          type={"file"}
-          className={styles.input}
-          accept={accept}
-          onChange={handleChange}
-        />
-
-        <Button
-          className={styles.button}
-          primary
-          size={"small"}
-          type={"button"}
-          onClick={() => inputRef?.current?.click()}
-        >
-          Wybierz
-        </Button>
-      </div>
-
-      {isCropDialogVisible && ( //todo extract higher in hierarchy
-        <Portal>
-          <CropImageDialog
-            title="Wykadruj zdjęcie"
-            confirmText="Gotowe"
-            dismissText="Anuluj"
-            confirmAction={(blob) => {
-              const file = new File([blob], "a", { type: blob.type });
-              onChange([file]);
-              setIsCropDialogVisible(false);
-            }}
-            dismissAction={() => {
-              setIsCropDialogVisible(false);
-            }}
-            imgSrc={URL.createObjectURL(imageSrc)}
-            aspectRatio={1}
-          />
-        </Portal>
-      )}
-    </>
+        Wybierz
+      </Button>
+    </div>
   );
 };

@@ -12,6 +12,8 @@ import { UpdateUserRequest } from "shared/model/user/request/updateUser.request"
 import { myFetch } from "@/common/fetch";
 import { FileItem } from "@/components/molecules/fileItem/FileItem";
 import toast from "react-hot-toast";
+import { Portal } from "@/components/molecules/portal/Portal";
+import { CropImageDialog } from "@/components/molecules/cropImageDialog/CropImageDialog";
 
 type ProfileForm = {
   name: string;
@@ -30,6 +32,7 @@ export default function Page() {
   const [isInitialized, setIsInitialized] = useState(false);
   const { control, handleSubmit, reset } = useForm<ProfileForm>();
   const [avatarUrl, setAvatarUrl] = useState<string>(user?.avatar);
+  const [imageSrc, setImageSrc] = useState<File>();
 
   useEffect(() => {
     if (!user || isInitialized) return;
@@ -105,9 +108,28 @@ export default function Page() {
       <div className={styles.container}>
         <Section title="Zdjęcie profilowe">
           <div className={styles.imageInputs}>
+            {imageSrc && (
+              <Portal>
+                <CropImageDialog
+                  title="Wykadruj zdjęcie"
+                  confirmText="Gotowe"
+                  dismissText="Anuluj"
+                  confirmAction={(blob) => {
+                    const file = new File([blob], "a", { type: blob.type });
+                    saveAvatar(file);
+                    setImageSrc(null);
+                  }}
+                  dismissAction={() => {
+                    setImageSrc(null);
+                  }}
+                  imgSrc={URL.createObjectURL(imageSrc)}
+                  aspectRatio={1}
+                />
+              </Portal>
+            )}
             <FileUpload
               onChange={(files) => {
-                saveAvatar(files[0]);
+                setImageSrc(files[0]);
               }}
             />
             {avatarUrl && (
