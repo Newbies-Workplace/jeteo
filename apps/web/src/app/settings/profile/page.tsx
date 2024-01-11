@@ -12,6 +12,7 @@ import { UpdateUserRequest } from "shared/model/user/request/updateUser.request"
 import { myFetch } from "@/common/fetch";
 import { FileItem } from "@/components/molecules/fileItem/FileItem";
 import toast from "react-hot-toast";
+import { useCropDialog } from "@/contexts/useCropDialog";
 
 type ProfileForm = {
   name: string;
@@ -30,6 +31,17 @@ export default function Page() {
   const [isInitialized, setIsInitialized] = useState(false);
   const { control, handleSubmit, reset } = useForm<ProfileForm>();
   const [avatarUrl, setAvatarUrl] = useState<string>(user?.avatar);
+
+  const { CropDialog, openCropDialog } = useCropDialog({
+    aspectRatio: 1,
+    title: "Wykadruj zdjęcie",
+    confirmText: "Gotowe",
+    dismissText: "Anuluj",
+    confirmAction: (file) => {
+      saveAvatar(file);
+    },
+    dismissAction: () => {},
+  });
 
   useEffect(() => {
     if (!user || isInitialized) return;
@@ -102,12 +114,13 @@ export default function Page() {
 
   return (
     <form style={{ display: "flex", flexDirection: "column" }}>
+      <CropDialog />
       <div className={styles.container}>
         <Section title="Zdjęcie profilowe">
           <div className={styles.imageInputs}>
             <FileUpload
               onChange={(files) => {
-                saveAvatar(files[0]);
+                openCropDialog(URL.createObjectURL(files[0]));
               }}
             />
             {avatarUrl && (

@@ -60,7 +60,14 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         type={"file"}
         className={styles.input}
         accept={accept}
-        onChange={handleChange}
+        onChange={(e) => {
+          handleChange(e);
+
+          // Reset the value of the input field
+          if (e.target instanceof HTMLInputElement) {
+            e.target.value = "";
+          }
+        }}
       />
 
       <Button

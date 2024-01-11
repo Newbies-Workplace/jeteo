@@ -1,0 +1,104 @@
+@use "@/colors.module.scss" as colors;
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog {
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border-radius: 16px;
+  background: colors.$surface;
+
+  max-height: 90%;
+  max-width: 90%;
+
+  .title {
+    align-self: stretch;
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    background: colors.$stroke;
+
+    overflow: auto;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+
+    .dismiss {
+      display: flex;
+      min-width: 100px;
+      padding: 8px 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      background: colors.$white;
+      border-radius: 16px;
+      border: 0.5px solid colors.$stroke;
+
+      .dismisstext {
+        color: colors.$black;
+        text-align: center;
+      }
+    }
+
+    .confirm {
+      display: flex;
+      min-width: 100px;
+      padding: 8px 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex: 1 0 0;
+      border-radius: 16px;
+      background: colors.$primary;
+
+      .confirmtext {
+        color: colors.$white;
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .backdrop {
+    align-items: flex-end;
+  }
+
+  .dialog {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    max-width: unset;
+
+    width: 100%;
+  }
+}
+

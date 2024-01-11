@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Section } from "@/components/molecules/section/Section";
-import { EventCard } from "@/components/molecules/eventCard/EventCard";
+import { SmartEventCard } from "@/components/molecules/eventCard/EventCard";
 import styles from "./EventThemeForm.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import { HexColorPicker } from "react-colorful";
@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { myFetch } from "@/common/fetch";
 import { FileItem } from "@/components/molecules/fileItem/FileItem";
 import { FileUpload } from "@/components/molecules/fileUpload/FileUpload";
+import { useCropDialog } from "@/contexts/useCropDialog";
 
 const getRequest = async (
   color: string,
@@ -32,6 +33,17 @@ interface EventThemeFormProps {
 export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
   const [color, setColor] = useState(event?.primaryColor);
   const [coverImage, setCoverImage] = useState<string>(event?.coverImage);
+
+  const { CropDialog, openCropDialog } = useCropDialog({
+    aspectRatio: 3,
+    title: "Wykadruj zdjęcie",
+    confirmText: "Gotowe",
+    dismissText: "Anuluj",
+    confirmAction: (file) => {
+      saveCoverImage(file);
+    },
+    dismissAction: () => {},
+  });
 
   const onSubmit = () => {
     toast.promise(
@@ -66,8 +78,10 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
       res.ok && setCoverImage(null);
     });
   };
+
   return (
     <>
+      <CropDialog />
       <Section title={"Motyw"}>
         <div className={styles.themeContainer}>
           <Text variant="headS">Kolor przewodni</Text>
@@ -78,7 +92,7 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
           <div className={styles.imageInputs}>
             <FileUpload
               onChange={(files) => {
-                saveCoverImage(files[0]);
+                openCropDialog(URL.createObjectURL(files[0]));
               }}
             />
             {coverImage && (
@@ -88,17 +102,8 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
         </div>
       </Section>
       <Section title={"Podgląd"}>
-        <EventCard
-          title="Wydarzenie 1"
-          subtitle={"opis wydarzenia"}
-          host={{
-            name: "host",
-          }}
-          place={"Wrocław, Racławicka 13"}
-          tags={[]}
-          startDate={"kiedyś"}
-          color={color}
-          coverImage={coverImage}
+        <SmartEventCard
+          event={{ ...event, primaryColor: color, coverImage: coverImage }}
         />
       </Section>
       <Button primary style={{ alignSelf: "flex-end" }} onClick={onSubmit}>

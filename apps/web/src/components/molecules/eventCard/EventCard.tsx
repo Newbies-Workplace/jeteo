@@ -49,6 +49,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         className={styles.backgroundImage}
         style={{
           backgroundImage: coverImage ? `url('${coverImage}')` : undefined,
+          backgroundPosition: "center",
         }}
       />
       <div
