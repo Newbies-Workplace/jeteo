@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Section } from "@/components/molecules/section/Section";
-import { EventCard } from "@/components/molecules/eventCard/EventCard";
+import { SmartEventCard } from "@/components/molecules/eventCard/EventCard";
 import styles from "./EventThemeForm.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import { HexColorPicker } from "react-colorful";
@@ -12,8 +12,6 @@ import toast from "react-hot-toast";
 import { myFetch } from "@/common/fetch";
 import { FileItem } from "@/components/molecules/fileItem/FileItem";
 import { FileUpload } from "@/components/molecules/fileUpload/FileUpload";
-import { Portal } from "@/components/molecules/portal/Portal";
-import { CropImageDialog } from "@/components/molecules/cropImageDialog/CropImageDialog";
 import { useCropDialog } from "@/contexts/useCropDialog";
 
 const getRequest = async (
@@ -80,6 +78,7 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
       res.ok && setCoverImage(null);
     });
   };
+
   return (
     <>
       <CropDialog />
@@ -103,17 +102,8 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
         </div>
       </Section>
       <Section title={"Podgląd"}>
-        <EventCard
-          title="Wydarzenie 1"
-          subtitle={"opis wydarzenia"}
-          host={{
-            name: "host",
-          }}
-          place={"Wrocław, Racławicka 13"}
-          tags={[]}
-          startDate={"kiedyś"}
-          color={color}
-          coverImage={coverImage}
+        <SmartEventCard
+          event={{ ...event, primaryColor: color, coverImage: coverImage }}
         />
       </Section>
       <Button primary style={{ alignSelf: "flex-end" }} onClick={onSubmit}>

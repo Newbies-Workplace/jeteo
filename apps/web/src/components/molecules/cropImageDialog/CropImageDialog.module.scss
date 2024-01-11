@@ -1,6 +1,6 @@
 @use "@/colors.module.scss" as colors;
 
-.root {
+.backdrop {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -12,13 +12,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  @media (max-width: 600px) {
-    align-items: flex-end;
-  }
 }
 
-.wrapper {
+.dialog {
   display: flex;
   padding: 16px;
   flex-direction: column;
@@ -27,8 +23,26 @@
   border-radius: 16px;
   background: colors.$surface;
 
+  max-height: 90%;
+  max-width: 90%;
+
   .title {
     align-self: stretch;
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    background: colors.$stroke;
+
+    overflow: auto;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
 
   .buttons {
@@ -73,3 +87,18 @@
     }
   }
 }
+
+@media (max-width: 600px) {
+  .backdrop {
+    align-items: flex-end;
+  }
+
+  .dialog {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    max-width: unset;
+
+    width: 100%;
+  }
+}
+

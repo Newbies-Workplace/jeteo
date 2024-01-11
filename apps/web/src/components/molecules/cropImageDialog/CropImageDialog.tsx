@@ -64,14 +64,16 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
     });
 
   return (
-    <div className={styles.root} onClick={dismissAction}>
-      <div className={styles.wrapper} onClick={(e) => e.stopPropagation()}>
+    <div className={styles.backdrop} onClick={dismissAction}>
+      <div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
         <Text variant="headS" bold className={styles.title}>
           {title}
         </Text>
         <ReactCrop
           crop={crop}
+          className={styles.image}
           onChange={(c) => setCrop(c)}
+          ruleOfThirds={true}
           aspect={aspectRatio}
         >
           <img src={imgSrc} ref={imgRef} alt="obraz" />
