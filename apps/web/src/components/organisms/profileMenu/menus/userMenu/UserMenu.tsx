@@ -10,7 +10,7 @@ import { Avatar } from "@/components/atoms/avatar/Avatar";
 import cs from "classnames";
 
 export default function UserMenu() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <div className={styles.menu}>
@@ -34,14 +34,13 @@ export default function UserMenu() {
           </Button>
         </Link>
 
-        <Link href={"./"}>
-          <Button
-            size="small"
-            className={cs(menuStyles.button, menuStyles.dangerousButton)}
-          >
-            <Text variant="bodyM">Wyloguj</Text>
-          </Button>
-        </Link>
+        <Button
+          size="small"
+          className={cs(menuStyles.button, menuStyles.dangerousButton)}
+          onClick={logout}
+        >
+          <Text variant="bodyM">Wyloguj</Text>
+        </Button>
       </div>
     </div>
   );

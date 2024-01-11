@@ -27,6 +27,7 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
         }}
       >
         <CalendarButton
+          id={event.id}
           name={event.title}
           startTime={event.from}
           endTime={event.to}

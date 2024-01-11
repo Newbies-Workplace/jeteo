@@ -29,6 +29,7 @@ import {
   assertEventReadAccess,
   assertEventWriteAccess,
   assertLectureReadAccess,
+  assertLectureWriteAccess,
 } from '@/auth/auth.methods';
 import { RateLectureRequest } from 'shared/model/lecture/request/rateLecture.request';
 import { EventNotFoundException } from '@/event/domain/exceptions/EventNotFoundException';
@@ -146,7 +147,7 @@ export class LectureController {
   ): Promise<LectureDetailsResponse> {
     const lecture = await this.getLectureDetailsById(id);
 
-    assertEventWriteAccess(user, lecture.Event);
+    assertLectureWriteAccess(user, lecture);
 
     const updatedLecture = await this.lectureService.updateLecture(
       lecture,

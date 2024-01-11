@@ -1,0 +1,120 @@
+@use '@/colors.module.scss' as colors;
+@use '@/responsiveness.module.scss' as responsiveness;
+
+.backdrop {
+  z-index: 10;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+
+  display: flex;
+  padding: 0 16px 16px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dialog {
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  padding: 16px;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  max-width: 600px;
+
+  border-radius: 16px;
+  background-color: #12132F;
+
+  .texts {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 1 0 0;
+
+    color: colors.$white;
+  }
+
+  .buttons {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+@include responsiveness.mobile {
+  .dialog {
+    display: flex;
+    flex-direction: column;
+
+    .buttons {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.cookies {
+  position: absolute;
+  opacity: 0.2;
+  top: -100px;
+  width: 100vw;
+}
+
+.cookie {
+  display: inline-block;
+  position: absolute;
+
+  opacity: 0.9;
+
+  &:nth-child(1) {
+    left: 50vw;
+
+    animation: falling 10s ease-in infinite;
+  }
+  &:nth-child(2) {
+
+    animation: falling 5s ease-in infinite;
+    animation-delay: -5s;
+  }
+  &:nth-child(3) {
+    left: 30vw;
+
+    animation: falling 15s ease-in infinite;
+  }
+  &:nth-child(4) {
+    right: 30vw;
+
+    animation: falling 9s ease-in infinite;
+    animation-delay: -3s;
+  }
+  &:nth-child(5) {
+    right: 400px;
+
+    animation: falling 4s ease-in infinite;
+  }
+}
+
+@keyframes falling {
+  0% {
+    transform: translate3d(100px, 0px, 0px) rotate(160deg);
+
+  }
+  50% {
+    transform: translate3d(450px, 900px, 0) rotate(160deg);
+
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(450px, 900px, 0) rotate(160deg);
+
+    opacity: 0;
+  }
+}
+

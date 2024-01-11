@@ -13,12 +13,14 @@ import {
   LectureCardActionsLive,
 } from "@/components/molecules/cardActions/LectureCardActions";
 import dayjs from "dayjs";
+import YouTube from "react-youtube";
 
 interface LectureProps {
   from: string;
   to: string;
   title: string;
   description: string;
+  youtubeVideoId?: string;
   speakers: SpeakerCardProps[];
   children?: React.ReactNode;
 }
@@ -28,6 +30,7 @@ export const LectureCard: React.FC<LectureProps> = ({
   to,
   title,
   description,
+  youtubeVideoId,
   speakers,
   children,
 }) => {
@@ -43,6 +46,14 @@ export const LectureCard: React.FC<LectureProps> = ({
             {description}
           </Text>
         </div>
+
+        {youtubeVideoId && (
+          <YouTube
+            videoId={youtubeVideoId}
+            className={styles.youtubeContainer}
+            iframeClassName={styles.youtubeIframe}
+          />
+        )}
 
         {speakers.length >= 1 && (
           <div className={styles.speakers}>
@@ -84,6 +95,7 @@ export const SmartLectureCard: React.FC<{
       to={lecture.to}
       title={lecture.title}
       description={lecture.description}
+      youtubeVideoId={lecture.youtubeVideoId}
       speakers={[...lecture.speakers, ...lecture.invites]}
     >
       {isLive && <LectureCardActionsLive lecture={lecture} />}

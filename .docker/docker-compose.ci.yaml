@@ -1,0 +1,13 @@
+version: '3.4'
+x-jeteo-test:
+  name: "jeteo-test"
+
+services:
+  jeteo-db:
+    image: postgres:15.3
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: jeteo
+      POSTGRES_PASSWORD: jeteo
+    ports:
+      - "5432:5432"

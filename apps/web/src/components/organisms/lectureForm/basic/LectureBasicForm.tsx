@@ -16,18 +16,20 @@ import {
   CreateLectureRequest,
 } from "shared/model/lecture/request/createLecture.request";
 import {
-  LectureResponse,
   LectureDetailsResponse,
+  LectureResponse,
 } from "shared/model/lecture/response/lecture.response";
 import { UpdateLectureRequest } from "shared/model/lecture/request/updateLecture.request";
 import { getIdFromSlug } from "shared/util";
 import toast from "react-hot-toast";
+import YouTube from "react-youtube";
 
 type BasicForm = {
   title: string;
   description: string;
   from: string;
   to: string;
+  youtubeLink?: string;
   speakersAndInvites: {
     invites: CreateLectureInvite[];
     speakers: UserResponse[];
@@ -41,6 +43,9 @@ const getDefaultValue = (lecture?: LectureDetailsResponse): BasicForm => {
         description: lecture.description,
         from: dayjs(lecture.from).format("YYYY-MM-DDTHH:mm"),
         to: dayjs(lecture.to).format("YYYY-MM-DDTHH:mm"),
+        youtubeLink: lecture.youtubeVideoId
+          ? "https://www.youtube.com/watch?v=" + lecture.youtubeVideoId
+          : null,
         speakersAndInvites: {
           invites: lecture.invites,
           speakers: lecture.speakers,
@@ -51,11 +56,24 @@ const getDefaultValue = (lecture?: LectureDetailsResponse): BasicForm => {
         description: "",
         from: dayjs().format("YYYY-MM-DDTHH:mm"),
         to: dayjs().add(1, "h").format("YYYY-MM-DDTHH:mm"),
+        youtubeLink: "",
         speakersAndInvites: {
           invites: [],
           speakers: [],
         },
       };
+};
+
+const youtubeVideoIdFromUrl = (url: string | undefined): string | undefined => {
+  if (!url) {
+    return undefined;
+  }
+
+  const match = url.match(
+    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+  );
+
+  return match && match[2].length === 11 ? match[2] : undefined;
 };
 
 const getRequest = async (
@@ -82,6 +100,7 @@ const getCreateRequestData = (form: BasicForm): CreateLectureRequest => {
     description: form.description,
     from: dayjs(form.from).toISOString(),
     to: dayjs(form.to).toISOString(),
+    youtubeVideoId: youtubeVideoIdFromUrl(form.youtubeLink),
     invites: form.speakersAndInvites.invites,
   };
 };
@@ -91,6 +110,7 @@ const getUpdateRequestData = (form: BasicForm): UpdateLectureRequest => {
     description: form.description,
     from: dayjs(form.from).toISOString(),
     to: dayjs(form.to).toISOString(),
+    youtubeVideoId: youtubeVideoIdFromUrl(form.youtubeLink),
     invites: form.speakersAndInvites.invites,
     speakerIds: form.speakersAndInvites.speakers.map((speaker) => speaker.id),
   };
@@ -107,7 +127,7 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   lecture,
   onSubmitted,
 }) => {
-  const { control, handleSubmit } = useForm<BasicForm>({
+  const { control, handleSubmit, watch } = useForm<BasicForm>({
     defaultValues: getDefaultValue(lecture),
   });
 
@@ -142,14 +162,20 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
             label={"Rozpoczęcie"}
             control={control}
             type={"datetime-local"}
-            rules={{ required: Validations.required }}
+            rules={{
+              required: Validations.required,
+              validate: (value) => Validations.dateRange(value, watch("to")),
+            }}
           />
           <ControlledInput
             name={"to"}
             label={"Zakończenie"}
             control={control}
             type={"datetime-local"}
-            rules={{ required: Validations.required }}
+            rules={{
+              required: Validations.required,
+              validate: (value) => Validations.dateRange(watch("from"), value),
+            }}
           />
         </div>
 
@@ -217,6 +243,20 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
             />
           )}
         />
+      </Section>
+      <Section title={"Wideo"}>
+        <ControlledInput
+          name={"youtubeLink"}
+          label={"Link do filmu na YouTube"}
+          control={control}
+          rules={{
+            pattern: Validations.youtubeVideoLink,
+          }}
+        />
+
+        {youtubeVideoIdFromUrl(watch("youtubeLink")) && (
+          <YouTube videoId={youtubeVideoIdFromUrl(watch("youtubeLink"))} />
+        )}
       </Section>
       <Button
         primary

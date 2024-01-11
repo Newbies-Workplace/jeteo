@@ -5,6 +5,8 @@ import { UpdateLectureRequest } from 'shared/model/lecture/request/updateLecture
 import { LectureDetails } from '@/lecture/domain/lecture.types';
 import { nanoid } from '@/common/nanoid';
 import { RateLectureRequest } from 'shared/model/lecture/request/rateLecture.request';
+import dayjs from 'dayjs';
+import { LectureInvalidDatesException } from '@/lecture/domain/exceptions/LectureInvalidDatesException';
 
 @Injectable()
 export class LectureService {
@@ -15,6 +17,11 @@ export class LectureService {
     userId: string,
     createLectureRequest: CreateLectureRequest,
   ) {
+    this.assertDates(
+      dayjs(createLectureRequest.from),
+      dayjs(createLectureRequest.to),
+    );
+
     return this.prismaService.lecture.create({
       data: {
         id: nanoid(),
@@ -24,6 +31,7 @@ export class LectureService {
         description: createLectureRequest.description,
         from: new Date(createLectureRequest.from),
         to: new Date(createLectureRequest.to),
+        youtubeVideoId: createLectureRequest.youtubeVideoId,
         Invites: {
           createMany: {
             data: createLectureRequest.invites.map((invite) => ({
@@ -48,6 +56,16 @@ export class LectureService {
     lecture: LectureDetails,
     updateLectureRequest: UpdateLectureRequest,
   ): Promise<LectureDetails> {
+    const from = dayjs(
+      updateLectureRequest.from ? updateLectureRequest.from : lecture.from,
+    );
+
+    const to = dayjs(
+      updateLectureRequest.to ? updateLectureRequest.to : lecture.to,
+    );
+
+    this.assertDates(from, to);
+
     // delete old speakers
     const speakersToDelete = lecture.Speakers.filter(
       (speaker) =>
@@ -90,6 +108,7 @@ export class LectureService {
         description: updateLectureRequest.description,
         from: new Date(updateLectureRequest.from),
         to: new Date(updateLectureRequest.to),
+        youtubeVideoId: updateLectureRequest.youtubeVideoId,
         Speakers: {
           deleteMany: {
             id: {
@@ -150,5 +169,11 @@ export class LectureService {
         id: lectureId,
       },
     });
+  }
+
+  private assertDates(from: dayjs.Dayjs, to: dayjs.Dayjs) {
+    if (from.isAfter(to)) {
+      throw new LectureInvalidDatesException();
+    }
   }
 }

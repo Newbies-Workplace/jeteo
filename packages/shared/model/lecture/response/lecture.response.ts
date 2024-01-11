@@ -18,6 +18,7 @@ export interface LectureResponse {
   description: string;
   from: DateTime;
   to: DateTime;
+  youtubeVideoId?: string;
   speakers: UserResponse[];
   invites: InviteResponse[];
   ratingSummary: {

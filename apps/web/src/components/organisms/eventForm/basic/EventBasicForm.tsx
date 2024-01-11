@@ -196,14 +196,20 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
             label={"Rozpoczęcie"}
             control={control}
             type={"datetime-local"}
-            rules={{ required: Validations.required }}
+            rules={{
+              required: Validations.required,
+              validate: (value) => Validations.dateRange(value, watch("to")),
+            }}
           />
           <ControlledInput
             name={"to"}
             label={"Zakończenie"}
             control={control}
             type={"datetime-local"}
-            rules={{ required: Validations.required }}
+            rules={{
+              required: Validations.required,
+              validate: (value) => Validations.dateRange(watch("from"), value),
+            }}
           />
         </div>
 

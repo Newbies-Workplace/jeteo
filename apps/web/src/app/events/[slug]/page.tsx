@@ -95,7 +95,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <div
           className={styles.backgroundImage}
           style={{
-            backgroundImage: `url('${event.coverImage}')`,
+            backgroundImage: event.coverImage
+              ? `url('${event.coverImage}')`
+              : undefined,
           }}
         />
 
@@ -111,6 +113,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <div className={styles.actionBoxContainer}>
               <div className={styles.actionBox}>
                 <CalendarButton
+                  id={event.id}
                   name={event.title}
                   startTime={event.from}
                   endTime={event.to}
