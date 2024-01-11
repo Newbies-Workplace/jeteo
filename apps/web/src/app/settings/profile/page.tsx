@@ -120,7 +120,6 @@ export default function Page() {
           <div className={styles.imageInputs}>
             <FileUpload
               onChange={(files) => {
-                console.log(files);
                 openCropDialog(URL.createObjectURL(files[0]));
               }}
             />
