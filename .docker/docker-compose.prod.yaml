@@ -1,9 +1,26 @@
 version: '3.3'
 
 services:
+  backup:
+    image: offen/docker-volume-backup:latest
+    restart: always
+    container_name: jeteo-backup
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_S3_BUCKET_NAME=backupy-newbies
+      - AWS_S3_PATH=jeteo
+      - BACKUP_RETENTION_DAYS=14
+      - BACKUP_STOP_CONTAINER_LABEL=jeteo
+    volumes:
+      - jeteo-db-data:/backup/db:ro
+      - jeteo-api-storage:/backup/api-storage:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
   jeteo-db:
     image: postgres:15.3
     restart: unless-stopped
+    labels:
+      - docker-volume-backup.stop-during-backup=jeteo
     environment:
       POSTGRES_USER: jeteo
       POSTGRES_PASSWORD: jeteo
@@ -23,6 +40,8 @@ services:
     image: ghcr.io/newbies-workplace/jeteo-api:latest
     restart: unless-stopped
     container_name: jeteo-api
+    labels:
+      - docker-volume-backup.stop-during-backup=jeteo
     volumes:
       - jeteo-api-storage:/jeteo-api-storage
     environment:
