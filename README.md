@@ -1,13 +1,13 @@
 # Jeteo
 
-### Apps and Packages
+## Apps and Packages
 
 - `api`: a Nest.js API
 - `web`: a Next.js web application
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
-### Develop
+## Develop
 
 To develop jeteo, run the following commands:
 
@@ -50,3 +50,8 @@ To run tests in the background (without a visible interface), use the main `pack
 ```
 npm run test
 ```
+
+## Production
+
+### Backups
+https://offen.github.io/docker-volume-backup/how-tos/
