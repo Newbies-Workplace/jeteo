@@ -16,6 +16,7 @@ import {
   EventCardActionsLive,
 } from "@/components/molecules/cardActions/EventCardActions";
 import colors from "@/colors.module.scss";
+import { formatStartDate } from "@/common/utils";
 
 export interface EventCardProps {
   title: string;
@@ -89,7 +90,7 @@ export const EventCard: React.FC<EventCardProps> = ({
           <div className={styles.pin}>
             <Image src={ClockIcon} alt={"time"} />
             <Text variant={"bodyS"} className={styles.date}>
-              {dayjs(startDate).format("D MMMM YYYY, HH:mm")}
+              {formatStartDate(startDate)}
             </Text>
           </div>
         </div>
