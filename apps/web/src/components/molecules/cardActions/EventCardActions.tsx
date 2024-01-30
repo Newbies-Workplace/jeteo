@@ -21,25 +21,19 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
 
   return (
     <div className={styles.actions}>
-      <div
-        style={{
-          maxHeight: "100px",
-        }}
-      >
-        <CalendarButton
-          id={event.id}
-          name={event.title}
-          startTime={event.from}
-          endTime={event.to}
-          timeZone="Europe/Warsaw"
-          location={
-            event.address
-              ? `${event.address.city} ${event.address.place}`
-              : "online"
-          }
-          className={cs(styles.action, styles.stretched)}
-        />
-      </div>
+      <CalendarButton
+        id={event.id}
+        name={event.title}
+        startTime={event.from}
+        endTime={event.to}
+        timeZone="Europe/Warsaw"
+        location={
+          event.address
+            ? `${event.address.city} ${event.address.place}`
+            : "online"
+        }
+        className={cs(styles.action, styles.stretched)}
+      />
 
       <Text className={cs(styles.action, styles.stretched)} bold>
         Rozpoczęcie za {timeLeft}
