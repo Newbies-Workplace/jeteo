@@ -7,12 +7,14 @@ import cs from "classnames";
 import Image from "next/image";
 import arrowBackIcon from "@/assets/arrow-back.svg";
 import { useRouter } from "next/navigation";
+import { cn } from "../../../../lib/utils";
 
 interface DialogProps {
   title: string;
   arrowBack?: boolean;
   children?: React.ReactNode;
   style?: React.CSSProperties;
+  className?: string;
 }
 
 export const Dialog: React.FC<DialogProps> = ({
@@ -20,11 +22,12 @@ export const Dialog: React.FC<DialogProps> = ({
   arrowBack = false,
   children,
   style,
+  className,
 }) => {
   const router = useRouter();
 
   return (
-    <div className={cs(styles.container)} style={style}>
+    <div className={cn(styles.container, className)} style={style}>
       {arrowBack && (
         <div
           style={{

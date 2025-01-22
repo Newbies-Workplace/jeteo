@@ -1,4 +1,7 @@
 @use "@/scrollbar.module.scss" as scrollbar;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 html {
   box-sizing: border-box;

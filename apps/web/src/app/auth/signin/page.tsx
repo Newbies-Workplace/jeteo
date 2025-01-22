@@ -1,4 +1,3 @@
-import styles from "./page.module.scss";
 import { GalaxyBackground } from "@/components/molecules/galaxyBackground/GalaxyBackground";
 import Link from "next/link";
 import { Dialog } from "@/components/molecules/dialog/Dialog";
@@ -11,22 +10,10 @@ const baseUrl: string = process.env["NEXT_PUBLIC_BACKEND_URL"];
 export default function Page() {
   return (
     <GalaxyBackground>
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Dialog
-          title="Zaczynamy przygodę 🚀"
-          arrowBack
-          style={{ zIndex: 1, position: "fixed" }}
-        >
+      <div className="w-full h-full flex justify-center items-center fixed z-[1]">
+        <Dialog title="Zaczynamy przygodę 🚀" arrowBack>
           <Text variant={"bodyM"}>Kontynuuj przez:</Text>
-          <div className={styles.buttons}>
+          <div className="w-full flex flex-col gap-2.5 items-center justify-center pt-3.5 px-2.5 md:px-0">
             <Link
               href={`${baseUrl}/auth/google/redirect`}
               data-cy={"google-button"}
@@ -34,12 +21,12 @@ export default function Page() {
               <SignInButton icon={Google}>Google</SignInButton>
             </Link>
           </div>
-          <div style={{ textAlign: "center", paddingTop: 12 }}>
+          <div className="text-center pt-3">
             <Text variant={"bodyM"}>
               Korzystając z serwiusu akceptujesz
               <br />
             </Text>
-            <Link href={"/privacy-policy"} className={styles.link}>
+            <Link href={"/privacy-policy"} className="underline text-black">
               politykę prywatności
             </Link>
           </div>
