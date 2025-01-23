@@ -1,8 +1,0 @@
-@use '@/colors.module.scss' as colors;
-
-.avatar {
-  border-radius: 50%;
-  border: 0.5px solid colors.$stroke;
-  background-color: colors.$white;
-  object-fit: cover;
-}

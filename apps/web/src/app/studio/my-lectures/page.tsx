@@ -1,6 +1,5 @@
 import { Text } from "@/components/atoms/text/Text";
 import React from "react";
-import styles from "./page.module.scss";
 import { getMyLectures } from "@/common/getLecture";
 import { StudioMyLectureCard } from "@/components/molecules/studioLectureCard/StudioMyLectureCard";
 
@@ -8,7 +7,7 @@ export default async function Page() {
   const lectures = await getMyLectures();
 
   return (
-    <div className={styles.container}>
+    <div className={"flex flex-col justify-center gap-4"}>
       <Text variant={"headM"} bold>
         Moje prelekcje
       </Text>

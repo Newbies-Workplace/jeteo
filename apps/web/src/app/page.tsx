@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/molecules/navbar/Navbar";
 import { GetUser } from "@/components/home/GetUser";
-import styles from "@/app/page.module.scss";
 import { SmartEventCard } from "@/components/molecules/eventCard/EventCard";
 import Link from "next/link";
 import React from "react";
@@ -13,14 +12,25 @@ export default async function Page() {
   const events = await getEvents().catch(() => undefined);
 
   return (
-    <div className={styles.page}>
+    <div className={"flex flex-col w-screen items-center"}>
       <Navbar />
-      <div className={styles.container}>
-        <div className={styles.main}>
-          <Text variant="headM" className={styles.hello}>
+      <div className={"flex w-screen justify-center"}>
+        <div
+          className={
+            "m-0 mx-4 flex flex-col max-w-screen-xl items-center gap-4 flex-1 self-stretch"
+          }
+        >
+          <Text
+            variant="headM"
+            className={"flex h-10 flex-col justify-end self-stretch"}
+          >
             Witaj, <GetUser /> 👋
           </Text>
-          <div className={styles.events}>
+          <div
+            className={
+              "flex flex-col justify-center items-start gap-4 self-stretch"
+            }
+          >
             {events &&
               events.map((event) => {
                 return (
@@ -35,7 +45,10 @@ export default async function Page() {
               })}
 
             {!events && (
-              <Text variant="bodyM" className={styles.hello}>
+              <Text
+                variant="bodyM"
+                className={"flex h-10 flex-col justify-end self-stretch"}
+              >
                 Błąd pobierania wydarzeń
               </Text>
             )}

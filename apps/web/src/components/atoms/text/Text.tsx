@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Text.module.scss";
-import cs from "classnames";
+import { cn } from "@/lib/utils";
 
 interface TextCompProps {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export const Text: React.FC<TextCompProps> = ({
 }) => {
   return (
     <span
-      className={cs(styles[variant], { [styles.bold]: bold }, className)}
+      className={cn(styles[variant], { [styles.bold]: bold }, className)}
       style={style}
     >
       {children}

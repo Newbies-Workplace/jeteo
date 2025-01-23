@@ -1,6 +1,5 @@
 import { Text } from "@/components/atoms/text/Text";
 import Button from "@/components/atoms/button/Button";
-import styles from "./page.module.scss";
 import Link from "next/link";
 import { SmartEventCard } from "@/components/molecules/eventCard/EventCard";
 import React from "react";
@@ -10,7 +9,7 @@ export default async function Page() {
   const events = await getMyEvents();
 
   return (
-    <div className={styles.container}>
+    <div className={"flex flex-col justify-center gap-4"}>
       <div
         style={{
           display: "flex",
@@ -27,7 +26,11 @@ export default async function Page() {
         </Link>
       </div>
 
-      <div className={styles.events}>
+      <div
+        className={
+          "flex flex-col justify-center items-start gap-4 self-stretch"
+        }
+      >
         {events.map((event) => {
           return (
             <Link

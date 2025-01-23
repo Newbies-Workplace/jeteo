@@ -1,13 +1,13 @@
 "use client";
+
 import { Logo } from "@/components/atoms/logo/Logo";
 import styles from "./Dialog.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import React from "react";
-import cs from "classnames";
 import Image from "next/image";
 import arrowBackIcon from "@/assets/arrow-back.svg";
 import { useRouter } from "next/navigation";
-import { cn } from "../../../../lib/utils";
+import { cn } from "@/lib/utils";
 
 interface DialogProps {
   title: string;

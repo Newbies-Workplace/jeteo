@@ -1,5 +1,4 @@
 import Link from "next/link";
-import styles from "@/app/not-found.module.scss";
 import Image from "next/image";
 import notFoundText from "@/assets/images/not-found.svg";
 import planetWhere from "@/assets/images/planet-where.svg";
@@ -15,23 +14,31 @@ export default function NotFound() {
     <GalaxyBackground hidePlanets>
       <Navbar invertColor />
 
-      <div className={styles.container}>
+      <div
+        className={
+          "flex items-center flex-col gap-8 h-fit absolute inset-2 top-1/4 bottom-1/4 md:items-start max-md:text-center md:top-[25%] md:bottom-[25%] md:left-[240px] md:right-[16px] z-[2] text-white"
+        }
+      >
         <Image src={notFoundText} alt="Not Found" />
-        <div className={styles.textContainer}>
-          <Text variant="headL" bold className={styles.title}>
+        <div className={"max-2-[550px] inline-flex flex-col"}>
+          <Text variant="headL" bold>
             Gdzie ja to miałem?
           </Text>
-          <Text variant="headM" className={styles.title}>
+          <Text variant="headM">
             miejsce do którego zmierzasz już nie istnieje lub nigdy nie istniało
           </Text>
         </div>
-        <Link href={"/"} style={{ width: "fit-content" }}>
+        <Link href={"/"} className={"w-fit"}>
           <Button primary size="small">
             Zabierz mnie na stronę główną
           </Button>
         </Link>
       </div>
-      <div className={styles.imageContainer}>
+      <div
+        className={
+          "inline-flex flex-col items-end mt-[15%] mr-[25%] absolute inset-0 max-md:hidden"
+        }
+      >
         <Image src={planetWhere} alt="Planet Where" />
         <Image src={startPath} alt="Start Patrh" />
       </div>

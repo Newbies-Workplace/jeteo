@@ -29,6 +29,11 @@ const config: Config = {
         },
         success: "#6BBC91",
       },
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+        oswald: ["Oswald", "sans-serif"],
+        lato: ["Lato", "sans-serif"],
+      },
     },
   },
   plugins: [],

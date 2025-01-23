@@ -1,7 +1,6 @@
 import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader";
 import { StudioFunctionCard } from "@/components/molecules/studioFunctionCard/StudioFunctionCard";
 import { Text } from "@/components/atoms/text/Text";
-import styles from "./page.module.scss";
 import { getEvent } from "@/common/getEvent";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -18,10 +17,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className={styles.content}>
+    <div className={"flex flex-col gap-3"}>
       <StudioHeader title={event.title} returnPath={"/studio/events"} />
 
-      <div className={styles.cards}>
+      <div className={"flex items-start flex-wrap gap-3 cursor-pointer"}>
         <Link href={`/events/${event.slug}`}>
           <StudioFunctionCard title="Zobacz" subtitle="wydarzenie" />
         </Link>

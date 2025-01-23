@@ -1,6 +1,5 @@
 import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader";
 import { StepNavigation } from "@/components/molecules/stepNavigation/StepNavigation";
-import styles from "./layout.module.scss";
 import React from "react";
 import { EventResponse } from "shared/model/event/response/event.response";
 import { getEvent } from "@/common/getEvent";
@@ -19,7 +18,7 @@ export default async function Layout({
   }
 
   return (
-    <div className={styles.page}>
+    <div className={"flex flex-col gap-3"}>
       <StudioHeader
         title={`Edycja wydarzenia: ${event.title}`}
         returnPath={`/studio/events/${params.slug}`}
@@ -42,7 +41,9 @@ export default async function Layout({
         ]}
       />
 
-      <div className={styles.content}>{children}</div>
+      <div className={"flex flex-col bg-surface rounded-xl p-4 shadow"}>
+        {children}
+      </div>
     </div>
   );
 }
