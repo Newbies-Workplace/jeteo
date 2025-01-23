@@ -5,7 +5,6 @@ import MDEditor from "@uiw/react-md-editor";
 import React from "react";
 import { ITextAreaProps } from "@uiw/react-md-editor/lib/components/TextArea";
 import { TextLabel } from "@/components/atoms/textLabel/TextLabel";
-import styles from "@/components/atoms/input/Input.module.scss";
 
 export interface MarkdownInputProps {
   label?: string;
@@ -46,7 +45,7 @@ export const MarkdownInput: React.FC<MarkdownInputProps> = ({
       </div>
 
       {error && (
-        <Text className={styles.error} variant={"bodyS"}>
+        <Text className={"text-live"} variant={"bodyS"}>
           {error}
         </Text>
       )}
