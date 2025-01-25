@@ -3,6 +3,7 @@
 import React from "react";
 import { cva } from "class-variance-authority";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface ButtonProps {
   className?: string;
@@ -24,7 +25,7 @@ const buttonStyles = cva(
       primary: {
         true: "bg-primary text-white border border-primary hover:bg-primaryHover active:bg-primaryActive",
         false:
-          "bg-surface text-black border border-stroke hover:bg-lightHover active:bg-lightActive",
+          "bg-surface text-black border border-stroke hover:bg-light-hover active:bg-light-active",
       },
       disabled: {
         true: "bg-stroke cursor-not-allowed hover:bg-stroke active:bg-stroke",
@@ -60,7 +61,14 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
     <button
       type={type}
       disabled={disabled}
-      className={buttonStyles({ primary, disabled, size, className })}
+      className={cn(
+        buttonStyles({
+          primary,
+          disabled,
+          size,
+        }),
+        className
+      )}
       style={style}
       onClick={onClick}
     >

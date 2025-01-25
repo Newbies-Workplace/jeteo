@@ -4,7 +4,7 @@ import { EventResponse } from "shared/model/event/response/event.response";
 import dayjs from "dayjs";
 
 const meta: Meta<typeof SmartEventCard> = {
-  title: "Components/Molecules/EventCard",
+  title: "Components/Molecules/SmartEventCard",
   component: SmartEventCard,
   tags: ["autodocs"],
 };

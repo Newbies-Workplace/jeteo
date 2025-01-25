@@ -1,7 +1,6 @@
 "use client";
 
 import { Logo } from "@/components/atoms/logo/Logo";
-import styles from "./Dialog.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import React from "react";
 import Image from "next/image";
@@ -13,7 +12,6 @@ interface DialogProps {
   title: string;
   arrowBack?: boolean;
   children?: React.ReactNode;
-  style?: React.CSSProperties;
   className?: string;
 }
 
@@ -21,26 +19,23 @@ export const Dialog: React.FC<DialogProps> = ({
   title,
   arrowBack = false,
   children,
-  style,
   className,
 }) => {
   const router = useRouter();
 
   return (
-    <div className={cn(styles.container, className)} style={style}>
+    <div
+      className={cn(
+        "w-full sm:w-[420px] gap-2.5 py-6 bg-white max-sm:absolute bottom-0 flex flex-col items-center rounded-t-2xl sm:rounded-2xl",
+        className
+      )}
+    >
       {arrowBack && (
-        <div
-          style={{
-            width: "100%",
-            alignItems: "start",
-            paddingLeft: 16,
-            marginBottom: -30,
-          }}
-        >
+        <div className={"w-full flex items-start pl-4 -mb-[30px]"}>
           <Image
             width={24}
             height={24}
-            className={styles.arrowBack}
+            className={"cursor-pointer"}
             src={arrowBackIcon}
             alt="Arrow back"
             onClick={() => router.back()}

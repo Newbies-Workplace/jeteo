@@ -1,5 +1,4 @@
 import Button from "@/components/atoms/button/Button";
-import styles from "./CropImageDialog.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import ReactCrop, { PixelCrop } from "react-image-crop";
 import "react-image-crop/src/ReactCrop.scss";
@@ -64,30 +63,44 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
     });
 
   return (
-    <div className={styles.backdrop} onClick={dismissAction}>
-      <div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
-        <Text variant="headS" bold className={styles.title}>
+    <div
+      className="fixed inset-0 z-10 flex items-end sm:items-center justify-center bg-black bg-opacity-50"
+      onClick={dismissAction}
+    >
+      <div
+        className="flex flex-col items-center gap-2.5 p-4 max-h-[90%] sm:max-w-[90%] bg-white rounded-lg max-w-full"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Text variant="headS" bold className="self-stretch">
           {title}
         </Text>
         <ReactCrop
           crop={crop}
-          className={styles.image}
+          className="w-full h-full rounded-lg bg-gray-200 overflow-auto"
           onChange={(c) => setCrop(c)}
           ruleOfThirds={true}
           aspect={aspectRatio}
         >
-          <img src={imgSrc} ref={imgRef} alt="obraz" />
+          <img
+            src={imgSrc}
+            ref={imgRef}
+            alt="obraz"
+            className="w-full h-full object-contain"
+          />
         </ReactCrop>
-        <div className={styles.buttons}>
-          <Button className={styles.dismiss} onClick={dismissAction}>
-            <Text variant="bodyL" className={styles.dismisstext}>
-              {dismissText}
-            </Text>
+        <div className="flex justify-center items-start gap-2.5 self-stretch">
+          <Button
+            className="flex min-w-[100px] gap-2.5"
+            onClick={dismissAction}
+          >
+            {dismissText}
           </Button>
-          <Button className={styles.confirm} onClick={handleConfirm}>
-            <Text variant="bodyL" className={styles.confirmtext}>
-              {confirmText}
-            </Text>
+          <Button
+            primary
+            className="flex min-w-[100px] gap-2.5 flex-1"
+            onClick={handleConfirm}
+          >
+            {confirmText}
           </Button>
         </div>
       </div>

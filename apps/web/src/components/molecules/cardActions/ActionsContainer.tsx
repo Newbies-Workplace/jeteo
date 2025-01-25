@@ -9,7 +9,7 @@ export const ActionsContainer: React.FC<{ children: React.ReactNode }> = ({
   return (
     <div
       className={
-        "flex flex-col sm:flex-row items-start gap-2 self-stretch text-primary flex-1 justify-center"
+        "flex flex-col sm:flex-row items-start gap-4 self-stretch text-primary flex-1 justify-center"
       }
     >
       {children}
