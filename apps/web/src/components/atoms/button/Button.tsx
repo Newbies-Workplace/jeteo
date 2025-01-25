@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import cs from "classnames";
-import styles from "./Button.module.scss";
+import { cva } from "class-variance-authority";
 import Image from "next/image";
 
 interface ButtonProps {
@@ -17,6 +16,32 @@ interface ButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   size?: "medium" | "small";
 }
+
+const buttonStyles = cva(
+  "flex min-w-[100px] px-4 py-2 justify-center items-center gap-2 text-center cursor-pointer rounded-lg",
+  {
+    variants: {
+      primary: {
+        true: "bg-primary text-white border border-primary hover:bg-primaryHover active:bg-primaryActive",
+        false:
+          "bg-surface text-black border border-stroke hover:bg-lightHover active:bg-lightActive",
+      },
+      disabled: {
+        true: "bg-stroke cursor-not-allowed hover:bg-stroke active:bg-stroke",
+        false: "",
+      },
+      size: {
+        medium: "px-4 py-2 text-lg",
+        small: "px-4 py-1 text-md",
+      },
+    },
+    defaultVariants: {
+      primary: false,
+      disabled: false,
+      size: "medium",
+    },
+  }
+);
 
 export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   children,
@@ -35,12 +60,7 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
     <button
       type={type}
       disabled={disabled}
-      className={cs(className, styles.button, {
-        [styles.primary]: primary,
-        [styles.disabled]: disabled,
-        [styles.medium]: size === "medium",
-        [styles.small]: size === "small",
-      })}
+      className={buttonStyles({ primary, disabled, size, className })}
       style={style}
       onClick={onClick}
     >

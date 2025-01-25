@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Text.module.scss";
+import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 interface TextCompProps {
@@ -10,6 +10,27 @@ interface TextCompProps {
   className?: string;
 }
 
+const textStyles = cva("font-normal", {
+  variants: {
+    variant: {
+      bodyS: "text-xs font-lato",
+      bodyM: "text-sm font-lato",
+      bodyL: "text-base font-lato",
+      headS: "text-lg font-inter",
+      headM: "text-xl font-inter",
+      headL: "text-2xl font-inter",
+    },
+    bold: {
+      true: "font-bold",
+      false: "font-normal",
+    },
+  },
+  defaultVariants: {
+    variant: "bodyM",
+    bold: false,
+  },
+});
+
 export const Text: React.FC<TextCompProps> = ({
   className,
   style,
@@ -19,7 +40,7 @@ export const Text: React.FC<TextCompProps> = ({
 }) => {
   return (
     <span
-      className={cn(styles[variant], { [styles.bold]: bold }, className)}
+      className={cn(textStyles({ variant, bold }), className)}
       style={style}
     >
       {children}

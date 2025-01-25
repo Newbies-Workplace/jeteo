@@ -1,5 +1,4 @@
 import { Text } from "@/components/atoms/text/Text";
-import styles from "./TextLabel.module.scss";
 import React from "react";
 
 interface LabelProps {
@@ -16,7 +15,7 @@ export const TextLabel: React.FC<LabelProps> = ({
       {label}
 
       {required && (
-        <Text className={styles.requiredStar} variant={"headS"}>
+        <Text className={"font-bold ml-1 text-primary"} variant={"headS"}>
           *
         </Text>
       )}

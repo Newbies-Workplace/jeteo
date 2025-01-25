@@ -1,9 +1,0 @@
-@use "@/colors.module.scss" as colors;
-
-.label {
-  padding: 4px;
-  align-items: flex-start;
-  gap: 10px;
-  border-radius: 4px;
-  background-color: colors.$light;
-}
