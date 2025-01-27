@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./LectureCard.module.scss";
 import {
   SpeakerCard,
   SpeakerCardProps,
@@ -35,14 +34,14 @@ export const LectureCard: React.FC<LectureProps> = ({
   children,
 }) => {
   return (
-    <div className={styles.content}>
+    <div className="flex flex-col items-center w-full gap-3">
       <Timer from={from} to={to} />
-      <div className={styles.main}>
-        <div className={styles.titleContainer}>
+      <div className="flex flex-col items-start self-stretch p-4 gap-4 rounded-lg bg-white">
+        <div className="flex flex-col items-start gap-1 self-stretch">
           <Text variant="headS" bold>
             {title}
           </Text>
-          <Text variant="headS" style={{ whiteSpace: "pre-line" }}>
+          <Text variant="headS" className="whitespace-pre-line">
             {description}
           </Text>
         </div>
@@ -50,13 +49,13 @@ export const LectureCard: React.FC<LectureProps> = ({
         {youtubeVideoId && (
           <YouTube
             videoId={youtubeVideoId}
-            className={styles.youtubeContainer}
-            iframeClassName={styles.youtubeIframe}
+            className="flex self-stretch"
+            iframeClassName="w-full rounded-md"
           />
         )}
 
         {speakers.length >= 1 && (
-          <div className={styles.speakers}>
+          <div className="flex items-start gap-2 self-stretch flex-wrap">
             {speakers.map((item) => {
               return (
                 <SpeakerCard
@@ -77,9 +76,9 @@ export const LectureCard: React.FC<LectureProps> = ({
   );
 };
 
-export const SmartLectureCard: React.FC<{
-  lecture: LectureResponse;
-}> = ({ lecture }) => {
+export const SmartLectureCard: React.FC<{ lecture: LectureResponse }> = ({
+  lecture,
+}) => {
   const now = dayjs();
   const start = dayjs(lecture.from);
   const end = dayjs(lecture.to);

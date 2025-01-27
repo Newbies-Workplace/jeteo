@@ -9,7 +9,6 @@ import ZoomIcon from "@/assets/ZoomIn.svg";
 import CloseIcon from "@/assets/close.svg";
 import MapIcon from "@/assets/map.svg";
 import "leaflet/dist/leaflet.css";
-import styles from "./InternalMap.module.scss";
 import { useScrollBlock } from "@/contexts/useScrollBlock";
 import { IconButton } from "@/components/atoms/iconButton/IconButton";
 
@@ -33,7 +32,7 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
   return (
     <>
       <MapContainer
-        className={styles.map}
+        className={"w-full h-56 rounded-2xl"}
         center={{
           lat: coordinates.latitude,
           lng: coordinates.longitude,
@@ -44,7 +43,7 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
       >
         <div onDoubleClick={() => setMapPopupOpen(false)} />
 
-        <div className={styles.buttons}>
+        <div className={"absolute top-2 left-2 z-[400] flex flex-row gap-2"}>
           <IconButton
             icon={ZoomIcon}
             primary
@@ -103,12 +102,14 @@ const LocationDialog: React.FC<LocationDialogProps> = ({
   return (
     <>
       <div
-        className={styles.mapBigDisplayOverlay}
+        className={"fixed z-[9999] inset-0 bg-black/60"}
         onClick={() => closeDialog()}
       />
 
       <MapContainer
-        className={styles.mapBigDisplay}
+        className={
+          "w-full sm:w-4/5 h-full sm:h-[90%] rounded-[0] sm:rounded-2xl block z-[9999] m-auto fixed inset-0"
+        }
         center={{
           lat: coordinates.latitude,
           lng: coordinates.longitude,
@@ -117,7 +118,7 @@ const LocationDialog: React.FC<LocationDialogProps> = ({
         zoomControl={false}
         scrollWheelZoom
       >
-        <div className={styles.buttons}>
+        <div className={"absolute top-2 left-2 z-[400] flex flex-row gap-2"}>
           <IconButton
             icon={CloseIcon}
             primary

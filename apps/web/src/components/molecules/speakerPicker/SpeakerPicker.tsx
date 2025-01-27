@@ -15,6 +15,7 @@ import { CreateLectureInvite } from "shared/model/lecture/request/createLecture.
 import cs from "classnames";
 import { Validations } from "@/common/validations";
 import { IconButton } from "@/components/atoms/iconButton/IconButton";
+import { cn } from "@/lib/utils";
 
 interface SpeakerPickerProps {
   onAddInvite?: (mail: string, name: string) => void;
@@ -74,12 +75,12 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
   }
 
   return (
-    <div className={styles.container}>
+    <div className={cn("flex flex-col", styles.container)}>
       <table>
         <tbody>
           <tr>
             <td>
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div className={"flex items-center"}>
                 <Image
                   src={GreyCircle}
                   alt={"GreyCircle"}
@@ -91,7 +92,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
 
             <td>
               <input
-                className={cs(styles.input, styles.ellipsis)}
+                className={cn("bg-background", styles.ellipsis)}
                 type="email"
                 placeholder="Email"
                 onKeyDown={(e) => {
@@ -110,7 +111,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
 
             <td>
               <input
-                className={cs(styles.input, styles.ellipsis)}
+                className={cn("bg-background", styles.ellipsis)}
                 type="text"
                 placeholder="Nazwa (widoczna publicznie)"
                 onKeyDown={(e) => {
@@ -129,12 +130,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
             <td />
 
             <td>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+              <div className={"flex items-center"}>
                 {canAdd && (
                   <IconButton icon={AddSlim} primary onClick={onSubmit} />
                 )}
@@ -145,7 +141,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
             invites.map((invite) => (
               <tr className={styles.item} key={invite.id}>
                 <td>
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div className={"flex items-center"}>
                     <Image
                       src={PrimaryCircle}
                       alt={"PrimaryCircle"}
@@ -174,7 +170,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
                   {/*</div>*/}
                 </td>
                 <td>
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div className={"flex items-center"}>
                     <IconButton
                       icon={Delete}
                       onClick={() => onDeleteInvite(invite.id)}
@@ -188,7 +184,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
             speakers.map((speaker) => (
               <tr className={styles.item} key={speaker.id}>
                 <td>
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div className={"flex items-center"}>
                     <Avatar src={speaker.avatar} size={32} />
                   </div>
                 </td>
@@ -198,7 +194,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
                 <td />
 
                 <td>
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div className={"flex items-center"}>
                     <IconButton
                       icon={Delete}
                       onClick={() => onDeleteSpeaker(speaker.id)}
@@ -210,7 +206,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
         </tbody>
       </table>
       {errorMessage && (
-        <Text variant={"bodyS"} className={styles.error}>
+        <Text variant={"bodyS"} className={"text-live pb-1"}>
           {errorMessage}
         </Text>
       )}

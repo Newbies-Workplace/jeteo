@@ -11,7 +11,6 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import styles from "@/components/molecules/lectureRateBarChart/LectureRateBarChart.module.scss";
 import colors from "@/colors.module.scss";
 
 interface LectureRateBarChartProps {
@@ -90,7 +89,7 @@ export const LectureRateBarChart: React.FC<LectureRateBarChartProps> = ({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={"max-w-[800px]"}>
       <Bar data={data} options={options} />
     </div>
   );

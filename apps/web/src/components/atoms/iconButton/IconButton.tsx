@@ -27,7 +27,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
         size === "small" && "w-8 h-8 p-1.5",
         primary
           ? "bg-primary border-none hover:bg-primaryHover active:bg-primaryActive"
-          : "bg-surface border-stroke hover:bg-lightHover active:bg-lightActive"
+          : "bg-surface border-stroke hover:bg-light-hover active:bg-light-active"
       )}
       onClick={onClick}
     >

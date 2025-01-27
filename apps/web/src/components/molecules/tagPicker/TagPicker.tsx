@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "./TagPicker.module.scss";
 import { Tag } from "./Tag/Tag";
 import { useState } from "react";
 import { Text } from "@/components/atoms/text/Text";
@@ -40,7 +39,11 @@ export const TagPicker: React.FC<TagPickerProps> = ({ value, setValue }) => {
   }
 
   return (
-    <div className={styles.tagPicker}>
+    <div
+      className={
+        "flex flex-wrap items-center p-1 gap-1 min-h-10 w-full rounded-xl border border-stroke bg-background"
+      }
+    >
       {value.map((t) => {
         return <Tag key={t} value={t} del={() => deleteTag(t)} />;
       })}
@@ -52,7 +55,9 @@ export const TagPicker: React.FC<TagPickerProps> = ({ value, setValue }) => {
           value={tagValue}
           onChange={(e) => setTagValue(e.target.value)}
           onKeyDown={onKeyDown}
-          className={styles.input}
+          className={
+            "bg-transparent border-none outline-none focus:border-none focus:outline-none"
+          }
           placeholder="Otaguj mnie"
         />
       ) : (

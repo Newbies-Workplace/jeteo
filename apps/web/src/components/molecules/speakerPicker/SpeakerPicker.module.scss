@@ -3,20 +3,15 @@
 @use "@/responsiveness.module.scss" as responsiveness;
 
 .container {
-  display: flex;
-  flex-direction: column;
-
   table {
     table-layout: fixed;
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 8px;
   }
-
   tr:first-child {
     background-color: colors.$background;
   }
-
   td {
     horiz-align: center;
     overflow: hidden;
@@ -44,29 +39,8 @@
     border-right: none;
   }
 
-  .item {
-    background-color: colors.$white;
-  }
-
-  .input {
-    border: none;
-    outline: none;
-    width: 100%;
-    background-color: colors.$background;
-    color: colors.$black;
-    @include typography.bodyM();
-  }
-
-  .iconButton {
-    cursor: pointer;
-  }
-
   .ellipsis {
     white-space: nowrap;
     text-overflow: ellipsis;
-  }
-  .error {
-    color: colors.$live;
-    padding-bottom: 4px;
   }
 }

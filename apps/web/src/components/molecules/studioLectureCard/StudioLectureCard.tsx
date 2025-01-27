@@ -1,4 +1,3 @@
-import styles from "./StudioLectureCard.module.scss";
 import React, { useState } from "react";
 import Delete from "@/assets/delete.svg";
 import Edit from "@/assets/edit.svg";
@@ -60,11 +59,14 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
   };
 
   return (
-    <div className={styles.content}>
+    <div className="flex flex-col items-center gap-2 self-stretch min-w-[280px]">
       <Timer from={from} to={to} />
-      <div className={styles.card}>
-        <div className={styles.description} onClick={navigateToSummary}>
-          <div className={styles.titles}>
+      <div className="relative z-0 flex flex-row justify-between items-center p-4 gap-4 self-stretch bg-surface rounded-lg border border-stroke hover:bg-lightHover active:bg-lightActive cursor-pointer">
+        <div
+          className="z-3 flex flex-col items-start self-stretch gap-4 w-full"
+          onClick={navigateToSummary}
+        >
+          <div className="flex flex-col items-start gap-1 self-stretch">
             <Text variant="headS" bold>
               {title}
             </Text>
@@ -72,7 +74,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
           </div>
 
           {speakers.length >= 1 && (
-            <div className={styles.speakers}>
+            <div className="flex items-start content-start gap-2 self-stretch flex-wrap">
               {speakers.map((item) => {
                 return (
                   <SpeakerCard
@@ -88,9 +90,9 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
           )}
         </div>
 
-        <div className={styles.actions}>
+        <div className="z-2 flex flex-col gap-7">
           <Link
-            className={styles.action}
+            className="z-2"
             href={`/studio/events/edit/${eventSlug}/lectures/edit/${lectureSlug}/basic`}
             onClick={(e) => e.stopPropagation()}
           >
@@ -98,14 +100,14 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
           </Link>
 
           <div
-            className={styles.action}
+            className="z-2"
             onClick={() => {
               setIsConfirmVisible(true);
             }}
           >
             <IconButton icon={Delete} />
           </div>
-          <div className={styles.cardOverwrite} />
+          <div className="absolute inset-0 z-1 hidden bg-surface rounded-lg" />
 
           {isConfirmVisible && (
             <Portal>

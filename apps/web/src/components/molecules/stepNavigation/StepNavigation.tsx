@@ -1,11 +1,10 @@
 "use client";
 
-import styles from "./StepNavigation.module.scss";
-import cs from "classnames";
 import React from "react";
 import { Text } from "@/components/atoms/text/Text";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface StepButtonProps {
   title: string;
@@ -18,15 +17,19 @@ export const StepButton: React.FC<StepButtonProps> = ({
   active,
   disabled = false,
 }) => (
-  <div className={cs(styles.step, { [styles.disabled]: disabled })}>
-    <span className={cs(styles.circle, { [styles.selected]: active })} />
-
-    <Text
-      className={cs(styles.text, {
-        [styles.textActive]: active,
-      })}
-      variant={"headM"}
-    >
+  <div
+    className={cn(
+      "flex items-center p-2 gap-2 rounded-lg shadow-md cursor-pointer bg-surface",
+      {
+        "cursor-not-allowed hover:bg-surface": disabled,
+        "hover:bg-background active:bg-stroke text-primary": !disabled,
+      }
+    )}
+  >
+    <span
+      className={cn(`rounded-full size-6`, active ? "bg-primary" : "bg-gray")}
+    />
+    <Text className={active ? "text-primary" : "text-gray"} variant={"headM"}>
       {title}
     </Text>
   </div>
@@ -43,7 +46,7 @@ export const StepNavigation: React.FC<StepsContainerProps> = ({ links }) => {
   const pathname = usePathname();
 
   return (
-    <div className={styles.stepsContainer}>
+    <div className="flex flex-row flex-wrap gap-3">
       {links.map((link) => {
         const isActive = pathname.startsWith(link.href);
 

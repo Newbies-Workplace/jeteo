@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "./StudioHeader.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import Image from "next/image";
 import arrowBack from "@/assets/arrow-back.svg";
@@ -19,14 +18,20 @@ export const StudioHeader: React.FC<StudioHeaderProps> = ({
   const router = useRouter();
 
   return (
-    <div className={styles.header}>
+    <div
+      className={
+        "flex items-center text-center gap-3 rounded-xl shadow bg-surface py-2 px-4 break-words"
+      }
+    >
       <Image
-        className={styles.icon}
         src={arrowBack}
         alt="Arrow back"
         onClick={() => {
           returnPath ? router.replace(returnPath) : router.back();
         }}
+        className={"cursor-pointer"}
+        width={24}
+        height={24}
       />
 
       <Text variant="headM" bold>

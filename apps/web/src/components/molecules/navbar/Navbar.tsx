@@ -12,7 +12,7 @@ export const Navbar: React.FC<NavbarProps> = ({ invertColor }) => {
   return (
     <div
       className={cn(
-        "flex px-4 py-2 sm:p-[12px_96px] justify-between items-center self-stretch bg-surface no-underline text-black",
+        "flex px-4 py-2 sm:py-3 sm:px-24 justify-between items-center self-stretch bg-surface no-underline text-black",
         invertColor && "bg-transparent text-surface"
       )}
     >

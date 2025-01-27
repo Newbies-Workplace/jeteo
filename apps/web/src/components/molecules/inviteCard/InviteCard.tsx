@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "./InviteCard.module.scss";
 import Button from "@/components/atoms/button/Button";
 import { Text } from "@/components/atoms/text/Text";
 import { SpeakerCard } from "@/components/molecules/speakerCard/SpeakerCard";
@@ -52,14 +51,18 @@ export const InviteCard: React.FC<InviteCardProps> = ({ invite }) => {
   };
 
   return (
-    <div className={styles.card}>
+    <div
+      className={
+        "flex p-4 flex-col items-start gap-4 self-stretch rounded-lg border border-stroke bg-surface"
+      }
+    >
       <Text>
         Witaj <Text bold>{user?.name}</Text> Zostań prelegentem w wydarzeniu{" "}
         <Text bold>{invite.event.title}</Text>!
       </Text>
 
-      <div className={styles.mid}>
-        <div className={styles.texts}>
+      <div className={"flex justify-between items-start self-stretch"}>
+        <div className={"flex flex-col items-start gap-2.5"}>
           <Text variant={"headS"} bold>
             {invite.lecture.title}
           </Text>
@@ -77,11 +80,11 @@ export const InviteCard: React.FC<InviteCardProps> = ({ invite }) => {
         />
       </div>
 
-      <div className={styles.buttons}>
-        <Button primary className={styles.button} onClick={onAcceptPress}>
+      <div className={"flex items-start gap-2.5 self-stretch"}>
+        <Button primary className={"flex-grow"} onClick={onAcceptPress}>
           Akceptuj
         </Button>
-        <Button className={styles.button} onClick={onRejectPress}>
+        <Button className={"flex-grow"} onClick={onRejectPress}>
           Odrzuć
         </Button>
       </div>
