@@ -12,10 +12,12 @@ export interface TextAreaProps {
 
 const TextArea: React.FC<TextAreaProps> = ({ title, text, setText }) => {
   return (
-    <div className={styles.areaWrapper}>
+    <div className={"flex flex-col justify-center items-center gap-2"}>
       <Text variant="headS"> {title} </Text>
       <textarea
-        className={styles.textArea}
+        className={
+          "bg-background text-gray border-none rounded-2xl p-2 w-full h-32 resize-none focus:outline-1 focus:outline-stroke"
+        }
         placeholder="Podziel się swoją opinią, abyśmy mogli dalej doskonalić nasze prelekcje i dostarczać Ci wartościowe treści!"
         maxLength={1000}
         value={text}
@@ -23,7 +25,7 @@ const TextArea: React.FC<TextAreaProps> = ({ title, text, setText }) => {
           setText(event.target.value);
         }}
       />
-      <div className={styles.counterWrapper}>
+      <div className={"flex justify-end w-full"}>
         <Text variant="bodyS">{text?.length ?? 0}/1000</Text>
       </div>
     </div>

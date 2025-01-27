@@ -35,7 +35,7 @@ export const GalaxyBackground: React.FC<
 }) => {
   return (
     <div
-      className={styles.wrapper}
+      className={"relative h-screen overflow-hidden bg-space-dark"}
       style={{
         backgroundImage: `url(${SpaceFog.src})`,
         backgroundSize: "cover",
@@ -52,7 +52,7 @@ export const GalaxyBackground: React.FC<
 
       {!hideComets && (
         <>
-          <div className={styles.comets}>
+          <div className={"absolute -top-[100px] w-screen"}>
             <div className={styles.comet} />
             <div className={styles.comet} />
             <div className={styles.comet} />
@@ -67,9 +67,11 @@ export const GalaxyBackground: React.FC<
             height={132}
             alt="Planet Violet"
             src={PlanetViolet}
-            className={styles.planet}
+            className={
+              "absolute top-[750px] left-[10%] size-32 -rotate-[25deg] p-5 bg-[radial-gradient(circle_at_50%_50%,rgba(0,148,255,0.25)_50%,transparent_65%)]"
+            }
           />
-          <div className={styles.planet2Container}>
+          <div className={"absolute right-[10%] top-[150px] -rotate-[25deg]"}>
             <Image
               width={157}
               height={159}

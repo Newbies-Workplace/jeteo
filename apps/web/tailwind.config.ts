@@ -28,6 +28,10 @@ const config: Config = {
           active: "#C5C4EB",
         },
         success: "#6BBC91",
+        space: {
+          DEFAULT: "#12132F",
+          dark: "#080736",
+        },
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

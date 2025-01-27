@@ -28,7 +28,7 @@ const buttonStyles = cva(
           "bg-surface text-black border border-stroke hover:bg-light-hover active:bg-light-active",
       },
       disabled: {
-        true: "bg-stroke cursor-not-allowed hover:bg-stroke active:bg-stroke",
+        true: "bg-stroke cursor-not-allowed hover:bg-stroke active:bg-stroke border-none",
         false: "",
       },
       size: {

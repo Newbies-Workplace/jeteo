@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "./EventLecturesForm.module.scss";
 import { StudioLectureCard } from "@/components/molecules/studioLectureCard/StudioLectureCard";
 import Link from "next/link";
 import Button from "@/components/atoms/button/Button";
@@ -12,8 +11,8 @@ export const EventLecturesForm: React.FC<{
   lectures: LectureResponse[];
 }> = ({ eventSlug, lectures }) => {
   return (
-    <div className={styles.content}>
-      <div className={styles.lectures}>
+    <div className="flex flex-col items-end gap-3">
+      <div className="flex flex-col items-center gap-3 w-full">
         {lectures.map((lecture) => (
           <StudioLectureCard
             eventSlug={eventSlug}
@@ -34,7 +33,7 @@ export const EventLecturesForm: React.FC<{
           />
         ))}
       </div>
-      <div className={styles.buttons}>
+      <div className="flex">
         <Link href={`/studio/events/edit/${eventSlug}/lectures/create`}>
           <Button>Dodaj</Button>
         </Link>

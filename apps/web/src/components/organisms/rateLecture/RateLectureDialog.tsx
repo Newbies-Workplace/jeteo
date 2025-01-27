@@ -1,12 +1,10 @@
 "use client";
 
-import styles from "./RateLectureDialog.module.scss";
 import { SpeakerCard } from "@/components/molecules/speakerCard/SpeakerCard";
 import { Text } from "@/components/atoms/text/Text";
 import RateStars from "@/components/molecules/rateStars/RateStars";
 import TextArea from "./textArea/TextArea";
 import Button from "@/components/atoms/button/Button";
-import colors from "@/colors.module.scss";
 import React, { useState } from "react";
 import { LectureResponse } from "shared/model/lecture/response/lecture.response";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
@@ -73,42 +71,33 @@ export const RateLectureDialog: React.FC<RateLectureProps> = ({
     <>
       {confetti && (
         <ConfettiExplosion
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            width: "100%",
-            height: "100%",
-          }}
+          className={"fixed top-1/2 left-1/2 w-full h-full"}
           zIndex={10001}
           onComplete={() => handleConfettiCompleted()}
         />
       )}
 
       {isDialogVisible && (
-        <div className={styles.root} onClick={handleDismiss}>
+        <div
+          className="fixed inset-0 z-[10000] bg-black bg-opacity-50 flex justify-center items-end sm:items-center"
+          onClick={handleDismiss}
+        >
           <form
-            className={styles.rateLecture}
+            className="flex flex-col bg-white rounded-2xl p-6 gap-6 max-sm:rounded-b-none max-sm:w-full"
             onClick={(e) => {
               e.stopPropagation();
             }}
           >
-            <div className={styles.vertical}>
+            <div className="flex flex-col gap-2">
               <Text variant="headS" bold>
                 {lecture.title}
               </Text>
-              <div className={styles.horizontal}>
+              <div className="flex flex-row gap-2">
                 {[...lecture.speakers, ...lecture.invites].map((speaker) => (
                   <SpeakerCard key={speaker.name} {...speaker} />
                 ))}
               </div>
-              <div
-                style={{
-                  width: "100%",
-                  height: "1.5px",
-                  backgroundColor: colors.stroke,
-                }}
-              />
+              <div className="w-full h-[1px] bg-stroke" />
             </div>
             <Controller
               name={"overallRate"}
@@ -153,11 +142,12 @@ export const RateLectureDialog: React.FC<RateLectureProps> = ({
                 />
               )}
             />
-            <div className={styles.buttonsWrapper}>
+            <div className="grid grid-cols-4 gap-6">
               <Button size="medium" onClick={handleDismiss}>
                 <Text variant="bodyL">Anuluj</Text>
               </Button>
               <Button
+                className={"col-span-3"}
                 size="medium"
                 primary
                 disabled={
