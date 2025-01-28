@@ -1,4 +1,4 @@
-FROM node:18.16.0 AS builder
+FROM node:22.13.1 AS builder
 
 ARG NEXT_PUBLIC_BACKEND_URL
 ARG NEXT_PUBLIC_FRONTEND_URL
@@ -12,7 +12,7 @@ COPY . ./
 RUN npm install
 RUN npm run build
 
-FROM node:18.16.0-alpine as jeteo-api
+FROM node:22.13.1-alpine as jeteo-api
 
 COPY --from=builder /build/node_modules ./node_modules
 COPY --from=builder /build/apps/api/package*.json ./
@@ -24,7 +24,7 @@ EXPOSE 3001
 
 CMD [ "npm", "run", "start:migrate:prod" ]
 
-FROM node:18.16.0-alpine AS jeteo-web
+FROM node:22.13.1-alpine AS jeteo-web
 WORKDIR /app
 
 ENV NODE_ENV production
