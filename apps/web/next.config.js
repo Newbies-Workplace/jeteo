@@ -1,10 +1,8 @@
-import type { NextConfig } from "next";
-
+/** @type {import('next').NextConfig} */
 require("dotenv").config();
-
 const isDev = process.env.NODE_ENV === "development";
 
-const nextConfig: NextConfig = {
+module.exports = {
   reactStrictMode: false,
   compiler: {
     reactRemoveProperties: {
@@ -27,5 +25,3 @@ const nextConfig: NextConfig = {
     ],
   },
 };
-
-export default nextConfig;
