@@ -19,7 +19,7 @@ export const getLecture = async (
     {
       cache: "no-store",
       headers: {
-        Cookie: cookies().toString(),
+        Cookie: (await cookies()).toString(),
       },
     },
     false
@@ -37,7 +37,7 @@ export const getLectureDetails = async (
     {
       cache: "no-store",
       headers: {
-        Cookie: cookies().toString(),
+        Cookie: (await cookies()).toString(),
       },
     },
     false
@@ -61,7 +61,7 @@ export const getEventLectures = async (
     {
       cache: "no-store",
       headers: {
-        Cookie: cookies().toString(),
+        Cookie: (await cookies()).toString(),
       },
     },
     false
@@ -81,7 +81,7 @@ export const getMyLectures = async (): Promise<LectureResponse[]> => {
     {
       cache: "no-store",
       headers: {
-        Cookie: cookies().toString(),
+        Cookie: (await cookies()).toString(),
       },
     },
     false

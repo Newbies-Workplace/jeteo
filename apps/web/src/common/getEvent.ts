@@ -11,7 +11,7 @@ export const getEvent = async (eventSlug: string): Promise<EventResponse> => {
     {
       cache: "no-store",
       headers: {
-        Cookie: cookies().toString(),
+        Cookie: (await cookies()).toString(),
       },
     },
     false
@@ -40,7 +40,7 @@ export const getMyEvents = async (): Promise<EventResponse[]> => {
   const res = await myFetch(`/rest/v1/events/@me?${urlParams(params)}`, {
     cache: "no-store",
     headers: {
-      Cookie: cookies().toString(),
+      Cookie: (await cookies()).toString(),
     },
   });
   if (!res.ok) return undefined;

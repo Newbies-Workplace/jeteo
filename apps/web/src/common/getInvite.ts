@@ -8,7 +8,7 @@ export const getMyInvites = async (): Promise<InviteDetailsResponse[]> => {
     {
       cache: "no-store",
       headers: {
-        Cookie: cookies().toString(),
+        Cookie: (await cookies()).toString(),
       },
     },
     false
