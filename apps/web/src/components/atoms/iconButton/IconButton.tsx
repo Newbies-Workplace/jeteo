@@ -8,6 +8,7 @@ interface IconButtonProps {
   primary?: boolean;
   onClick?: () => void;
   size?: "medium" | "small";
+  className?: string;
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -16,6 +17,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   onClick,
   primary = false,
   size = "medium",
+  className,
 }) => {
   const imageSize = size === "medium" ? 24 : 18;
 
@@ -27,7 +29,8 @@ export const IconButton: React.FC<IconButtonProps> = ({
         size === "small" && "w-8 h-8 p-1.5",
         primary
           ? "bg-primary border-none hover:bg-primaryHover active:bg-primaryActive"
-          : "bg-surface border-stroke hover:bg-light-hover active:bg-light-active"
+          : "bg-surface border-stroke hover:bg-light-hover active:bg-light-active",
+        className
       )}
       onClick={onClick}
     >
