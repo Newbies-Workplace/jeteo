@@ -1,20 +1,23 @@
 "use client";
 
-import styles from "./CardActions.module.scss";
-import { Text } from "@/components/atoms/text/Text";
 import React, { useState } from "react";
+import { Text } from "@/components/atoms/text/Text";
 import { LectureResponse } from "shared/model/lecture/response/lecture.response";
-import cs from "classnames";
 import { Portal } from "@/components/molecules/portal/Portal";
 import { RateLectureDialog } from "@/components/organisms/rateLecture/RateLectureDialog";
+import {
+  actionClassName,
+  ActionsContainer,
+} from "@/components/molecules/cardActions/ActionsContainer";
+import { cn } from "@/lib/utils";
 
 export const LectureCardActionsLive: React.FC<{ lecture: LectureResponse }> = ({
   lecture,
 }) => {
   return (
-    <div className={styles.actions}>
+    <ActionsContainer>
       <RateButton lecture={lecture} />
-    </div>
+    </ActionsContainer>
   );
 };
 
@@ -22,10 +25,10 @@ export const LectureCardActionsFresh: React.FC<{
   lecture: LectureResponse;
 }> = ({ lecture }) => {
   return (
-    <div className={styles.actions}>
+    <ActionsContainer>
       <RateButton lecture={lecture} />
       <LectureRating lecture={lecture} />
-    </div>
+    </ActionsContainer>
   );
 };
 
@@ -33,9 +36,9 @@ export const LectureCardActionsArchive: React.FC<{
   lecture: LectureResponse;
 }> = ({ lecture }) => {
   return (
-    <div className={styles.actions}>
+    <ActionsContainer>
       <LectureRating lecture={lecture} />
-    </div>
+    </ActionsContainer>
   );
 };
 
@@ -52,7 +55,10 @@ const RateButton: React.FC<{ lecture: LectureResponse }> = ({ lecture }) => {
         </Portal>
       )}
       <div
-        className={cs(styles.action, styles.liveAction)}
+        className={cn(
+          actionClassName,
+          "cursor-pointer text-white bg-live hover:bg-liveHover"
+        )}
         onClick={() => {
           setRateDialogVisible(true);
         }}
@@ -67,12 +73,13 @@ const RateButton: React.FC<{ lecture: LectureResponse }> = ({ lecture }) => {
 
 const LectureRating: React.FC<{ lecture: LectureResponse }> = ({ lecture }) => {
   return (
-    <Text className={cs(styles.action, styles.rate, styles.stretched)} bold>
-      <span className={styles.rateAverage}>Średnia ocena</span>
+    <Text
+      className={cn(actionClassName, "text-white bg-[#080736] justify-between")}
+      bold
+    >
+      <span>Średnia ocena</span>
 
-      <div className={styles.stars}>
-        {lecture.ratingSummary.average.toFixed(2)}
-      </div>
+      <span>{lecture.ratingSummary.average.toFixed(2)}</span>
     </Text>
   );
 };

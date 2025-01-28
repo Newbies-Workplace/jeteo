@@ -2,21 +2,19 @@ import { Text } from "@/components/atoms/text/Text";
 import { getEvent } from "@/common/getEvent";
 import { notFound } from "next/navigation";
 import { Tag } from "@/components/atoms/tag/Tag";
-import styles from "./page.module.scss";
 import { Navbar } from "@/components/molecules/navbar/Navbar";
 import { EventDescription } from "@/app/events/[slug]/components/eventDescription/EventDescription";
 import { formatFromToDates } from "@/common/utils";
 import { Map } from "@/components/molecules/map/Map";
-import cs from "classnames";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
 import { UserSocials } from "@/components/molecules/userSocials/UserSocials";
 import { getEventLectures } from "@/common/getLecture";
 import { EventLectures } from "@/app/events/[slug]/components/eventLectures/EventLectures";
-import colors from "@/colors.module.scss";
 import { Metadata } from "next";
 import SocialPreview from "@/assets/social-preview.png";
 import dayjs from "dayjs";
 import { CalendarButton } from "@/components/atoms/calendarButton/CalendarButton";
+import { getTailwindTheme } from "@/common/getTailwindTheme";
 
 export async function generateMetadata({
   params,
@@ -87,31 +85,30 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const now = dayjs();
   const start = dayjs(event.from);
   const isFuture = now.isBefore(start);
+  const { colors } = getTailwindTheme();
 
   return (
-    <div className={styles.page}>
+    <div className="flex flex-col items-center justify-center">
       <Navbar />
-      <div className={styles.header}>
+      <div className="relative flex self-stretch bg-primary min-h-[320px] rounded-b md:rounded-b-2xl">
         <div
-          className={styles.backgroundImage}
+          className="z-[2] absolute top-0 left-0 right-0 bottom-0 h-full w-full min-h-[320px] rounded-b-2xl opacity-35 bg-no-repeat bg-cover"
           style={{
             backgroundImage: event.coverImage
               ? `url('${event.coverImage}')`
               : undefined,
           }}
         />
-
         <div
-          className={styles.backgroundColor}
+          className="z-[1] absolute top-0 left-0 right-0 bottom-0 h-full w-full min-h-[320px] rounded-b-2xl"
           style={{
             background: `linear-gradient(to right, ${event.primaryColor}, ${colors.primary})`,
           }}
         />
-
         {isFuture && (
-          <div className={styles.actionBoxWrapper}>
-            <div className={styles.actionBoxContainer}>
-              <div className={styles.actionBox}>
+          <div className="z-[2] flex my-0 mx-auto w-full justify-center self-stretch">
+            <div className="w-full max-w-screen-xl mx-4 mt-2 mb-4">
+              <div className="flex flex-row-reverse">
                 <CalendarButton
                   id={event.id}
                   name={event.title}
@@ -123,19 +120,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
                       ? `${event.address.city} ${event.address.place}`
                       : "online"
                   }
-                  className={styles.actionButton}
+                  className="rounded-[8px]"
                 />
               </div>
             </div>
           </div>
         )}
       </div>
-
-      <div className={styles.containerWrapper} style={{ zIndex: 3 }}>
-        <div className={styles.container}>
-          <div className={styles.titleAnchor}>
-            <div className={styles.title}>
-              <div className={styles.tags}>
+      <div className="z-[3] flex mx-auto w-full justify-center self-stretch">
+        <div className="flex w-full max-w-screen-xl flex-col gap-4 flex-1 self-stretch m-4 -mt-12 px-2 md:px-0">
+          <div className="relative">
+            <div className="absolute bottom-0 flex flex-col items-start self-stretch gap-1 text-white">
+              <div className="flex flex-wrap flex-row gap-2">
                 {event.tags.map((tag) => (
                   <Tag key={tag} text={tag} />
                 ))}
@@ -146,31 +142,30 @@ export default async function Page({ params }: { params: { slug: string } }) {
               <Text variant={"bodyM"}>{event.subtitle}</Text>
             </div>
           </div>
-
-          <div className={styles.content}>
-            <div className={styles.main}>
-              <div className={cs(styles.box, styles.description)}>
+          <div className="flex flex-col md:flex-row md:items-start justify-center gap-4 self-stretch pb-16">
+            <div className="flex flex-col items-start gap-4 flex-1">
+              <div className="flex p-4 flex-col gap-4 self-stretch bg-surface rounded-2xl max-md:order-1">
                 <Text variant={"headS"} bold>
                   Opis
                 </Text>
-
                 <EventDescription description={event.description} />
               </div>
-              <div id="rate" className={styles.agenda}>
+              <div
+                id="rate"
+                className="flex flex-col items-center gap-4 self-stretch max-md:order-4"
+              >
                 <Text variant={"headS"} bold>
                   Agenda
                 </Text>
-
                 <EventLectures lectures={lectures} />
               </div>
             </div>
-
-            <div className={styles.side}>
-              <div className={cs(styles.box, styles.host)}>
+            <div className="flex md:max-w-[304px] flex-col items-start gap-4 flex-1">
+              <div className="flex p-4 flex-col gap-4 self-stretch items-center bg-surface rounded-2xl max-md:order-5">
                 <Avatar
                   size={86}
                   src={event.host.avatar}
-                  className={styles.avatar}
+                  className="md:-mt-12"
                 />
                 <Text variant={"headS"} bold>
                   {event.host.name}
@@ -185,13 +180,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   </Text>
                 )}
                 {event.host.description && (
-                  <Text variant={"bodyM"} style={{ textAlign: "justify" }}>
+                  <Text variant={"bodyM"} className={"text-justify"}>
                     {event.host.description}
                   </Text>
                 )}
                 <UserSocials socials={event.host.socials} />
               </div>
-              <div className={cs(styles.box, styles.timeBox)}>
+              <div className="flex p-4 flex-col gap-4 self-stretch bg-surface rounded-2xl max-md:order-3">
                 <Text variant={"headS"} bold>
                   Kiedy?
                 </Text>
@@ -199,16 +194,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   {formatFromToDates(event.from, event.to)}
                 </Text>
               </div>
-
               {event.address && (
-                <div className={cs(styles.box, styles.location)}>
+                <div className="flex p-4 flex-col gap-4 self-stretch bg-surface rounded-2xl max-md:order-2">
                   <Text variant={"headS"} bold>
                     Gdzie?
                   </Text>
                   <Text variant={"bodyM"}>
                     {event.address.city}, {event.address.place}
                   </Text>
-
                   <Map coordinates={event.address.coordinates} />
                 </div>
               )}

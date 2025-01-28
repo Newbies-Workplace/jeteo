@@ -4,6 +4,7 @@ import Profile from "@/assets/images/default-profile-pic.svg";
 
 const meta: Meta<typeof SpeakerPicker> = {
   title: "Components/Molecules/SpeakerPicker",
+  tags: ["autodocs"],
   component: SpeakerPicker,
   argTypes: {
     onAddInvite: { action: "Add Invite" },

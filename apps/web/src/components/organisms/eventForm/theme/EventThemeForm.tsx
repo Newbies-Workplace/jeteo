@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { Section } from "@/components/molecules/section/Section";
 import { SmartEventCard } from "@/components/molecules/eventCard/EventCard";
-import styles from "./EventThemeForm.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import { HexColorPicker } from "react-colorful";
 import { EventResponse } from "shared/model/event/response/event.response";
@@ -83,13 +82,13 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
     <>
       <CropDialog />
       <Section title={"Motyw"}>
-        <div className={styles.themeContainer}>
+        <div className={"flex flex-col"}>
           <Text variant="headS">Kolor przewodni</Text>
           <HexColorPicker color={color} onChange={setColor} />
           <Text variant="headS" style={{ marginTop: "15px" }}>
             Okładka
           </Text>
-          <div className={styles.imageInputs}>
+          <div className={"flex flex-row gap-3"}>
             <FileUpload
               onChange={(files) => {
                 openCropDialog(URL.createObjectURL(files[0]));

@@ -1,13 +1,16 @@
 import React from "react";
-import styles from "./Tag.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import Image from "next/image";
 import Close from "@/assets/close-black.svg";
 
 export const Tag = ({ value, del }) => {
   return (
-    <div className={styles.tagContainer}>
-      <Text variant="bodyM" className={styles.text}>
+    <div
+      className={
+        "flex p-1 items-center gap-1 rounded-lg border border-primary bg-surface"
+      }
+    >
+      <Text variant="bodyM" className={"cursor-default"}>
         {value}
       </Text>
 
@@ -17,7 +20,7 @@ export const Tag = ({ value, del }) => {
         width={16}
         height={16}
         onClick={del}
-        className={styles.close}
+        className={"cursor-pointer"}
       />
     </div>
   );

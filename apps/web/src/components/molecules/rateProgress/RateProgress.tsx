@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "./RateProgress.module.scss";
-
 import { Doughnut } from "react-chartjs-2";
 import { ArcElement, Chart as ChartJS, ChartOptions, Legend } from "chart.js";
 import { Text } from "@/components/atoms/text/Text";
@@ -22,7 +20,7 @@ export const RateProgress: React.FC<RateProgressProps> = ({
   value,
   label,
   description,
-  color
+  color,
 }) => {
   const data = {
     labels: ["Oceny"],
@@ -54,18 +52,22 @@ export const RateProgress: React.FC<RateProgressProps> = ({
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.chart}>
+    <div
+      className={
+        "max-w-60 flex flex-col justify-center items-center text-center"
+      }
+    >
+      <div className={"size-60"}>
         <Doughnut data={data} options={options} style={{ zIndex: 1 }} />
       </div>
-      <div className={styles.textContainer}>
+      <div className={"-mt-[125px] flex flex-col gap-2"}>
         <Text variant={"headL"} bold>
           {value.toFixed(2) + "/" + max}
         </Text>
         <Text variant={"headM"} bold>
           {label}
         </Text>
-        <Text variant={"bodyS"} bold className={styles.description}>
+        <Text variant={"bodyS"} bold className={"max-w-60 text-gray"}>
           {description}
         </Text>
       </div>

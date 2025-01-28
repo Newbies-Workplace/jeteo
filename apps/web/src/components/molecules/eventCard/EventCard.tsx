@@ -1,7 +1,6 @@
 import React from "react";
 import { Text } from "@/components/atoms/text/Text";
 import Image from "next/image";
-import styles from "./EventCard.module.scss";
 import { Tag } from "@/components/atoms/tag/Tag";
 import LocationIcon from "@/assets/location.svg";
 import ClockIcon from "@/assets/clock.svg";
@@ -15,7 +14,6 @@ import {
   EventCardActionsFuture,
   EventCardActionsLive,
 } from "@/components/molecules/cardActions/EventCardActions";
-import colors from "@/colors.module.scss";
 import { formatStartDate } from "@/common/utils";
 
 export interface EventCardProps {
@@ -45,65 +43,60 @@ export const EventCard: React.FC<EventCardProps> = ({
   children,
 }) => {
   return (
-    <div className={styles.card}>
+    <div className="flex flex-col items-start gap-2 p-4 rounded-2xl relative text-white">
       <div
-        className={styles.backgroundImage}
+        className="absolute inset-0 z-[2] rounded-2xl bg-cover bg-center opacity-35"
         style={{
           backgroundImage: coverImage ? `url('${coverImage}')` : undefined,
-          backgroundPosition: "center",
         }}
       />
       <div
-        className={styles.backgroundColor}
+        className="absolute inset-0 z-[1] rounded-2xl"
         style={{
-          background: `linear-gradient(to right, ${color}, ${colors.primary})`,
+          background: `linear-gradient(to right, ${color}, #4340BE)`,
         }}
       />
-      <div className={styles.top}>
-        <div className={styles.texts}>
-          <Text variant={"headM"} bold className={styles.title}>
+      <div className="z-[3] flex justify-between items-start w-full flex-wrap gap-2">
+        <div className="flex flex-col items-start gap-1 min-w-[260px] flex-1">
+          <Text variant="headM" bold className="w-full break-words mr-5">
             {title}
           </Text>
           {subtitle && (
-            <Text variant={"bodyM"} className={styles.subtitle}>
+            <Text variant="bodyM" className="w-full">
               {subtitle}
             </Text>
           )}
         </div>
-        <div className={styles.host}>
-          <Text variant={"bodyS"}>{host.name}</Text>
-
+        <div className="flex items-center gap-2">
+          <Text variant="bodyS">{host.name}</Text>
           <Avatar src={host.avatar} size={32} />
         </div>
       </div>
-      <div className={styles.mid}>
-        <div className={styles.pins}>
+      <div className="z-[3] flex justify-between items-center w-full flex-wrap gap-3">
+        <div className="flex items-center gap-2 flex-1 flex-wrap">
           {place !== undefined && (
-            <div className={styles.pin}>
-              <Image src={LocationIcon} alt={"location"} />
-              <Text variant={"bodyS"} className={styles.place}>
+            <div className="flex items-center gap-1">
+              <Image src={LocationIcon} alt="location" />
+              <Text variant="bodyS" className="flex gap-2">
                 {place}
               </Text>
             </div>
           )}
-
-          <div className={styles.pin}>
-            <Image src={ClockIcon} alt={"time"} />
-            <Text variant={"bodyS"} className={styles.date}>
+          <div className="flex items-center gap-1">
+            <Image src={ClockIcon} alt="time" />
+            <Text variant="bodyS" className="flex gap-2">
               {formatStartDate(startDate)}
             </Text>
           </div>
         </div>
-
         {tags.length > 0 && (
-          <div className={styles.tags}>
+          <div className="flex justify-end flex-wrap gap-1">
             {tags.map((tag) => (
               <Tag text={tag} key={tag} />
             ))}
           </div>
         )}
       </div>
-
       {children}
     </div>
   );
@@ -140,7 +133,7 @@ export const SmartEventCard: React.FC<{ event: EventResponse }> = ({
       color={event.primaryColor}
       coverImage={event.coverImage}
     >
-      <div style={{ zIndex: 3, width: "100%" }}>
+      <div className="z-[3] w-full">
         {isFuture && <EventCardActionsFuture event={event} />}
         {isFresh && <EventCardActionsFresh event={event} />}
         {isArchive && <EventCardActionsArchive event={event} />}

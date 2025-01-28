@@ -11,8 +11,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import styles from "@/components/molecules/lectureRateBarChart/LectureRateBarChart.module.scss";
-import colors from "@/colors.module.scss";
+import { getTailwindTheme } from "@/common/getTailwindTheme";
 
 interface LectureRateBarChartProps {
   overallRatesCounts: { [key: number]: number }[];
@@ -25,6 +24,8 @@ export const LectureRateBarChart: React.FC<LectureRateBarChartProps> = ({
   overallRatesCounts: overallRatesCounts,
   topicRatesCounts: topicRatesCounts,
 }) => {
+  const { colors } = getTailwindTheme();
+
   const options = {
     responsive: true,
     plugins: {
@@ -90,7 +91,7 @@ export const LectureRateBarChart: React.FC<LectureRateBarChartProps> = ({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={"max-w-[800px]"}>
       <Bar data={data} options={options} />
     </div>
   );

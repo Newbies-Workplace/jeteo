@@ -248,7 +248,7 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
         />
       </Section>
 
-      <Section title={"Gdzie?"} contentStyle={{ gap: 8 }}>
+      <Section title={"Gdzie?"} contentStyle={"gap-2"}>
         <Controller
           name={"location"}
           control={control}

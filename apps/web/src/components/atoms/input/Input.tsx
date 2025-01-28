@@ -1,8 +1,7 @@
 "use client";
 
-import styles from "./Input.module.scss";
 import React from "react";
-import cs from "classnames";
+import { cva } from "class-variance-authority";
 import { Text } from "@/components/atoms/text/Text";
 import { TextLabel } from "@/components/atoms/textLabel/TextLabel";
 
@@ -20,6 +19,23 @@ export type InputProps = {
   style?: React.CSSProperties;
 };
 
+const inputStyles = cva("w-full border rounded-lg p-2 bg-background", {
+  variants: {
+    multiline: {
+      true: "min-h-[60px] resize-vertical",
+      false: "min-h-[30px]",
+    },
+    error: {
+      true: "border-red-500",
+      false: "border-stroke",
+    },
+  },
+  defaultVariants: {
+    multiline: false,
+    error: false,
+  },
+});
+
 export const Input: React.FC<InputProps> = ({
   label,
   error,
@@ -34,13 +50,13 @@ export const Input: React.FC<InputProps> = ({
   onBlur,
 }) => {
   return (
-    <div className={styles.input} style={style}>
+    <div className="flex flex-col" style={style}>
       {label && <TextLabel label={label} required={required} />}
 
-      <div className={styles.inputWrapper}>
+      <div className="my-1">
         {multiline ? (
           <textarea
-            className={cs(styles.multiline, className)}
+            className={inputStyles({ multiline, error: !!error, className })}
             placeholder={placeholder}
             value={value}
             onChange={(event) => setValue(event.target.value)}
@@ -49,7 +65,7 @@ export const Input: React.FC<InputProps> = ({
           />
         ) : (
           <input
-            className={cs(styles.oneline, className)}
+            className={inputStyles({ multiline, error: !!error, className })}
             placeholder={placeholder}
             type={type}
             value={value}
@@ -60,11 +76,7 @@ export const Input: React.FC<InputProps> = ({
         )}
       </div>
 
-      {error && (
-        <Text className={styles.error} variant={"bodyS"}>
-          {error}
-        </Text>
-      )}
+      {error && <Text className="text-red-500 text-sm">{error}</Text>}
     </div>
   );
 };

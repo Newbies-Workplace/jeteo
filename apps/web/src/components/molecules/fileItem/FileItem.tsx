@@ -1,10 +1,9 @@
 "use client";
 
 import React from "react";
-import styles from "./FileItem.module.scss";
-import close from "../../../assets/close.svg";
+import close from "@/assets/close.svg";
 import Image from "next/image";
-import colors from "@/colors.module.scss";
+
 interface FileItemProps {
   url: string;
   onDeleteClick?: () => void;
@@ -13,15 +12,18 @@ interface FileItemProps {
 export const FileItem: React.FC<FileItemProps> = ({ url, onDeleteClick }) => {
   return (
     <div
-      className={styles.item}
+      className={
+        "flex justify-end items-start size-[185px] flex-shrink-0 bg-background rounded-[24px] bg-no-repeat bg-center bg-cover"
+      }
       style={{
         backgroundImage: `url(${url})`,
-        backgroundColor: colors.background,
       }}
     >
       {onDeleteClick && (
         <Image
-          className={styles.close}
+          className={
+            "flex justify-center items-center bg-[#8e8e8e] rounded-full mt-2 mr-2 cursor-pointer hover:bg-[#777777] active:bg-[#444444]"
+          }
           src={close}
           alt="Cancel"
           style={{ color: "white" }}

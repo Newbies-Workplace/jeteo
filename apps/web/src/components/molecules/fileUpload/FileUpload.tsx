@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import styles from "./FileUpload.module.scss";
 import Button from "@/components/atoms/button/Button";
-import cs from "classnames";
 import { ALLOWED_IMAGE_EXTENSIONS } from "@/common/constants";
 import { Text } from "@/components/atoms/text/Text";
+import { cn } from "@/lib/utils";
 
 interface FileUploadProps {
   accept?: string;
@@ -47,7 +46,10 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
   return (
     <div
-      className={cs(styles.container, { [styles.hovering]: isDraggingFile })}
+      className={cn(
+        "flex flex-col items-center justify-center text-center size-[185px] p-4 bg-surface border border-black rounded-2xl",
+        isDraggingFile && "bg-lightGray"
+      )}
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}
       onDragOver={handleDrag}
@@ -58,7 +60,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       <input
         ref={inputRef}
         type={"file"}
-        className={styles.input}
+        className="hidden"
         accept={accept}
         onChange={(e) => {
           handleChange(e);
@@ -71,7 +73,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       />
 
       <Button
-        className={styles.button}
+        className="mt-4"
         primary
         size={"small"}
         type={"button"}

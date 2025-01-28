@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import styles from "./page.module.scss";
 import { Section } from "@/components/molecules/section/Section";
 import { FileUpload } from "@/components/molecules/fileUpload/FileUpload";
 import { ControlledInput } from "@/components/atoms/input/ControlledInput";
@@ -115,9 +114,13 @@ export default function Page() {
   return (
     <form style={{ display: "flex", flexDirection: "column" }}>
       <CropDialog />
-      <div className={styles.container}>
+      <div
+        className={
+          "flex max-w-screen-lg flex-col items-start gap-3 flex-1 self-stretch p-6 rounded-t-2xl bg-surface shadow"
+        }
+      >
         <Section title="Zdjęcie profilowe">
-          <div className={styles.imageInputs}>
+          <div className={"flex flex-row gap-3"}>
             <FileUpload
               onChange={(files) => {
                 openCropDialog(URL.createObjectURL(files[0]));

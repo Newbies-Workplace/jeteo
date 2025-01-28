@@ -2,7 +2,6 @@
 
 import React from "react";
 import cs from "classnames";
-import styles from "./SignInButton.module.scss";
 import Image from "next/image";
 
 interface SignInButtonProps {
@@ -19,7 +18,10 @@ export const SignInButton: React.FC<
   return (
     <button
       type="button"
-      className={cs(styles.button, className)}
+      className={cs(
+        "flex min-w-[100px] justify-center items-center gap-16 p-[8px_84px_8px_12px] bg-white text-black rounded-[16px] border border-stroke text-center cursor-pointer hover:bg-light-hover active:bg-light-active",
+        className
+      )}
       style={style}
       onClick={onClick}
     >

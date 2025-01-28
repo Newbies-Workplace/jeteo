@@ -1,11 +1,10 @@
 "use client";
 
 import CalendarIcon from "@/assets/calendar-primary.svg";
-import cs from "classnames";
-import styles from "./CalendarButton.module.scss";
 import dayjs from "dayjs";
 import Button from "@/components/atoms/button/Button";
 import { logEvent } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 interface CalendarButtonProps {
   id: string;
@@ -32,7 +31,7 @@ export const CalendarButton = (props: CalendarButtonProps) => {
 
         window.open(googleCalendarUrl, "_blank");
       }}
-      className={cs(styles.calendarButton, props.className)}
+      className={cn("border-0 font-bold text-primary", props.className)}
     >
       Dodaj do kalendarza
     </Button>

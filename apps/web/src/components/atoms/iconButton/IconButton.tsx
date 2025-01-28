@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import styles from "./IconButton.module.scss";
-import cs from "classnames";
+import { cn } from "@/lib/utils";
 
 interface IconButtonProps {
   icon: string;
@@ -9,6 +8,7 @@ interface IconButtonProps {
   primary?: boolean;
   onClick?: () => void;
   size?: "medium" | "small";
+  className?: string;
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -17,16 +17,21 @@ export const IconButton: React.FC<IconButtonProps> = ({
   onClick,
   primary = false,
   size = "medium",
+  className,
 }) => {
   const imageSize = size === "medium" ? 24 : 18;
 
   return (
     <div
-      className={cs(styles.iconButton, {
-        [styles.primary]: primary,
-        [styles.medium]: size === "medium",
-        [styles.small]: size === "small",
-      })}
+      className={cn(
+        "flex flex-col items-center justify-center gap-2.5 flex-shrink-0 rounded-lg border cursor-pointer select-none",
+        size === "medium" && "w-10 h-10 p-2",
+        size === "small" && "w-8 h-8 p-1.5",
+        primary
+          ? "bg-primary border-none hover:bg-primaryHover active:bg-primaryActive"
+          : "bg-surface border-stroke hover:bg-light-hover active:bg-light-active",
+        className
+      )}
       onClick={onClick}
     >
       <Image

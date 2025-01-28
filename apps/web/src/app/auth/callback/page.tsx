@@ -14,16 +14,8 @@ export default function Page() {
 
   return (
     <GalaxyBackground>
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Dialog title="Jeszcze chwila ⌛" style={{ zIndex: 1 }}></Dialog>
+      <div className="w-full h-full flex justify-center items-center">
+        <Dialog title="Jeszcze chwila ⌛" className={"z-[1]"}></Dialog>
       </div>
     </GalaxyBackground>
   );

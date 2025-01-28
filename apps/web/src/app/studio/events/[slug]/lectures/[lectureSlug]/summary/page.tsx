@@ -1,11 +1,10 @@
 import { getLectureDetails } from "@/common/getLecture";
 import { LectureDetailsResponse } from "shared/.dist/model/lecture/response/lecture.response";
 import { Section } from "@/components/molecules/section/Section";
-import styles from "./page.module.scss";
 import { RateProgress } from "@/components/molecules/rateProgress/RateProgress";
 import { StudioOpinion } from "@/components/molecules/studioOpinion/StudioOpinion";
 import { LectureRateBarChart } from "@/components/molecules/lectureRateBarChart/LectureRateBarChart";
-import colors from "@/colors.module.scss";
+import { getTailwindTheme } from "@/common/getTailwindTheme";
 
 export default async function Page({
   params,
@@ -15,12 +14,13 @@ export default async function Page({
   const lecture: LectureDetailsResponse = await getLectureDetails(
     params.lectureSlug
   );
+  const { colors } = getTailwindTheme();
 
   return (
     <div>
       <Section title={`Oceny (${lecture.ratingSummary.count})`}>
         {lecture.ratingSummary.count > 0 && (
-          <div className={styles.ratingSummary}>
+          <div className={"flex items-start gap-8 self-stretch justify-center"}>
             <RateProgress
               max={5}
               value={lecture.ratingSummary.overallAverage}
@@ -47,7 +47,7 @@ export default async function Page({
         )}
       </Section>
       <Section title={`Opinie (${lecture.ratingSummary.opinionCount})`}>
-        <div className={styles.ratingsList}></div>
+        <div className={"flex flex-col items-start gap-4 self-stretch"}></div>
         {lecture.ratingSummary.opinionCount > 0 &&
           lecture.ratings
             .filter((rate) => rate.opinion)

@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./UserSocials.module.scss";
 import Link from "next/link";
 import EmailIcon from "@/assets/email.svg";
 import TwitterIcon from "@/assets/twitter.svg";
@@ -9,7 +8,6 @@ import { IconButton } from "@/components/atoms/iconButton/IconButton";
 
 interface UserSocialsProps {
   size?: "medium" | "small";
-  direction?: "row" | "column";
   socials: {
     mail?: string;
     twitter?: string;
@@ -48,9 +46,7 @@ const socialsData: {
 
 export const UserSocials: React.FC<UserSocialsProps> = ({
   size = "medium",
-  direction = "row",
   socials,
-  
 }) => {
   if (!socials) {
     return null;
@@ -65,19 +61,14 @@ export const UserSocials: React.FC<UserSocialsProps> = ({
   }
 
   return (
-    <div
-      className={styles.socials}
-      style={{
-        flexDirection: direction,
-      }}
-    >
+    <div className={"flex flex-row gap-2"}>
       {socialEntries.map(([key, href]) => {
         if (!href) return;
 
         const { icon, alt, hrefPrefix } = socialsData[key];
         return (
           <Link href={`${hrefPrefix || ""}${href}`} key={key}>
-            <IconButton icon={icon} alt={alt} size={size}/>
+            <IconButton icon={icon} alt={alt} size={size} />
           </Link>
         );
       })}

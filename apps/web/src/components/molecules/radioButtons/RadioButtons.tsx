@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useRef } from "react";
-import styles from "./RadioButtons.module.scss";
-import cs from "classnames";
-import HelpIcon from "@/assets/help.svg";
 import Image from "next/image";
+import HelpIcon from "@/assets/help.svg";
 import { Text } from "@/components/atoms/text/Text";
 
 export interface RadioItem {
@@ -34,18 +32,21 @@ export const RadioButtons: React.FC<RadioButtonsProps> = ({
   };
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-row gap-2">
       {values.map((item, index) => {
         return (
           <div
-            className={cs(styles.item, {
-              [styles.selected]: selectedValueIndex === index,
-              [styles.disabled]: item.disabled,
-            })}
+            className={`flex flex-col flex-grow justify-between items-center max-w-[150px] h-[75px] p-2 rounded-lg border ${
+              selectedValueIndex === index
+                ? "bg-primary text-white hover:bg-primaryHover active:bg-primaryActive"
+                : item.disabled
+                ? "bg-lightGray text-black hover:bg-lightGray active:bg-lightGray"
+                : "bg-surface border-stroke hover:bg-light-hover active:bg-light-active"
+            }`}
             onClick={() => onItemClick(index, item)}
             key={item.id}
           >
-            <div className={styles.top}>
+            <div className="flex justify-between w-full">
               <input
                 ref={inputRef}
                 type="radio"
@@ -56,22 +57,22 @@ export const RadioButtons: React.FC<RadioButtonsProps> = ({
               />
 
               {item.description !== undefined && (
-                <div className={styles.help}>
+                <div className="relative inline-block">
                   <Image
                     src={HelpIcon}
-                    alt={"help icon"}
+                    alt="help icon"
                     width={20}
                     height={20}
                   />
-
-                  <Text className={styles.helpText} variant={"bodyS"}>
+                  <Text className="absolute bottom-[calc(100%+10px)] left-1/2 ml-[-60px] w-[120px] bg-black text-white text-center p-1 rounded-lg hidden group-hover:block">
                     {item.description}
                   </Text>
+                  <div className="absolute top-full left-1/2 ml-[-5px] border-5 border-solid border-black border-t-transparent border-r-transparent border-b-transparent border-l-transparent"></div>
                 </div>
               )}
             </div>
 
-            <Text className={styles.name} variant={"bodyM"}>
+            <Text className="w-full overflow-hidden text-ellipsis text-end font-bold select-none">
               {item.name}
             </Text>
           </div>

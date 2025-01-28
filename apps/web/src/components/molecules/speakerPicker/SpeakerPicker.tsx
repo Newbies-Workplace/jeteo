@@ -1,20 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import styles from "./SpeakerPicker.module.scss";
 import GreyCircle from "@/assets/images/speaker-picker-circle-grey.svg";
 import PrimaryCircle from "@/assets/images/speaker-picker-circle-primary.svg";
 import AddSlim from "@/assets/AddSlim.svg";
 import Delete from "@/assets/delete.svg";
-import Copy from "@/assets/copy.svg";
 import Image from "next/image";
 import { Text } from "@/components/atoms/text/Text";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
 import { UserResponse } from "shared/model/user/response/user.response";
 import { CreateLectureInvite } from "shared/model/lecture/request/createLecture.request";
-import cs from "classnames";
 import { Validations } from "@/common/validations";
 import { IconButton } from "@/components/atoms/iconButton/IconButton";
+import { cn } from "@/lib/utils";
 
 interface SpeakerPickerProps {
   onAddInvite?: (mail: string, name: string) => void;
@@ -74,146 +72,137 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
   }
 
   return (
-    <div className={styles.container}>
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <Image
-                  src={GreyCircle}
-                  alt={"GreyCircle"}
-                  width={32}
-                  height={32}
-                />
-              </div>
-            </td>
+    <div className={cn("flex flex-col gap-2")}>
+      <div
+        className={
+          "flex flex-row items-center gap-2 p-1 border border-stroke rounded-lg bg-background"
+        }
+      >
+        <Image
+          className={"size-8"}
+          src={GreyCircle}
+          alt={"GreyCircle"}
+          width={32}
+          height={32}
+        />
+        <div className={"grid grid-cols-2 gap-2 w-full"}>
+          <input
+            className={cn("bg-background whitespace-nowrap text-ellipsis")}
+            type="email"
+            placeholder="Email"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onSubmit();
+              }
+            }}
+            disabled={!canAdd}
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setErrorMessage("");
+            }}
+          />
+          <input
+            className={cn("bg-background whitespace-nowrap text-ellipsis")}
+            type="text"
+            placeholder="Nazwa (widoczna publicznie)"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onSubmit();
+              }
+            }}
+            disabled={!canAdd}
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+              setErrorMessage("");
+            }}
+          />
+        </div>
+        {canAdd && (
+          <IconButton
+            icon={AddSlim}
+            primary
+            onClick={onSubmit}
+            className={"ms-auto"}
+          />
+        )}
+      </div>
 
-            <td>
-              <input
-                className={cs(styles.input, styles.ellipsis)}
-                type="email"
-                placeholder="Email"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    onSubmit();
-                  }
-                }}
-                disabled={!canAdd}
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setErrorMessage("");
-                }}
-              />
-            </td>
-
-            <td>
-              <input
-                className={cs(styles.input, styles.ellipsis)}
-                type="text"
-                placeholder="Nazwa (widoczna publicznie)"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    onSubmit();
-                  }
-                }}
-                disabled={!canAdd}
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                  setErrorMessage("");
-                }}
-              />
-            </td>
-            <td />
-
-            <td>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
+      {invites &&
+        invites.map((invite) => (
+          <div
+            key={invite.id}
+            className={
+              "flex flex-row items-center gap-2 p-1 w-full border border-stroke rounded-lg"
+            }
+          >
+            <Image
+              className={"size-8"}
+              src={PrimaryCircle}
+              alt={"PrimaryCircle"}
+              width={32}
+              height={32}
+            />
+            <div className={"grid grid-cols-2 gap-2 w-full"}>
+              <Text
+                variant={"bodyM"}
+                className={
+                  "bg-blue-500 whitespace-nowrap text-ellipsis overflow-hidden"
+                }
               >
-                {canAdd && (
-                  <IconButton icon={AddSlim} primary onClick={onSubmit} />
-                )}
-              </div>
-            </td>
-          </tr>
-          {invites &&
-            invites.map((invite) => (
-              <tr className={styles.item} key={invite.id}>
-                <td>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <Image
-                      src={PrimaryCircle}
-                      alt={"PrimaryCircle"}
-                      width={32}
-                      height={32}
-                    />
-                  </div>
-                </td>
-                <td className={styles.ellipsis}>
-                  <Text variant={"bodyM"}>{invite.mail}</Text>
-                </td>
-                <td className={styles.ellipsis}>
-                  <Text variant={"bodyM"}>{invite.name}</Text>
-                </td>
-                <td>
-                  {/*<div style={{ display: "flex", alignItems: "center" }}>*/}
-                  {/*  <IconButton*/}
-                  {/*    icon={Copy}*/}
-                  {/*    primary*/}
-                  {/*    onClick={() => {*/}
-                  {/*      copyTextToClipboard(*/}
-                  {/*        `${invite.id}`*/}
-                  {/*      );*/}
-                  {/*    }}*/}
-                  {/*  />*/}
-                  {/*</div>*/}
-                </td>
-                <td>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <IconButton
-                      icon={Delete}
-                      onClick={() => onDeleteInvite(invite.id)}
-                    />
-                  </div>
-                </td>
-              </tr>
-            ))}
+                {invite.mail}
+              </Text>
+              <Text
+                variant={"bodyM"}
+                className={
+                  "bg-green-500 whitespace-nowrap text-ellipsis overflow-hidden"
+                }
+              >
+                {invite.name}
+              </Text>
+            </div>
 
-          {speakers &&
-            speakers.map((speaker) => (
-              <tr className={styles.item} key={speaker.id}>
-                <td>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <Avatar src={speaker.avatar} size={32} />
-                  </div>
-                </td>
-                <td className={styles.ellipsis} colSpan={2}>
-                  <Text variant={"bodyM"}>{speaker.name}</Text>
-                </td>
-                <td />
+            <div className={"ms-auto"}>
+              <IconButton
+                icon={Delete}
+                onClick={() => onDeleteInvite(invite.id)}
+              />
+            </div>
+          </div>
+        ))}
 
-                <td>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <IconButton
-                      icon={Delete}
-                      onClick={() => onDeleteSpeaker(speaker.id)}
-                    />
-                  </div>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      {speakers &&
+        speakers.map((speaker) => (
+          <div
+            key={speaker.id}
+            className={
+              "flex flex-row items-center gap-2 p-1 border border-stroke rounded-lg"
+            }
+          >
+            <Avatar className={"size-8"} src={speaker.avatar} size={32} />
+            <Text
+              variant={"bodyM"}
+              className={"whitespace-nowrap text-ellipsis"}
+            >
+              {speaker.name}
+            </Text>
+
+            <div className={"ms-auto"}>
+              <IconButton
+                icon={Delete}
+                onClick={() => onDeleteSpeaker(speaker.id)}
+              />
+            </div>
+          </div>
+        ))}
+
       {errorMessage && (
-        <Text variant={"bodyS"} className={styles.error}>
+        <Text variant={"bodyS"} className={"text-live"}>
           {errorMessage}
         </Text>
       )}
+
       <Text variant={"bodyS"}>
         Maksymlanie 2 prelegentów. Pamiętaj aby wysłać zaproszenie na adres,
         którym prelegent jest zalogowany w serwisie.

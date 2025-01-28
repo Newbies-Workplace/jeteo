@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./ConfirmDialog.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 import Button from "@/components/atoms/button/Button";
 
@@ -21,28 +20,34 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   confirmText = "Potwierdź",
 }) => {
   return (
-    <div className={styles.root} onClick={onDismiss}>
+    <div
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black bg-opacity-50"
+      onClick={onDismiss}
+    >
       <div
-        className={styles.content}
+        className="flex flex-col items-center gap-6 p-6 min-w-full sm:min-w-[420px] bg-white rounded-lg"
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
         <Text variant="headS">{title}</Text>
 
-        <span className={styles.description}>
+        <span className="text-center">
           <Text variant="bodyM">{description}</Text>
         </span>
 
-        <div className={styles.buttons}>
-          <Button onClick={onDismiss} className={styles.dismiss}>
-            <Text variant="bodyL" className={styles.dismisstext}>
+        <div className="flex flex-wrap justify-center gap-4 w-full">
+          <Button onClick={onDismiss} className="flex-1">
+            <Text variant="bodyL" className="text-center text-black">
               {dismissText}
             </Text>
           </Button>
 
-          <Button onClick={onConfirm} className={styles.confirm}>
-            <Text variant="bodyL" className={styles.confirmtext}>
+          <Button
+            onClick={onConfirm}
+            className="flex-1 bg-live hover:bg-live-hover active:bg-live-active"
+          >
+            <Text variant="bodyL" className="text-center text-white">
               {confirmText}
             </Text>
           </Button>

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "./InternalMapPicker.module.scss";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { LatLngLiteral } from "leaflet";
 import PinIcon from "@/assets/pin.svg";
@@ -16,9 +15,9 @@ interface MapPickerProps {
 
 const InternalMapPicker: React.FC<MapPickerProps> = ({ value, onChange }) => {
   return (
-    <div className={styles.mapDiv}>
+    <div className={"size-full"}>
       <MapContainer
-        style={{ height: 300, borderRadius: 16 }}
+        className={"h-96 rounded-2xl"}
         center={
           value ?? {
             lat: 51.08549,
