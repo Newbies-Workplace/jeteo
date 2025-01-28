@@ -10,9 +10,10 @@ export default async function Layout({
   params,
 }: {
   children: React.ReactNode;
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const event: EventResponse = await getEvent(params.slug);
+  const { slug } = await params;
+  const event: EventResponse = await getEvent(slug);
   if (!event) {
     notFound();
   }
@@ -21,22 +22,22 @@ export default async function Layout({
     <div className={"flex flex-col gap-3"}>
       <StudioHeader
         title={`Edycja wydarzenia: ${event.title}`}
-        returnPath={`/studio/events/${params.slug}`}
+        returnPath={`/studio/events/${slug}`}
       />
       <StepNavigation
         links={[
           {
             name: "Podstawowe informacje",
-            href: `/studio/events/edit/${params.slug}/basic`,
+            href: `/studio/events/edit/${slug}/basic`,
           },
-          { name: "Wygląd", href: `/studio/events/edit/${params.slug}/theme` },
+          { name: "Wygląd", href: `/studio/events/edit/${slug}/theme` },
           {
             name: "Prelekcje",
-            href: `/studio/events/edit/${params.slug}/lectures`,
+            href: `/studio/events/edit/${slug}/lectures`,
           },
           {
             name: "Widoczność",
-            href: `/studio/events/edit/${params.slug}/visibility`,
+            href: `/studio/events/edit/${slug}/visibility`,
           },
         ]}
       />

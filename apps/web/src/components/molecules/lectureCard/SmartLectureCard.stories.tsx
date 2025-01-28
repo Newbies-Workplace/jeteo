@@ -24,6 +24,13 @@ const archiveEnd = now.subtract(2, "day").toISOString();
 const baseLecture: Omit<LectureResponse, "from" | "to"> = {
   id: "1",
   title: "Lecture Title",
+  slug: "lecture-slug",
+  event: {
+    slug: "event-slug",
+    title: "Event Title",
+    id: "1",
+    subtitle: "Event Subtitle",
+  },
   description: "Lecture Description",
   speakers: [],
   invites: [],

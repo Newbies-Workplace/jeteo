@@ -1,5 +1,5 @@
 import { Providers } from "@/providers";
-import React from "react";
+import React, { Suspense } from "react";
 import "@/global.scss";
 import "dayjs/locale/pl";
 import dayjs from "dayjs";
@@ -61,9 +61,11 @@ export default function RootLayout({
         <title>jeteo</title>
       </Head>
 
-      <GoogleAnalytics
-        measurementId={process.env["NEXT_PUBLIC_GOOGLE_ANALYTICS"]}
-      />
+      <Suspense>
+        <GoogleAnalytics
+          measurementId={process.env["NEXT_PUBLIC_GOOGLE_ANALYTICS"]}
+        />
+      </Suspense>
 
       <body
         className={cn(

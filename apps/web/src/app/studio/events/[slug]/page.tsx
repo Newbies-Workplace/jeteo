@@ -9,9 +9,14 @@ import { EventLecturesForm } from "@/components/organisms/eventForm/lectures/Eve
 import Link from "next/link";
 import { DeleteEventCard } from "@/app/studio/events/[slug]/DeleteEventCard";
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const event = await getEvent(params.slug);
-  const lectures = await getEventLectures(params.slug);
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const event = await getEvent(slug);
+  const lectures = await getEventLectures(slug);
   if (!event) {
     notFound();
   }
@@ -34,7 +39,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         Prelekcje
       </Text>
 
-      <EventLecturesForm eventSlug={params.slug} lectures={lectures} />
+      <EventLecturesForm eventSlug={slug} lectures={lectures} />
     </div>
   );
 }

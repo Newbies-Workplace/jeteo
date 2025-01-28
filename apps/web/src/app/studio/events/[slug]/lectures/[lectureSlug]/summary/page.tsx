@@ -9,11 +9,10 @@ import { getTailwindTheme } from "@/common/getTailwindTheme";
 export default async function Page({
   params,
 }: {
-  params: { lectureSlug: string };
+  params: Promise<{ lectureSlug: string }>;
 }) {
-  const lecture: LectureDetailsResponse = await getLectureDetails(
-    params.lectureSlug
-  );
+  const { lectureSlug } = await params;
+  const lecture: LectureDetailsResponse = await getLectureDetails(lectureSlug);
   const { colors } = getTailwindTheme();
 
   return (

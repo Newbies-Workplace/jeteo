@@ -9,20 +9,20 @@ export default async function Layout({
   params,
 }: {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     slug: string;
     lectureSlug: string;
-  };
+  }>;
 }) {
-  const lecture: LectureDetailsResponse = await getLectureDetails(
-    params.lectureSlug
-  );
+  const { slug, lectureSlug } = await params;
+
+  const lecture: LectureDetailsResponse = await getLectureDetails(lectureSlug);
 
   return (
     <div className={"flex flex-col gap-3"}>
       <StudioHeader
         title={lecture.title}
-        returnPath={`/studio/events/${params.slug}`}
+        returnPath={`/studio/events/${slug}`}
       />
       <div className={"flex flex-row flex-wrap gap-3"}>
         <StepButton title={"Feedback"} active={true} />

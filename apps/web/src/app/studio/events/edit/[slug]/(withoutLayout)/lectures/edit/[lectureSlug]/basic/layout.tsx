@@ -10,11 +10,10 @@ export default async function Layout({
   params,
 }: {
   children: React.ReactNode;
-  params: { slug: string; lectureSlug: string };
+  params: Promise<{ slug: string; lectureSlug: string }>;
 }) {
-  const lecture: LectureDetailsResponse = await getLectureDetails(
-    params.lectureSlug
-  );
+  const { slug, lectureSlug } = await params;
+  const lecture: LectureDetailsResponse = await getLectureDetails(lectureSlug);
   if (!lecture) {
     notFound();
   }
@@ -23,7 +22,7 @@ export default async function Layout({
     <div className={"flex flex-col gap-3"}>
       <StudioHeader
         title={"Edycja prelekcji"}
-        returnPath={`/studio/events/edit/${params.slug}/lectures`}
+        returnPath={`/studio/events/edit/${slug}/lectures`}
       />
       <div className={"flex flex-row flex-wrap gap-3"}>
         <StepButton title={"Podstawowe informacje"} active={true} />

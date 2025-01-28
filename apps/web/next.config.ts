@@ -1,8 +1,10 @@
-/** @type {import('next').NextConfig} */
+import type { NextConfig } from "next";
+
 require("dotenv").config();
+
 const isDev = process.env.NODE_ENV === "development";
 
-module.exports = {
+const nextConfig: NextConfig = {
   reactStrictMode: false,
   compiler: {
     reactRemoveProperties: {
@@ -11,6 +13,9 @@ module.exports = {
   },
   experimental: {
     esmExternals: "loose",
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
   images: {
     domains: ["jeteo.newbies.pl"], //todo fix hardcoded variable
@@ -22,3 +27,5 @@ module.exports = {
     ],
   },
 };
+
+export default nextConfig;

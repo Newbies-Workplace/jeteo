@@ -6,11 +6,10 @@ import { LectureDetailsResponse } from "shared/model/lecture/response/lecture.re
 export default async function Page({
   params,
 }: {
-  params: { slug: string; lectureSlug: string };
+  params: Promise<{ slug: string; lectureSlug: string }>;
 }) {
-  const lecture: LectureDetailsResponse = await getLectureDetails(
-    params.lectureSlug
-  );
+  const { lectureSlug, slug } = await params;
+  const lecture: LectureDetailsResponse = await getLectureDetails(lectureSlug);
 
-  return <LectureBasicForm eventSlug={params.slug} lecture={lecture} />;
+  return <LectureBasicForm eventSlug={slug} lecture={lecture} />;
 }
