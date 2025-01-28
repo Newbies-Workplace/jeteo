@@ -110,7 +110,9 @@ export default function RootLayout({
           />
         </Providers>
 
-        <CookieDialog />
+        <Suspense>
+          <CookieDialog />
+        </Suspense>
       </body>
     </html>
   );
