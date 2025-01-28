@@ -3,7 +3,7 @@
 import React from "react";
 import close from "@/assets/close.svg";
 import Image from "next/image";
-import colors from "@/colors.module.scss";
+
 interface FileItemProps {
   url: string;
   onDeleteClick?: () => void;
@@ -13,11 +13,10 @@ export const FileItem: React.FC<FileItemProps> = ({ url, onDeleteClick }) => {
   return (
     <div
       className={
-        "flex justify-end items-start size-[185px] flex-shrink-0 bg-stroke rounded-[24px] bg-no-repeat bg-center bg-cover"
+        "flex justify-end items-start size-[185px] flex-shrink-0 bg-background rounded-[24px] bg-no-repeat bg-center bg-cover"
       }
       style={{
         backgroundImage: `url(${url})`,
-        backgroundColor: colors.background,
       }}
     >
       {onDeleteClick && (

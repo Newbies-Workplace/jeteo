@@ -11,7 +11,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import colors from "@/colors.module.scss";
+import { getTailwindTheme } from "@/common/getTailwindTheme";
 
 interface LectureRateBarChartProps {
   overallRatesCounts: { [key: number]: number }[];
@@ -24,6 +24,8 @@ export const LectureRateBarChart: React.FC<LectureRateBarChartProps> = ({
   overallRatesCounts: overallRatesCounts,
   topicRatesCounts: topicRatesCounts,
 }) => {
+  const { colors } = getTailwindTheme();
+
   const options = {
     responsive: true,
     plugins: {

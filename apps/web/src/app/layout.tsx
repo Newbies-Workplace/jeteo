@@ -1,17 +1,16 @@
 import { Providers } from "@/providers";
 import React from "react";
 import "@/global.scss";
-import colors from "@/colors.module.scss";
 import "dayjs/locale/pl";
 import dayjs from "dayjs";
 import { Inter, Oswald, Lato } from "next/font/google";
-import cs from "classnames";
 import { Toaster } from "react-hot-toast";
 import { Metadata } from "next";
 import socialpreview from "@/assets/social-preview.png";
 import { GoogleAnalytics } from "@/components/organisms/analytics/GoogleAnalytics";
 import Head from "next/head";
 import { CookieDialog } from "@/components/organisms/analytics/cookieDialog/CookieDialog";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -67,12 +66,12 @@ export default function RootLayout({
       />
 
       <body
-        className={cs(inter.variable, oswald.variable, lato.variable)}
-        style={{
-          margin: 0,
-          backgroundColor: colors.background,
-          height: "100vh",
-        }}
+        className={cn(
+          inter.variable,
+          oswald.variable,
+          lato.variable,
+          "m-0 bg-background h-screen"
+        )}
       >
         <Providers>
           {children}

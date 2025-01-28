@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "./TextArea.module.scss";
 import { Text } from "@/components/atoms/text/Text";
 
 export interface TextAreaProps {

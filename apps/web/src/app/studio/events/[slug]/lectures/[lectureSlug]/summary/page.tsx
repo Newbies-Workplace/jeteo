@@ -4,7 +4,7 @@ import { Section } from "@/components/molecules/section/Section";
 import { RateProgress } from "@/components/molecules/rateProgress/RateProgress";
 import { StudioOpinion } from "@/components/molecules/studioOpinion/StudioOpinion";
 import { LectureRateBarChart } from "@/components/molecules/lectureRateBarChart/LectureRateBarChart";
-import colors from "@/colors.module.scss";
+import { getTailwindTheme } from "@/common/getTailwindTheme";
 
 export default async function Page({
   params,
@@ -14,6 +14,7 @@ export default async function Page({
   const lecture: LectureDetailsResponse = await getLectureDetails(
     params.lectureSlug
   );
+  const { colors } = getTailwindTheme();
 
   return (
     <div>

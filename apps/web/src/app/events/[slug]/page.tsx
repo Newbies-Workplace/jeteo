@@ -10,11 +10,11 @@ import { Avatar } from "@/components/atoms/avatar/Avatar";
 import { UserSocials } from "@/components/molecules/userSocials/UserSocials";
 import { getEventLectures } from "@/common/getLecture";
 import { EventLectures } from "@/app/events/[slug]/components/eventLectures/EventLectures";
-import colors from "@/colors.module.scss";
 import { Metadata } from "next";
 import SocialPreview from "@/assets/social-preview.png";
 import dayjs from "dayjs";
 import { CalendarButton } from "@/components/atoms/calendarButton/CalendarButton";
+import { getTailwindTheme } from "@/common/getTailwindTheme";
 
 export async function generateMetadata({
   params,
@@ -85,6 +85,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const now = dayjs();
   const start = dayjs(event.from);
   const isFuture = now.isBefore(start);
+  const { colors } = getTailwindTheme();
 
   return (
     <div className="flex flex-col items-center justify-center">
