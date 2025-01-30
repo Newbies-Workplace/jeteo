@@ -22,14 +22,19 @@ export const RateProgress: React.FC<RateProgressProps> = ({
   description,
   color,
 }) => {
+  const style = window.getComputedStyle(document.body);
+
   const data = {
     labels: ["Oceny"],
     datasets: [
       {
         label: "Średnia ocen",
         data: [value, max - value],
-        backgroundColor: [color, "rgba(196,196,196, 1)"],
-        borderColor: [color, "rgba(196,196,196, 1)"],
+        backgroundColor: [
+          style.getPropertyValue(color),
+          "rgba(196,196,196, 1)",
+        ],
+        borderColor: [style.getPropertyValue(color), "rgba(196,196,196, 1)"],
         borderWidth: 1,
       },
     ],

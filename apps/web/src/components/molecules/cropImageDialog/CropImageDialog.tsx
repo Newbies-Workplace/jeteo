@@ -4,7 +4,6 @@ import ReactCrop, { PixelCrop } from "react-image-crop";
 import "react-image-crop/src/ReactCrop.scss";
 import React, { useRef, useState } from "react";
 import { canvasPreview } from "@/components/molecules/cropImageDialog/canvasPreview";
-import Image from "next/image";
 
 export type CropImageProps = {
   title: string;
@@ -44,7 +43,6 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
     crop: PixelCrop
   ): Promise<File> =>
     new Promise((resolve, reject) => {
-      // @ts-ignore
       const image = new Image();
       image.src = imageSrc;
       image.onload = () => {
@@ -68,7 +66,7 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-10 flex items-end sm:items-center justify-center bg-black bg-opacity-50"
+      className="fixed inset-0 z-10 flex items-end sm:items-center justify-center bg-black/50"
       onClick={dismissAction}
     >
       <div
@@ -85,7 +83,7 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
           ruleOfThirds={true}
           aspect={aspectRatio}
         >
-          <Image
+          <img
             src={imgSrc}
             ref={imgRef}
             alt="obraz"

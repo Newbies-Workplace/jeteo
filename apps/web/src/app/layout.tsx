@@ -1,6 +1,6 @@
 import { Providers } from "@/providers";
 import React, { Suspense } from "react";
-import "@/global.scss";
+import "@/app/globals.css";
 import "dayjs/locale/pl";
 import dayjs from "dayjs";
 import { Inter, Oswald, Lato } from "next/font/google";

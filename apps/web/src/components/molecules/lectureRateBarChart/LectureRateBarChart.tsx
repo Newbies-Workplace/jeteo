@@ -12,7 +12,6 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import { getTailwindTheme } from "@/common/getTailwindTheme";
 
 interface LectureRateBarChartProps {
   overallRatesCounts: { [key: number]: number }[];
@@ -25,8 +24,7 @@ export const LectureRateBarChart: React.FC<LectureRateBarChartProps> = ({
   overallRatesCounts: overallRatesCounts,
   topicRatesCounts: topicRatesCounts,
 }) => {
-  const { colors } = getTailwindTheme();
-
+  const style = window.getComputedStyle(document.body);
   const options: ChartOptions<"bar"> = {
     responsive: true,
     plugins: {
@@ -75,16 +73,16 @@ export const LectureRateBarChart: React.FC<LectureRateBarChartProps> = ({
       {
         label: "Oceny prelekcji",
         data: overallRatesCounts?.map((rate) => Object.values(rate)[0]),
-        backgroundColor: [colors.primary],
-        borderColor: [colors.primary],
+        backgroundColor: style.getPropertyValue("--color-primary"),
+        borderColor: style.getPropertyValue("--color-primary"),
         borderWidth: 0,
         borderRadius: 8,
       },
       {
         label: "Oceny tematu",
         data: topicRatesCounts?.map((rate) => Object.values(rate)[0]),
-        backgroundColor: [colors.success],
-        borderColor: [colors.success],
+        backgroundColor: style.getPropertyValue("--color-success"),
+        borderColor: style.getPropertyValue("--color-success"),
         borderWidth: 0,
         borderRadius: 8,
       },
