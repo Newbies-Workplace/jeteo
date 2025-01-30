@@ -34,9 +34,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
-        oswald: ["Oswald", "sans-serif"],
-        lato: ["Lato", "sans-serif"],
+        inter: ["var(--font-inter)"],
+        oswald: ["var(--font-oswald)"],
+        lato: ["var(--font-lato)"],
       },
     },
   },

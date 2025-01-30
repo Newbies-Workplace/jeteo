@@ -5,7 +5,7 @@ import { Text } from "@/components/atoms/text/Text";
 import Google from "@/assets/google.svg";
 import { SignInButton } from "@/app/auth/signin/components/SignInButton";
 
-const baseUrl: string = process.env["NEXT_PUBLIC_BACKEND_URL"];
+const baseUrl: string = process.env["NEXT_PUBLIC_BACKEND_URL"]!;
 
 export default function Page() {
   return (

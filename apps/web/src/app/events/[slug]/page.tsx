@@ -10,7 +10,7 @@ import { Avatar } from "@/components/atoms/avatar/Avatar";
 import { UserSocials } from "@/components/molecules/userSocials/UserSocials";
 import { getEventLectures } from "@/common/getLecture";
 import { EventLectures } from "@/app/events/[slug]/components/eventLectures/EventLectures";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import SocialPreview from "@/assets/social-preview.png";
 import dayjs from "dayjs";
 import { CalendarButton } from "@/components/atoms/calendarButton/CalendarButton";
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   function getSpeakersNames() {
-    const speakers = [];
+    const speakers: string[] = [];
     lectures.map((lecture) => {
       lecture.speakers.map((speaker) => {
         speakers.push(speaker.name);
@@ -57,7 +57,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     keywords: event.tags,
     creator: event.host.name,
-    authors: getSpeakersNames(),
+    authors: getSpeakersNames().map((name) => ({
+      name: name,
+    })),
     description: description,
     openGraph: {
       title: title,
@@ -205,7 +207,9 @@ export default async function Page({ params }: Props) {
                   <Text variant={"bodyM"}>
                     {event.address.city}, {event.address.place}
                   </Text>
-                  <Map coordinates={event.address.coordinates} />
+                  {event.address.coordinates && (
+                    <Map coordinates={event.address.coordinates} />
+                  )}
                 </div>
               )}
             </div>

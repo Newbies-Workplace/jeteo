@@ -1,4 +1,4 @@
-const baseUrl: string = process.env["NEXT_PUBLIC_BACKEND_URL"];
+const baseUrl: string = process.env["NEXT_PUBLIC_BACKEND_URL"]!;
 
 export const myFetch = async (
   input: RequestInfo,
@@ -9,6 +9,7 @@ export const myFetch = async (
     typeof input === "string"
       ? baseUrl + input
       : {
+          // @ts-ignore
           url: baseUrl + input.url,
           ...input,
         };

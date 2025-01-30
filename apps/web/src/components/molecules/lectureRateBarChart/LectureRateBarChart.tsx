@@ -6,6 +6,7 @@ import {
   BarElement,
   CategoryScale,
   Chart,
+  type ChartOptions,
   Legend,
   LinearScale,
   Title,
@@ -26,7 +27,7 @@ export const LectureRateBarChart: React.FC<LectureRateBarChartProps> = ({
 }) => {
   const { colors } = getTailwindTheme();
 
-  const options = {
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     plugins: {
       legend: {

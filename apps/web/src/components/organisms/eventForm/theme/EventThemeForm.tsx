@@ -22,6 +22,8 @@ const getRequest = async (
       method: "PATCH",
       body: JSON.stringify({ primaryColor: color }),
     }).then((res) => res.json());
+  } else {
+    return Promise.reject("no event");
   }
 };
 
@@ -31,7 +33,9 @@ interface EventThemeFormProps {
 
 export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
   const [color, setColor] = useState(event?.primaryColor);
-  const [coverImage, setCoverImage] = useState<string>(event?.coverImage);
+  const [coverImage, setCoverImage] = useState<string | undefined>(
+    event?.coverImage
+  );
 
   const { CropDialog, openCropDialog } = useCropDialog({
     aspectRatio: 3,
@@ -46,6 +50,7 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
 
   const onSubmit = () => {
     toast.promise(
+      // @ts-ignore
       getRequest(color, event).then((res: EventResponse) => {
         return res;
       }),
@@ -74,6 +79,7 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
     await myFetch(`/rest/v1/events/${event?.id}/cover`, {
       method: "DELETE",
     }).then((res) => {
+      // @ts-ignore
       res.ok && setCoverImage(null);
     });
   };
@@ -102,7 +108,12 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
       </Section>
       <Section title={"Podgląd"}>
         <SmartEventCard
-          event={{ ...event, primaryColor: color, coverImage: coverImage }}
+          event={{
+            ...event,
+            // @ts-ignore
+            primaryColor: color,
+            coverImage: coverImage,
+          }}
         />
       </Section>
       <Button primary style={{ alignSelf: "flex-end" }} onClick={onSubmit}>

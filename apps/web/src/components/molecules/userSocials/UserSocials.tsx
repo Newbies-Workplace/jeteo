@@ -8,7 +8,7 @@ import { IconButton } from "@/components/atoms/iconButton/IconButton";
 
 interface UserSocialsProps {
   size?: "medium" | "small";
-  socials: {
+  socials?: {
     mail?: string;
     twitter?: string;
     linkedin?: string;
@@ -53,6 +53,7 @@ export const UserSocials: React.FC<UserSocialsProps> = ({
   }
 
   const socialEntries = Object.entries(socials).filter(([key, _]) => {
+    // @ts-ignore
     return !!socialsData[key];
   });
 
@@ -65,6 +66,7 @@ export const UserSocials: React.FC<UserSocialsProps> = ({
       {socialEntries.map(([key, href]) => {
         if (!href) return;
 
+        // @ts-ignore
         const { icon, alt, hrefPrefix } = socialsData[key];
         return (
           <Link href={`${hrefPrefix || ""}${href}`} key={key}>

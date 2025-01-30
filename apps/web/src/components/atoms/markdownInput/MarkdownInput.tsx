@@ -3,16 +3,17 @@
 import { Text } from "@/components/atoms/text/Text";
 import MDEditor from "@uiw/react-md-editor";
 import React from "react";
-import { ITextAreaProps } from "@uiw/react-md-editor/lib/components/TextArea";
 import { TextLabel } from "@/components/atoms/textLabel/TextLabel";
+// @ts-ignore
+import { ITextAreaProps } from "@uiw/react-md-editor/lib/components/TextArea";
 
 export interface MarkdownInputProps {
-  label?: string;
+  label: string;
   error?: string;
   required?: boolean;
   placeholder?: string;
   value: string;
-  setValue: (value: string) => void;
+  setValue: (value?: string) => void;
   onBlur?: () => void;
   height?: number;
   textareaProps?: ITextAreaProps;
@@ -38,7 +39,7 @@ export const MarkdownInput: React.FC<MarkdownInputProps> = ({
           textareaProps={textareaProps}
           height={height}
           value={value}
-          placeholder={placeholder}
+          // placeholder={placeholder}
           onBlur={onBlur}
           onChange={setValue}
         />

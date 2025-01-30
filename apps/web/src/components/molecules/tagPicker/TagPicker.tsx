@@ -7,7 +7,7 @@ import { Text } from "@/components/atoms/text/Text";
 
 interface TagPickerProps {
   value?: string[];
-  setValue?: React.Dispatch<React.SetStateAction<string[]>>;
+  setValue: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export const TagPicker: React.FC<TagPickerProps> = ({ value, setValue }) => {
@@ -44,11 +44,11 @@ export const TagPicker: React.FC<TagPickerProps> = ({ value, setValue }) => {
         "flex flex-wrap items-center p-1 gap-1 min-h-10 w-full rounded-xl border border-stroke bg-background"
       }
     >
-      {value.map((t) => {
+      {value?.map((t) => {
         return <Tag key={t} value={t} del={() => deleteTag(t)} />;
       })}
 
-      {value.length <= 8 ? (
+      {value && value.length <= 8 ? (
         <input
           minLength={1}
           maxLength={20}

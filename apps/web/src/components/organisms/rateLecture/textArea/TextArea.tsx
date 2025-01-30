@@ -6,7 +6,7 @@ import { Text } from "@/components/atoms/text/Text";
 export interface TextAreaProps {
   title: string;
   text: string;
-  setText: any;
+  setText: (text: string) => void;
 }
 
 const TextArea: React.FC<TextAreaProps> = ({ title, text, setText }) => {

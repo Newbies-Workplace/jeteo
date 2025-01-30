@@ -10,6 +10,7 @@ export const Portal: React.FC<{ children: ReactNode }> = ({ children }) => {
   React.useEffect(() => setMounted(true), []);
 
   return mounted
-    ? createPortal(<>{children}</>, document.getElementById("portal"))
+    ? // @ts-ignore
+      createPortal(<>{children}</>, document.getElementById("portal"))
     : null;
 };

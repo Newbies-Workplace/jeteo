@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const baseUrl: string = Cypress.config("baseUrl");
+const baseUrl: string = Cypress.config("baseUrl")!;
 
 describe("Basic Actions", () => {
   it("should correctly visit signin page", () => {

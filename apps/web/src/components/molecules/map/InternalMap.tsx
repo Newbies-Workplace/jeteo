@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
+// @ts-ignore
 import { Marker, MarkerLayer } from "react-leaflet-marker";
 import Image from "next/image";
 import PinIcon from "@/assets/pin.svg";

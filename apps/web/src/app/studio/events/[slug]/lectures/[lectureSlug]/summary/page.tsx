@@ -1,5 +1,5 @@
 import { getLectureDetails } from "@/common/getLecture";
-import { LectureDetailsResponse } from "shared/.dist/model/lecture/response/lecture.response";
+import { LectureDetailsResponse } from "shared/model/lecture/response/lecture.response";
 import { Section } from "@/components/molecules/section/Section";
 import { RateProgress } from "@/components/molecules/rateProgress/RateProgress";
 import { StudioOpinion } from "@/components/molecules/studioOpinion/StudioOpinion";
