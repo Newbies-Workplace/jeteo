@@ -79,7 +79,7 @@ export const RateLectureDialog: React.FC<RateLectureProps> = ({
 
       {isDialogVisible && (
         <div
-          className="fixed inset-0 z-[10000] bg-black bg-opacity-50 flex justify-center items-end sm:items-center"
+          className="fixed inset-0 z-[10000] bg-black/50 flex justify-center items-end sm:items-center"
           onClick={handleDismiss}
         >
           <form
