@@ -1,10 +1,9 @@
 import type { Preview } from "@storybook/react";
-import "@/global.css";
+import "@/app/globals.css";
 import "./fonts.css";
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,

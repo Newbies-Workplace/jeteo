@@ -143,17 +143,13 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
             <div className={"grid grid-cols-2 gap-2 w-full"}>
               <Text
                 variant={"bodyM"}
-                className={
-                  "bg-blue-500 whitespace-nowrap text-ellipsis overflow-hidden"
-                }
+                className={"whitespace-nowrap text-ellipsis overflow-hidden"}
               >
                 {invite.mail}
               </Text>
               <Text
                 variant={"bodyM"}
-                className={
-                  "bg-green-500 whitespace-nowrap text-ellipsis overflow-hidden"
-                }
+                className={"whitespace-nowrap text-ellipsis overflow-hidden"}
               >
                 {invite.name}
               </Text>
