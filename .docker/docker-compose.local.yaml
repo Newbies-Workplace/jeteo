@@ -19,6 +19,8 @@ services:
       target: jeteo-web
     restart: unless-stopped
     container_name: jeteo-web
+    env_file:
+      - ../.env.docker
     ports:
       - "3000:3000"
   jeteo-api:
@@ -29,13 +31,8 @@ services:
     container_name: jeteo-api
     volumes:
       - jeteo-api-storage:/jeteo-api-storage
-    environment:
-      - GOOGLE_CLIENT_ID
-      - GOOGLE_SECRET
-      - GOOGLE_CALLBACK_URL
-      - JWT_SECRET
-      - CLIENT_URL
-      - DATABASE_URL
+    env_file:
+      - ../.env.docker
     ports:
       - "3001:3001"
     depends_on:
