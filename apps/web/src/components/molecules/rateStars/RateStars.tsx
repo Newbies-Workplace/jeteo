@@ -10,7 +10,7 @@ export interface RateStarsProps {
   title: string;
   subtitle: string;
   rating: number;
-  setRating: any;
+  setRating: (vote: number) => void;
 }
 
 const RateStars: React.FC<RateStarsProps> = ({

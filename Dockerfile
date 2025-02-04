@@ -38,6 +38,9 @@ COPY --from=builder /build/apps/web/next.config.js ./
 COPY --from=builder /build/apps/web/package.json ./package.json
 COPY --from=builder /build/node_modules ./node_modules
 
+# workaround for wrong manifest name
+#COPY --from=builder --chown=nextjs:nodejs /build/apps/web/.next/server/next-font-manifest.json ./.next/server/font-manifest.json
+
 USER nextjs
 
 EXPOSE 3000

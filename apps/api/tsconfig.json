@@ -5,7 +5,7 @@
     "outDir": "./.nest",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   }
 }

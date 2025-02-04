@@ -36,7 +36,7 @@ export const LectureCard: React.FC<LectureProps> = ({
   return (
     <div className="flex flex-col items-center w-full gap-3">
       <Timer from={from} to={to} />
-      <div className="flex flex-col items-start self-stretch p-4 gap-4 rounded-lg bg-white">
+      <div className="flex flex-col items-start self-stretch p-4 gap-4 rounded-2xl bg-white">
         <div className="flex flex-col items-start gap-1 self-stretch">
           <Text variant="headS" bold>
             {title}

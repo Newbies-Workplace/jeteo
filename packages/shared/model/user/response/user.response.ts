@@ -1,14 +1,14 @@
 export interface UserResponse {
   id: string;
   name: string;
-  avatar: string | null;
-  jobTitle: string | null;
-  description: string | null;
+  avatar?: string;
+  jobTitle?: string;
+  description?: string;
   socials: {
-    mail: string | null;
-    github: string | null;
-    twitter: string | null;
-    linkedin: string | null;
+    mail?: string;
+    github?: string;
+    twitter?: string;
+    linkedin?: string;
   };
 }
 

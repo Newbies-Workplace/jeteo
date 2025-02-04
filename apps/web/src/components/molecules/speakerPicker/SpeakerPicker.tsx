@@ -61,15 +61,11 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
       return;
     }
 
-    onAddInvite(trimmedEmail, trimmedName);
+    onAddInvite?.(trimmedEmail, trimmedName);
 
     setEmail("");
     setName("");
   };
-
-  async function copyTextToClipboard(text: string) {
-    return await navigator.clipboard.writeText(text);
-  }
 
   return (
     <div className={cn("flex flex-col gap-2")}>
@@ -166,7 +162,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
             <div className={"ms-auto"}>
               <IconButton
                 icon={Delete}
-                onClick={() => onDeleteInvite(invite.id)}
+                onClick={() => onDeleteInvite?.(invite.id)}
               />
             </div>
           </div>
@@ -191,7 +187,7 @@ export const SpeakerPicker: React.FC<SpeakerPickerProps> = ({
             <div className={"ms-auto"}>
               <IconButton
                 icon={Delete}
-                onClick={() => onDeleteSpeaker(speaker.id)}
+                onClick={() => onDeleteSpeaker?.(speaker.id)}
               />
             </div>
           </div>

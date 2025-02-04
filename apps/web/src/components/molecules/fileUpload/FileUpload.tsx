@@ -48,7 +48,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     <div
       className={cn(
         "flex flex-col items-center justify-center text-center size-[185px] p-4 bg-surface border border-black rounded-2xl",
-        isDraggingFile && "bg-lightGray"
+        isDraggingFile && "bg-light-gray"
       )}
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}

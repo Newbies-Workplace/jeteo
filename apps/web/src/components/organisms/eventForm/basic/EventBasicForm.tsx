@@ -42,6 +42,7 @@ type BasicForm = {
 };
 
 const getDefaultValue = (event?: EventResponse): BasicForm => {
+  // @ts-ignore
   return event
     ? {
         title: event.title,
@@ -86,6 +87,7 @@ const getCreateRequestData = (form: BasicForm): CreateEventRequest => {
     description: form.description,
     from: dayjs(form.from).toISOString(),
     to: dayjs(form.to).toISOString(),
+    // @ts-ignore
     address:
       form.location === "location" &&
       form.address &&
@@ -94,12 +96,12 @@ const getCreateRequestData = (form: BasicForm): CreateEventRequest => {
         ? {
             city: notBlank(form.address.city),
             place: notBlank(form.address.place),
-            coordinates: {
+            coordinates: form.address.coordinates && {
               latitude: form.address.coordinates.latitude,
               longitude: form.address.coordinates.longitude,
             },
           }
-        : null,
+        : undefined,
     tags: form.tags,
   };
 };
@@ -110,6 +112,7 @@ const getUpdateRequestData = (form: BasicForm): UpdateEventRequest => {
     description: form.description,
     from: dayjs(form.from).toISOString(),
     to: dayjs(form.to).toISOString(),
+    // @ts-ignore
     address:
       form.location === "location" &&
       form.address &&
@@ -118,7 +121,7 @@ const getUpdateRequestData = (form: BasicForm): UpdateEventRequest => {
         ? {
             city: notBlankOrNull(form.address.city),
             place: notBlankOrNull(form.address.place),
-            coordinates: {
+            coordinates: form.address.coordinates && {
               latitude: form.address.coordinates.latitude,
               longitude: form.address.coordinates.longitude,
             },
@@ -274,10 +277,14 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
                       longitude: value.lng,
                     });
                   }}
-                  value={{
-                    lat: field.value?.latitude,
-                    lng: field.value?.longitude,
-                  }}
+                  value={
+                    field?.value
+                      ? {
+                          lat: field.value.latitude,
+                          lng: field.value.longitude,
+                        }
+                      : undefined
+                  }
                 />
               )}
               name={"address.coordinates"}

@@ -48,6 +48,7 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
       image.onload = () => {
         const canvas = document.createElement("canvas");
 
+        // @ts-ignore
         canvasPreview(imgRef.current, canvas, crop, 1, 0);
 
         canvas.toBlob((blob) => {
@@ -55,6 +56,7 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
             reject(new Error("Canvas is empty"));
           }
 
+          // @ts-ignore
           const file = new File([blob], "croppedImage", { type: blob.type });
 
           resolve(file);
@@ -64,7 +66,7 @@ export const CropImageDialog: React.FC<CropImageProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-10 flex items-end sm:items-center justify-center bg-black bg-opacity-50"
+      className="fixed inset-0 z-10 flex items-end sm:items-center justify-center bg-black/50"
       onClick={dismissAction}
     >
       <div

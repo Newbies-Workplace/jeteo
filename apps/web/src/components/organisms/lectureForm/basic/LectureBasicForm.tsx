@@ -37,6 +37,7 @@ type BasicForm = {
 };
 
 const getDefaultValue = (lecture?: LectureDetailsResponse): BasicForm => {
+  // @ts-ignore
   return lecture
     ? {
         title: lecture.title,
@@ -134,6 +135,7 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
     toast.promise(
       getRequest(data, eventSlug, lecture).then(
+        // @ts-ignore
         (res: LectureDetailsResponse) => {
           onSubmitted?.(res);
         }

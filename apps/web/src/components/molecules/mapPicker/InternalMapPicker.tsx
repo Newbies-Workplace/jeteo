@@ -4,6 +4,7 @@ import React from "react";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { LatLngLiteral } from "leaflet";
 import PinIcon from "@/assets/pin.svg";
+// @ts-ignore
 import { MarkerLayer, Marker } from "react-leaflet-marker";
 import Image from "next/image";
 import "leaflet/dist/leaflet.css";

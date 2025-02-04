@@ -16,7 +16,10 @@ export const getEvent = async (eventSlug: string): Promise<EventResponse> => {
     },
     false
   );
-  if (!res.ok) return undefined;
+  if (!res.ok) {
+    // @ts-ignore
+    return undefined;
+  }
   return res.json();
 };
 
@@ -28,7 +31,10 @@ export const getEvents = async (): Promise<EventResponse[]> => {
   const res = await myFetch(`/rest/v1/events?${urlParams(params)}`, {
     cache: "no-store",
   });
-  if (!res.ok) return undefined;
+  if (!res.ok) {
+    // @ts-ignore
+    return undefined;
+  }
   return res.json();
 };
 
@@ -43,6 +49,9 @@ export const getMyEvents = async (): Promise<EventResponse[]> => {
       Cookie: (await cookies()).toString(),
     },
   });
-  if (!res.ok) return undefined;
+  if (!res.ok) {
+    // @ts-ignore
+    return undefined;
+  }
   return res.json();
 };

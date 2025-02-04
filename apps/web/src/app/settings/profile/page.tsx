@@ -29,7 +29,7 @@ export default function Page() {
   const { user } = useAuth();
   const [isInitialized, setIsInitialized] = useState(false);
   const { control, handleSubmit, reset } = useForm<ProfileForm>();
-  const [avatarUrl, setAvatarUrl] = useState<string>(user?.avatar);
+  const [avatarUrl, setAvatarUrl] = useState<string | undefined>(user?.avatar);
 
   const { CropDialog, openCropDialog } = useCropDialog({
     aspectRatio: 1,
@@ -77,6 +77,7 @@ export default function Page() {
 
   const getUpdateUserRequestData = (form: ProfileForm): UpdateUserRequest => {
     return {
+      // @ts-ignore
       avatar: undefined,
       name: form.name,
       jobTitle: form.jobTitle,
@@ -107,6 +108,7 @@ export default function Page() {
     await myFetch(`/rest/v1/users/@me/avatar`, {
       method: "DELETE",
     }).then((res) => {
+      // @ts-ignore
       res.ok && setAvatarUrl(null);
     });
   };

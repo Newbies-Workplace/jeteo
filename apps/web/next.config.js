@@ -1,19 +1,14 @@
-/** @type {import('next').NextConfig} */
 require("dotenv").config();
 const isDev = process.env.NODE_ENV === "development";
 
+/** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: false,
+  distDir: ".next",
   compiler: {
     reactRemoveProperties: {
       properties: isDev ? [] : ["^data-cy"],
     },
-  },
-  experimental: {
-    esmExternals: "loose",
-  },
-  typescript: {
-    ignoreBuildErrors: true,
   },
   images: {
     domains: ["jeteo.newbies.pl"], //todo fix hardcoded variable

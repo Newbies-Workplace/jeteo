@@ -24,7 +24,10 @@ export const getLecture = async (
     },
     false
   );
-  if (!res.ok) return undefined;
+  if (!res.ok) {
+    // @ts-ignore
+    return undefined;
+  }
   return res.json();
 };
 
@@ -42,7 +45,10 @@ export const getLectureDetails = async (
     },
     false
   );
-  if (!res.ok) return undefined;
+  if (!res.ok) {
+    // @ts-ignore
+    return undefined;
+  }
   return res.json();
 };
 
@@ -66,7 +72,10 @@ export const getEventLectures = async (
     },
     false
   );
-  if (!res.ok) return undefined;
+  if (!res.ok) {
+    // @ts-ignore
+    return undefined;
+  }
   return res.json();
 };
 
@@ -86,6 +95,9 @@ export const getMyLectures = async (): Promise<LectureResponse[]> => {
     },
     false
   );
-  if (!res.ok) return undefined;
+  if (!res.ok) {
+    // @ts-ignore
+    return undefined;
+  }
   return res.json();
 };

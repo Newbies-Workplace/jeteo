@@ -1,10 +1,9 @@
 import { getLectureDetails } from "@/common/getLecture";
-import { LectureDetailsResponse } from "shared/.dist/model/lecture/response/lecture.response";
+import { LectureDetailsResponse } from "shared/model/lecture/response/lecture.response";
 import { Section } from "@/components/molecules/section/Section";
 import { RateProgress } from "@/components/molecules/rateProgress/RateProgress";
 import { StudioOpinion } from "@/components/molecules/studioOpinion/StudioOpinion";
 import { LectureRateBarChart } from "@/components/molecules/lectureRateBarChart/LectureRateBarChart";
-import { getTailwindTheme } from "@/common/getTailwindTheme";
 
 export default async function Page({
   params,
@@ -13,7 +12,6 @@ export default async function Page({
 }) {
   const { lectureSlug } = await params;
   const lecture: LectureDetailsResponse = await getLectureDetails(lectureSlug);
-  const { colors } = getTailwindTheme();
 
   return (
     <div>
@@ -25,14 +23,14 @@ export default async function Page({
               value={lecture.ratingSummary.overallAverage}
               label={"prelekcja"}
               description={"Średnia ocena prelekcji"}
-              color={colors.primary}
+              color={"--color-primary"}
             />
             <RateProgress
               max={5}
               value={lecture.ratingSummary.topicAverage}
               label={"temat"}
               description={"Średnia ocena tematu"}
-              color={colors.success}
+              color={"--color-success"}
             />
           </div>
         )}

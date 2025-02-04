@@ -40,7 +40,7 @@ export const RadioButtons: React.FC<RadioButtonsProps> = ({
               selectedValueIndex === index
                 ? "bg-primary text-white hover:bg-primaryHover active:bg-primaryActive"
                 : item.disabled
-                ? "bg-lightGray text-black hover:bg-lightGray active:bg-lightGray"
+                ? "bg-light-gray text-black hover:bg-light-gray active:bg-light-gray"
                 : "bg-surface border-stroke hover:bg-light-hover active:bg-light-active"
             }`}
             onClick={() => onItemClick(index, item)}

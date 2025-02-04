@@ -3,7 +3,7 @@ import { Text } from "@/components/atoms/text/Text";
 import Image from "next/image";
 import Close from "@/assets/close-black.svg";
 
-export const Tag = ({ value, del }) => {
+export const Tag = ({ value, del }: { value: string; del: () => void }) => {
   return (
     <div
       className={

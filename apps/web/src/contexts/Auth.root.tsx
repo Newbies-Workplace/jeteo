@@ -4,7 +4,13 @@ import { useAuth } from "./Auth.hook";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
-const AuthRoot = ({ children, loader: Loader = <div>Loading...</div> }) => {
+const AuthRoot = ({
+  children,
+  loader: Loader = <div>Loading...</div>,
+}: {
+  children: React.ReactNode;
+  loader?: React.ReactNode;
+}) => {
   const { user } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);

@@ -10,11 +10,10 @@ import { Avatar } from "@/components/atoms/avatar/Avatar";
 import { UserSocials } from "@/components/molecules/userSocials/UserSocials";
 import { getEventLectures } from "@/common/getLecture";
 import { EventLectures } from "@/app/events/[slug]/components/eventLectures/EventLectures";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import SocialPreview from "@/assets/social-preview.png";
 import dayjs from "dayjs";
 import { CalendarButton } from "@/components/atoms/calendarButton/CalendarButton";
-import { getTailwindTheme } from "@/common/getTailwindTheme";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -45,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   function getSpeakersNames() {
-    const speakers = [];
+    const speakers: string[] = [];
     lectures.map((lecture) => {
       lecture.speakers.map((speaker) => {
         speakers.push(speaker.name);
@@ -57,7 +56,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     keywords: event.tags,
     creator: event.host.name,
-    authors: getSpeakersNames(),
+    authors: getSpeakersNames().map((name) => ({
+      name: name,
+    })),
     description: description,
     openGraph: {
       title: title,
@@ -88,7 +89,6 @@ export default async function Page({ params }: Props) {
   const now = dayjs();
   const start = dayjs(event.from);
   const isFuture = now.isBefore(start);
-  const { colors } = getTailwindTheme();
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -105,7 +105,7 @@ export default async function Page({ params }: Props) {
         <div
           className="z-[1] absolute top-0 left-0 right-0 bottom-0 h-full w-full min-h-[320px] rounded-b-2xl"
           style={{
-            background: `linear-gradient(to right, ${event.primaryColor}, ${colors.primary})`,
+            background: `linear-gradient(to right, ${event.primaryColor}, var(--color-primary))`,
           }}
         />
         {isFuture && (
@@ -205,7 +205,9 @@ export default async function Page({ params }: Props) {
                   <Text variant={"bodyM"}>
                     {event.address.city}, {event.address.place}
                   </Text>
-                  <Map coordinates={event.address.coordinates} />
+                  {event.address.coordinates && (
+                    <Map coordinates={event.address.coordinates} />
+                  )}
                 </div>
               )}
             </div>

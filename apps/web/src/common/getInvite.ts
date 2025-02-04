@@ -13,6 +13,9 @@ export const getMyInvites = async (): Promise<InviteDetailsResponse[]> => {
     },
     false
   );
-  if (!res.ok) return undefined;
+  if (!res.ok) {
+    // @ts-ignore
+    return undefined;
+  }
   return res.json();
 };
