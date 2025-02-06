@@ -5,8 +5,6 @@ import { Text } from "@/components/atoms/text/Text";
 import Google from "@/assets/google.svg";
 import { SignInButton } from "@/app/auth/signin/components/SignInButton";
 
-const baseUrl: string = process.env["NEXT_PUBLIC_BACKEND_URL"]!;
-
 export default function Page() {
   return (
     <GalaxyBackground>
@@ -14,12 +12,7 @@ export default function Page() {
         <Dialog title="Zaczynamy przygodę 🚀" arrowBack>
           <Text variant={"bodyM"}>Kontynuuj przez:</Text>
           <div className="w-full flex flex-col gap-2.5 items-center justify-center pt-3.5 px-2.5 md:px-0">
-            <Link
-              href={`${baseUrl}/auth/google/redirect`}
-              data-cy={"google-button"}
-            >
-              <SignInButton icon={Google}>Google</SignInButton>
-            </Link>
+            <SignInButton icon={Google}>Google</SignInButton>
           </div>
           <div className="text-center pt-3">
             <Text variant={"bodyM"}>

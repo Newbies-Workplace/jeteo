@@ -8,7 +8,6 @@ import { Toaster } from "react-hot-toast";
 import { Metadata } from "next";
 import socialpreview from "@/assets/social-preview.png";
 import { GoogleAnalytics } from "@/components/organisms/analytics/GoogleAnalytics";
-import Head from "next/head";
 import { CookieDialog } from "@/components/organisms/analytics/cookieDialog/CookieDialog";
 
 const inter = Inter({
@@ -57,13 +56,6 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${oswald.variable} ${lato.variable}`}
     >
-      <Head>
-        <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-        <link rel="icon" href="favicon.ico" sizes="any" />
-
-        <title>jeteo</title>
-      </Head>
-
       <Suspense>
         <GoogleAnalytics
           measurementId={process.env["NEXT_PUBLIC_GOOGLE_ANALYTICS"]!}

@@ -3,18 +3,18 @@
 import React from "react";
 import cs from "classnames";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 interface SignInButtonProps {
   className?: string;
   style?: React.CSSProperties;
   icon?: string;
   iconSize?: number;
-  onClick?: () => void;
 }
 
 export const SignInButton: React.FC<
   React.PropsWithChildren<SignInButtonProps>
-> = ({ children, className, style, icon, iconSize, onClick }) => {
+> = ({ children, className, style, icon, iconSize }) => {
   return (
     <button
       type="button"
@@ -23,7 +23,9 @@ export const SignInButton: React.FC<
         className
       )}
       style={style}
-      onClick={onClick}
+      onClick={() => {
+        signIn("google");
+      }}
     >
       {icon && <Image alt={"icon"} src={icon} width={iconSize} />}
       {children}

@@ -29,7 +29,6 @@ export const EventCardActionsFuture: React.FC<{ event: EventResponse }> = ({
         name={event.title}
         startTime={event.from}
         endTime={event.to}
-        timeZone="Europe/Warsaw"
         location={
           event.address
             ? `${event.address.city} ${event.address.place}`
@@ -55,7 +54,7 @@ export const EventCardActionsLive: React.FC<{
 
   return (
     <ActionsContainer>
-      <RateButton event={event} />
+      <RateButton eventSlug={event.slug} />
 
       <Text className={cn(actionClassName, "text-white bg-live")} bold>
         Na żywo, {timeLeft} do zakończenia
@@ -69,7 +68,7 @@ export const EventCardActionsFresh: React.FC<{ event: EventResponse }> = ({
 }) => {
   return (
     <ActionsContainer>
-      <RateButton event={event} />
+      <RateButton eventSlug={event.slug} />
 
       <EventRating event={event} />
     </ActionsContainer>
@@ -86,14 +85,14 @@ export const EventCardActionsArchive: React.FC<{ event: EventResponse }> = ({
   );
 };
 
-const RateButton: React.FC<{ event: EventResponse }> = ({ event }) => {
+const RateButton: React.FC<{ eventSlug: string }> = ({ eventSlug }) => {
   return (
     <Link
       className={cn(
         actionClassName,
         "cursor-pointer text-white bg-live hover:bg-liveHover"
       )}
-      href={`/events/${event.slug}#rate`}
+      href={`/events/${eventSlug}#rate`}
       onClick={(e) => e.stopPropagation()}
     >
       <Text bold className={"text-md"}>

@@ -15,7 +15,7 @@ export interface LectureResponse {
     subtitle?: string;
   };
   title: string;
-  description: string;
+  description?: string;
   from: DateTime;
   to: DateTime;
   youtubeVideoId?: string;
@@ -37,7 +37,7 @@ export interface LectureDetailsResponse extends LectureResponse {
     id: string;
     overallRate: number;
     topicRate: number;
-    opinion: string;
+    opinion?: string;
     createdAt: DateTime;
   }[];
   overallRatesCounts: { [key: number]: number }[];

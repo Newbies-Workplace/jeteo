@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { UserDetailsResponse } from "shared/model/user/response/user.response";
 import { myFetch } from "@/common/fetch";
 import { logUserId } from "@/lib/analytics";
+import { useSession } from "next-auth/react";
 
 interface AuthContext {
   fetchUser: () => Promise<void>;

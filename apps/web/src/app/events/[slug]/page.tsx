@@ -117,7 +117,6 @@ export default async function Page({ params }: Props) {
                   name={event.title}
                   startTime={event.from}
                   endTime={event.to}
-                  timeZone="Europe/Warsaw"
                   location={
                     event.address
                       ? `${event.address.city} ${event.address.place}`

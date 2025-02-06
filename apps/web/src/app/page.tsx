@@ -4,12 +4,13 @@ import { SmartEventCard } from "@/components/molecules/eventCard/EventCard";
 import Link from "next/link";
 import React from "react";
 import { Text } from "@/components/atoms/text/Text";
-import { getEvents } from "@/common/getEvent";
+import { getPublicEvents } from "@/lib/data/events";
+import { generateSlug } from "@/lib/slugs";
 
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
-  const events = await getEvents().catch(() => undefined);
+  const events = await getPublicEvents(1, 100).catch(() => undefined);
 
   return (
     <div className={"flex flex-col w-screen items-center"}>
@@ -36,7 +37,7 @@ export default async function Page() {
                 return (
                   <Link
                     key={event.id}
-                    href={`/events/${event.slug}`}
+                    href={`/events/${generateSlug(event.title, event.id)}`}
                     style={{ alignSelf: "stretch" }}
                   >
                     <SmartEventCard event={event} />

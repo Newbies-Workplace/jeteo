@@ -11,7 +11,6 @@ interface CalendarButtonProps {
   name: string;
   startTime: string;
   endTime: string;
-  timeZone: string;
   location: string;
   className?: string;
 }

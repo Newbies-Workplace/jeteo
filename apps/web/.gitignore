@@ -35,3 +35,5 @@ yarn-error.log*
 
 storybook-static
 tsconfig.tsbuildinfo
+
+storage
