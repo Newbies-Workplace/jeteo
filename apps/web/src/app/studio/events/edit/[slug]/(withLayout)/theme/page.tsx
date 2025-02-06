@@ -1,6 +1,6 @@
-import { getEvent } from "@/common/getEvent";
+import { getEvent } from "@/lib/data/events";
 import { EventThemeForm } from "@/components/organisms/eventForm/theme/EventThemeForm";
-import { EventResponse } from "shared/model/event/response/event.response";
+import { notFound } from "next/navigation";
 
 export default async function Page({
   params,
@@ -8,6 +8,11 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const event: EventResponse = await getEvent(slug);
+  const event = await getEvent(slug);
+
+  if (!event) {
+    return notFound();
+  }
+
   return <EventThemeForm event={event} />;
 }

@@ -14,7 +14,7 @@ import {
   EventCardActionsFuture,
   EventCardActionsLive,
 } from "@/components/molecules/cardActions/EventCardActions";
-import { formatStartDate } from "@/common/utils";
+import { formatStartDate } from "@/lib/dates";
 
 export interface EventCardProps {
   title: string;

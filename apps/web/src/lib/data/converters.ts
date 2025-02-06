@@ -107,6 +107,10 @@ export const convertUserDetails = (user: User): UserDetailsResponse => {
 };
 
 export const convertStoragePath = (path: string): string => {
+  if (path.startsWith("http")) {
+    return path;
+  }
+
   return `${process.env["NEXT_PUBLIC_FRONTEND_URL"]}/api/storage/v1${path}`;
 };
 

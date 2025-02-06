@@ -65,7 +65,7 @@ const createPathIfMissing = (folderPath: string): void => {
     });
 };
 
-const isValidPath = (folderPath: string, filename?: string): boolean => {
+export const isValidPath = (folderPath: string, filename?: string): boolean => {
   if (!filename) {
     const parsedPath = parse(folderPath);
     folderPath = parsedPath.dir;

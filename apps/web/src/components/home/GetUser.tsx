@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import { useAuth } from "@/contexts/Auth.hook";
+import { useSession } from "next-auth/react";
 
 export const GetUser: React.FC = () => {
-  const { user } = useAuth();
+  const { data } = useSession();
+  const user = data?.user;
 
   const name = user?.name?.split(" ")?.[0] ?? "użytkowniku!";
 

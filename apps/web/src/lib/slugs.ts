@@ -15,3 +15,7 @@ export const generateSlug = (title: string, id: string): string => {
 
   return `${sanitizedTitle}-${id}`;
 };
+
+export const getIdFromSlug = (slug: string): string => {
+  return slug.split("-").pop()!;
+};

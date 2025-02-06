@@ -1,5 +1,5 @@
 import { EventLecturesForm } from "@/components/organisms/eventForm/lectures/EventLecturesForm";
-import { getEventLectures } from "@/common/getLecture";
+import { getEventLectures } from "@/lib/data/lectures";
 
 export default async function Page({
   params,

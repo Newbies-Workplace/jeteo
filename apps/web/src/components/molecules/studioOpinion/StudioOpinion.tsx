@@ -4,7 +4,7 @@ import { Text } from "@/components/atoms/text/Text";
 interface StudioOpinionProps {
   overallRate: number;
   topicRate: number;
-  opinion: string;
+  opinion?: string;
 }
 
 export const StudioOpinion: React.FC<StudioOpinionProps> = ({

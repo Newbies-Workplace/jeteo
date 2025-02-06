@@ -11,9 +11,9 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { EventResponse } from "shared/model/event/response/event.response";
 import { myFetch } from "@/common/fetch";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/Auth.hook";
 import { Text } from "@/components/atoms/text/Text";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
 
 type VisibilityForm = {
   visibility: "PRIVATE" | "HIDDEN" | "PUBLIC";
@@ -27,7 +27,8 @@ interface EventVisibilityFormProps {
 export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
   event,
 }) => {
-  const { user } = useAuth();
+  const { data } = useSession();
+  const user = data?.user;
   const router = useRouter();
   const {
     control,

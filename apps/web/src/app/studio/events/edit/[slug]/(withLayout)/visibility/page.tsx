@@ -1,6 +1,6 @@
 import { EventVisibilityForm } from "@/components/organisms/eventForm/visibility/EventVisibilityForm";
-import { EventResponse } from "shared/model/event/response/event.response";
-import { getEvent } from "@/common/getEvent";
+import { getEvent } from "@/lib/data/events";
+import { notFound } from "next/navigation";
 
 export default async function Page({
   params,
@@ -8,7 +8,11 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const event: EventResponse = await getEvent(slug);
+  const event = await getEvent(slug);
+
+  if (!event) {
+    return notFound();
+  }
 
   return <EventVisibilityForm event={event} />;
 }

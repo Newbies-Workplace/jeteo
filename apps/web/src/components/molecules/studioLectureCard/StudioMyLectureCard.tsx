@@ -5,7 +5,7 @@ import Image from "next/image";
 import ChevronIcon from "@/assets/chevron-stroke.svg";
 import { LectureCardActionsArchive } from "@/components/molecules/cardActions/LectureCardActions";
 import Link from "next/link";
-import { formatFromToDates } from "@/common/utils";
+import { formatFromToDates } from "@/lib/dates";
 import { Label } from "@/components/atoms/label/Label";
 
 export interface StudioMyLectureCardProps {

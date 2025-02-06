@@ -1,19 +1,19 @@
 import { Text } from "@/components/atoms/text/Text";
-import { getEvent } from "@/common/getEvent";
 import { notFound } from "next/navigation";
 import { Tag } from "@/components/atoms/tag/Tag";
 import { Navbar } from "@/components/molecules/navbar/Navbar";
 import { EventDescription } from "@/app/events/[slug]/components/eventDescription/EventDescription";
-import { formatFromToDates } from "@/common/utils";
+import { formatFromToDates } from "@/lib/dates";
 import { Map } from "@/components/molecules/map/Map";
 import { Avatar } from "@/components/atoms/avatar/Avatar";
 import { UserSocials } from "@/components/molecules/userSocials/UserSocials";
-import { getEventLectures } from "@/common/getLecture";
 import { EventLectures } from "@/app/events/[slug]/components/eventLectures/EventLectures";
 import { Metadata } from "next";
 import SocialPreview from "@/assets/social-preview.png";
 import dayjs from "dayjs";
 import { CalendarButton } from "@/components/atoms/calendarButton/CalendarButton";
+import { getEvent } from "@/lib/data/events";
+import { getEventLectures } from "@/lib/data/lectures";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -23,11 +23,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = (await params).slug;
 
   const event = await getEvent(slug);
-  const lectures = await getEventLectures(slug);
-
   if (!event) {
     notFound();
   }
+  const lectures = await getEventLectures(slug);
 
   let title = event.title;
   let description = event.description;

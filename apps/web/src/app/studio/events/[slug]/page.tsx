@@ -1,13 +1,13 @@
 import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader";
 import { StudioFunctionCard } from "@/components/molecules/studioFunctionCard/StudioFunctionCard";
 import { Text } from "@/components/atoms/text/Text";
-import { getEvent } from "@/common/getEvent";
+import { getEvent } from "@/lib/data/events";
 import { notFound } from "next/navigation";
 import React from "react";
-import { getEventLectures } from "@/common/getLecture";
 import { EventLecturesForm } from "@/components/organisms/eventForm/lectures/EventLecturesForm";
 import Link from "next/link";
 import { DeleteEventCard } from "@/app/studio/events/[slug]/DeleteEventCard";
+import { getEventLectures } from "@/lib/data/lectures";
 
 export default async function Page({
   params,

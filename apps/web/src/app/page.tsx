@@ -10,7 +10,7 @@ import { generateSlug } from "@/lib/slugs";
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
-  const events = await getPublicEvents(1, 100).catch(() => undefined);
+  const events = await getPublicEvents(1, 100);
 
   return (
     <div className={"flex flex-col w-screen items-center"}>

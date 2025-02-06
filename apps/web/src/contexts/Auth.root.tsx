@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useAuth } from "./Auth.hook";
-import Cookies from "js-cookie";
+
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const AuthRoot = ({
   children,
@@ -11,18 +11,16 @@ const AuthRoot = ({
   children: React.ReactNode;
   loader?: React.ReactNode;
 }) => {
-  const { user } = useAuth();
+  const { status } = useSession();
+
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    if (!!Cookies.get("token")) {
-      setIsLoading(!user);
-    } else {
+    if (status === "unauthenticated") {
       router.replace("/");
     }
-  }, [user, isLoading]);
+  }, [status]);
 
-  return isLoading ? Loader : <div>{children}</div>;
+  return status === "loading" ? Loader : <div>{children}</div>;
 };
 
 export default AuthRoot;

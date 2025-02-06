@@ -3,10 +3,10 @@ import Button from "@/components/atoms/button/Button";
 import Link from "next/link";
 import { SmartEventCard } from "@/components/molecules/eventCard/EventCard";
 import React from "react";
-import { getMyEvents } from "@/common/getEvent";
+import { getMyEvents } from "@/lib/data/events";
 
 export default async function Page() {
-  const events = await getMyEvents();
+  const events = await getMyEvents(1, 100);
 
   return (
     <div className={"flex flex-col justify-center gap-4"}>

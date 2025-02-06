@@ -5,19 +5,20 @@ import Button from "@/components/atoms/button/Button";
 import { Text } from "@/components/atoms/text/Text";
 import { SpeakerCard } from "@/components/molecules/speakerCard/SpeakerCard";
 import { Label } from "@/components/atoms/label/Label";
-import { formatFromToDates } from "@/common/utils";
-import { useAuth } from "@/contexts/Auth.hook";
+import { formatFromToDates } from "@/lib/dates";
 import { InviteDetailsResponse } from "shared/model/invite/response/inviteResponse";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { myFetch } from "@/common/fetch";
+import { useSession } from "next-auth/react";
 
 export interface InviteCardProps {
   invite: InviteDetailsResponse;
 }
 
 export const InviteCard: React.FC<InviteCardProps> = ({ invite }) => {
-  const { user } = useAuth();
+  const { data } = useSession();
+  const user = data?.user;
   const router = useRouter();
 
   const onAcceptPress = () => {

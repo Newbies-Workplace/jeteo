@@ -1,8 +1,7 @@
 import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader";
 import { StepNavigation } from "@/components/molecules/stepNavigation/StepNavigation";
 import React from "react";
-import { EventResponse } from "shared/model/event/response/event.response";
-import { getEvent } from "@/common/getEvent";
+import { getEvent } from "@/lib/data/events";
 import { notFound } from "next/navigation";
 
 export default async function Layout({
@@ -13,7 +12,7 @@ export default async function Layout({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const event: EventResponse = await getEvent(slug);
+  const event = await getEvent(slug);
   if (!event) {
     notFound();
   }
