@@ -6,10 +6,11 @@ import lectureIcon from "@/assets/lecture.svg";
 import inviteIcon from "@/assets/invite.svg";
 import { NavButton } from "@/components/molecules/navButton/NavButton";
 import AuthRoot from "@/contexts/Auth.root";
+import { StudioPageSkeleton } from "@/contexts/loaders/StudioPageSkeleton";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthRoot>
+    <AuthRoot loader={<StudioPageSkeleton />}>
       <div className={"flex flex-col"}>
         <Navbar />
         <div className={"flex flex-row justify-center gap-4 p-4"}>

@@ -4,14 +4,17 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCropDialog } from "@/contexts/useCropDialog";
 import toast from "react-hot-toast";
-import { myFetch } from "@/common/fetch";
-import { UpdateUserRequest } from "shared/model/user/request/updateUser.request";
 import { Section } from "@/components/molecules/section/Section";
 import { FileUpload } from "@/components/molecules/fileUpload/FileUpload";
 import { FileItem } from "@/components/molecules/fileItem/FileItem";
 import { ControlledInput } from "@/components/atoms/input/ControlledInput";
 import Button from "@/components/atoms/button/Button";
 import { UserResponse } from "shared/model/user/response/user.response";
+import {
+  deleteMyUserImage,
+  updateMyUser,
+  updateMyUserImage,
+} from "@/lib/actions";
 
 type ProfileForm = {
   name: string;
@@ -49,16 +52,30 @@ export const ProfileSettingsForm: React.FC<{ user: UserResponse }> = ({
     confirmText: "Gotowe",
     dismissText: "Anuluj",
     confirmAction: (file) => {
-      saveAvatar(file);
+      const form = new FormData();
+      form.append("image", file);
+
+      updateMyUserImage(form).then((res) => {
+        setAvatarUrl(res.image);
+      });
     },
     dismissAction: () => {},
   });
 
-  const onSubmit: SubmitHandler<ProfileForm> = (data: ProfileForm) => {
+  const onSubmit: SubmitHandler<ProfileForm> = (form: ProfileForm) => {
     toast.promise(
-      myFetch(`/rest/v1/users/@me`, {
-        method: "PUT",
-        body: JSON.stringify(getUpdateUserRequestData(data)),
+      updateMyUser({
+        // @ts-ignore
+        image: undefined,
+        name: form.name,
+        jobTitle: form.jobTitle,
+        description: form.description,
+        socials: {
+          mail: form.socials.mail,
+          linkedin: form.socials.linkedin,
+          twitter: form.socials.twitter,
+          github: form.socials.github,
+        },
       }),
       {
         loading: "Zapisywanie...",
@@ -66,44 +83,6 @@ export const ProfileSettingsForm: React.FC<{ user: UserResponse }> = ({
         error: <b>Wystąpił błąd</b>,
       }
     );
-  };
-
-  const getUpdateUserRequestData = (form: ProfileForm): UpdateUserRequest => {
-    return {
-      // @ts-ignore
-      avatar: undefined,
-      name: form.name,
-      jobTitle: form.jobTitle,
-      description: form.description,
-      socials: {
-        mail: form.socials.mail,
-        linkedin: form.socials.linkedin,
-        twitter: form.socials.twitter,
-        github: form.socials.github,
-      },
-    };
-  };
-
-  const saveAvatar = async (file: File) => {
-    const formData = new FormData();
-    formData.append("avatar", file);
-
-    await myFetch(`/rest/v1/users/@me/avatar`, {
-      method: "PUT",
-      body: formData,
-      headers: undefined,
-    }).then((res) => {
-      res.ok && res.text().then(setAvatarUrl);
-    });
-  };
-
-  const deleteAvatar = async () => {
-    await myFetch(`/rest/v1/users/@me/avatar`, {
-      method: "DELETE",
-    }).then((res) => {
-      // @ts-ignore
-      res.ok && setAvatarUrl(null);
-    });
   };
 
   return (
@@ -122,7 +101,14 @@ export const ProfileSettingsForm: React.FC<{ user: UserResponse }> = ({
               }}
             />
             {avatarUrl && (
-              <FileItem url={avatarUrl} onDeleteClick={deleteAvatar} />
+              <FileItem
+                url={avatarUrl}
+                onDeleteClick={async () => {
+                  await deleteMyUserImage();
+
+                  setAvatarUrl(undefined);
+                }}
+              />
             )}
           </div>
         </Section>

@@ -14,7 +14,7 @@ export const getFile = (folderPath: string): fs.ReadStream => {
 };
 
 export const createFile = async (
-  file: Buffer,
+  file: File,
   folderPath: string
 ): Promise<string> => {
   if (!fs.existsSync(storagePath)) {
@@ -27,9 +27,10 @@ export const createFile = async (
   }
 
   const filename = randomUUID();
+  const buffer = Buffer.from(await file.arrayBuffer());
 
   createPathIfMissing(folderPath);
-  await fs.promises.writeFile(formatPath(folderPath, filename), file);
+  await fs.promises.writeFile(formatPath(folderPath, filename), buffer);
   return filename;
 };
 
@@ -43,10 +44,11 @@ export const deleteFile = async (filePath: string): Promise<void> => {
 };
 
 export const replaceFile = async (
-  file: Buffer,
+  file: File,
   filePath: string
 ): Promise<string> => {
   await deleteFile(filePath);
+
   return createFile(file, parse(filePath).dir);
 };
 

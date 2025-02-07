@@ -75,23 +75,6 @@ export class EventController {
     );
   }
 
-  @Get('/@me')
-  @UseGuards(JwtGuard)
-  async getMe(
-    @Query() pagination: GetEventsQuery,
-    @JWTUser() user: TokenUser,
-  ): Promise<EventResponse[]> {
-    const events = await this.eventService.getUserEventsById(
-      user.id,
-      pagination.page,
-      pagination.size,
-    );
-
-    return await Promise.all(
-      events.map((event) => this.eventConverter.convert(event)),
-    );
-  }
-
   @Post('/:id/lectures')
   @UseGuards(JwtGuard)
   async createLecture(
@@ -171,19 +154,6 @@ export class EventController {
     assertEventWriteAccess(user, event);
 
     await this.eventService.deleteEvent(eventId);
-  }
-
-  @UseGuards(OptionalJwtGuard)
-  @Get('/:id')
-  async getEvent(
-    @Param('id') eventId: string,
-    @JWTUser() user: TokenUser | undefined,
-  ): Promise<EventResponse> {
-    const event = await this.getEventById(eventId);
-
-    assertEventReadAccess(user, event);
-
-    return await this.eventConverter.convert(event);
   }
 
   private async getEventById(id: string): Promise<Event> {

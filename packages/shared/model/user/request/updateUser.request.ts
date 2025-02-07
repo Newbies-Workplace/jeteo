@@ -32,7 +32,7 @@ export class UpdateUserRequest {
 
   @IsOptional()
   @IsString()
-  avatar: string | null;
+  image: string | null;
 
   @IsOptional()
   @IsString()

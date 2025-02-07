@@ -15,23 +15,6 @@ export class InviteController {
     private readonly inviteConverter: InviteConverter,
     private readonly inviteService: InviteService,
   ) {}
-
-  @Get('/@me')
-  @UseGuards(JwtGuard)
-  async getMyInvites(
-    @JWTUser() user: TokenUser,
-  ): Promise<InviteDetailsResponse[]> {
-    const invites = await this.prismaService.invite.findMany({
-      where: {
-        mail: user.google_mail,
-      },
-    });
-
-    return await Promise.all(
-      invites.map((invite) => this.inviteConverter.convertDetails(invite)),
-    );
-  }
-
   @Post('/:id/accept')
   @UseGuards(JwtGuard)
   async acceptInvite(@Param('id') id: string, @JWTUser() user: TokenUser) {

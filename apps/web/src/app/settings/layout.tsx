@@ -4,11 +4,11 @@ import Image from "next/image";
 import person from "@/assets/person.svg";
 import { NavButton } from "@/components/molecules/navButton/NavButton";
 import AuthRoot from "@/contexts/Auth.root";
-import { SettingsPage } from "@/contexts/loaders/settings.page";
+import { SettingsPageSkeleton } from "@/contexts/loaders/settingsPageSkeleton";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthRoot loader={<SettingsPage />}>
+    <AuthRoot loader={<SettingsPageSkeleton />}>
       <div className={"flex flex-col"}>
         <Navbar />
         <div className={"flex flex-row justify-center gap-4 p-4"}>

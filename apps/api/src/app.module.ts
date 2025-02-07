@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from '@/app.controller';
 import { AuthModule } from '@/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from '@/config/prisma.module';
@@ -22,6 +21,5 @@ import { InviteModule } from '@/invite/invite.module';
     EventModule,
     StorageModule,
   ],
-  controllers: [AppController],
 })
 export class AppModule {}

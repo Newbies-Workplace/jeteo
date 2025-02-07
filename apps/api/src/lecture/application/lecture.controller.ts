@@ -43,19 +43,6 @@ export class LectureController {
     private readonly lectureConverter: LectureConverter,
   ) {}
 
-  @Get('/:id/details')
-  @UseGuards(JwtGuard)
-  async getLectureDetails(
-    @Param('id') id: string,
-    @JWTUser() user: TokenUser,
-  ): Promise<LectureDetailsResponse> {
-    const lecture = await this.getLectureDetailsById(id);
-
-    assertLectureReadAccess(user, lecture, 'detailed');
-
-    return this.lectureConverter.convertDetails(lecture);
-  }
-
   @Patch('/:id')
   @UseGuards(JwtGuard)
   async updateLecture(
