@@ -9,14 +9,14 @@ import { ControlledInput } from "@/components/atoms/input/ControlledInput";
 import dayjs from "dayjs";
 import { MapPicker } from "@/components/molecules/mapPicker/MapPicker";
 import { EventResponse } from "shared/model/event/response/event.response";
-import { myFetch } from "@/common/fetch";
 import { CreateEventRequest } from "shared/model/event/request/createEvent.request";
-import { notBlank, notBlankOrNull } from "shared/util";
+import { notBlank } from "shared/util";
 import { UpdateEventRequest } from "shared/model/event/request/updateEvent.request";
 import { Validations } from "@/common/validations";
 import { ControlledMarkdownInput } from "@/components/atoms/markdownInput/ControlledMarkdownInput";
 import { TagPicker } from "@/components/molecules/tagPicker/TagPicker";
 import toast from "react-hot-toast";
+import { createEvent, updateEvent } from "@/lib/actions/events";
 
 const locationOptions = [
   { id: "location", name: "Na miejscu" },
@@ -108,7 +108,7 @@ const getCreateRequestData = (form: BasicForm): CreateEventRequest => {
 const getUpdateRequestData = (form: BasicForm): UpdateEventRequest => {
   return {
     title: form.title,
-    subtitle: notBlankOrNull(form.subtitle),
+    subtitle: notBlank(form.subtitle),
     description: form.description,
     from: dayjs(form.from).toISOString(),
     to: dayjs(form.to).toISOString(),
@@ -119,8 +119,8 @@ const getUpdateRequestData = (form: BasicForm): UpdateEventRequest => {
       form.address.city &&
       form.address.place
         ? {
-            city: notBlankOrNull(form.address.city),
-            place: notBlankOrNull(form.address.place),
+            city: notBlank(form.address.city),
+            place: notBlank(form.address.place),
             coordinates: form.address.coordinates && {
               latitude: form.address.coordinates.latitude,
               longitude: form.address.coordinates.longitude,
@@ -136,15 +136,9 @@ const getRequest = async (
   event?: EventResponse
 ): Promise<EventResponse> => {
   if (event) {
-    return myFetch(`/rest/v1/events/${event.id}`, {
-      method: "PATCH",
-      body: JSON.stringify(getUpdateRequestData(data)),
-    }).then((res) => res.json());
+    return await updateEvent(event.id, getUpdateRequestData(data));
   } else {
-    return myFetch("/rest/v1/events", {
-      method: "POST",
-      body: JSON.stringify(getCreateRequestData(data)),
-    }).then((res) => res.json());
+    return await createEvent(getCreateRequestData(data));
   }
 };
 

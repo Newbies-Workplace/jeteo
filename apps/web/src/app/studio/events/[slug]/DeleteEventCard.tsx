@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { StudioFunctionCard } from "@/components/molecules/studioFunctionCard/StudioFunctionCard";
-import { myFetch } from "@/common/fetch";
+import { deleteEvent } from "@/lib/actions/events";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -23,9 +23,7 @@ export const DeleteEventCard: React.FC<DeleteEventCardProps> = ({
 
   const onDelete = () => {
     toast.promise(
-      myFetch(`/rest/v1/events/${eventId}`, {
-        method: "DELETE",
-      }).then((r) => {
+      deleteEvent(eventId).then(() => {
         router.replace("/studio/events");
         router.refresh();
       }),

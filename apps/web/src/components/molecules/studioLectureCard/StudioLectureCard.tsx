@@ -9,7 +9,7 @@ import {
 import { Timer } from "@/components/molecules/timer/Timer";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { myFetch } from "@/common/fetch";
+import { deleteLecture, updateLecture } from "@/lib/actions/lectures";
 import { getIdFromSlug } from "shared/util";
 import toast from "react-hot-toast";
 import { IconButton } from "@/components/atoms/iconButton/IconButton";
@@ -45,9 +45,7 @@ export const StudioLectureCard: React.FC<StudioLectureCardProps> = ({
 
   const onDeleteClick = () => {
     toast.promise(
-      myFetch(`/rest/v1/lectures/${getIdFromSlug(lectureSlug)}`, {
-        method: "DELETE",
-      }).then((r) => {
+      deleteLecture(getIdFromSlug(lectureSlug)).then((r) => {
         router.refresh();
       }),
       {

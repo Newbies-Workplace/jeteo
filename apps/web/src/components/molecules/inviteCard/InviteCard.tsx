@@ -9,8 +9,8 @@ import { formatFromToDates } from "@/lib/dates";
 import { InviteDetailsResponse } from "shared/model/invite/response/inviteResponse";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { myFetch } from "@/common/fetch";
 import { useSession } from "next-auth/react";
+import { acceptInvite, rejectInvite } from "@/lib/actions/invites";
 
 export interface InviteCardProps {
   invite: InviteDetailsResponse;
@@ -23,14 +23,11 @@ export const InviteCard: React.FC<InviteCardProps> = ({ invite }) => {
 
   const onAcceptPress = () => {
     toast
-      .promise(
-        myFetch(`/rest/v1/invites/${invite.id}/accept`, { method: "POST" }),
-        {
-          loading: "Akceptowanie zaproszenia...",
-          success: <b>Zaproszenie zaakceptowano</b>,
-          error: <b>Wystąpił błąd</b>,
-        }
-      )
+      .promise(acceptInvite(invite.id), {
+        loading: "Akceptowanie zaproszenia...",
+        success: <b>Zaproszenie zaakceptowano</b>,
+        error: <b>Wystąpił błąd</b>,
+      })
       .then(() => {
         router.refresh();
       });
@@ -38,14 +35,11 @@ export const InviteCard: React.FC<InviteCardProps> = ({ invite }) => {
 
   const onRejectPress = () => {
     toast
-      .promise(
-        myFetch(`/rest/v1/invites/${invite.id}/reject`, { method: "POST" }),
-        {
-          loading: "Odrzucanie zaproszenia...",
-          success: <b>Zaproszenie odrzucono</b>,
-          error: <b>Wystąpił błąd</b>,
-        }
-      )
+      .promise(rejectInvite(invite.id), {
+        loading: "Odrzucanie zaproszenia...",
+        success: <b>Zaproszenie odrzucono</b>,
+        error: <b>Wystąpił błąd</b>,
+      })
       .then(() => {
         router.refresh();
       });

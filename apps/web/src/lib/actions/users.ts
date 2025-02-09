@@ -1,39 +1,49 @@
-"use server";
+"use server"
 
-import { UpdateUserRequest } from "shared/model/user/request/updateUser.request";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import {
-  createFile,
-  deleteFile,
-  replaceFile,
-} from "@/app/api/storage/storage-service";
-import { convertStoragePath } from "@/lib/data/converters";
+import { z } from "zod";
+import { UpdateUserRequest } from "shared/model/user/request/updateUser.request";
+import { convertStoragePath, convertUser } from "@/lib/data/converters";
+import { UserResponse } from "shared/model/user/response/user.response";
+import { createFile, deleteFile, replaceFile } from "@/app/api/storage/storage-service";
 
-//todo add zod
-export const updateMyUser = async (data: UpdateUserRequest) => {
+// Define Zod schema for UpdateUserRequest
+const updateUserSchema = z.object({
+  name: z.string().optional(),
+  image: z.string().optional(),
+  jobTitle: z.string().optional(),
+  description: z.string().optional(),
+  socials: z.object({
+    mail: z.string().email().optional(),
+    github: z.string().url().optional(),
+    twitter: z.string().url().optional(),
+    linkedin: z.string().url().optional(),
+  }).optional(),
+});
+
+export const updateMyUser = async (
+  userId: string,
+  data: Partial<UpdateUserRequest>
+): Promise<UserResponse> => {
+  // Validate data using Zod schema
+  const validatedData = updateUserSchema.parse(data);
+
   const session = await auth();
-  const userId = session?.user.id;
+  const currentUserId = session?.user.id;
 
-  if (!userId) {
+  if (!currentUserId) {
     throw new Error("Unauthorized");
   }
 
-  await prisma.user.update({
+  const updatedUser = await prisma.user.update({
+    data: validatedData,
     where: {
       id: userId,
     },
-    data: {
-      name: data.name,
-      image: data.image,
-      jobTitle: data.jobTitle,
-      description: data.description,
-      mail: data.socials.mail,
-      github: data.socials.github,
-      twitter: data.socials.twitter,
-      linkedin: data.socials.linkedin,
-    },
   });
+
+  return convertUser(updatedUser);
 };
 
 export const updateMyUserImage = async (

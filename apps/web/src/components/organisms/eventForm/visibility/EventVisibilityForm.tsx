@@ -9,7 +9,7 @@ import {
 import Button from "@/components/atoms/button/Button";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { EventResponse } from "shared/model/event/response/event.response";
-import { myFetch } from "@/common/fetch";
+import { updateEvent } from "@/lib/actions/events";
 import { useRouter } from "next/navigation";
 import { Text } from "@/components/atoms/text/Text";
 import toast from "react-hot-toast";
@@ -64,15 +64,10 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
 
   const onSubmit: SubmitHandler<VisibilityForm> = (data: VisibilityForm) => {
     toast.promise(
-      myFetch(`/rest/v1/events/${event.id}`, {
-        method: "PATCH",
-        body: JSON.stringify(data),
-      }).then(() => {
-        router.refresh();
-      }),
+      updateEvent(event.id, { visibility: data.visibility }),
       {
         loading: "Zapisywanie...",
-        success: <b>Wydarzenie zapisano pomyślnie!</b>,
+        success: <b>Zaktualizowano widoczność wydarzenia!</b>,
         error: <b>Wystąpił błąd</b>,
       }
     );

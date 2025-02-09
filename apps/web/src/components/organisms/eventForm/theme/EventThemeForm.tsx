@@ -8,27 +8,13 @@ import { HexColorPicker } from "react-colorful";
 import { EventResponse } from "shared/model/event/response/event.response";
 import Button from "@/components/atoms/button/Button";
 import toast from "react-hot-toast";
-import { myFetch } from "@/common/fetch";
 import { FileItem } from "@/components/molecules/fileItem/FileItem";
 import { FileUpload } from "@/components/molecules/fileUpload/FileUpload";
 import { useCropDialog } from "@/contexts/useCropDialog";
-
-const getRequest = async (
-  color: string,
-  event?: EventResponse
-): Promise<EventResponse> => {
-  if (event) {
-    return myFetch(`/rest/v1/events/${event.id}`, {
-      method: "PATCH",
-      body: JSON.stringify({ primaryColor: color }),
-    }).then((res) => res.json());
-  } else {
-    return Promise.reject("no event");
-  }
-};
+import { updateEvent, updateEventCover, deleteEventCover } from "@/lib/actions/events";
 
 interface EventThemeFormProps {
-  event?: EventResponse;
+  event: EventResponse;
 }
 
 export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
@@ -50,10 +36,7 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
 
   const onSubmit = () => {
     toast.promise(
-      // @ts-ignore
-      getRequest(color, event).then((res: EventResponse) => {
-        return res;
-      }),
+      updateEvent(event.id, { primaryColor: color }),
       {
         loading: "Zapisywanie...",
         success: <b>Zaktualizowano wygląd wydarzenia!</b>,
@@ -66,21 +49,28 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
     const formData = new FormData();
     formData.append("coverImage", file);
 
-    await myFetch(`/rest/v1/events/${event?.id}/cover`, {
-      method: "PUT",
-      body: formData,
-      headers: undefined,
-    }).then((res) => {
-      res.ok && res.text().then(setCoverImage);
+    await toast.promise(
+      updateEventCover(event.id, formData),
+      {
+        loading: "Aktualizowanie okładki...",
+        success: <b>Okładka zaktualizowana</b>,
+        error: <b>Wystąpił błąd</b>,
+      }
+    ).then((res) => {
+      setCoverImage(res.coverImage);
     });
   };
 
   const deleteCoverImage = async () => {
-    await myFetch(`/rest/v1/events/${event?.id}/cover`, {
-      method: "DELETE",
-    }).then((res) => {
-      // @ts-ignore
-      res.ok && setCoverImage(null);
+    await toast.promise(
+      deleteEventCover(event.id),
+      {
+        loading: "Usuwanie okładki...",
+        success: <b>Okładka usunięta</b>,
+        error: <b>Wystąpił błąd</b>,
+      }
+    ).then(() => {
+      setCoverImage(undefined);
     });
   };
 
@@ -110,7 +100,6 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
         <SmartEventCard
           event={{
             ...event,
-            // @ts-ignore
             primaryColor: color,
             coverImage: coverImage,
           }}

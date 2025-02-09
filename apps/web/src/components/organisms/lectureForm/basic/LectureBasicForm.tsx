@@ -10,7 +10,6 @@ import { SpeakerPicker } from "@/components/molecules/speakerPicker/SpeakerPicke
 import Button from "@/components/atoms/button/Button";
 import { UserResponse } from "shared/model/user/response/user.response";
 import { v4 as uuidv4 } from "uuid";
-import { myFetch } from "@/common/fetch";
 import {
   CreateLectureInvite,
   CreateLectureRequest,
@@ -23,6 +22,7 @@ import { UpdateLectureRequest } from "shared/model/lecture/request/updateLecture
 import { getIdFromSlug } from "shared/util";
 import toast from "react-hot-toast";
 import YouTube from "react-youtube";
+import { createLecture, updateLecture } from "@/lib/actions/lectures";
 
 type BasicForm = {
   title: string;
@@ -83,15 +83,9 @@ const getRequest = async (
   lecture?: LectureResponse
 ): Promise<LectureResponse> => {
   if (lecture) {
-    return myFetch(`/rest/v1/lectures/${lecture.id}`, {
-      method: "PATCH",
-      body: JSON.stringify(getUpdateRequestData(data)),
-    }).then((res) => res.json());
+    return updateLecture(lecture.id, getUpdateRequestData(data));
   } else {
-    return myFetch(`/rest/v1/events/${getIdFromSlug(eventSlug)}/lectures`, {
-      method: "POST",
-      body: JSON.stringify(getCreateRequestData(data)),
-    }).then((res) => res.json());
+    return createLecture(getIdFromSlug(eventSlug), getCreateRequestData(data));
   }
 };
 
@@ -132,8 +126,8 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
     defaultValues: getDefaultValue(lecture),
   });
 
-  const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {
-    toast.promise(
+  const onSubmit: SubmitHandler<BasicForm> = async (data: BasicForm) => {
+    await toast.promise(
       getRequest(data, eventSlug, lecture).then(
         // @ts-ignore
         (res: LectureDetailsResponse) => {
@@ -141,15 +135,15 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
         }
       ),
       {
-        loading: "Zapisywanie...",
-        success: <b>Wydarzenie zapisano pomyślnie!</b>,
+        loading: "Aktualizowanie prelekcji...",
+        success: <b>Prelekcja zaktualizowana</b>,
         error: <b>Wystąpił błąd</b>,
       }
     );
   };
 
   return (
-    <form style={{ display: "flex", flexDirection: "column" }}>
+    <form style={{ display: "flex", flexDirection: "column" }} onSubmit={handleSubmit(onSubmit)}>
       <Section title={"Co i kiedy?"}>
         <div
           style={{
@@ -263,7 +257,7 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
       <Button
         primary
         style={{ alignSelf: "flex-end" }}
-        onClick={handleSubmit(onSubmit)}
+        type="submit"
       >
         Zapisz
       </Button>
