@@ -161,7 +161,7 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
   });
   const watchOnline = watch(
     "location",
-    event?.address !== null ? "location" : "online"
+    event?.address !== undefined ? "location" : "online"
   );
 
   const onSubmit: SubmitHandler<BasicForm> = (data: BasicForm) => {

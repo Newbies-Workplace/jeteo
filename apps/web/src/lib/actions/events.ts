@@ -54,6 +54,7 @@ const updateEventSchema = z.object({
                 })
                 .optional(),
         })
+        .nullable()
         .optional(),
     tags: z.array(z.string()).optional(),
     primaryColor: z.string().optional(),
@@ -99,7 +100,7 @@ export const createEvent = async (data: CreateEventRequest): Promise<EventRespon
 
 export const updateEvent = async (
     eventId: string,
-    data: Partial<UpdateEventRequest>
+    data: UpdateEventRequest
 ): Promise<EventResponse> => {
     // Validate data using Zod schema
     const validatedData = updateEventSchema.parse(data);
