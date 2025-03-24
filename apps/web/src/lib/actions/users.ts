@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
@@ -6,7 +6,11 @@ import { z } from "zod";
 import { UpdateUserRequest } from "shared/model/user/request/updateUser.request";
 import { convertStoragePath, convertUser } from "@/lib/data/converters";
 import { UserResponse } from "shared/model/user/response/user.response";
-import { createFile, deleteFile, replaceFile } from "@/app/api/storage/storage-service";
+import {
+  createFile,
+  deleteFile,
+  replaceFile,
+} from "@/app/api/storage/storage-service";
 
 // Define Zod schema for UpdateUserRequest
 const updateUserSchema = z.object({
@@ -14,16 +18,17 @@ const updateUserSchema = z.object({
   image: z.string().optional(),
   jobTitle: z.string().optional(),
   description: z.string().optional(),
-  socials: z.object({
-    mail: z.string().email().optional(),
-    github: z.string().url().optional(),
-    twitter: z.string().url().optional(),
-    linkedin: z.string().url().optional(),
-  }).optional(),
+  socials: z
+    .object({
+      mail: z.string().email().optional(),
+      github: z.string().url().optional(),
+      twitter: z.string().url().optional(),
+      linkedin: z.string().url().optional(),
+    })
+    .optional(),
 });
 
 export const updateMyUser = async (
-  userId: string,
   data: Partial<UpdateUserRequest>
 ): Promise<UserResponse> => {
   // Validate data using Zod schema
@@ -39,7 +44,7 @@ export const updateMyUser = async (
   const updatedUser = await prisma.user.update({
     data: validatedData,
     where: {
-      id: userId,
+      id: currentUserId,
     },
   });
 

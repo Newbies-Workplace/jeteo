@@ -1,165 +1,172 @@
-"use server"
+"use server";
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { z } from "zod";
-import { convertEvent, convertStoragePath } from "@/lib/data/converters";
-import { assertEventWriteAccess, assertEventVisibilityAccess, assertInviteWriteAccess } from "../data/auth.methods";
-import { CreateEventRequest } from "shared/model/event/request/createEvent.request";
-import { UpdateEventRequest } from "shared/model/event/request/updateEvent.request";
+import {
+  convertEvent,
+  convertStoragePath,
+  extractFormData,
+} from "@/lib/data/converters";
+import {
+  assertEventWriteAccess,
+  assertEventVisibilityAccess,
+} from "../data/auth.methods";
 import dayjs from "dayjs";
 import { nanoid } from "@/lib/nanoid";
 import { EventVisibility } from "@prisma/client";
 import { EventResponse } from "shared/model/event/response/event.response";
-import { createFile, deleteFile, replaceFile } from "@/app/api/storage/storage-service";
+import {
+  createFile,
+  deleteFile,
+  replaceFile,
+} from "@/app/api/storage/storage-service";
 
 // Define Zod schema for CreateEventRequest
 const createEventSchema = z.object({
-    title: z.string(),
-    subtitle: z.string().optional(),
-    description: z.string(),
-    from: z.string(),
-    to: z.string(),
-    address: z
-      .object({
-        city: z.string().optional(),
-        place: z.string().optional(),
-        coordinates: z
-          .object({
-            latitude: z.number().optional(),
-            longitude: z.number().optional(),
-          })
-          .optional(),
-      })
-      .optional(),
-    tags: z.array(z.string()).optional(),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  description: z.string(),
+  from: z.string(),
+  to: z.string(),
+  address: z
+    .object({
+      city: z.string().optional(),
+      place: z.string().optional(),
+      coordinates: z
+        .object({
+          latitude: z.number().optional(),
+          longitude: z.number().optional(),
+        })
+        .optional(),
+    })
+    .optional(),
+  tags: z.array(z.string()).optional(),
+});
+
+export const createEvent = async (data: FormData): Promise<EventResponse> => {
+  // Validate data using Zod schema
+  const validatedData = createEventSchema.parse(extractFormData(data));
+
+  const session = await auth();
+  const userId = session?.user.id;
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  const event = await prisma.event.create({
+    data: {
+      id: nanoid(),
+      title: validatedData.title,
+      subtitle: validatedData.subtitle,
+      description: validatedData.description,
+      from: new Date(validatedData.from),
+      to: new Date(validatedData.to),
+      city: validatedData.address?.city,
+      place: validatedData.address?.place,
+      latitude: validatedData.address?.coordinates?.latitude,
+      longitude: validatedData.address?.coordinates?.longitude,
+      tags: validatedData.tags,
+      primaryColor: "#4340BE",
+      visibility: "HIDDEN",
+      authorId: userId,
+    },
+    include: {
+      Author: true,
+    },
   });
-    
+
+  return convertEvent(event);
+};
 
 // Define Zod schema for UpdateEventRequest
 const updateEventSchema = z.object({
-    title: z.string().optional(),
-    subtitle: z.string().optional(),
-    description: z.string().optional(),
-    from: z.string().optional(),
-    to: z.string().optional(),
-    address: z
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  description: z.string().optional(),
+  from: z.string().optional(),
+  to: z.string().optional(),
+  address: z
+    .object({
+      city: z.string().optional(),
+      place: z.string().optional(),
+      coordinates: z
         .object({
-            city: z.string().optional(),
-            place: z.string().optional(),
-            coordinates: z
-                .object({
-                    latitude: z.number().optional(),
-                    longitude: z.number().optional(),
-                })
-                .optional(),
+          latitude: z.number().optional(),
+          longitude: z.number().optional(),
         })
-        .nullable()
         .optional(),
-    tags: z.array(z.string()).optional(),
-    primaryColor: z.string().optional(),
-    visibility: z.nativeEnum(EventVisibility).optional(),
+    })
+    .nullable()
+    .optional(),
+  tags: z.array(z.string()).optional(),
+  primaryColor: z.string().optional(),
+  visibility: z.nativeEnum(EventVisibility).optional(),
 });
 
-export const createEvent = async (data: CreateEventRequest): Promise<EventResponse> => {
-
-    // Validate data using Zod schema
-    const validatedData = createEventSchema.parse(data);
-
-    const session = await auth();
-    const userId = session?.user.id;
-
-    if (!userId) {
-        throw new Error("Unauthorized");
-    }
-
-    const event = await prisma.event.create({
-        data: {
-            id: nanoid(),
-            title: validatedData.title,
-            subtitle: validatedData.subtitle,
-            description: validatedData.description,
-            from: new Date(validatedData.from),
-            to: new Date(validatedData.to),
-            city: validatedData.address?.city,
-            place: validatedData.address?.place,
-            latitude: validatedData.address?.coordinates?.latitude,
-            longitude: validatedData.address?.coordinates?.longitude,
-            tags: validatedData.tags,
-            primaryColor: "#4340BE",
-            visibility: "HIDDEN",
-            authorId: userId,
-        },
-        include: {
-            Author: true,
-        }
-    });
-
-    return convertEvent(event);
-};
-
 export const updateEvent = async (
-    eventId: string,
-    data: UpdateEventRequest
+  eventId: string,
+  data: FormData
 ): Promise<EventResponse> => {
-    // Validate data using Zod schema
-    const validatedData = updateEventSchema.parse(data);
+  // Validate data using Zod schema
+  const validatedData = updateEventSchema.parse(extractFormData(data));
 
-    const session = await auth();
-    const userId = session?.user.id;
+  const session = await auth();
+  const userId = session?.user.id;
 
-    if (!userId) {
-        throw new Error("Unauthorized");
-    }
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
 
-    const event = await prisma.event.findUnique({
-        where: {
-            id: eventId,
-        },
-    });
+  const event = await prisma.event.findUnique({
+    where: {
+      id: eventId,
+    },
+  });
 
-    if (!event) {
-        throw new Error("Event not found");
-    }
+  if (!event) {
+    throw new Error("Event not found");
+  }
 
-    assertEventWriteAccess(event);
-    assertEventVisibilityAccess(validatedData as UpdateEventRequest);
+  await assertEventWriteAccess(event);
+  await assertEventVisibilityAccess(validatedData);
 
-    const from = dayjs(validatedData.from ? validatedData.from : event.from);
-    const to = dayjs(validatedData.to ? validatedData.to : event.to);
+  const from = dayjs(validatedData.from ? validatedData.from : event.from);
+  const to = dayjs(validatedData.to ? validatedData.to : event.to);
 
-    if (from.isAfter(to)) {
-        throw 'EventInvalidDatesException';
-    }
+  if (from.isAfter(to)) {
+    throw "EventInvalidDatesException";
+  }
 
-    const address = {
-        city: validatedData.address?.city,
-        place: validatedData.address?.place,
-        latitude: validatedData.address?.coordinates?.latitude,
-        longitude: validatedData.address?.coordinates?.longitude,
-    };
+  const address = {
+    city: validatedData.address?.city,
+    place: validatedData.address?.place,
+    latitude: validatedData.address?.coordinates?.latitude,
+    longitude: validatedData.address?.coordinates?.longitude,
+  };
 
-    const updatedEvent = await prisma.event.update({
-        data: {
-            title: validatedData.title,
-            subtitle: validatedData.subtitle,
-            description: validatedData.description,
-            from: validatedData.from && new Date(validatedData.from),
-            to: validatedData.to && new Date(validatedData.to),
-            ...address,
-            primaryColor: validatedData.primaryColor,
-            visibility: validatedData.visibility,
-            tags: validatedData.tags,
-        },
-        where: {
-            id: eventId,
-        },
-        include: {
-            Author: true,
-        }
-    });
+  const updatedEvent = await prisma.event.update({
+    data: {
+      title: validatedData.title,
+      subtitle: validatedData.subtitle,
+      description: validatedData.description,
+      from: validatedData.from && new Date(validatedData.from),
+      to: validatedData.to && new Date(validatedData.to),
+      ...address,
+      primaryColor: validatedData.primaryColor,
+      visibility: validatedData.visibility,
+      tags: validatedData.tags,
+    },
+    where: {
+      id: eventId,
+    },
+    include: {
+      Author: true,
+    },
+  });
 
-    return convertEvent(updatedEvent);
+  return convertEvent(updatedEvent);
 };
 
 export const updateEventCover = async (
@@ -183,7 +190,7 @@ export const updateEventCover = async (
     throw new Error("Event not found");
   }
 
-  assertEventWriteAccess(event);
+  await assertEventWriteAccess(event);
 
   const coverImage = form.get("coverImage") as File;
 
@@ -227,7 +234,7 @@ export const deleteEventCover = async (eventId: string) => {
     throw new Error("Event not found");
   }
 
-  assertEventWriteAccess(event);
+  await assertEventWriteAccess(event);
 
   if (!event.coverImage) {
     return;
@@ -239,10 +246,10 @@ export const deleteEventCover = async (eventId: string) => {
       id: eventId,
     },
     data: {
-      coverImage: null },
+      coverImage: null,
+    },
   });
 };
-
 
 export const deleteEvent = async (eventId: string) => {
   const session = await auth();
@@ -262,46 +269,11 @@ export const deleteEvent = async (eventId: string) => {
     throw new Error("Event not found");
   }
 
-  assertEventWriteAccess(event);
+  await assertEventWriteAccess(event);
 
   await prisma.event.delete({
     where: {
       id: eventId,
-    },
-  });
-};
-
-export const acceptInvite = async (id: string) => {
-  const session = await auth();
-  const userId = session?.user.id;
-
-  if (!userId) {
-    throw new Error("Unauthorized");
-  }
-
-  const invite = await prisma.invite.findUniqueOrThrow({
-    where: {
-      id,
-    },
-  });
-
-  assertInviteWriteAccess(invite);
-
-  await prisma.lecture.update({
-    where: {
-      id: invite.lectureId,
-    },
-    data: {
-      Speakers: {
-        connect: {
-          id: userId,
-        },
-      },
-      Invites: {
-        delete: {
-          id: invite.id,
-        },
-      },
     },
   });
 };

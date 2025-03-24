@@ -1,20 +1,20 @@
-import { Event, EventVisibility, Invite } from '@prisma/client';
-import { UpdateEventRequest } from 'shared/model/event/request/updateEvent.request';
-import { LectureDetails } from './converters';
-import { auth } from '@/lib/auth';
+import { Event, EventVisibility, Invite } from "@prisma/client";
+import { UpdateEventRequest } from "shared/model/event/request/updateEvent.request";
+import { LectureDetails } from "./converters";
+import { auth } from "@/lib/auth";
 
 export const assertLectureReadAccess = async (
   lecture: LectureDetails,
-  lectureType: 'detailed' | 'public',
+  lectureType: "detailed" | "public"
 ) => {
-  const session = await auth()
+  const session = await auth();
   const user = session?.user;
 
   const event = lecture.Event;
 
   if (
     event.visibility !== EventVisibility.PRIVATE &&
-    lectureType === 'public'
+    lectureType === "public"
   ) {
     return;
   }
@@ -27,16 +27,13 @@ export const assertLectureReadAccess = async (
     return;
   }
 
-  throw 'NotAllowedToReadLectureException';
+  throw "NotAllowedToReadLectureException";
 };
 
-export const assertLectureWriteAccess = async (
-  lecture: LectureDetails,
-) => {
-  const session = await auth()
+export const assertLectureWriteAccess = async (lecture: LectureDetails) => {
+  const session = await auth();
   const user = session?.user;
 
-
   if (
     user &&
     (lecture.Event.authorId === user.id ||
@@ -45,26 +42,22 @@ export const assertLectureWriteAccess = async (
     return;
   }
 
-  throw 'NotAllowedToEditEventException';
+  throw "NotAllowedToEditEventException";
 };
 
-export const assertEventWriteAccess = async (
-  event: Event,
-) => {
-  const session = await auth()
+export const assertEventWriteAccess = async (event: Event) => {
+  const session = await auth();
   const user = session?.user;
 
   if (user && event.authorId === user.id) {
     return;
   }
 
-  throw 'NotAllowedToEditEventException';
+  throw "NotAllowedToEditEventException";
 };
 
-export const assertEventReadAccess = async (
-  event: Event,
-) => {
-  const session = await auth()
+export const assertEventReadAccess = async (event: Event) => {
+  const session = await auth();
   const user = session?.user;
 
   if (event.visibility !== EventVisibility.PRIVATE) {
@@ -75,36 +68,34 @@ export const assertEventReadAccess = async (
     return;
   }
 
-  throw 'NotAllowedToReadEventException';
+  throw "NotAllowedToReadEventException";
 };
 
-export const assertInviteWriteAccess = async (
-  invite: Invite,
-) => {
-  const session = await auth()
+export const assertInviteWriteAccess = async (invite: Invite) => {
+  const session = await auth();
   const user = session?.user;
 
   if (user?.google_mail === invite.mail) {
     return;
   }
 
-  throw 'NotAllowedToEditInviteException';
+  throw "NotAllowedToEditInviteException";
 };
 
-export const assertEventVisibilityAccess = async (
-  updateEventRequest: UpdateEventRequest,
-) => {
-  const session = await auth()
+export const assertEventVisibilityAccess = async (updateEventRequest: {
+  visibility?: EventVisibility;
+}) => {
+  const session = await auth();
   const user = session?.user;
 
   if (!user) {
-    throw 'NotAllowedToCreatePublicEventException';
+    throw "NotAllowedToCreatePublicEventException";
   }
 
   if (
     !user._permissions.isAuthorized &&
-    updateEventRequest.visibility === 'PUBLIC'
+    updateEventRequest.visibility === "PUBLIC"
   ) {
-    throw 'NotAllowedToCreatePublicEventException';
+    throw "NotAllowedToCreatePublicEventException";
   }
 };

@@ -2,6 +2,7 @@ import { InviteDetailsResponse } from "shared/model/invite/response/inviteRespon
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { convertInviteDetails } from "@/lib/data/converters";
+import { assertInviteWriteAccess } from "@/lib/data/auth.methods";
 
 export const getMyInvites = async (): Promise<InviteDetailsResponse[]> => {
   const session = await auth();
@@ -22,4 +23,39 @@ export const getMyInvites = async (): Promise<InviteDetailsResponse[]> => {
   return await Promise.all(
     invites.map((invite) => convertInviteDetails(invite))
   );
+};
+
+export const acceptInvite = async (id: string) => {
+  const session = await auth();
+  const userId = session?.user.id;
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  const invite = await prisma.invite.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  await assertInviteWriteAccess(invite);
+
+  await prisma.lecture.update({
+    where: {
+      id: invite.lectureId,
+    },
+    data: {
+      Speakers: {
+        connect: {
+          id: userId,
+        },
+      },
+      Invites: {
+        delete: {
+          id: invite.id,
+        },
+      },
+    },
+  });
 };

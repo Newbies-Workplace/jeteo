@@ -22,6 +22,22 @@ export type LectureDetails = Lecture & {
   Rate: Rate[];
 };
 
+export const extractFormData = (formData: FormData) =>
+  [...formData.entries()].reduce<
+    Record<string, FormDataEntryValue | FormDataEntryValue[]>
+  >(
+    (data, [key, value]) => ({
+      ...data,
+      [key]:
+        key in data
+          ? Array.isArray(data[key])
+            ? [...data[key], value]
+            : [data[key], value]
+          : value,
+    }),
+    {}
+  );
+
 export const convertEvent = async (
   event: Event & { Author: User }
 ): Promise<EventResponse> => {

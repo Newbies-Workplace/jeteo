@@ -14,7 +14,7 @@ import {
   deleteMyUserImage,
   updateMyUser,
   updateMyUserImage,
-} from "@/lib/actions";
+} from "@/lib/actions/users";
 
 type ProfileForm = {
   name: string;
