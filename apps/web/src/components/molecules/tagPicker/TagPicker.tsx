@@ -7,7 +7,7 @@ import { Text } from "@/components/atoms/text/Text";
 
 interface TagPickerProps {
   value?: string[];
-  setValue: React.Dispatch<React.SetStateAction<string[]>>;
+  setValue: (value: string[]) => void;
 }
 
 export const TagPicker: React.FC<TagPickerProps> = ({ value, setValue }) => {
@@ -30,12 +30,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({ value, setValue }) => {
   };
 
   function createTag(tagToCreate: string) {
-    setValue((prevState) => [...prevState, tagToCreate]);
+    setValue([...(value ?? []), tagToCreate]);
     setTagValue("");
   }
 
   function deleteTag(tag: string) {
-    setValue((oldTagList) => oldTagList.filter((oldTag) => oldTag !== tag));
+    setValue(value?.filter((oldTag) => oldTag !== tag) ?? []);
   }
 
   return (

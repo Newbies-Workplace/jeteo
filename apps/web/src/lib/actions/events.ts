@@ -14,39 +14,22 @@ import {
 } from "../data/auth.methods";
 import dayjs from "dayjs";
 import { nanoid } from "@/lib/nanoid";
-import { EventVisibility } from "@prisma/client";
 import { EventResponse } from "shared/model/event/response/event.response";
 import {
   createFile,
   deleteFile,
   replaceFile,
 } from "@/app/api/storage/storage-service";
+import { eventCreateSchema, eventUpdateSchema } from "@/lib/data/schemas";
 
 // Define Zod schema for CreateEventRequest
-const createEventSchema = z.object({
-  title: z.string(),
-  subtitle: z.string().optional(),
-  description: z.string(),
-  from: z.string(),
-  to: z.string(),
-  address: z
-    .object({
-      city: z.string().optional(),
-      place: z.string().optional(),
-      coordinates: z
-        .object({
-          latitude: z.number().optional(),
-          longitude: z.number().optional(),
-        })
-        .optional(),
-    })
-    .optional(),
-  tags: z.array(z.string()).optional(),
-});
+export type EventCreateSchema = z.infer<typeof eventCreateSchema>;
 
 export const createEvent = async (data: FormData): Promise<EventResponse> => {
   // Validate data using Zod schema
-  const validatedData = createEventSchema.parse(extractFormData(data));
+  const form = extractFormData(data);
+  console.log(JSON.stringify(form));
+  const validatedData = eventCreateSchema.parse(form);
 
   const session = await auth();
   const userId = session?.user.id;
@@ -54,6 +37,13 @@ export const createEvent = async (data: FormData): Promise<EventResponse> => {
   if (!userId) {
     throw new Error("Unauthorized");
   }
+
+  const address = {
+    city: validatedData.address?.city,
+    place: validatedData.address?.place,
+    latitude: validatedData.address?.coordinates?.latitude,
+    longitude: validatedData.address?.coordinates?.longitude,
+  };
 
   const event = await prisma.event.create({
     data: {
@@ -63,10 +53,7 @@ export const createEvent = async (data: FormData): Promise<EventResponse> => {
       description: validatedData.description,
       from: new Date(validatedData.from),
       to: new Date(validatedData.to),
-      city: validatedData.address?.city,
-      place: validatedData.address?.place,
-      latitude: validatedData.address?.coordinates?.latitude,
-      longitude: validatedData.address?.coordinates?.longitude,
+      ...address,
       tags: validatedData.tags,
       primaryColor: "#4340BE",
       visibility: "HIDDEN",
@@ -81,36 +68,15 @@ export const createEvent = async (data: FormData): Promise<EventResponse> => {
 };
 
 // Define Zod schema for UpdateEventRequest
-const updateEventSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  description: z.string().optional(),
-  from: z.string().optional(),
-  to: z.string().optional(),
-  address: z
-    .object({
-      city: z.string().optional(),
-      place: z.string().optional(),
-      coordinates: z
-        .object({
-          latitude: z.number().optional(),
-          longitude: z.number().optional(),
-        })
-        .optional(),
-    })
-    .nullable()
-    .optional(),
-  tags: z.array(z.string()).optional(),
-  primaryColor: z.string().optional(),
-  visibility: z.nativeEnum(EventVisibility).optional(),
-});
+export type EventUpdateSchema = z.infer<typeof eventUpdateSchema>;
 
 export const updateEvent = async (
   eventId: string,
   data: FormData
 ): Promise<EventResponse> => {
-  // Validate data using Zod schema
-  const validatedData = updateEventSchema.parse(extractFormData(data));
+  const form = extractFormData(data);
+  console.log(JSON.stringify(form));
+  const validatedData = eventUpdateSchema.parse(form);
 
   const session = await auth();
   const userId = session?.user.id;
@@ -140,10 +106,10 @@ export const updateEvent = async (
   }
 
   const address = {
-    city: validatedData.address?.city,
-    place: validatedData.address?.place,
-    latitude: validatedData.address?.coordinates?.latitude,
-    longitude: validatedData.address?.coordinates?.longitude,
+    city: validatedData.address?.city ?? null,
+    place: validatedData.address?.place ?? null,
+    latitude: validatedData.address?.coordinates?.latitude ?? null,
+    longitude: validatedData.address?.coordinates?.longitude ?? null,
   };
 
   const updatedEvent = await prisma.event.update({

@@ -22,21 +22,51 @@ export type LectureDetails = Lecture & {
   Rate: Rate[];
 };
 
-export const extractFormData = (formData: FormData) =>
-  [...formData.entries()].reduce<
+export const extractFormData = (formData: FormData) => {
+  return [...formData.entries()].reduce<
     Record<string, FormDataEntryValue | FormDataEntryValue[]>
-  >(
-    (data, [key, value]) => ({
+  >((data, [key, value]) => {
+    const parsedValue = (() => {
+      try {
+        return JSON.parse(value as string);
+      } catch {
+        return value;
+      }
+    })();
+
+    return {
       ...data,
       [key]:
         key in data
           ? Array.isArray(data[key])
-            ? [...data[key], value]
-            : [data[key], value]
-          : value,
-    }),
-    {}
-  );
+            ? [...data[key], parsedValue]
+            : [data[key], parsedValue]
+          : parsedValue,
+    };
+  }, {});
+};
+
+export const convertIntoFormData = (object: any) => {
+  const formData = new FormData();
+  Object.keys(object).forEach((key) => {
+    if (Array.isArray(object[key])) {
+      object[key].forEach((item: any) => {
+        formData.append(
+          key,
+          typeof item === "object" ? JSON.stringify(item) : item
+        );
+      });
+    } else if (object[key] !== null && object[key] !== undefined) {
+      formData.append(
+        key,
+        typeof object[key] === "object"
+          ? JSON.stringify(object[key])
+          : object[key]
+      );
+    }
+  });
+  return formData;
+};
 
 export const convertEvent = async (
   event: Event & { Author: User }
