@@ -26,9 +26,7 @@ import { eventCreateSchema, eventUpdateSchema } from "@/lib/data/schemas";
 export type EventCreateSchema = z.infer<typeof eventCreateSchema>;
 
 export const createEvent = async (data: FormData): Promise<EventResponse> => {
-  // Validate data using Zod schema
   const form = extractFormData(data);
-  console.log(JSON.stringify(form));
   const validatedData = eventCreateSchema.parse(form);
 
   const session = await auth();
@@ -75,7 +73,6 @@ export const updateEvent = async (
   data: FormData
 ): Promise<EventResponse> => {
   const form = extractFormData(data);
-  console.log(JSON.stringify(form));
   const validatedData = eventUpdateSchema.parse(form);
 
   const session = await auth();

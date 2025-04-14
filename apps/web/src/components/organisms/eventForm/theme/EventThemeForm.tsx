@@ -11,7 +11,12 @@ import toast from "react-hot-toast";
 import { FileItem } from "@/components/molecules/fileItem/FileItem";
 import { FileUpload } from "@/components/molecules/fileUpload/FileUpload";
 import { useCropDialog } from "@/contexts/useCropDialog";
-import { updateEvent, updateEventCover, deleteEventCover } from "@/lib/actions/events";
+import {
+  updateEvent,
+  updateEventCover,
+  deleteEventCover,
+} from "@/lib/actions/events";
+import { convertIntoFormData } from "@/lib/data/converters";
 
 interface EventThemeFormProps {
   event: EventResponse;
@@ -36,7 +41,7 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
 
   const onSubmit = () => {
     toast.promise(
-      updateEvent(event.id, { primaryColor: color }),
+      updateEvent(event.id, convertIntoFormData({ primaryColor: color })),
       {
         loading: "Zapisywanie...",
         success: <b>Zaktualizowano wygląd wydarzenia!</b>,
@@ -49,29 +54,27 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
     const formData = new FormData();
     formData.append("coverImage", file);
 
-    await toast.promise(
-      updateEventCover(event.id, formData),
-      {
+    await toast
+      .promise(updateEventCover(event.id, formData), {
         loading: "Aktualizowanie okładki...",
         success: <b>Okładka zaktualizowana</b>,
         error: <b>Wystąpił błąd</b>,
-      }
-    ).then((res) => {
-      setCoverImage(res.coverImage);
-    });
+      })
+      .then((res) => {
+        setCoverImage(res.coverImage);
+      });
   };
 
   const deleteCoverImage = async () => {
-    await toast.promise(
-      deleteEventCover(event.id),
-      {
+    await toast
+      .promise(deleteEventCover(event.id), {
         loading: "Usuwanie okładki...",
         success: <b>Okładka usunięta</b>,
         error: <b>Wystąpił błąd</b>,
-      }
-    ).then(() => {
-      setCoverImage(undefined);
-    });
+      })
+      .then(() => {
+        setCoverImage(undefined);
+      });
   };
 
   return (

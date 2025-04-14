@@ -160,7 +160,6 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
             control={control}
             type={"datetime-local"}
           />
-          {JSON.stringify(errors)}
         </div>
 
         <ControlledInput
