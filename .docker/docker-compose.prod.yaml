@@ -28,10 +28,10 @@ services:
       - "127.0.0.1:5432:5432"
     volumes:
       - jeteo-db-data:/var/lib/postgresql/data
-  jeteo-web:
-    image: ghcr.io/newbies-workplace/jeteo-web:latest
+  jeteo-app:
+    image: ghcr.io/newbies-workplace/jeteo-app:latest
     restart: unless-stopped
-    container_name: jeteo-web
+    container_name: jeteo-app
     ports:
       - "3000:3000"
     networks:
