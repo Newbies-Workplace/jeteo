@@ -1,5 +1,5 @@
 import React from "react";
-import { getEvent } from "@/lib/data/events";
+import { getEvent } from "@/lib/actions/get-events";
 import { EventBasicFormWrapper } from "./EventBasicFormWrapper";
 import { notFound } from "next/navigation";
 

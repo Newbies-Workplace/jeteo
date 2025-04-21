@@ -13,7 +13,6 @@ import { updateEvent } from "@/lib/actions/events";
 import { Text } from "@/components/atoms/text/Text";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
-import { convertIntoFormData } from "@/lib/data/converters";
 
 type VisibilityForm = {
   visibility: "PRIVATE" | "HIDDEN" | "PUBLIC";
@@ -29,11 +28,7 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
 }) => {
   const { data } = useSession();
   const user = data?.user;
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<VisibilityForm>({
+  const { control, handleSubmit } = useForm<VisibilityForm>({
     defaultValues: {
       visibility: event.visibility,
     },
@@ -62,17 +57,11 @@ export const EventVisibilityForm: React.FC<EventVisibilityFormProps> = ({
   );
 
   const onSubmit: SubmitHandler<VisibilityForm> = (data: VisibilityForm) => {
-    toast.promise(
-      updateEvent(
-        event.id,
-        convertIntoFormData({ visibility: data.visibility })
-      ),
-      {
-        loading: "Zapisywanie...",
-        success: <b>Zaktualizowano widoczność wydarzenia!</b>,
-        error: <b>Wystąpił błąd</b>,
-      }
-    );
+    toast.promise(updateEvent(event.id, { visibility: data.visibility }), {
+      loading: "Zapisywanie...",
+      success: <b>Zaktualizowano widoczność wydarzenia!</b>,
+      error: <b>Wystąpił błąd</b>,
+    });
   };
 
   if (!user) {

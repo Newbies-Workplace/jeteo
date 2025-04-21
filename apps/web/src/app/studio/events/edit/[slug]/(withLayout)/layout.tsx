@@ -1,7 +1,7 @@
 import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader";
 import { StepNavigation } from "@/components/molecules/stepNavigation/StepNavigation";
 import React from "react";
-import { getEvent } from "@/lib/data/events";
+import { getEvent } from "@/lib/actions/get-events";
 import { notFound } from "next/navigation";
 
 export default async function Layout({

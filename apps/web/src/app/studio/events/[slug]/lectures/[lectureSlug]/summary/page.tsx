@@ -1,4 +1,4 @@
-import { getLectureDetails } from "@/lib/data/lectures";
+import { getLectureDetails } from "@/lib/actions/get-lectures";
 import { LectureDetailsResponse } from "shared/model/lecture/response/lecture.response";
 import { Section } from "@/components/molecules/section/Section";
 import { RateProgress } from "@/components/molecules/rateProgress/RateProgress";

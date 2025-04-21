@@ -1,6 +1,6 @@
 import { LectureBasicForm } from "@/components/organisms/lectureForm/basic/LectureBasicForm";
 import React from "react";
-import { getLectureDetails } from "@/lib/data/lectures";
+import { getLectureDetails } from "@/lib/actions/get-lectures";
 import { LectureDetailsResponse } from "shared/model/lecture/response/lecture.response";
 
 export default async function Page({

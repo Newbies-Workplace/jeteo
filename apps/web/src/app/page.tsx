@@ -4,7 +4,7 @@ import { SmartEventCard } from "@/components/molecules/eventCard/EventCard";
 import Link from "next/link";
 import React from "react";
 import { Text } from "@/components/atoms/text/Text";
-import { getPublicEvents } from "@/lib/data/events";
+import { getPublicEvents } from "@/lib/actions/get-events";
 import { generateSlug } from "@/lib/slugs";
 
 export const dynamic = "force-dynamic";

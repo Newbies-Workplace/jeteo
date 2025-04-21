@@ -22,52 +22,6 @@ export type LectureDetails = Lecture & {
   Rate: Rate[];
 };
 
-export const extractFormData = (formData: FormData) => {
-  return [...formData.entries()].reduce<
-    Record<string, FormDataEntryValue | FormDataEntryValue[]>
-  >((data, [key, value]) => {
-    const parsedValue = (() => {
-      try {
-        return JSON.parse(value as string);
-      } catch {
-        return value;
-      }
-    })();
-
-    return {
-      ...data,
-      [key]:
-        key in data
-          ? Array.isArray(data[key])
-            ? [...data[key], parsedValue]
-            : [data[key], parsedValue]
-          : parsedValue,
-    };
-  }, {});
-};
-
-export const convertIntoFormData = (object: any) => {
-  const formData = new FormData();
-  Object.keys(object).forEach((key) => {
-    if (Array.isArray(object[key])) {
-      object[key].forEach((item: any) => {
-        formData.append(
-          key,
-          typeof item === "object" ? JSON.stringify(item) : item
-        );
-      });
-    } else if (object[key] !== null && object[key] !== undefined) {
-      formData.append(
-        key,
-        typeof object[key] === "object"
-          ? JSON.stringify(object[key])
-          : object[key]
-      );
-    }
-  });
-  return formData;
-};
-
 export const convertEvent = async (
   event: Event & { Author: User }
 ): Promise<EventResponse> => {
@@ -286,4 +240,18 @@ export const convertLectureDetails = async (
     overallRatesCounts: formattedOverallRatesCounts,
     topicRatesCounts: formattedTopicRatesCounts,
   };
+};
+
+export const youtubeVideoIdFromUrl = (
+  url: string | undefined
+): string | undefined => {
+  if (!url) {
+    return undefined;
+  }
+
+  const match = url.match(
+    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+  );
+
+  return match && match[2].length === 11 ? match[2] : undefined;
 };

@@ -13,22 +13,22 @@ import { notBlank } from "shared/util";
 import { ControlledMarkdownInput } from "@/components/atoms/markdownInput/ControlledMarkdownInput";
 import { TagPicker } from "@/components/molecules/tagPicker/TagPicker";
 import toast from "react-hot-toast";
-import {
-  createEvent,
-  EventCreateSchema,
-  EventUpdateSchema,
-  updateEvent,
-} from "@/lib/actions/events";
-import { convertIntoFormData } from "@/lib/data/converters";
+import { createEvent, updateEvent } from "@/lib/actions/events";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { eventCreateSchema } from "@/lib/data/schemas";
+import {
+  EventCreateSchema,
+  eventCreateSchema,
+  EventUpdateSchema,
+} from "@/lib/actions/schemas";
 
 const locationOptions = [
   { id: "location", name: "Na miejscu" },
   { id: "online", name: "On-line" },
 ];
 
-const getDefaultValue = (event?: EventResponse): EventCreateSchema => {
+const getDefaultValue = (
+  event?: EventResponse
+): EventCreateSchema | EventUpdateSchema => {
   // @ts-ignore
   return event
     ? {
@@ -85,12 +85,11 @@ const getRequest = async (
     tags: form.tags ?? [],
   };
 
-  const formData = convertIntoFormData(convertedForm);
-
   if (event) {
-    return await updateEvent(event.id, formData);
+    return await updateEvent(event.id, convertedForm);
   } else {
-    return await createEvent(formData);
+    // @ts-ignore
+    return await createEvent(convertedForm);
   }
 };
 
@@ -103,17 +102,11 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
   event,
   onSubmitted,
 }) => {
-  const {
-    control,
-    handleSubmit,
-    watch,
-    register,
-    unregister,
-    formState: { errors },
-  } = useForm<EventCreateSchema>({
-    defaultValues: getDefaultValue(event),
-    resolver: zodResolver(eventCreateSchema),
-  });
+  const { control, handleSubmit, watch, register, unregister } =
+    useForm<EventCreateSchema>({
+      defaultValues: getDefaultValue(event),
+      resolver: zodResolver(eventCreateSchema),
+    });
   const locationWatch = watch(
     "location",
     event?.address !== undefined ? "location" : "online"
@@ -203,22 +196,27 @@ export const EventBasicForm: React.FC<EventBasicFormProps> = ({
           <>
             <Controller
               render={({ field, fieldState, formState }) => (
-                <MapPicker
-                  onChange={(value) => {
-                    field.onChange({
-                      latitude: value.lat,
-                      longitude: value.lng,
-                    });
-                  }}
-                  value={
-                    field?.value
-                      ? {
-                          lat: field.value.latitude,
-                          lng: field.value.longitude,
-                        }
-                      : undefined
-                  }
-                />
+                <>
+                  <MapPicker
+                    onChange={(value) => {
+                      field.onChange({
+                        latitude: value.lat,
+                        longitude: value.lng,
+                      });
+                    }}
+                    value={
+                      field?.value
+                        ? {
+                            lat: field.value.latitude,
+                            lng: field.value.longitude,
+                          }
+                        : undefined
+                    }
+                  />
+                  {fieldState.error && (
+                    <p className={"text-red-500"}>{fieldState.error.message}</p>
+                  )}
+                </>
               )}
               name={"address.coordinates"}
               control={control}

@@ -1,6 +1,6 @@
 import { Text } from "@/components/atoms/text/Text";
 import React from "react";
-import { getMyLectures } from "@/lib/data/lectures";
+import { getMyLectures } from "@/lib/actions/get-lectures";
 import { StudioMyLectureCard } from "@/components/molecules/studioLectureCard/StudioMyLectureCard";
 
 export default async function Page() {

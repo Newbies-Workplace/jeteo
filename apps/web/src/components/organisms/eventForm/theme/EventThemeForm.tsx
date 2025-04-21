@@ -16,7 +16,6 @@ import {
   updateEventCover,
   deleteEventCover,
 } from "@/lib/actions/events";
-import { convertIntoFormData } from "@/lib/data/converters";
 
 interface EventThemeFormProps {
   event: EventResponse;
@@ -40,14 +39,11 @@ export const EventThemeForm: React.FC<EventThemeFormProps> = ({ event }) => {
   });
 
   const onSubmit = () => {
-    toast.promise(
-      updateEvent(event.id, convertIntoFormData({ primaryColor: color })),
-      {
-        loading: "Zapisywanie...",
-        success: <b>Zaktualizowano wygląd wydarzenia!</b>,
-        error: <b>Wystąpił błąd</b>,
-      }
-    );
+    toast.promise(updateEvent(event.id, { primaryColor: color }), {
+      loading: "Zapisywanie...",
+      success: <b>Zaktualizowano wygląd wydarzenia!</b>,
+      error: <b>Wystąpił błąd</b>,
+    });
   };
 
   const saveCoverImage = async (file: File) => {

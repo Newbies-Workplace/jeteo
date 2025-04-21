@@ -1,5 +1,4 @@
 import { Event, EventVisibility, Invite } from "@prisma/client";
-import { UpdateEventRequest } from "shared/model/event/request/updateEvent.request";
 import { LectureDetails } from "./converters";
 import { auth } from "@/lib/auth";
 

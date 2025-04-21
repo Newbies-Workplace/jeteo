@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { EventResponse } from "shared/model/event/response/event.response";
-import { convertEvent } from "@/lib/data/converters";
+import { convertEvent } from "@/lib/actions/converters";
 import { Event, EventVisibility } from "@prisma/client";
 import { getIdFromSlug } from "@/lib/slugs";
 import { auth } from "@/lib/auth";

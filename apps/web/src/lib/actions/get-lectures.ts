@@ -4,12 +4,12 @@ import {
 } from "shared/model/lecture/response/lecture.response";
 import { getIdFromSlug } from "@/lib/slugs";
 import { prisma } from "@/lib/prisma";
-import { assertEventReadAccess } from "@/lib/data/events";
+import { assertEventReadAccess } from "@/lib/actions/get-events";
 import {
   convertLecture,
   convertLectureDetails,
   LectureDetails,
-} from "@/lib/data/converters";
+} from "@/lib/actions/converters";
 import { auth } from "@/lib/auth";
 import { EventVisibility } from "@prisma/client";
 

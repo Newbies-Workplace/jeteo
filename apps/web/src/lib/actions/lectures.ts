@@ -1,59 +1,44 @@
-"use server"
+"use server";
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import { z } from "zod";
-import { UpdateLectureRequest } from "shared/model/lecture/request/updateLecture.request";
-import { convertLectureDetails, LectureDetails } from "@/lib/data/converters";
-import { assertEventWriteAccess, assertLectureReadAccess, assertLectureWriteAccess } from "../data/auth.methods";
+import {
+  convertLectureDetails,
+  LectureDetails,
+} from "@/lib/actions/converters";
+import {
+  assertEventWriteAccess,
+  assertLectureReadAccess,
+  assertLectureWriteAccess,
+} from "@/lib/actions/auth.methods";
 import { LectureDetailsResponse } from "shared/model/lecture/response/lecture.response";
 import { RateLectureRequest } from "shared/model/lecture/request/rateLecture.request";
 import { nanoid } from "../nanoid";
-import { CreateLectureRequest } from "shared/model/lecture/request/createLecture.request";
 import dayjs from "dayjs";
-
-// Define Zod schema for UpdateLectureRequest
-const updateLectureSchema = z.object({
-  title: z.string().optional(),
-  description: z.string().optional(),
-  duration: z.number().optional(),
-  tags: z.array(z.string()).optional(),
-});
-
-const createLectureSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-  from: z.string(),
-  to: z.string(),
-  youtubeVideoId: z.string().optional(),
-  invites: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-      mail: z.string().email(),
-    })
-  ).optional(),
-});
+import {
+  LectureCreateSchema,
+  lectureCreateSchema,
+  LectureUpdateSchema,
+  lectureUpdateSchema,
+} from "@/lib/actions/schemas";
 
 export const createLecture = async (
   eventId: string,
-  data: CreateLectureRequest
+  data: LectureCreateSchema
 ): Promise<LectureDetailsResponse> => {
-  // Validate data using Zod schema
-  const validatedData = createLectureSchema.parse(data);
-
   const session = await auth();
   const userId = session?.user.id;
-
   if (!userId) {
     throw new Error("Unauthorized");
   }
+
+  const validatedData = lectureCreateSchema.parse(data);
 
   const from = dayjs(validatedData.from);
   const to = dayjs(validatedData.to);
 
   if (from.isAfter(to)) {
-    throw 'LectureInvalidDatesException';
+    throw "LectureInvalidDatesException";
   }
 
   const lecture = await prisma.lecture.create({
@@ -68,12 +53,13 @@ export const createLecture = async (
       youtubeVideoId: validatedData.youtubeVideoId,
       Invites: {
         createMany: {
-          data: validatedData.invites?.map((invite) => ({
-            id: invite.id,
-            name: invite.name,
-            userId: userId,
-            mail: invite.mail,
-          })) || [],
+          data:
+            validatedData.speakersAndInvites.invites?.map((invite) => ({
+              id: invite.id,
+              name: invite.name,
+              userId: userId,
+              mail: invite.mail,
+            })) || [],
         },
       },
     },
@@ -90,28 +76,81 @@ export const createLecture = async (
 
 export const updateLecture = async (
   lectureId: string,
-  data: Partial<UpdateLectureRequest>
+  data: LectureUpdateSchema
 ): Promise<LectureDetailsResponse> => {
-  // Validate data using Zod schema
-  const validatedData = updateLectureSchema.parse(data);
-
   const session = await auth();
   const userId = session?.user.id;
-
   if (!userId) {
     throw new Error("Unauthorized");
   }
 
+  const validatedData = lectureUpdateSchema.parse(data);
   const lecture = await getLectureDetailsById(lectureId);
 
   if (!lecture) {
     throw new Error("Lecture not found");
   }
 
-  assertLectureWriteAccess(lecture);
+  await assertLectureWriteAccess(lecture);
+
+  // delete old speakers
+  const speakersToDelete = lecture.Speakers.filter(
+    (speaker) =>
+      !data.speakersAndInvites!.speakers.some(
+        (newSpeakerId) => newSpeakerId === speaker.id
+      )
+  );
+
+  // delete old invites
+  const invitesToDelete = lecture.Invites.filter(
+    (invite) =>
+      !data.speakersAndInvites!.invites.some(
+        (newInvite) => newInvite.id === invite.id
+      )
+  );
+
+  // create new invites
+  const invitesToCreate = data
+    .speakersAndInvites!.invites.map((invite) => {
+      return {
+        id: invite.id,
+        name: invite.name,
+        userId: lecture.authorId,
+        mail: invite.mail,
+      };
+    })
+    .filter(
+      (invite) =>
+        !lecture.Invites.some(
+          (existingInvite) => existingInvite.id === invite.id
+        )
+    );
 
   const updatedLecture = await prisma.lecture.update({
-    data: validatedData,
+    data: {
+      title: validatedData.title,
+      description: validatedData.description,
+      from: validatedData.from ? new Date(validatedData.from) : undefined,
+      to: validatedData.to ? new Date(validatedData.to) : undefined,
+      youtubeVideoId: validatedData.youtubeVideoId,
+      Speakers: {
+        deleteMany: {
+          id: {
+            in: speakersToDelete.map((speaker) => speaker.id),
+          },
+        },
+      },
+      Invites: {
+        deleteMany: {
+          id: {
+            in: invitesToDelete.map((invite) => invite.id),
+          },
+        },
+        createMany: {
+          data: invitesToCreate,
+        },
+      },
+    },
     where: {
       id: lectureId,
     },
@@ -129,7 +168,6 @@ export const updateLecture = async (
 export const deleteLecture = async (id: string) => {
   const session = await auth();
   const userId = session?.user.id;
-
   if (!userId) {
     throw new Error("Unauthorized");
   }
@@ -140,7 +178,7 @@ export const deleteLecture = async (id: string) => {
     throw new Error("Lecture not found");
   }
 
-  assertEventWriteAccess(lecture.Event);
+  await assertEventWriteAccess(lecture.Event);
 
   await prisma.lecture.delete({
     where: { id },
@@ -157,7 +195,7 @@ export const rateLecture = async (
     throw new Error("Lecture not found");
   }
 
-  assertLectureReadAccess(lecture, "public");
+  await assertLectureReadAccess(lecture, "public");
 
   await prisma.rate.create({
     data: {
@@ -175,7 +213,7 @@ export const rateLecture = async (
 };
 
 const getLectureDetailsById = async (id: string): Promise<LectureDetails> => {
-  const lecture: LectureDetails = await prisma.lecture.findUniqueOrThrow({
+  return prisma.lecture.findUniqueOrThrow({
     where: {
       id: id,
     },
@@ -186,6 +224,4 @@ const getLectureDetailsById = async (id: string): Promise<LectureDetails> => {
       Rate: true,
     },
   });
-
-  return lecture;
 };

@@ -4,39 +4,30 @@ import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Section } from "@/components/molecules/section/Section";
 import { ControlledInput } from "@/components/atoms/input/ControlledInput";
-import { Validations } from "@/common/validations";
 import dayjs from "dayjs";
 import { SpeakerPicker } from "@/components/molecules/speakerPicker/SpeakerPicker";
 import Button from "@/components/atoms/button/Button";
-import { UserResponse } from "shared/model/user/response/user.response";
 import { v4 as uuidv4 } from "uuid";
-import {
-  CreateLectureInvite,
-  CreateLectureRequest,
-} from "shared/model/lecture/request/createLecture.request";
 import {
   LectureDetailsResponse,
   LectureResponse,
 } from "shared/model/lecture/response/lecture.response";
-import { UpdateLectureRequest } from "shared/model/lecture/request/updateLecture.request";
 import { getIdFromSlug } from "shared/util";
 import toast from "react-hot-toast";
 import YouTube from "react-youtube";
 import { createLecture, updateLecture } from "@/lib/actions/lectures";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  LectureCreateSchema,
+  lectureCreateSchema,
+  LectureUpdateSchema,
+  lectureUpdateSchema,
+} from "@/lib/actions/schemas";
+import { youtubeVideoIdFromUrl } from "@/lib/actions/converters";
 
-type BasicForm = {
-  title: string;
-  description: string;
-  from: string;
-  to: string;
-  youtubeLink?: string;
-  speakersAndInvites: {
-    invites: CreateLectureInvite[];
-    speakers: UserResponse[];
-  };
-};
-
-const getDefaultValue = (lecture?: LectureDetailsResponse): BasicForm => {
+const getDefaultValue = (
+  lecture?: LectureDetailsResponse
+): LectureCreateSchema | LectureUpdateSchema => {
   // @ts-ignore
   return lecture
     ? {
@@ -44,7 +35,7 @@ const getDefaultValue = (lecture?: LectureDetailsResponse): BasicForm => {
         description: lecture.description,
         from: dayjs(lecture.from).format("YYYY-MM-DDTHH:mm"),
         to: dayjs(lecture.to).format("YYYY-MM-DDTHH:mm"),
-        youtubeLink: lecture.youtubeVideoId
+        youtubeVideoId: lecture.youtubeVideoId
           ? "https://www.youtube.com/watch?v=" + lecture.youtubeVideoId
           : null,
         speakersAndInvites: {
@@ -57,7 +48,7 @@ const getDefaultValue = (lecture?: LectureDetailsResponse): BasicForm => {
         description: "",
         from: dayjs().format("YYYY-MM-DDTHH:mm"),
         to: dayjs().add(1, "h").format("YYYY-MM-DDTHH:mm"),
-        youtubeLink: "",
+        youtubeVideoId: "",
         speakersAndInvites: {
           invites: [],
           speakers: [],
@@ -65,20 +56,8 @@ const getDefaultValue = (lecture?: LectureDetailsResponse): BasicForm => {
       };
 };
 
-const youtubeVideoIdFromUrl = (url: string | undefined): string | undefined => {
-  if (!url) {
-    return undefined;
-  }
-
-  const match = url.match(
-    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
-  );
-
-  return match && match[2].length === 11 ? match[2] : undefined;
-};
-
 const getRequest = async (
-  data: BasicForm,
+  data: LectureCreateSchema | LectureUpdateSchema,
   eventSlug: string,
   lecture?: LectureResponse
 ): Promise<LectureResponse> => {
@@ -89,25 +68,34 @@ const getRequest = async (
   }
 };
 
-const getCreateRequestData = (form: BasicForm): CreateLectureRequest => {
+const getCreateRequestData = (
+  form: LectureCreateSchema
+): LectureCreateSchema => {
   return {
     title: form.title,
     description: form.description,
     from: dayjs(form.from).toISOString(),
     to: dayjs(form.to).toISOString(),
-    youtubeVideoId: youtubeVideoIdFromUrl(form.youtubeLink),
-    invites: form.speakersAndInvites.invites,
+    youtubeVideoId: form.youtubeVideoId,
+    speakersAndInvites: {
+      invites: form.speakersAndInvites.invites,
+      speakers: [],
+    },
   };
 };
-const getUpdateRequestData = (form: BasicForm): UpdateLectureRequest => {
+const getUpdateRequestData = (
+  form: LectureUpdateSchema
+): LectureUpdateSchema => {
   return {
     title: form.title,
     description: form.description,
     from: dayjs(form.from).toISOString(),
     to: dayjs(form.to).toISOString(),
-    youtubeVideoId: youtubeVideoIdFromUrl(form.youtubeLink),
-    invites: form.speakersAndInvites.invites,
-    speakerIds: form.speakersAndInvites.speakers.map((speaker) => speaker.id),
+    youtubeVideoId: form.youtubeVideoId,
+    speakersAndInvites: {
+      invites: form.speakersAndInvites?.invites ?? [],
+      speakers: form.speakersAndInvites?.speakers ?? [],
+    },
   };
 };
 
@@ -122,11 +110,19 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   lecture,
   onSubmitted,
 }) => {
-  const { control, handleSubmit, watch } = useForm<BasicForm>({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<LectureCreateSchema | LectureUpdateSchema>({
+    resolver: zodResolver(lecture ? lectureUpdateSchema : lectureCreateSchema),
     defaultValues: getDefaultValue(lecture),
   });
 
-  const onSubmit: SubmitHandler<BasicForm> = async (data: BasicForm) => {
+  const onSubmit: SubmitHandler<
+    LectureCreateSchema | LectureUpdateSchema
+  > = async (data: LectureCreateSchema | LectureUpdateSchema) => {
     await toast.promise(
       getRequest(data, eventSlug, lecture).then(
         // @ts-ignore
@@ -143,35 +139,23 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   };
 
   return (
-    <form style={{ display: "flex", flexDirection: "column" }} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      style={{ display: "flex", flexDirection: "column" }}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <Section title={"Co i kiedy?"}>
-        <div
-          style={{
-            display: "flex",
-            gap: 12,
-            flexDirection: "row",
-            justifyContent: "space-around",
-          }}
-        >
+        <div className={"flex gap-3 flex-row justify-around"}>
           <ControlledInput
             name={"from"}
             label={"Rozpoczęcie"}
             control={control}
             type={"datetime-local"}
-            rules={{
-              required: Validations.required,
-              validate: (value) => Validations.dateRange(value, watch("to")),
-            }}
           />
           <ControlledInput
             name={"to"}
             label={"Zakończenie"}
             control={control}
             type={"datetime-local"}
-            rules={{
-              required: Validations.required,
-              validate: (value) => Validations.dateRange(watch("from"), value),
-            }}
           />
         </div>
 
@@ -180,11 +164,6 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
           label={"Tytuł"}
           required
           control={control}
-          rules={{
-            required: Validations.required,
-            minLength: Validations.minLength(5),
-            maxLength: Validations.maxLength(100),
-          }}
         />
 
         <ControlledInput
@@ -193,10 +172,6 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
           required
           multiline
           control={control}
-          rules={{
-            required: Validations.required,
-            minLength: Validations.minLength(10),
-          }}
         />
       </Section>
       <Section title={"Prelegenci"}>
@@ -205,13 +180,17 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
           control={control}
           render={({ field }) => (
             <SpeakerPicker
-              invites={field.value.invites}
-              speakers={field.value.speakers}
+              invites={field.value?.invites ?? []}
+              speakers={
+                lecture?.speakers.filter((speaker) =>
+                  field.value?.speakers.includes(speaker.id)
+                ) ?? []
+              }
               onAddInvite={(email, name) => {
                 field.onChange({
                   ...field.value,
                   invites: [
-                    ...field.value.invites,
+                    ...(field.value?.invites ?? []),
                     {
                       id: uuidv4(),
                       mail: email,
@@ -223,7 +202,7 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
               onDeleteInvite={(id) => {
                 field.onChange({
                   ...field.value,
-                  invites: field.value.invites.filter(
+                  invites: field.value?.invites.filter(
                     (invite) => invite.id !== id
                   ),
                 });
@@ -231,8 +210,8 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
               onDeleteSpeaker={(id) => {
                 field.onChange({
                   ...field.value,
-                  speakers: field.value.speakers.filter(
-                    (speaker) => speaker.id !== id
+                  speakers: field.value?.speakers.filter(
+                    (speaker) => speaker !== id
                   ),
                 });
               }}
@@ -242,23 +221,16 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
       </Section>
       <Section title={"Wideo"}>
         <ControlledInput
-          name={"youtubeLink"}
+          name={"youtubeVideoId"}
           label={"Link do filmu na YouTube"}
           control={control}
-          rules={{
-            pattern: Validations.youtubeVideoLink,
-          }}
         />
 
-        {youtubeVideoIdFromUrl(watch("youtubeLink")) && (
-          <YouTube videoId={youtubeVideoIdFromUrl(watch("youtubeLink"))} />
+        {youtubeVideoIdFromUrl(watch("youtubeVideoId")) && (
+          <YouTube videoId={watch("youtubeVideoId")} />
         )}
       </Section>
-      <Button
-        primary
-        style={{ alignSelf: "flex-end" }}
-        type="submit"
-      >
+      <Button primary className={"self-end"} type="submit">
         Zapisz
       </Button>
     </form>

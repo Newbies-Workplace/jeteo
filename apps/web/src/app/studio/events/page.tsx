@@ -3,7 +3,7 @@ import Button from "@/components/atoms/button/Button";
 import Link from "next/link";
 import { SmartEventCard } from "@/components/molecules/eventCard/EventCard";
 import React from "react";
-import { getMyEvents } from "@/lib/data/events";
+import { getMyEvents } from "@/lib/actions/get-events";
 
 export default async function Page() {
   const events = await getMyEvents(1, 100);

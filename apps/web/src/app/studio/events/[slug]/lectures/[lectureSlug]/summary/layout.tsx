@@ -2,7 +2,7 @@ import { StudioHeader } from "@/components/molecules/studioHeader/StudioHeader";
 import { StepButton } from "@/components/molecules/stepNavigation/StepNavigation";
 import React from "react";
 import { LectureDetailsResponse } from "shared/model/lecture/response/lecture.response";
-import { getLectureDetails } from "@/lib/data/lectures";
+import { getLectureDetails } from "@/lib/actions/get-lectures";
 
 export default async function Layout({
   children,

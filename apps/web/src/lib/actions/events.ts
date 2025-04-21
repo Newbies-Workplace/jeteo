@@ -2,16 +2,11 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import { z } from "zod";
-import {
-  convertEvent,
-  convertStoragePath,
-  extractFormData,
-} from "@/lib/data/converters";
+import { convertEvent, convertStoragePath } from "@/lib/actions/converters";
 import {
   assertEventWriteAccess,
   assertEventVisibilityAccess,
-} from "../data/auth.methods";
+} from "@/lib/actions/auth.methods";
 import dayjs from "dayjs";
 import { nanoid } from "@/lib/nanoid";
 import { EventResponse } from "shared/model/event/response/event.response";
@@ -20,14 +15,17 @@ import {
   deleteFile,
   replaceFile,
 } from "@/app/api/storage/storage-service";
-import { eventCreateSchema, eventUpdateSchema } from "@/lib/data/schemas";
+import {
+  EventCreateSchema,
+  eventCreateSchema,
+  EventUpdateSchema,
+  eventUpdateSchema,
+} from "@/lib/actions/schemas";
 
-// Define Zod schema for CreateEventRequest
-export type EventCreateSchema = z.infer<typeof eventCreateSchema>;
-
-export const createEvent = async (data: FormData): Promise<EventResponse> => {
-  const form = extractFormData(data);
-  const validatedData = eventCreateSchema.parse(form);
+export const createEvent = async (
+  data: EventCreateSchema
+): Promise<EventResponse> => {
+  const validatedData = eventCreateSchema.parse(data);
 
   const session = await auth();
   const userId = session?.user.id;
@@ -65,15 +63,11 @@ export const createEvent = async (data: FormData): Promise<EventResponse> => {
   return convertEvent(event);
 };
 
-// Define Zod schema for UpdateEventRequest
-export type EventUpdateSchema = z.infer<typeof eventUpdateSchema>;
-
 export const updateEvent = async (
   eventId: string,
-  data: FormData
+  data: EventUpdateSchema
 ): Promise<EventResponse> => {
-  const form = extractFormData(data);
-  const validatedData = eventUpdateSchema.parse(form);
+  const validatedData = eventUpdateSchema.parse(data);
 
   const session = await auth();
   const userId = session?.user.id;

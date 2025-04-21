@@ -12,8 +12,8 @@ import { Metadata } from "next";
 import SocialPreview from "@/assets/social-preview.png";
 import dayjs from "dayjs";
 import { CalendarButton } from "@/components/atoms/calendarButton/CalendarButton";
-import { getEvent } from "@/lib/data/events";
-import { getEventLectures } from "@/lib/data/lectures";
+import { getEvent } from "@/lib/actions/get-events";
+import { getEventLectures } from "@/lib/actions/get-lectures";
 
 type Props = {
   params: Promise<{ slug: string }>;

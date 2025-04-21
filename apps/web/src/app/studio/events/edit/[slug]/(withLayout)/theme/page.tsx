@@ -1,4 +1,4 @@
-import { getEvent } from "@/lib/data/events";
+import { getEvent } from "@/lib/actions/get-events";
 import { EventThemeForm } from "@/components/organisms/eventForm/theme/EventThemeForm";
 import { notFound } from "next/navigation";
 

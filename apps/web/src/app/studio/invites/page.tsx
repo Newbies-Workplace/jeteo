@@ -1,7 +1,7 @@
 import { Text } from "@/components/atoms/text/Text";
 import React from "react";
 import { InviteCard } from "@/components/molecules/inviteCard/InviteCard";
-import { getMyInvites } from "@/lib/data/invites";
+import { getMyInvites } from "@/lib/actions/invites";
 
 export default async function Page() {
   const invites = (await getMyInvites()) ?? [];

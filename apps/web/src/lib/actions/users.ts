@@ -2,47 +2,60 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import { z } from "zod";
 import { UpdateUserRequest } from "shared/model/user/request/updateUser.request";
-import { convertStoragePath, convertUser } from "@/lib/data/converters";
+import { convertStoragePath, convertUser } from "@/lib/actions/converters";
 import { UserResponse } from "shared/model/user/response/user.response";
 import {
   createFile,
   deleteFile,
   replaceFile,
 } from "@/app/api/storage/storage-service";
+import { userUpdateSchema } from "@/lib/actions/schemas";
 
-// Define Zod schema for UpdateUserRequest
-const updateUserSchema = z.object({
-  name: z.string().optional(),
-  image: z.string().optional(),
-  jobTitle: z.string().optional(),
-  description: z.string().optional(),
-  socials: z
-    .object({
-      mail: z.string().email().optional(),
-      github: z.string().url().optional(),
-      twitter: z.string().url().optional(),
-      linkedin: z.string().url().optional(),
-    })
-    .optional(),
-});
+export const getMyUser = async (): Promise<UserResponse> => {
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  if (!userId) {
+    //todo throw user not found
+    throw "UserNotFoundException";
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!user) {
+    //todo throw user not found
+    throw "UserNotFoundException";
+  }
+
+  return convertUser(user);
+};
 
 export const updateMyUser = async (
   data: Partial<UpdateUserRequest>
 ): Promise<UserResponse> => {
-  // Validate data using Zod schema
-  const validatedData = updateUserSchema.parse(data);
-
   const session = await auth();
   const currentUserId = session?.user.id;
-
   if (!currentUserId) {
     throw new Error("Unauthorized");
   }
 
+  const validatedData = userUpdateSchema.parse(data);
+
   const updatedUser = await prisma.user.update({
-    data: validatedData,
+    data: {
+      name: validatedData.name,
+      jobTitle: validatedData.jobTitle,
+      description: validatedData.description,
+      mail: validatedData.socials?.mail ?? null,
+      linkedin: validatedData.socials?.linkedin ?? null,
+      twitter: validatedData.socials?.twitter ?? null,
+      github: validatedData.socials?.github ?? null,
+    },
     where: {
       id: currentUserId,
     },
@@ -56,7 +69,6 @@ export const updateMyUserImage = async (
 ): Promise<{ image: string }> => {
   const session = await auth();
   const userId = session?.user.id;
-
   if (!userId) {
     throw new Error("Unauthorized");
   }
@@ -91,11 +103,9 @@ export const updateMyUserImage = async (
   return { image: convertStoragePath(filePath) };
 };
 
-// todo fix
 export const deleteMyUserImage = async () => {
   const session = await auth();
   const userId = session?.user.id;
-
   if (!userId) {
     throw new Error("Unauthorized");
   }

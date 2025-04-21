@@ -15,23 +15,14 @@ import {
   updateMyUser,
   updateMyUserImage,
 } from "@/lib/actions/users";
-
-type ProfileForm = {
-  name: string;
-  jobTitle: string;
-  description: string;
-  socials: {
-    mail: string;
-    linkedin: string;
-    twitter: string;
-    github: string;
-  };
-};
+import { userUpdateSchema, UserUpdateSchema } from "@/lib/actions/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export const ProfileSettingsForm: React.FC<{ user: UserResponse }> = ({
   user,
 }) => {
-  const { control, handleSubmit } = useForm<ProfileForm>({
+  const { control, handleSubmit } = useForm<UserUpdateSchema>({
+    resolver: zodResolver(userUpdateSchema),
     defaultValues: {
       name: user.name,
       jobTitle: user.jobTitle,
@@ -62,7 +53,9 @@ export const ProfileSettingsForm: React.FC<{ user: UserResponse }> = ({
     dismissAction: () => {},
   });
 
-  const onSubmit: SubmitHandler<ProfileForm> = (form: ProfileForm) => {
+  const onSubmit: SubmitHandler<UserUpdateSchema> = (
+    form: UserUpdateSchema
+  ) => {
     toast.promise(
       updateMyUser({
         // @ts-ignore
@@ -71,10 +64,10 @@ export const ProfileSettingsForm: React.FC<{ user: UserResponse }> = ({
         jobTitle: form.jobTitle,
         description: form.description,
         socials: {
-          mail: form.socials.mail,
-          linkedin: form.socials.linkedin,
-          twitter: form.socials.twitter,
-          github: form.socials.github,
+          mail: form.socials?.mail ?? null,
+          linkedin: form.socials?.linkedin ?? null,
+          twitter: form.socials?.twitter ?? null,
+          github: form.socials?.github ?? null,
         },
       }),
       {
