@@ -20,7 +20,7 @@ export const acceptInvite = async (id: string) => {
     },
   });
 
-  assertInviteWriteAccess(invite);
+  await assertInviteWriteAccess(invite);
 
   await prisma.lecture.update({
     where: {
@@ -55,7 +55,7 @@ export const rejectInvite = async (id: string) => {
     },
   });
 
-  assertInviteWriteAccess(invite);
+  await assertInviteWriteAccess(invite);
 
   await prisma.invite.delete({
     where: { id },

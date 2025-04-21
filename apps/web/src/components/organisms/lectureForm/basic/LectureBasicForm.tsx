@@ -40,7 +40,7 @@ const getDefaultValue = (
           : null,
         speakersAndInvites: {
           invites: lecture.invites,
-          speakers: lecture.speakers,
+          speakers: lecture.speakers.map((speaker) => speaker.id),
         },
       }
     : {
@@ -110,12 +110,9 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   lecture,
   onSubmitted,
 }) => {
-  const {
-    control,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<LectureCreateSchema | LectureUpdateSchema>({
+  const { control, handleSubmit, watch } = useForm<
+    LectureCreateSchema | LectureUpdateSchema
+  >({
     resolver: zodResolver(lecture ? lectureUpdateSchema : lectureCreateSchema),
     defaultValues: getDefaultValue(lecture),
   });

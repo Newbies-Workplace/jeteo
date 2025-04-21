@@ -36,7 +36,6 @@ export const createLecture = async (
 
   const from = dayjs(validatedData.from);
   const to = dayjs(validatedData.to);
-
   if (from.isAfter(to)) {
     throw "LectureInvalidDatesException";
   }
@@ -86,12 +85,13 @@ export const updateLecture = async (
 
   const validatedData = lectureUpdateSchema.parse(data);
   const lecture = await getLectureDetailsById(lectureId);
-
   if (!lecture) {
     throw new Error("Lecture not found");
   }
 
   await assertLectureWriteAccess(lecture);
+
+  // todo validate dates
 
   // delete old speakers
   const speakersToDelete = lecture.Speakers.filter(
