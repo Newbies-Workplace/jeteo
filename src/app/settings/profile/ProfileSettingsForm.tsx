@@ -9,7 +9,6 @@ import { FileUpload } from "@/components/molecules/fileUpload/FileUpload";
 import { FileItem } from "@/components/molecules/fileItem/FileItem";
 import { ControlledInput } from "@/components/atoms/input/ControlledInput";
 import Button from "@/components/atoms/button/Button";
-import { UserResponse } from "@/lib/models/user.response";
 import {
   deleteMyUserImage,
   updateMyUser,
@@ -17,10 +16,11 @@ import {
 } from "@/lib/actions/users";
 import { userUpdateSchema, UserUpdateSchema } from "@/lib/actions/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
 
-export const ProfileSettingsForm: React.FC<{ user: UserResponse }> = ({
-  user,
-}) => {
+export const ProfileSettingsForm: React.FC = ({}) => {
+  const { update, data } = useSession();
+  const user = data?.user!;
   const { control, handleSubmit } = useForm<UserUpdateSchema>({
     resolver: zodResolver(userUpdateSchema),
     defaultValues: {
@@ -48,6 +48,7 @@ export const ProfileSettingsForm: React.FC<{ user: UserResponse }> = ({
 
       updateMyUserImage(form).then((res) => {
         setAvatarUrl(res.image);
+        update();
       });
     },
     dismissAction: () => {},
@@ -69,6 +70,8 @@ export const ProfileSettingsForm: React.FC<{ user: UserResponse }> = ({
           twitter: form.socials?.twitter ?? null,
           github: form.socials?.github ?? null,
         },
+      }).then(() => {
+        update();
       }),
       {
         loading: "Zapisywanie...",
@@ -100,6 +103,7 @@ export const ProfileSettingsForm: React.FC<{ user: UserResponse }> = ({
                   await deleteMyUserImage();
 
                   setAvatarUrl(undefined);
+                  update();
                 }}
               />
             )}

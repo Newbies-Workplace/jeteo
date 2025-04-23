@@ -11,27 +11,6 @@ import {
 } from "@/app/api/storage/storage-service";
 import { UserUpdateSchema, userUpdateSchema } from "@/lib/actions/schemas";
 
-export const getMyUser = async (): Promise<UserResponse> => {
-  const session = await auth();
-  const userId = session?.user?.id;
-
-  if (!userId) {
-    throw "UserNotFoundException";
-  }
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  if (!user) {
-    throw "UserNotFoundException";
-  }
-
-  return convertUser(user);
-};
-
 export const updateMyUser = async (
   data: UserUpdateSchema
 ): Promise<UserResponse> => {
