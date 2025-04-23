@@ -58,6 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     authors: getSpeakersNames().map((name) => ({
       name: name,
     })),
+    title: title,
     description: description,
     openGraph: {
       title: title,

@@ -7,6 +7,11 @@ import inviteIcon from "@/assets/invite.svg";
 import { NavButton } from "@/components/molecules/navButton/NavButton";
 import AuthRoot from "@/contexts/Auth.root";
 import { StudioPageSkeleton } from "@/contexts/loaders/StudioPageSkeleton";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Studio",
+};
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

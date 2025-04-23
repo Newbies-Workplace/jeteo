@@ -11,7 +11,7 @@ export interface LectureResponse {
     subtitle?: string;
   };
   title: string;
-  description?: string;
+  description: string;
   from: string;
   to: string;
   youtubeVideoId?: string;

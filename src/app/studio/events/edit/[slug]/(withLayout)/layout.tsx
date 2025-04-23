@@ -3,14 +3,29 @@ import { StepNavigation } from "@/components/molecules/stepNavigation/StepNaviga
 import React from "react";
 import { getEvent } from "@/lib/actions/get-events";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
+
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const slug = (await params).slug;
+
+  const event = await getEvent(slug);
+  if (!event) {
+    notFound();
+  }
+
+  return {
+    title: `Studio: ${event.title}`,
+  };
+}
 
 export default async function Layout({
   children,
   params,
-}: {
-  children: React.ReactNode;
-  params: Promise<{ slug: string }>;
-}) {
+}: React.PropsWithChildren<Props>) {
   const { slug } = await params;
   const event = await getEvent(slug);
   if (!event) {

@@ -37,7 +37,7 @@ const getDefaultValue = (
         to: dayjs(lecture.to).format("YYYY-MM-DDTHH:mm"),
         youtubeVideoId: lecture.youtubeVideoId
           ? "https://www.youtube.com/watch?v=" + lecture.youtubeVideoId
-          : null,
+          : "",
         speakersAndInvites: {
           invites: lecture.invites,
           speakers: lecture.speakers.map((speaker) => speaker.id),
@@ -74,8 +74,8 @@ const getCreateRequestData = (
   return {
     title: form.title,
     description: form.description,
-    from: dayjs(form.from).toISOString(),
-    to: dayjs(form.to).toISOString(),
+    from: form.from,
+    to: form.to,
     youtubeVideoId: form.youtubeVideoId,
     speakersAndInvites: {
       invites: form.speakersAndInvites.invites,
@@ -89,8 +89,8 @@ const getUpdateRequestData = (
   return {
     title: form.title,
     description: form.description,
-    from: dayjs(form.from).toISOString(),
-    to: dayjs(form.to).toISOString(),
+    from: form.from,
+    to: form.to,
     youtubeVideoId: form.youtubeVideoId,
     speakersAndInvites: {
       invites: form.speakersAndInvites?.invites ?? [],
@@ -136,10 +136,7 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
   };
 
   return (
-    <form
-      style={{ display: "flex", flexDirection: "column" }}
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form className={"flex flex-col"} onSubmit={handleSubmit(onSubmit)}>
       <Section title={"Co i kiedy?"}>
         <div className={"flex gap-3 flex-row justify-around"}>
           <ControlledInput
@@ -224,7 +221,7 @@ export const LectureBasicForm: React.FC<LectureBasicFormProps> = ({
         />
 
         {youtubeVideoIdFromUrl(watch("youtubeVideoId")) && (
-          <YouTube videoId={watch("youtubeVideoId")} />
+          <YouTube videoId={youtubeVideoIdFromUrl(watch("youtubeVideoId"))} />
         )}
       </Section>
       <Button primary className={"self-end"} type="submit">

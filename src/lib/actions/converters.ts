@@ -174,7 +174,7 @@ export const convertLecture = async (
       subtitle: lecture.Event.subtitle ?? undefined,
     },
     title: lecture.title,
-    description: lecture.description ?? undefined,
+    description: lecture.description ?? "",
     from: lecture.from.toISOString(),
     to: lecture.to.toISOString(),
     youtubeVideoId: lecture.youtubeVideoId ?? undefined,

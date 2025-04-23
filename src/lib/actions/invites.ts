@@ -72,7 +72,6 @@ export const getMyInvites = async (): Promise<InviteDetailsResponse[]> => {
 
   const invites = await prisma.invite.findMany({
     where: {
-      // todo: use something different than google_mail
       mail: user.google_mail,
     },
   });

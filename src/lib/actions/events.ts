@@ -67,11 +67,8 @@ export const updateEvent = async (
   eventId: string,
   data: EventUpdateSchema
 ): Promise<EventResponse> => {
-  const validatedData = eventUpdateSchema.parse(data);
-
   const session = await auth();
   const userId = session?.user.id;
-
   if (!userId) {
     throw new Error("Unauthorized");
   }
@@ -81,10 +78,11 @@ export const updateEvent = async (
       id: eventId,
     },
   });
-
   if (!event) {
     throw new Error("Event not found");
   }
+
+  const validatedData = eventUpdateSchema.parse(data);
 
   await assertEventWriteAccess(event);
   await assertEventVisibilityAccess(validatedData);

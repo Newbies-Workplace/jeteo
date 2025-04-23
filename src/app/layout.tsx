@@ -26,7 +26,7 @@ const lato = Lato({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env["NEXT_PUBLIC_FRONTEND_URL"]!),
-
+  title: "Jeteo",
   openGraph: {
     title: "Jeteo",
     description: "Portal do dzielenia się wiedzą!",

@@ -4,14 +4,15 @@ import {
 } from "@/lib/models/lecture.response";
 import { getIdFromSlug } from "@/lib/slugs";
 import { prisma } from "@/lib/prisma";
-import { assertEventReadAccess } from "@/lib/actions/get-events";
 import {
   convertLecture,
   convertLectureDetails,
-  LectureDetails,
 } from "@/lib/actions/converters";
 import { auth } from "@/lib/auth";
-import { EventVisibility } from "@prisma/client";
+import {
+  assertEventReadAccess,
+  assertLectureReadAccess,
+} from "@/lib/actions/auth.methods";
 
 export const getEventLectures = async (
   eventSlug: string
@@ -99,31 +100,4 @@ export const getLectureDetails = async (
   await assertLectureReadAccess(lecture, "detailed");
 
   return convertLectureDetails(lecture);
-};
-
-export const assertLectureReadAccess = async (
-  lecture: LectureDetails,
-  lectureType: "detailed" | "public"
-) => {
-  const session = await auth();
-  const user = session?.user;
-
-  const event = lecture.Event;
-
-  if (
-    event.visibility !== EventVisibility.PRIVATE &&
-    lectureType === "public"
-  ) {
-    return;
-  }
-
-  if (
-    user &&
-    (lecture.Event.authorId === user.id ||
-      lecture.Speakers.map((speaker) => speaker.id).includes(user.id!))
-  ) {
-    return;
-  }
-
-  throw "NotAllowedToReadLectureException";
 };

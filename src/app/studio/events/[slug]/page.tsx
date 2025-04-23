@@ -8,12 +8,26 @@ import { EventLecturesForm } from "@/components/organisms/eventForm/lectures/Eve
 import Link from "next/link";
 import { DeleteEventCard } from "@/app/studio/events/[slug]/DeleteEventCard";
 import { getEventLectures } from "@/lib/actions/get-lectures";
+import { Metadata } from "next";
 
-export default async function Page({
-  params,
-}: {
+type Props = {
   params: Promise<{ slug: string }>;
-}) {
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const slug = (await params).slug;
+
+  const event = await getEvent(slug);
+  if (!event) {
+    notFound();
+  }
+
+  return {
+    title: `Studio: ${event.title}`,
+  };
+}
+
+export default async function Page({ params }: Props) {
   const { slug } = await params;
   const event = await getEvent(slug);
   const lectures = await getEventLectures(slug);

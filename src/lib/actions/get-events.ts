@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { EventResponse } from "@/lib/models/event.response";
 import { convertEvent } from "@/lib/actions/converters";
-import { Event, EventVisibility } from "@prisma/client";
 import { getIdFromSlug } from "@/lib/slugs";
 import { auth } from "@/lib/auth";
+import { assertEventReadAccess } from "./auth.methods";
 
 export const getPublicEvents = async (
   page: number,
@@ -72,19 +72,4 @@ export const getEvent = async (slug: string): Promise<EventResponse | null> => {
   await assertEventReadAccess(event);
 
   return convertEvent(event);
-};
-
-export const assertEventReadAccess = async (event: Event) => {
-  const session = await auth();
-  const user = session?.user;
-
-  if (event.visibility !== EventVisibility.PRIVATE) {
-    return;
-  }
-
-  if (user && event.authorId === user.id) {
-    return;
-  }
-
-  throw "NotAllowedToReadEventException";
 };

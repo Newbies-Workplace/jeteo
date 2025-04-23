@@ -53,9 +53,9 @@ export type EventUpdateSchema = z.infer<typeof eventUpdateSchema>;
 const baseLectureSchema = z.object({
   title: z.string().min(5).max(100),
   description: z.string().min(10).max(10000),
-  from: z.string(),
-  to: z.string(),
-  youtubeVideoId: optionalField(
+  from: z.coerce.date(),
+  to: z.coerce.date(),
+  youtubeVideoId: z.union([
     z
       .string()
       .regex(
@@ -63,7 +63,10 @@ const baseLectureSchema = z.object({
         { message: "Invalid YouTube URL" }
       )
       .transform(youtubeVideoIdFromUrl)
-  ),
+      .optional(),
+    z.string().length(11).optional(),
+    z.literal("").transform((v) => (v === "" ? undefined : v)),
+  ]),
   speakersAndInvites: z.object({
     invites: z.array(
       z.object({

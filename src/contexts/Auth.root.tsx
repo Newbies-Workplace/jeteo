@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
+import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 const AuthRoot = ({
@@ -12,13 +12,10 @@ const AuthRoot = ({
   loader?: React.ReactNode;
 }) => {
   const { status } = useSession();
-  const router = useRouter();
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.replace("/");
-    }
-  }, [status]);
+  if (status === "unauthenticated") {
+    return redirect("/");
+  }
 
   return status === "loading" ? Loader : <div>{children}</div>;
 };
