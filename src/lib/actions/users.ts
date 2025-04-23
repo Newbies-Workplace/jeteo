@@ -113,11 +113,13 @@ export const deleteMyUserImage = async () => {
     },
   });
 
-  if (!user.image || user.image.startsWith("http")) {
+  if (!user.image) {
     return;
   }
+  if (!user.image.startsWith("http")) {
+    await deleteFile(user.image);
+  }
 
-  await deleteFile(user.image);
   await prisma.user.update({
     where: {
       id: userId,
