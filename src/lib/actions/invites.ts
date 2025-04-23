@@ -67,13 +67,12 @@ export const getMyInvites = async (): Promise<InviteDetailsResponse[]> => {
   const user = session?.user;
 
   if (!user) {
-    //todo throw user not found
     throw "UserNotFoundException";
   }
 
   const invites = await prisma.invite.findMany({
     where: {
-      //todo: use something different than google_mail
+      // todo: use something different than google_mail
       mail: user.google_mail,
     },
   });

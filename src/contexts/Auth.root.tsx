@@ -12,8 +12,8 @@ const AuthRoot = ({
   loader?: React.ReactNode;
 }) => {
   const { status } = useSession();
-
   const router = useRouter();
+
   useEffect(() => {
     if (status === "unauthenticated") {
       router.replace("/");

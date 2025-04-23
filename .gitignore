@@ -39,4 +39,4 @@ yarn-error.log*
 .idea
 .dist
 
-storage
+/storage

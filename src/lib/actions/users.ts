@@ -16,7 +16,6 @@ export const getMyUser = async (): Promise<UserResponse> => {
   const userId = session?.user?.id;
 
   if (!userId) {
-    //todo throw user not found
     throw "UserNotFoundException";
   }
 
@@ -27,7 +26,6 @@ export const getMyUser = async (): Promise<UserResponse> => {
   });
 
   if (!user) {
-    //todo throw user not found
     throw "UserNotFoundException";
   }
 

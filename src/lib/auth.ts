@@ -1,7 +1,9 @@
-import NextAuth, { type DefaultSession } from "next-auth";
+import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
+import { convertUserDetails } from "@/lib/actions/converters";
+import { UserDetailsResponse } from "@/lib/models/user.response";
 
 declare module "next-auth" {
   interface Session {
@@ -10,7 +12,7 @@ declare module "next-auth" {
       _permissions: {
         isAuthorized: boolean;
       };
-    } & DefaultSession["user"];
+    } & UserDetailsResponse;
   }
 }
 
@@ -18,16 +20,19 @@ export const { auth, handlers, signIn } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [Google],
   callbacks: {
-    session({ session, token, user }) {
-      // todo fetch user from db and add permissions
+    async session({ session, token, user }) {
+      const prismaUser = await prisma.user.findUniqueOrThrow({
+        where: {
+          id: user.id,
+        },
+      });
+      const convertedUser = convertUserDetails(prismaUser);
+
       return {
         ...session,
         user: {
-          ...session.user,
+          ...convertedUser,
           google_mail: user.email,
-          _permissions: {
-            isAuthorized: true,
-          },
         },
       };
     },

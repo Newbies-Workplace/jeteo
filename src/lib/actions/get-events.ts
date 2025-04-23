@@ -35,7 +35,6 @@ export const getMyEvents = async (
   const userId = user?.id;
 
   if (!userId) {
-    //todo throw user not found
     throw "UserNotFoundException";
   }
 
@@ -87,6 +86,5 @@ export const assertEventReadAccess = async (event: Event) => {
     return;
   }
 
-  // todo handle in a better way
   throw "NotAllowedToReadEventException";
 };

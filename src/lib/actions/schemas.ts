@@ -11,7 +11,7 @@ const optionalField = <T>(schema: z.ZodType<T>) =>
 // Shared schema for event creation and update
 const baseEventSchema = z.object({
   title: z.string().min(5).max(100),
-  subtitle: z.string().min(5).max(100).optional(),
+  subtitle: optionalField(z.string().min(5).max(100)),
   description: z.string().min(10).max(10000),
   from: z.coerce.date(),
   to: z.coerce.date(),

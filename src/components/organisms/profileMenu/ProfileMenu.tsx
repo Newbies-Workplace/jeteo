@@ -60,7 +60,7 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ invertColors }) => {
                 "flex flex-row justify-start items-center gap-2 self-stretch"
               }
             >
-              <Avatar size={64} src={user?.image ?? undefined} />
+              <Avatar size={64} src={user?.avatar ?? undefined} />
 
               <Text variant="headS" bold={true} className={"text-white"}>
                 {user ? user.name : "Gość"}

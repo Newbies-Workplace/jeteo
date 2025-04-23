@@ -23,7 +23,6 @@ export const getEventLectures = async (
     },
   });
   if (!event) {
-    // todo throw event not found
     throw "EventNotFoundException";
   }
 
@@ -53,7 +52,6 @@ export const getMyLectures = async (): Promise<LectureResponse[]> => {
   const userId = user?.id;
 
   if (!userId) {
-    //todo throw user not found
     throw "UserNotFoundException";
   }
 
@@ -95,7 +93,6 @@ export const getLectureDetails = async (
     },
   });
   if (!lecture) {
-    // todo throw lecture not found
     throw "LectureNotFoundException";
   }
 

@@ -83,7 +83,6 @@ export const updateLecture = async (
     throw new Error("Unauthorized");
   }
 
-  const validatedData = lectureUpdateSchema.parse(data);
   const lecture = await getLectureDetailsById(lectureId);
   if (!lecture) {
     throw new Error("Lecture not found");
@@ -91,7 +90,13 @@ export const updateLecture = async (
 
   await assertLectureWriteAccess(lecture);
 
-  // todo validate dates
+  const validatedData = lectureUpdateSchema.parse(data);
+
+  const from = dayjs(validatedData.from ?? lecture.from);
+  const to = dayjs(validatedData.to ?? lecture.to);
+  if (from.isAfter(to)) {
+    throw "LectureInvalidDatesException";
+  }
 
   // delete old speakers
   const speakersToDelete = lecture.Speakers.filter(

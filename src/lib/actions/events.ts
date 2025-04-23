@@ -106,7 +106,7 @@ export const updateEvent = async (
   const updatedEvent = await prisma.event.update({
     data: {
       title: validatedData.title,
-      subtitle: validatedData.subtitle,
+      subtitle: validatedData.subtitle ?? null,
       description: validatedData.description,
       from: validatedData.from && new Date(validatedData.from),
       to: validatedData.to && new Date(validatedData.to),
