@@ -25,6 +25,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
+    "i18next": "^25.0.2",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
     "next": "15.1.6",
@@ -43,7 +44,8 @@
     "shared": "*",
     "tailwind-merge": "3.0.1",
     "uuid": "^9.0.0",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "zod-i18n-map": "^2.27.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.4",
@@ -56,6 +58,7 @@
     "@storybook/preset-scss": "^1.0.3",
     "@storybook/react": "^8.5.3",
     "@tailwindcss/postcss": "^4.0.0",
+    "@turbo/gen": "^1.9.7",
     "@types/gtag.js": "^0.0.18",
     "@types/js-cookie": "^3.0.6",
     "@types/leaflet": "^1.9.3",
@@ -66,20 +69,19 @@
     "ajv": "^8.17.1",
     "ajv-keywords": "^5.1.0",
     "autoprefixer": "^10.4.20",
+    "dotenv-cli": "latest",
     "eslint": "^9",
+    "eslint-config-custom": "*",
     "eslint-config-next": "15.1.6",
     "eslint-plugin-storybook": "^0.11.2",
     "postcss": "^8.5.1",
+    "prettier": "^2.5.1",
     "prisma": "^6.3.1",
     "sass": "^1.63.6",
     "storybook": "^8.5.3",
     "tailwindcss": "^4.0.1",
-    "typescript": "^5",
-    "@turbo/gen": "^1.9.7",
-    "dotenv-cli": "latest",
-    "eslint-config-custom": "*",
-    "prettier": "^2.5.1",
-    "turbo": "^1.10.12"
+    "turbo": "^1.10.12",
+    "typescript": "^5"
   },
   "overrides": {
     "react": "19.0.0",

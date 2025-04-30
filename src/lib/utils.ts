@@ -16,3 +16,9 @@ export const notBlank = (value: string | undefined): string | undefined => {
 
   return value;
 };
+
+export const notBlankOrNull = (
+  value: string | null | undefined
+): string | null => {
+  return value ? notBlank(value) ?? null : null;
+};

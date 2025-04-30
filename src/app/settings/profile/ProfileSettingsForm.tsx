@@ -17,6 +17,7 @@ import {
 import { userUpdateSchema, UserUpdateSchema } from "@/lib/actions/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
+import { notBlankOrNull } from "@/lib/utils";
 
 export const ProfileSettingsForm: React.FC = ({}) => {
   const { update, data } = useSession();
@@ -28,10 +29,10 @@ export const ProfileSettingsForm: React.FC = ({}) => {
       jobTitle: user.jobTitle,
       description: user.description,
       socials: {
-        mail: user.socials.mail,
-        linkedin: user.socials.linkedin,
-        twitter: user.socials.twitter,
-        github: user.socials.github,
+        mail: notBlankOrNull(user.socials.mail),
+        linkedin: notBlankOrNull(user.socials.linkedin),
+        twitter: notBlankOrNull(user.socials.twitter),
+        github: notBlankOrNull(user.socials.github),
       },
     },
   });
@@ -62,13 +63,13 @@ export const ProfileSettingsForm: React.FC = ({}) => {
         // @ts-ignore
         image: undefined,
         name: form.name,
-        jobTitle: form.jobTitle,
-        description: form.description,
+        jobTitle: notBlankOrNull(form.jobTitle),
+        description: notBlankOrNull(form.description),
         socials: {
-          mail: form.socials?.mail ?? null,
-          linkedin: form.socials?.linkedin ?? null,
-          twitter: form.socials?.twitter ?? null,
-          github: form.socials?.github ?? null,
+          mail: notBlankOrNull(form.socials?.mail),
+          linkedin: notBlankOrNull(form.socials?.linkedin),
+          twitter: notBlankOrNull(form.socials?.twitter),
+          github: notBlankOrNull(form.socials?.github),
         },
       }).then(() => {
         update();

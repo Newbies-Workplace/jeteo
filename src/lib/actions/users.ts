@@ -15,8 +15,8 @@ export const updateMyUser = async (
   data: UserUpdateSchema
 ): Promise<UserResponse> => {
   const session = await auth();
-  const currentUserId = session?.user.id;
-  if (!currentUserId) {
+  const userId = session?.user.id;
+  if (!userId) {
     throw new Error("Unauthorized");
   }
 
@@ -27,13 +27,13 @@ export const updateMyUser = async (
       name: validatedData.name,
       jobTitle: validatedData.jobTitle,
       description: validatedData.description,
-      mail: validatedData.socials?.mail ?? null,
-      linkedin: validatedData.socials?.linkedin ?? null,
-      twitter: validatedData.socials?.twitter ?? null,
-      github: validatedData.socials?.github ?? null,
+      mail: validatedData.socials?.mail,
+      linkedin: validatedData.socials?.linkedin,
+      twitter: validatedData.socials?.twitter,
+      github: validatedData.socials?.github,
     },
     where: {
-      id: currentUserId,
+      id: userId,
     },
   });
 

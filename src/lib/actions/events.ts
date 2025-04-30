@@ -94,17 +94,25 @@ export const updateEvent = async (
     throw "EventInvalidDatesException";
   }
 
-  const address = {
-    city: validatedData.address?.city ?? null,
-    place: validatedData.address?.place ?? null,
-    latitude: validatedData.address?.coordinates?.latitude ?? null,
-    longitude: validatedData.address?.coordinates?.longitude ?? null,
-  };
+  const address =
+    validatedData.address === null
+      ? {
+          city: null,
+          place: null,
+          latitude: null,
+          longitude: null,
+        }
+      : {
+          city: validatedData.address?.city,
+          place: validatedData.address?.place,
+          latitude: validatedData.address?.coordinates?.latitude,
+          longitude: validatedData.address?.coordinates?.longitude,
+        };
 
   const updatedEvent = await prisma.event.update({
     data: {
       title: validatedData.title,
-      subtitle: validatedData.subtitle ?? null,
+      subtitle: validatedData.subtitle,
       description: validatedData.description,
       from: validatedData.from && new Date(validatedData.from),
       to: validatedData.to && new Date(validatedData.to),

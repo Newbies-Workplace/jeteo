@@ -9,7 +9,7 @@ import { ControlledInput } from "@/components/atoms/input/ControlledInput";
 import dayjs from "dayjs";
 import { MapPicker } from "@/components/molecules/mapPicker/MapPicker";
 import { EventResponse } from "@/lib/models/event.response";
-import { notBlank } from "@/lib/utils";
+import { notBlankOrNull } from "@/lib/utils";
 import { ControlledMarkdownInput } from "@/components/atoms/markdownInput/ControlledMarkdownInput";
 import { TagPicker } from "@/components/molecules/tagPicker/TagPicker";
 import toast from "react-hot-toast";
@@ -66,7 +66,7 @@ const getRequest = async (
 ): Promise<EventResponse> => {
   const convertedForm: EventCreateSchema | EventUpdateSchema = {
     title: form.title,
-    subtitle: notBlank(form.subtitle),
+    subtitle: notBlankOrNull(form.subtitle),
     description: form.description,
     from: form.from,
     to: form.to,
@@ -74,8 +74,8 @@ const getRequest = async (
     address:
       hasLocation && form.address && form.address.city && form.address.place
         ? {
-            city: notBlank(form.address.city)!,
-            place: notBlank(form.address.place)!,
+            city: notBlankOrNull(form.address.city)!,
+            place: notBlankOrNull(form.address.place)!,
             coordinates: form.address.coordinates && {
               latitude: form.address.coordinates.latitude,
               longitude: form.address.coordinates.longitude,

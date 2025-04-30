@@ -1,10 +1,21 @@
 import { z } from "zod";
 import { EventVisibility } from "@prisma/client";
 import { youtubeVideoIdFromUrl } from "@/lib/actions/converters";
+import i18next from "i18next";
+import { zodI18nMap } from "zod-i18n-map";
+import translation from "zod-i18n-map/locales/pl/zod.json";
+
+i18next.init({
+  lng: "pl",
+  resources: {
+    pl: { zod: translation },
+  },
+});
+z.setErrorMap(zodI18nMap);
 
 const optionalField = <T>(schema: z.ZodType<T>) =>
   z.union([
-    schema.optional(),
+    schema.nullish(),
     z.literal("").transform((v) => (v === "" ? undefined : v)),
   ]);
 
@@ -60,7 +71,7 @@ const baseLectureSchema = z.object({
       .string()
       .regex(
         /^https:\/\/(?:www\.youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})$/,
-        { message: "Invalid YouTube URL" }
+        { message: "Niepoprawny link YouTube" }
       )
       .transform(youtubeVideoIdFromUrl)
       .optional(),
@@ -94,15 +105,15 @@ export type LectureRateSchema = z.infer<typeof lectureRateSchema>;
 
 export const userUpdateSchema = z
   .object({
-    name: z.string(),
+    name: z.string().min(5).max(50),
     image: z.string(),
-    jobTitle: z.string(),
-    description: z.string(),
+    jobTitle: optionalField(z.string().min(5).max(50)),
+    description: optionalField(z.string().max(1000)),
     socials: z.object({
-      mail: z.string().email().nullish(),
-      github: z.string().url().nullish(),
-      twitter: z.string().url().nullish(),
-      linkedin: z.string().url().nullish(),
+      mail: optionalField(z.string().email()),
+      github: optionalField(z.string().url()),
+      twitter: optionalField(z.string().url()),
+      linkedin: optionalField(z.string().url()),
     }),
   })
   .partial();
