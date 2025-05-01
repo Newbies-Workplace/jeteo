@@ -9,12 +9,11 @@ DROP INDEX "User_google_id_key";
 ALTER TABLE "User"
     RENAME COLUMN "avatar" TO "image";
 ALTER TABLE "User"
-    DROP COLUMN "google_id",
     ADD COLUMN     "email" TEXT,
     ADD COLUMN     "emailVerified" TIMESTAMP(3),
     ADD COLUMN     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
-UPDATE "User" SET "email" = 'user' || id || '@example.com';
+UPDATE "User" SET "email" = 'user' || id || '@jeteo.newbies.pl';
 
 ALTER TABLE "User"
     ALTER COLUMN "email" SET NOT NULL;
@@ -37,6 +36,14 @@ CREATE TABLE "Account" (
 
     CONSTRAINT "Account_pkey" PRIMARY KEY ("provider","providerAccountId")
 );
+
+-- create accounts for all users based on their User google_id
+INSERT INTO "Account" ("userId", "type", "provider", "providerAccountId", "createdAt", "updatedAt")
+    SELECT "id", 'oidc', 'google', "google_id", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    FROM "User" WHERE "google_id" IS NOT NULL;
+
+ALTER TABLE "User"
+    DROP COLUMN "google_id",
 
 -- CreateTable
 CREATE TABLE "Session" (
