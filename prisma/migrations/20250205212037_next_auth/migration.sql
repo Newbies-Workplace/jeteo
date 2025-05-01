@@ -43,7 +43,7 @@ INSERT INTO "Account" ("userId", "type", "provider", "providerAccountId", "creat
     FROM "User" WHERE "google_id" IS NOT NULL;
 
 ALTER TABLE "User"
-    DROP COLUMN "google_id",
+    DROP COLUMN "google_id";
 
 -- CreateTable
 CREATE TABLE "Session" (
