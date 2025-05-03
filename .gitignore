@@ -40,3 +40,4 @@ yarn-error.log*
 .dist
 
 /storage
+/storybook-static
