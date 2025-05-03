@@ -1,7 +1,5 @@
 FROM node:22.13.1 AS builder
 
-ARG AUTH_URL
-
 # Create build directory
 WORKDIR /build
 

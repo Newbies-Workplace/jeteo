@@ -33,13 +33,6 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/newbies-workplace/jeteo-app
 
-      - name: "Create .env"
-        uses: iamsauravsharma/create-dotenv@v1.2.2
-        with:
-          file-name: '.env'
-        env:
-          AUTH_URL: ${{ secrets.AUTH_URL }}
-
       - name: "Build and push Docker image"
         uses: docker/build-push-action@v3
         with:

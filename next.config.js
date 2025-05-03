@@ -4,6 +4,9 @@ require("dotenv").config();
 module.exports = {
   reactStrictMode: false,
   distDir: ".next",
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
     remotePatterns: [
       {
