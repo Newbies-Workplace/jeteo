@@ -1,12 +1,14 @@
 FROM node:22.13.1 AS builder
 
+ARG AUTH_URL
+
 # Create build directory
 WORKDIR /build
 
 COPY . ./
 
 # Install build dependencies
-RUN npm install
+RUN npm ci
 RUN npm run build
 
 FROM node:22.13.1-alpine AS jeteo-app
