@@ -1,0 +1,140 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @unique @default(uuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+
+  accounts Account[]
+  sessions Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  jobTitle     String?
+  description  String?
+  mail         String?
+  linkedin     String?
+  twitter      String?
+  github       String?
+  isAuthorized Boolean @default(false)
+
+  CreatedInvites    Invite[]
+  CreatedEvents     Event[]
+  CreatedLectures   Lecture[] @relation("LectureAuthors")
+  ConductedLectures Lecture[] @relation("LectureSpeakers")
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+model Event {
+  id           String          @id @unique @default(uuid())
+  title        String
+  subtitle     String?
+  description  String
+  from         DateTime
+  to           DateTime
+  city         String?
+  place        String?
+  latitude     Float?
+  longitude    Float?
+  tags         String[]
+  visibility   EventVisibility @default(PRIVATE)
+  primaryColor String
+  coverImage   String?
+  createdAt    DateTime        @default(now())
+  authorId     String
+  Author       User            @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  Lectures     Lecture[]
+}
+
+model Lecture {
+  id             String   @id @unique @default(uuid())
+  title          String
+  description    String?
+  from           DateTime
+  to             DateTime
+  youtubeVideoId String?
+  createdAt      DateTime @default(now())
+  eventId        String
+  authorId       String
+  Rate           Rate[]
+  Event          Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  Author         User     @relation("LectureAuthors", fields: [authorId], references: [id], onDelete: Cascade)
+  Invites        Invite[]
+  Speakers       User[]   @relation("LectureSpeakers")
+}
+
+model Invite {
+  id        String   @id @unique @default(uuid())
+  mail      String
+  name      String
+  createdAt DateTime @default(now())
+  lectureId String
+  userId    String
+  Lecture   Lecture  @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  InvitedBy User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Rate {
+  id          String   @id @unique @default(uuid())
+  overallRate Int
+  topicRate   Int
+  opinion     String?
+  createdAt   DateTime @default(now())
+  lectureId   String
+  Lecture     Lecture  @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+}
+
+enum EventVisibility {
+  PUBLIC
+  HIDDEN
+  PRIVATE
+}
