@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getFile } from "@/app/api/storage/storage-service";
 
-export const CONTROLLER_PREFIX = "storage/v1";
-
 export async function GET(req: NextRequest) {
-  const path = req.nextUrl.pathname!.replace(`/api/${CONTROLLER_PREFIX}`, "");
+  const path = req.nextUrl.pathname!.replace(`/api/storage/v1`, "");
 
   if (!path || Array.isArray(path)) {
     return NextResponse.json({ error: "Invalid path" }, { status: 400 });

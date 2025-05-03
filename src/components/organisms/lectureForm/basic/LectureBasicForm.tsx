@@ -64,6 +64,7 @@ const getRequest = async (
   if (lecture) {
     return updateLecture(lecture.id, getUpdateRequestData(data));
   } else {
+    // @ts-ignore
     return createLecture(getIdFromSlug(eventSlug), getCreateRequestData(data));
   }
 };

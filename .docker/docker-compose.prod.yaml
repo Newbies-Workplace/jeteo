@@ -32,28 +32,16 @@ services:
     image: ghcr.io/newbies-workplace/jeteo-app:latest
     restart: unless-stopped
     container_name: jeteo-app
-    ports:
-      - "3000:3000"
-    networks:
-      - reverse-proxy_global
-  jeteo-api:
-    image: ghcr.io/newbies-workplace/jeteo-api:latest
-    restart: unless-stopped
-    container_name: jeteo-api
     labels:
       - docker-volume-backup.stop-during-backup=jeteo
     volumes:
       - jeteo-api-storage:/jeteo-api-storage
-    environment:
-      - GOOGLE_CLIENT_ID
-      - GOOGLE_SECRET
-      - GOOGLE_CALLBACK_URL
-      - JWT_SECRET
-      - CLIENT_URL
-      - DATABASE_URL
-      - NEXT_PUBLIC_BACKEND_URL
     ports:
-      - "3001:3001"
+      - "3000:3000"
+    env_file:
+      - .env
+    networks:
+      - reverse-proxy_global
     depends_on:
       - jeteo-db
 
