@@ -28,6 +28,8 @@ services:
       - "127.0.0.1:5432:5432"
     volumes:
       - jeteo-db-data:/var/lib/postgresql/data
+    networks:
+      - jeteo-back
   jeteo-app:
     image: ghcr.io/newbies-workplace/jeteo-app:latest
     restart: unless-stopped
@@ -41,11 +43,13 @@ services:
     env_file:
       - .env
     networks:
+      - jeteo-back
       - reverse-proxy_global
     depends_on:
       - jeteo-db
 
 networks:
+  jeteo-back:
   reverse-proxy_global:
     external: true
 

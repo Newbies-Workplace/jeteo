@@ -83,7 +83,7 @@ export const ProfileSettingsForm: React.FC = ({}) => {
   };
 
   return (
-    <form style={{ display: "flex", flexDirection: "column" }}>
+    <form className={"flex flex-col"}>
       <CropDialog />
       <div
         className={
