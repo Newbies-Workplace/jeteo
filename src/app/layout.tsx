@@ -24,8 +24,10 @@ const lato = Lato({
   preload: false,
 });
 
+const frontendUrl = process.env["NEXT_PUBLIC_FRONTEND_URL"];
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env["NEXT_PUBLIC_FRONTEND_URL"]!),
+  metadataBase: frontendUrl ? new URL(frontendUrl) : undefined,
   title: "Jeteo",
   openGraph: {
     title: "Jeteo",
