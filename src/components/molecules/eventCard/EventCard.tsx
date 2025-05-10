@@ -108,7 +108,7 @@ export const SmartEventCard: React.FC<{ event: EventResponse }> = ({
   const now = dayjs();
   const start = dayjs(event.from);
   const end = dayjs(event.to);
-  const freshnessEnd = dayjs(event.from).add(2, "day");
+  const freshnessEnd = dayjs(event.to).add(2, "day");
 
   const isFuture = now.isBefore(start);
   const isLive = now.isAfter(start) && now.isBefore(end);
