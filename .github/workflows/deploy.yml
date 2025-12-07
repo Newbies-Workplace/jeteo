@@ -56,6 +56,6 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             docker-compose down
-            docker image rm ghcr.io/newbies-workplace/jeteo-aapp || true
+            docker image rm ghcr.io/newbies-workplace/jeteo-app || true
             docker pull ghcr.io/newbies-workplace/jeteo-app:latest
             docker-compose up -d
